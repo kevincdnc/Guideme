@@ -94,28 +94,28 @@ export default {
   archives: [
     {
       year: 'v. 1900',
-      src: `${C}/d/d7/Audierne_Vue_du_port_1900.jpg`,
+      src: `${C}/thumb/d/d7/Audierne_Vue_du_port_1900.jpg/500px-Audierne_Vue_du_port_1900.jpg`,
       caption: 'Vue générale du port vers 1900. Carte postale.',
       credit: 'Léon et Lévy, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Audierne_Vue_du_port_1900.jpg',
     },
     {
       year: '< 1903',
-      src: `${C}/5/53/Audierne_L%27entr%C3%A9e_du_port_1903.jpg`,
+      src: `${C}/thumb/5/53/Audierne_L%27entr%C3%A9e_du_port_1903.jpg/960px-Audierne_L%27entr%C3%A9e_du_port_1903.jpg`,
       caption: "L'entrée du port, redoutée pour sa barre. Dessin d'A. Karl.",
       credit: 'A. Karl, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Audierne_L%27entr%C3%A9e_du_port_1903.jpg',
     },
     {
       year: 'v. 1905',
-      src: `${C}/3/3c/Audierne_Joseph-Marie_Villard.jpg`,
+      src: `${C}/thumb/3/3c/Audierne_Joseph-Marie_Villard.jpg/960px-Audierne_Joseph-Marie_Villard.jpg`,
       caption: "Une famille de pêcheurs d'Audierne au début du XXe siècle.",
       credit: 'Joseph-Marie Villard, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Audierne_Joseph-Marie_Villard.jpg',
     },
     {
       year: '1910',
-      src: `${C}/2/25/Audierne_port_d%C3%A9but_XXe.jpg`,
+      src: `${C}/thumb/2/25/Audierne_port_d%C3%A9but_XXe.jpg/960px-Audierne_port_d%C3%A9but_XXe.jpg`,
       caption: 'Le port au début du XXe siècle. Photographie du Touring-Club de France.',
       credit: 'Auteur inconnu, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Audierne_port_d%C3%A9but_XXe.jpg',
@@ -143,7 +143,7 @@ export default {
     },
     {
       year: 'Signac',
-      src: `${C}/1/15/Audierne_Paul_Signac.jpg`,
+      src: `${C}/thumb/1/15/Audierne_Paul_Signac.jpg/500px-Audierne_Paul_Signac.jpg`,
       caption: 'Audierne vu par Paul Signac, qui y a peint plusieurs toiles à la fin des années 1920.',
       credit: 'Paul Signac, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Audierne_Paul_Signac.jpg',

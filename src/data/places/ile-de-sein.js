@@ -108,21 +108,21 @@ export default {
   archives: [
     {
       year: '1873',
-      src: `${C}/a/a8/Sein_en_1873.jpg`,
+      src: `${C}/thumb/a/a8/Sein_en_1873.jpg/960px-Sein_en_1873.jpg`,
       caption: "L'île de Sein en 1873. Photographie de J. Duclos (Gallica, BnF).",
       credit: 'J. Duclos, via Moreau.henri, CC BY-SA 3.0',
       page: 'https://commons.wikimedia.org/wiki/File:Sein_en_1873.jpg',
     },
     {
       year: '1880',
-      src: `${C}/8/8a/Emile_Renouf_La_veuve_de_l%27%C3%8Ele_de_Sein.jpg`,
+      src: `${C}/thumb/8/8a/Emile_Renouf_La_veuve_de_l%27%C3%8Ele_de_Sein.jpg/960px-Emile_Renouf_La_veuve_de_l%27%C3%8Ele_de_Sein.jpg`,
       caption: "« La veuve de l'île de Sein », tableau d'Émile Renouf.",
       credit: 'Émile Renouf, CC BY-SA 3.0',
       page: 'https://commons.wikimedia.org/wiki/File:Emile_Renouf_La_veuve_de_l%27%C3%8Ele_de_Sein.jpg',
     },
     {
       year: 'Coiffe',
-      src: `${C}/9/9d/Coiffe_de_l%27%C3%AEle_de_Sein_%283%29-_mus%C3%A9e_de_Bretagne_-_986.0006.2.jpg`,
+      src: `${C}/thumb/9/9d/Coiffe_de_l%27%C3%AEle_de_Sein_%283%29-_mus%C3%A9e_de_Bretagne_-_986.0006.2.jpg/500px-Coiffe_de_l%27%C3%AEle_de_Sein_%283%29-_mus%C3%A9e_de_Bretagne_-_986.0006.2.jpg`,
       caption: "Une coiffe de l'île de Sein, conservée au musée de Bretagne.",
       credit: 'Pierre Tressos, musée de Bretagne, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Coiffe_de_l%27%C3%AEle_de_Sein_(3)-_mus%C3%A9e_de_Bretagne_-_986.0006.2.jpg',

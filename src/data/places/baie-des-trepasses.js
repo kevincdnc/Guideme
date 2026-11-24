@@ -82,14 +82,14 @@ export default {
   archives: [
     {
       year: '1899',
-      src: `${C}/e/e5/La_Baie_des_Tr%C3%A9pass%C3%A9s_1899.jpg`,
+      src: `${C}/thumb/e/e5/La_Baie_des_Tr%C3%A9pass%C3%A9s_1899.jpg/500px-La_Baie_des_Tr%C3%A9pass%C3%A9s_1899.jpg`,
       caption: 'La baie des Trépassés en 1899.',
       credit: 'Louis Rousselet, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:La_Baie_des_Tr%C3%A9pass%C3%A9s_1899.jpg',
     },
     {
       year: 'v. 1910',
-      src: `${C}/c/c1/Baie_des_Tr%C3%A9pass%C3%A9s_ND_Photo.jpg`,
+      src: `${C}/thumb/c/c1/Baie_des_Tr%C3%A9pass%C3%A9s_ND_Photo.jpg/500px-Baie_des_Tr%C3%A9pass%C3%A9s_ND_Photo.jpg`,
       caption: 'Petites gardeuses de vaches au-dessus de la baie. Carte postale.',
       credit: 'Neurdein (ND Photo), domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:Baie_des_Tr%C3%A9pass%C3%A9s_ND_Photo.jpg',
