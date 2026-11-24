@@ -135,7 +135,7 @@ export default function App() {
 
   // Espace laissé à la carte : carrousel en bas (mobile), panneau à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: place ? 60 : 440, right: place ? Math.max(window.innerWidth / 2, 560) + 60 : 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: place ? Math.max(window.innerWidth / 2, 560) + 40 : 440, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -200,7 +200,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: place ? 16 : 416 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: place ? Math.max(window.innerWidth / 2, 560) + 16 : 416 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
       </div>

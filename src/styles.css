@@ -67,11 +67,11 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Barre du haut (mobile) ---------- */
 .topbar {
-  position: absolute; z-index: 5; top: 0; left: 0; right: 0;
+  position: absolute; z-index: 5; top: calc(10px + var(--safe-top)); left: 12px; right: 12px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: calc(12px + var(--safe-top)) 16px 12px;
-  background: #111;
-  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+  padding: 12px 14px 12px 16px;
+  background: #111; border-radius: var(--r-lg);
+  box-shadow: 0 4px 14px rgba(0,0,0,.2);
 }
 .topbar-region {
   font-family: var(--font); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
@@ -80,7 +80,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Outils carte ---------- */
 .map-tools {
-  position: absolute; z-index: 5; right: 12px; top: calc(66px + var(--safe-top));
+  position: absolute; z-index: 5; right: 12px; top: calc(76px + var(--safe-top));
   display: flex; flex-direction: column; gap: 8px;
 }
 .tool-btn {
@@ -451,10 +451,7 @@ img { display: block; max-width: 100%; }
   .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: 0; }
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
   .maplibregl-ctrl-bottom-left { margin-left: 400px; }
-  .has-guide .maplibregl-ctrl-bottom-right { margin-right: max(50vw, 560px); }
-  /* Fiche ouverte : la liste s'efface, la carte occupe la moitié gauche */
-  .has-guide .sidebar { display: none; }
-  .has-guide .maplibregl-ctrl-bottom-left { margin-left: 0; }
+  .has-guide .maplibregl-ctrl-bottom-left { margin-left: max(50vw, 560px); }
 
   /* Barre du haut commune */
   .guide-bar { padding: 14px 24px; gap: 10px; }
@@ -471,13 +468,13 @@ img { display: block; max-width: 100%; }
   .guide-bar.is-compact .close-btn, .guide-bar.is-compact .pill-btn:not(.pill-btn--primary) { box-shadow: none; background: var(--surface-2); }
 
   /* ---- Panneau : moitié gauche de l'écran, une colonne aérée ---- */
-  /* Fiche à droite de l'écran ; la liste reste à gauche, la carte au milieu */
+  /* Fiche sur la moitié gauche de l'écran, la carte à droite */
   .guide--panel {
-    left: auto; right: 0; width: max(50vw, 560px);
-    border-left: 1px solid var(--line); box-shadow: -8px 0 40px rgba(15,23,42,.12);
+    right: auto; left: 0; width: max(50vw, 560px);
+    border-right: 1px solid var(--line); box-shadow: 8px 0 40px rgba(15,23,42,.12);
     animation: guideInSide .3s cubic-bezier(.2,.8,.25,1);
   }
-  @keyframes guideInSide { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes guideInSide { from { transform: translateX(-24px); opacity: 0; } to { transform: none; opacity: 1; } }
   .guide--panel .guide-aside { display: none; }
   .guide--panel .hero { height: min(42vh, 400px); }
   .guide--panel .guide-head { padding: 34px 56px 8px; }
@@ -575,7 +572,6 @@ img { display: block; max-width: 100%; }
 .guide-head .gwenn-ha-du { width: 72px; margin-bottom: 14px; }
 
 /* ---------- Barre de marque noire, pleine largeur ---------- */
-.brand-bar { background: #111; margin: -22px -20px 0; padding: 16px 20px; }
-.sidebar { padding-top: 22px; }
+.brand-bar { background: #111; padding: 16px 18px; border-radius: var(--r-lg); box-shadow: 0 4px 14px rgba(0,0,0,.14); }
 /* Logo de la page complète : sur fond noir, comme la barre de marque */
 .guide-brand .brand { background: #111; padding: 8px 10px; border-radius: var(--r-md); }
