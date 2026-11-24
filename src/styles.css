@@ -691,3 +691,11 @@ img { display: block; max-width: 100%; }
 }
 /* Coupe dans la liste des lieux */
 .pc-records { color: #b45309 !important; font-weight: 700; }
+
+/* ---------- Le saviez-vous ? ---------- */
+.funfact { display: flex; gap: 12px; margin-top: 10px; padding: 14px 16px; border-radius: var(--r-lg);
+  background: linear-gradient(100deg, #eef4ff, #fff 80%); border: 1px solid #c7dbff; }
+.funfact-icon { flex: 0 0 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(10,108,255,.3); }
+.funfact-kicker { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--primary-ink); }
+.funfact strong { display: block; font-family: var(--font-title); font-size: 16px; line-height: 1.25; margin: 1px 0 3px; letter-spacing: -0.01em; }
+.funfact p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-2); }

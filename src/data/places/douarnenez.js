@@ -31,6 +31,7 @@ export default {
     { medal: 'argent', scope: 'France', title: 'Premier port sardinier au XIXe siècle', text: 'Puis premier port de pêche côtière en 1900.' },
     { medal: 'bronze', scope: 'France', title: 'Parmi les 10 premières femmes élues', text: 'Joséphine Pencalet, conseillère municipale en 1925.' },
   ],
+  funFact: { title: 'La place de l\'Enfer… qui n\'en est pas un', text: 'L\'ancien marais (gwern en breton) serait devenu Ivern, puis Ifer… et enfin « Enfer ».' },
   sections: [
     {
       id: 'essentiel',

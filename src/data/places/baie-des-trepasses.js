@@ -25,6 +25,7 @@ export default {
     { value: '70-80 m', label: 'hauteur des pointes qui l\'encadrent' },
     { value: '1968', label: 'roman « La Baie des Trépassés » de Catherine Arley' },
   ],
+  funFact: { title: 'Un nom né d\'une faute de traduction ?', text: 'La légende dit que les courants y rejetaient les corps des naufragés. Mais le cadastre ancien parle de Bae an Avon, « la baie de la source » : elle serait devenue Bae an Anaon, « la baie des âmes ».' },
   sections: [
     {
       id: 'essentiel',

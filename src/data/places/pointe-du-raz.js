@@ -37,6 +37,7 @@ export default {
     { medal: 'argent', scope: 'France', title: 'Avant-dernier phare en mer automatisé', text: 'En 1995, juste avant Kéréon.' },
     { medal: 'bronze', scope: 'France', title: 'La route la plus courte entre l\'Atlantique et la Manche', text: 'Le raz de Sein, et aussi l\'une des plus dangereuses.' },
   ],
+  funFact: { title: 'Quatre gardiens pour la dernière nuit', text: 'En 1995, deux gardiens refusent la relève pour protester contre l\'automatisation : la dernière nuit, ils sont quatre au lieu de deux dans le phare.' },
   sections: [
     {
       id: 'essentiel',

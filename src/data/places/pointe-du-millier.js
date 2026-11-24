@@ -25,6 +25,7 @@ export default {
     { value: '1868', label: 'construction du moulin de Kériolet' },
     { value: '20 t', label: 'le bateau de pierre de saint Conogan' },
   ],
+  funFact: { title: 'Un « bateau » de 20 tonnes', text: 'Sur la lande gît le bateau de pierre de saint Conogan, un bloc de granit de 8 mètres. Sa légende est inscrite à l\'Inventaire du patrimoine culturel immatériel.' },
   sections: [
     {
       id: 'essentiel',

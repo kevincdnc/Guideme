@@ -31,6 +31,7 @@ export default {
     { medal: 'argent', scope: 'Pays bigouden', title: 'Première attraction payante', text: 'Et 6e du Finistère, avec près de 55 000 entrées en 2009.' },
     { medal: 'bronze', scope: 'Penmarc\'h', title: 'Le plus grand des trois phares du site', text: 'Plus de 60 mètres, à côté de la Vieille tour et du phare de 1835.' },
   ],
+  funFact: { title: '307 marches en 46 secondes', text: 'Le record du « Championnat du monde de l\'ascension du phare d\'Eckmühl » est de 46 s 54, établi en 2015.' },
   sections: [
     {
       id: 'essentiel',

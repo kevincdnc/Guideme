@@ -312,6 +312,16 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               ))}
             </ul>
           )}
+          {place.funFact && (
+            <aside className="funfact">
+              <span className="funfact-icon"><Icon name="spark" size={20} /></span>
+              <div>
+                <span className="funfact-kicker">Le saviez-vous ?</span>
+                <strong>{place.funFact.title}</strong>
+                <p>{place.funFact.text}</p>
+              </div>
+            </aside>
+          )}
           <div className="guide-actions">
             {speech.supported && (
               <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>

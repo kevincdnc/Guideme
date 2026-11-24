@@ -28,6 +28,7 @@ export default {
   records: [
     { medal: 'or', scope: 'Bretagne', title: 'Monument préféré des Bretons', text: 'En 2014, devant Carnac et le phare d\'Eckmühl ; 6e en France.' },
   ],
+  funFact: { title: 'La porte des pendus', text: 'La porte des Larrons doit son nom aux voleurs qu\'on y conduisait en barque jusqu\'au Passage, pour y être pendus. Elle n\'a été rouverte qu\'en 1991.' },
   sections: [
     {
       id: 'essentiel',

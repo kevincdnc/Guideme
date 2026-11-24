@@ -30,6 +30,7 @@ export default {
     { medal: 'argent', scope: 'France', title: '2e port pour le prix moyen du poisson', text: 'En 2020 : bar, sole, saint-pierre…' },
     { medal: 'bronze', scope: 'Cornouaille', title: 'Le seul vrai havre entre la Torche et le Raz', text: 'Un port de refuge, malgré sa barre redoutée.' },
   ],
+  funFact: { title: 'La ligne des mangeurs de bouillie', text: 'Le petit train Douarnenez–Audierne roulait à 22 km/h de moyenne. On le surnommait Ar Youter, de youd, « bouillie ».' },
   sections: [
     {
       id: 'essentiel',

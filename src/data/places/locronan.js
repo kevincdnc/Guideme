@@ -28,6 +28,7 @@ export default {
   records: [
     { medal: 'or', scope: 'Unique', title: 'Le seul nemeton encore visible', text: 'Un bois sacré gaulois, dont la Troménie suit le tour.' },
   ],
+  funFact: { title: 'Polanski a fait enterrer les fils', text: 'Pour le tournage de Tess (1979), tous les réseaux électriques et téléphoniques du village ont été enterrés. Ils le sont restés.' },
   sections: [
     {
       id: 'essentiel',

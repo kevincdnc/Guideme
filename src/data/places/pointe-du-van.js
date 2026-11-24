@@ -28,6 +28,7 @@ export default {
   records: [
     { medal: 'or', scope: 'Cap Sizun', title: 'La plus vaste chapelle de Cléden', text: 'La chapelle Saint-They, au bord de la falaise.' },
   ],
+  funFact: { title: 'La cloche qui sonne toute seule', text: 'On prétend que la cloche de la chapelle Saint-They sonne d\'elle-même pour avertir les bateaux du danger.' },
   sections: [
     {
       id: 'essentiel',

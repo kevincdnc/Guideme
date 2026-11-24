@@ -29,6 +29,7 @@ export default {
     { medal: 'or', scope: 'Monde', title: 'Parmi les plus anciennes traces de feu maîtrisé', text: 'Des indices de combustion vieux d\'environ 465 000 ans.' },
     { medal: 'argent', scope: 'Monde', title: 'L\'un des 5 sites au monde aux foyers aussi anciens', text: 'Avec Terra Amata, Bilzingsleben, Vértesszőlős et Zhoukoudian.' },
   ],
+  funFact: { title: 'De l\'ADN dans des os de 400 000 ans', text: 'Trop abîmés pour être identifiés à l\'œil, les os ont parlé grâce à l\'ADN : chevaux, rhinocéros, cerfs et bovins.' },
   sections: [
     {
       id: 'essentiel',

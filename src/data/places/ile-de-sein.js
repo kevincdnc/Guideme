@@ -47,6 +47,7 @@ export default {
     { medal: 'or', scope: 'France', title: 'La seule commune avec plus de morts en 1939-1945 qu\'en 1914-1918', text: '27 contre 21.' },
     { medal: 'argent', scope: 'France', title: 'Première station à recevoir le nouveau canot tous temps', text: 'En 2017, l\'Yves et François Olivaux (SNS 001).' },
   ],
+  funFact: { title: 'Un mur de 7 000 ans sous la mer', text: 'Par 9 mètres de fond, des archéologues ont étudié un mur de granit de 120 mètres, bâti quand la mer était plus basse.' },
   sections: [
     {
       id: 'essentiel',

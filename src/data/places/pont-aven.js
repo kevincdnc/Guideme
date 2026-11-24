@@ -28,6 +28,7 @@ export default {
   records: [
     { medal: 'bronze', scope: 'France', title: '« La population la plus pauvre de France »', text: 'Selon Madame de La Villemarqué, vers 1860.' },
   ],
+  funFact: { title: 'Couvre-feu pour les peintres', text: 'En 1883, la colonie d\'artistes fait tant de bruit que la ville interdit les débits de boisson après 22 heures.' },
   sections: [
     {
       id: 'essentiel',
