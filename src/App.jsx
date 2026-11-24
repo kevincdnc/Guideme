@@ -43,7 +43,6 @@ function PlaceCard({ place, selected, onOpen, onSelect }) {
         {!soon && <span className="pc-badge"><Icon name={place.icon || 'pin'} size={13} stroke={2.2} /></span>}
       </div>
       <div className="pc-body">
-        <span className="pc-cat">{place.category}</span>
         <h3>{place.shortTitle}</h3>
         <span className="pc-meta">
           <span><Icon name="pin" size={13} /> {place.commune.split(' · ')[0].split(' & ')[0]}</span>
@@ -55,20 +54,43 @@ function PlaceCard({ place, selected, onOpen, onSelect }) {
   );
 }
 
-// Puces de catégories : filtrent la liste et les repères de la carte
+// Puces de catégories sur une seule ligne ; « + » en bout de ligne ouvre la liste complète.
 function TagBar({ value, onChange, places }) {
+  const [open, setOpen] = useState(false);
+  const boxRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
+  // La catégorie active passe en tête pour rester visible
+  const ordered = value ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
+  const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
+  const pick = (id) => { onChange(id); setOpen(false); };
+  useEffect(() => {
+    if (!open) return;
+    const close = (e) => { if (!boxRef.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
   return (
-    <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
-      <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => onChange(null)} aria-pressed={!value}>
-        <Icon name="grid" size={14} /> Tous
+    <div className="tagbar-wrap" ref={boxRef}>
+      <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
+        <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
+        {ordered.map((t) => (
+          <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
+            <Icon name={t.icon} size={14} /> {t.label}
+          </button>
+        ))}
+      </div>
+      <button className={`tag-more ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
+        <Icon name="plus" size={16} stroke={2.4} />
       </button>
-      {used.map((t) => (
-        <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => onChange(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
-          <Icon name={t.icon} size={14} /> {t.label}
-          <span className="tag-count">{places.filter((p) => p.tags?.includes(t.id)).length}</span>
-        </button>
-      ))}
+      {open && (
+        <div className="tag-menu" role="menu">
+          {used.map((t) => (
+            <button key={t.id} role="menuitemradio" aria-checked={value === t.id} className={`tag-menu-item ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)}>
+              <Icon name={t.icon} size={16} /> <span>{t.label}</span> <b>{count(t.id)}</b>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -183,22 +205,15 @@ export default function App() {
         <aside className="sidebar">
           <Brand />
           <div className="sidebar-intro">
-            <span className="chip chip--accent">Finistère · Penn-ar-Bed</span>
-            <h1>Le bout du monde, raconté lieu par lieu.</h1>
-            <p>Histoire, anecdotes insolites, cartes postales d'époque et lecture audio, à consulter sur place ou depuis chez vous.</p>
+            <h1>Le Finistère, lieu par lieu</h1>
+            <p>Histoires, anecdotes et archives, à écouter sur place.</p>
           </div>
-          <div className="sidebar-nav">
-            <div className="sidebar-count">
-              <strong>{available} guide{available > 1 ? 's' : ''}</strong>{tag ? ` · ${TAGS.find((t) => t.id === tag).label.toLowerCase()}` : ' autour de la pointe du Raz'}
-            </div>
-            <TagBar value={tag} onChange={changeTag} places={PLACES} />
-          </div>
+          <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="sidebar-list">
             {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
-          <footer className="sidebar-foot">guideme.bzh · version de démonstration</footer>
         </aside>
       )}
 

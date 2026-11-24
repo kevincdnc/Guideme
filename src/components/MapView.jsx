@@ -18,6 +18,35 @@ const PIN_ICONS = {
   fire: '<path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z"/>',
 };
 
+// Couleur du badge selon le type de lieu
+const PIN_COLORS = { lighthouse: '#ff5a36', beach: '#ffb020', cliff: '#22b573', port: '#2f80ff', fire: '#ff7a1a' };
+
+// Motifs dessinés à la volée (pas de fichier image) : petites vagues sur la mer, arbres sur les forêts.
+function patternImage(draw, size) {
+  const r = 2; // net sur écrans haute densité
+  const c = document.createElement('canvas');
+  c.width = c.height = size * r;
+  const ctx = c.getContext('2d');
+  ctx.scale(r, r);
+  draw(ctx, size);
+  return { width: c.width, height: c.height, data: ctx.getImageData(0, 0, c.width, c.height).data };
+}
+const drawWaves = (ctx, n) => {
+  ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+  ctx.lineWidth = 1.6;
+  ctx.lineCap = 'round';
+  const wave = (x, y) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 4, y - 4, x + 8, y); ctx.quadraticCurveTo(x + 12, y + 4, x + 16, y); ctx.stroke(); };
+  wave(10, 18); wave(n / 2 + 14, n / 2 + 24);
+};
+const drawTrees = (ctx) => {
+  const tree = (x, y, s) => {
+    ctx.fillStyle = 'rgba(70,120,50,0.25)'; ctx.beginPath(); ctx.ellipse(x + 1.5, y + s * 0.9, s * 0.8, s * 0.35, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6cbf55'; ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#8fd673'; ctx.beginPath(); ctx.arc(x - s * 0.3, y - s * 0.3, s * 0.5, 0, Math.PI * 2); ctx.fill();
+  };
+  tree(9, 10, 5); tree(28, 22, 6); tree(12, 32, 4.5);
+};
+
 const MAX_BOUNDS = [
   [-6.3, 47.2],
   [-2.4, 49.25],
@@ -28,13 +57,15 @@ function markerEl(place, onSelect) {
   el.type = 'button';
   el.className = `gm-marker ${place.available ? 'is-available' : 'is-soon'}`;
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
-  el.innerHTML = `
+  el.style.setProperty('--c', place.available ? PIN_COLORS[place.icon] || '#ff5a36' : '#9aa3b2');
+  el.innerHTML = `<span class="gm-marker-body">
     <span class="gm-marker-pin">
       ${place.available
         ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${PIN_ICONS[place.icon] || PIN_ICONS.lighthouse}</svg>`
         : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>'}
     </span>
-    <span class="gm-marker-label">${place.shortTitle}</span>`;
+    <span class="gm-marker-label">${place.shortTitle}</span>
+    <span class="gm-marker-ground"></span></span>`;
   el.addEventListener('click', (e) => {
     e.stopPropagation();
     onSelect(place.id);
@@ -51,17 +82,17 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
 
   useImperativeHandle(ref, () => ({
     flyTo(coords, zoom = 11.5) {
-      map.current?.flyTo({ center: coords, zoom, padding: padding || undefined, speed: 1.2, essential: true });
+      map.current?.flyTo({ center: coords, zoom, pitch: zoom >= 11 ? 50 : 0, padding: padding || undefined, speed: 1.2, essential: true });
     },
     fitPoints(points) {
       if (!map.current || !points.length) return;
       const b = new maplibregl.LngLatBounds(points[0], points[0]);
       points.forEach((c) => b.extend(c));
       const pad = padding ? { ...padding, left: (padding.left || 0) + 60, right: (padding.right || 0) + 150, top: (padding.top || 0) + 40 } : 60; // place pour les étiquettes à droite des points
-      map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 1200 });
+      map.current.fitBounds(b, { padding: pad, maxZoom: 13, pitch: 45, duration: 1200 });
     },
     fitFinistere() {
-      map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, duration: 900 });
+      map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, pitch: 0, bearing: 0, duration: 900 });
     },
     locate() {
       if (!navigator.geolocation) return;
@@ -91,6 +122,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       maxBounds: MAX_BOUNDS,
       minZoom: 7,
       maxZoom: 18,
+      maxPitch: 60,
       fadeDuration: 150,
       // Rendu net sur écrans haute densité, transitions de zoom douces
       pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
@@ -114,10 +146,20 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     m.on('zoom', onZoom);
     m.once('load', () => {
       onZoom();
+      m.addImage('gm-waves', patternImage(drawWaves, 88), { pixelRatio: 2 });
+      m.addImage('gm-trees', patternImage(drawTrees, 40), { pixelRatio: 2 });
+      m.addLayer({ id: 'water_waves', type: 'fill', source: 'openmaptiles', 'source-layer': 'water', minzoom: 8,
+        paint: { 'fill-pattern': 'gm-waves', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 8, 0, 9.5, 0.9] } }, 'water_shallow');
+      m.addLayer({ id: 'wood_trees', type: 'fill', source: 'openmaptiles', 'source-layer': 'landcover', minzoom: 10.5,
+        filter: ['==', ['get', 'class'], 'wood'],
+        paint: { 'fill-pattern': 'gm-trees', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10.5, 0, 12, 1] } }, 'hillshade');
+      // Relief en 3D (falaises, vallons) quand la carte est inclinée
+      m.setTerrain({ source: 'terrain3d', exaggeration: 1.6 });
       // Attribution repliée par défaut (toujours accessible par le bouton « i »)
       box.current?.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
     });
     map.current = m;
+    box.current.__map = m; // accès pour les tests
 
     places.forEach((p) => {
       const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true)), anchor: 'bottom' })

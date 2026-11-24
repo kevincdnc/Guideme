@@ -30,6 +30,7 @@ const PATHS = {
   beach: (<><path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18" /><path d="M12 14V5" /><path d="M5 9a7 7 0 0114 0z" /></>),
   port: (<><circle cx="12" cy="5" r="2" /><path d="M12 7v13" /><path d="M5 13a7 7 0 0014 0" /><path d="M8 10h8" /></>),
   fire: <path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z" />,
+  plus: <path d="M12 5v14M5 12h14" />,
   grid: (<><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>),
   lighthouse: (<><path d="M9 21l1.5-12h3L15 21z" /><path d="M8 9h8M10 6h4v3h-4zM12 3v3" /><path d="M16 6.5l4-1.5M8 6.5L4 5" /></>),
 };

@@ -95,48 +95,59 @@ img { display: block; max-width: 100%; }
 .has-guide .map-tools { display: none; }
 
 /* ---------- Repères ---------- */
-.gm-marker {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  transform-origin: bottom center; transition: transform .18s ease;
-  background: none; border: 0; padding: 0; cursor: pointer;
+.gm-marker { background: none; border: 0; padding: 0; cursor: pointer; }
+/* Les animations portent sur l'intérieur : MapLibre positionne le repère via son propre transform */
+.gm-marker-body {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-bottom: 6px;
+  transform-origin: bottom center; transition: transform .25s cubic-bezier(.3,1.6,.5,1);
 }
+/* Badge de jeu : pastille colorée, bord blanc épais, petite pointe, ombre au sol */
 .gm-marker-pin {
-  position: relative;
-  width: 40px; height: 40px; border-radius: 50% 50% 50% 4px; transform: rotate(-45deg);
+  position: relative; z-index: 1;
+  width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--accent); color: #fff;
-  border: 3px solid #fff; box-shadow: 0 4px 12px rgba(11,21,38,.35);
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 70%, #fff) 0%, var(--c) 60%);
+  color: #fff; border: 3px solid #fff;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 70%, #000), 0 8px 16px rgba(15,23,42,.28);
 }
-.gm-marker-pin svg { transform: rotate(45deg); }
+.gm-marker-pin::before {
+  content: ''; position: absolute; left: 50%; bottom: -9px; width: 12px; height: 12px; background: #fff;
+  transform: translateX(-50%) rotate(45deg); border-radius: 0 0 3px 0; z-index: -1;
+}
+.gm-marker-pin svg { filter: drop-shadow(0 1px 0 rgba(0,0,0,.2)); }
+.gm-marker-ground { position: absolute; bottom: 0; width: 22px; height: 7px; border-radius: 50%; background: rgba(40,30,10,.28); filter: blur(1.5px); }
+.gm-marker:hover .gm-marker-body { transform: translateY(-5px) scale(1.06); }
 .gm-marker.is-available .gm-marker-pin::after {
-  content: ''; position: absolute; inset: -8px; border-radius: inherit;
-  border: 2px solid var(--accent); opacity: 0; animation: pulse 2.2s ease-out infinite;
+  content: ''; position: absolute; inset: -9px; border-radius: 50%;
+  border: 3px solid var(--c); opacity: 0; animation: pulse 2.4s ease-out infinite;
 }
-@keyframes pulse { 0% { opacity: .7; transform: scale(.8); } 100% { opacity: 0; transform: scale(1.35); } }
-.gm-marker.is-soon .gm-marker-pin { width: 30px; height: 30px; background: var(--soon); border-width: 2.5px; }
+@keyframes pulse { 0% { opacity: .6; transform: scale(.75); } 100% { opacity: 0; transform: scale(1.3); } }
+@keyframes bob { 0%, 100% { transform: translateY(0) scale(1.12); } 50% { transform: translateY(-7px) scale(1.12); } }
+.gm-marker.is-soon .gm-marker-pin { width: 32px; height: 32px; border-width: 2.5px; box-shadow: 0 3px 0 #6f7887, 0 6px 12px rgba(15,23,42,.2); }
 .gm-marker-label {
   order: -1;
-  font-family: var(--font); font-weight: 700; font-size: 13px; line-height: 1;
-  color: var(--ink); background: #fff; padding: 5px 8px; border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(11,21,38,.22); white-space: nowrap;
+  font-family: var(--font-title); font-weight: 700; font-size: 13.5px; line-height: 1;
+  color: var(--ink); background: #fff; padding: 6px 10px; border-radius: 999px;
+  box-shadow: 0 3px 0 rgba(15,23,42,.08), 0 4px 12px rgba(15,23,42,.18); white-space: nowrap;
 }
 .gm-marker.is-soon .gm-marker-label { color: var(--ink-3); font-size: 12px; }
 .gm-marker.is-hidden { display: none; }
-/* De loin : petits points, vue d'ensemble (étiquette au survol ou si sélectionné) */
-.map.z-far .gm-marker-pin { width: 14px; height: 14px; border-radius: 50%; transform: none; border-width: 2px; box-shadow: 0 1px 4px rgba(15,23,42,.35); }
-.map.z-far .gm-marker-pin svg, .map.z-far .gm-marker-pin::after { display: none; }
-.map.z-far .gm-marker.is-soon .gm-marker-pin { width: 10px; height: 10px; }
-.map.z-far .gm-marker { transform: translateY(5px); }
-/* À mi-distance : repères réduits, sans étiquette */
-.map.z-mid .gm-marker-pin { width: 28px; height: 28px; border-width: 2px; }
-.map.z-mid .gm-marker-pin svg { width: 13px; height: 13px; }
-.map.z-mid .gm-marker.is-soon .gm-marker-pin { width: 20px; height: 20px; }
+/* De loin : petites pastilles colorées, vue d'ensemble du Finistère */
+.map.z-far .gm-marker-body { padding-bottom: 0; }
+.map.z-far .gm-marker-pin { width: 16px; height: 16px; border-width: 2.5px; box-shadow: 0 2px 0 color-mix(in srgb, var(--c) 70%, #000), 0 3px 6px rgba(15,23,42,.3); }
+.map.z-far .gm-marker-pin svg, .map.z-far .gm-marker-pin::after, .map.z-far .gm-marker-pin::before, .map.z-far .gm-marker-ground { display: none; }
+.map.z-far .gm-marker.is-soon .gm-marker-pin { width: 11px; height: 11px; }
+/* À mi-distance : badges réduits, sans étiquette */
+.map.z-mid .gm-marker-pin { width: 32px; height: 32px; border-width: 2.5px; }
+.map.z-mid .gm-marker-pin svg { width: 15px; height: 15px; }
+.map.z-mid .gm-marker.is-soon .gm-marker-pin { width: 22px; height: 22px; }
 .map.z-far .gm-marker-label, .map.z-mid .gm-marker-label { display: none; }
 .map.z-far .gm-marker:hover .gm-marker-label, .map.z-mid .gm-marker:hover .gm-marker-label,
 .map.z-far .gm-marker.is-selected .gm-marker-label, .map.z-mid .gm-marker.is-selected .gm-marker-label { display: block; }
-.map.z-far .gm-marker.is-selected .gm-marker-pin { width: 18px; height: 18px; }
-.gm-marker.is-selected { transform: scale(1.15); z-index: 3; }
-.gm-marker.is-selected .gm-marker-label { background: var(--primary); color: #fff; }
+.map.z-far .gm-marker.is-selected .gm-marker-pin { width: 20px; height: 20px; }
+.gm-marker.is-selected { z-index: 3; }
+.gm-marker.is-selected .gm-marker-body { animation: bob 1.4s ease-in-out infinite; }
+.gm-marker.is-selected .gm-marker-label { background: var(--ink); color: #fff; }
 .gm-poi { display: flex; align-items: center; gap: 6px; pointer-events: none; }
 .gm-poi-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(11,21,38,.4); margin-left: -6px; }
 .gm-poi-label { font-family: var(--font); font-weight: 600; font-size: 12.5px; color: var(--ink); background: rgba(255,255,255,.95); padding: 3px 7px; border-radius: 6px; box-shadow: 0 1px 4px rgba(11,21,38,.18); white-space: nowrap; }
@@ -164,23 +175,37 @@ img { display: block; max-width: 100%; }
 .rail::-webkit-scrollbar { display: none; }
 .rail .place-card { flex: 0 0 min(84vw, 340px); scroll-snap-align: center; }
 
-/* ---------- Puces de catégories ---------- */
-.tagbar { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 0 16px 8px; }
+/* ---------- Puces de catégories : une seule ligne + menu « + » ---------- */
+.tagbar-wrap { position: relative; display: flex; align-items: center; gap: 6px; padding: 0 16px 8px; }
+.tagbar { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
 .tagbar::-webkit-scrollbar { display: none; }
 .tag {
-  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 12px; border-radius: 999px;
-  font-size: 13.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap;
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px;
+  height: 32px; padding: 0 12px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; color: var(--ink-2); white-space: nowrap;
   background: rgba(255,255,255,.96); border: 1px solid var(--line-2);
-  box-shadow: 0 1px 2px rgba(15,23,42,.05);
   transition: background .15s, color .15s, border-color .15s;
 }
 .tag svg { color: var(--ink-3); }
 .tag:hover { border-color: rgba(15,23,42,.24); }
 .tag.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
 .tag.is-active svg { color: #fff; }
-.tag-count { font-size: 11.5px; font-weight: 700; color: var(--ink-3); background: var(--surface-2); border-radius: 999px; padding: 1px 6px; }
-.tag.is-active .tag-count { background: rgba(255,255,255,.18); color: #fff; }
+.tag-more { flex: 0 0 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  background: #fff; color: var(--ink); border: 1px solid var(--line-2); box-shadow: 0 1px 3px rgba(15,23,42,.08); transition: transform .2s; }
+.tag-more.is-open { transform: rotate(45deg); background: var(--ink); color: #fff; border-color: var(--ink); }
+.tag-menu {
+  position: absolute; z-index: 20; right: 16px; bottom: calc(100% + 4px); width: min(280px, calc(100vw - 32px));
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 6px;
+  box-shadow: 0 12px 34px rgba(15,23,42,.18); animation: fade .15s ease;
+}
+.sidebar .tag-menu { top: calc(100% - 2px); bottom: auto; left: 0; right: auto; }
+.tag-menu-item { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; font-size: 14px; font-weight: 500; text-align: left; color: var(--ink); }
+.tag-menu-item svg { color: var(--ink-3); }
+.tag-menu-item span { flex: 1; }
+.tag-menu-item b { font-size: 12px; font-weight: 700; color: var(--ink-3); background: var(--surface-2); padding: 2px 7px; border-radius: 999px; }
+.tag-menu-item:hover { background: var(--surface-2); }
+.tag-menu-item.is-active { background: var(--primary-soft); color: var(--primary-ink); }
 
 /* ---------- Carte de lieu ---------- */
 .place-card {
@@ -215,16 +240,15 @@ img { display: block; max-width: 100%; }
 /* ---------- Panneau latéral (desktop) ---------- */
 .sidebar {
   position: absolute; z-index: 6; top: 0; bottom: 0; left: 0; width: 400px;
-  display: flex; flex-direction: column; gap: 18px; padding: 22px 20px 16px;
+  display: flex; flex-direction: column; gap: 14px; padding: 22px 20px 16px;
   background: var(--bg); border-right: 1px solid var(--line); box-shadow: 4px 0 24px rgba(15,23,42,.05);
   overflow-y: auto;
 }
-.sidebar-intro h1 { font-size: 36px; line-height: 1.02; font-weight: 700; margin: 10px 0 8px; }
-.sidebar-intro p { margin: 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.45; }
-.sidebar-nav { position: sticky; top: -22px; z-index: 2; margin: 0 -20px; padding: 14px 20px 6px; background: var(--bg); border-top: 1px solid var(--line); }
+.sidebar-intro h1 { font-size: 22px; line-height: 1.15; font-weight: 700; margin: 0 0 4px; }
+.sidebar-intro p { margin: 0; color: var(--ink-3); font-size: 14px; line-height: 1.4; }
 .sidebar-count { font-size: 13.5px; color: var(--ink-3); margin-bottom: 10px; }
 .sidebar-count strong { color: var(--ink); }
-.sidebar .tagbar { flex-wrap: wrap; padding: 0; overflow: visible; }
+.sidebar .tagbar-wrap { position: sticky; top: -22px; z-index: 2; margin: 0 -20px; padding: 10px 20px; background: var(--bg); }
 .sidebar-list { display: flex; flex-direction: column; gap: 10px; }
 .sidebar-foot { margin-top: auto; font-size: 12px; color: var(--ink-3); }
 
