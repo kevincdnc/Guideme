@@ -57,6 +57,55 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
   );
 }
 
+// Progression : part des lieux du Finistère déjà visités. Apparaît au premier lieu coché.
+function ProgressButton({ visited, onPick }) {
+  const [open, setOpen] = useState(false);
+  const boxRef = useRef(null);
+  const places = PLACES.filter((p) => p.available);
+  const done = places.filter((p) => visited.includes(p.id));
+  const pct = places.length ? Math.round((done.length / places.length) * 100) : 0;
+  const R = 15, L = 2 * Math.PI * R;
+  useEffect(() => {
+    if (!open) return;
+    const close = (e) => { if (!boxRef.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+  return (
+    <div className="progress" ref={boxRef}>
+      <button className="tool-btn progress-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Finistère visité à ${pct} %`}>
+        <svg viewBox="0 0 36 36" className="progress-ring" aria-hidden="true">
+          <circle cx="18" cy="18" r={R} className="progress-track" />
+          <circle cx="18" cy="18" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} />
+        </svg>
+        <span className="progress-pct">{pct}<small>%</small></span>
+      </button>
+      {open && (
+        <div className="progress-menu">
+          <div className="progress-head">
+            <strong>Ton Finistère</strong>
+            <span>{done.length} / {places.length} lieux visités</span>
+          </div>
+          <div className="progress-bar"><span style={{ width: `${pct}%` }} /></div>
+          <ul>
+            {places.map((p) => {
+              const v = visited.includes(p.id);
+              return (
+                <li key={p.id}>
+                  <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
+                    <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
+                    {p.shortTitle}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Puces de catégories sur une seule ligne ; « + » en bout de ligne ouvre la liste complète.
 function TagBar({ value, onChange, places }) {
   const [open, setOpen] = useState(false);
@@ -116,7 +165,7 @@ export default function App() {
   const [selected, setSelected] = useState(() => readRoute());
   const fromRail = useRef(false);
   const place = route ? getPlace(route) : null;
-  const [visited] = useVisited();
+  const [visited, , started] = useVisited();
   const [tag, setTag] = useState(null);
   const visible = useMemo(() => PLACES.filter((p) => !tag || p.tags?.includes(tag)), [tag]);
   const available = visible.filter((p) => p.available).length;
@@ -203,6 +252,7 @@ export default function App() {
       <div className="map-tools" style={desktop ? { left: place ? Math.max(window.innerWidth / 2, 560) + 16 : 416 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
+        {started && <ProgressButton visited={visited} onPick={select} />}
       </div>
 
       {desktop && (

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 // Lieux marqués « déjà visité ». Préférence personnelle, gardée sur l'appareil (localStorage) ;
 // l'app fonctionne normalement si le stockage n'est pas disponible (navigation privée…).
 const KEY = 'guideme:visited';
+const STARTED = 'guideme:started'; // l'utilisateur a déjà coché un lieu au moins une fois
 const EVENT = 'guideme-visited';
 let memory = null; // repli en mémoire si le stockage est indisponible
 
@@ -16,11 +17,17 @@ function read() {
   }
 }
 
+let startedMemory = false;
+function readStarted() {
+  try { return startedMemory || localStorage.getItem(STARTED) === '1'; } catch (e) { return startedMemory; }
+}
+
 export function useVisited() {
   const [ids, setIds] = useState(read);
+  const [started, setStarted] = useState(readStarted);
 
   useEffect(() => {
-    const sync = () => setIds(read());
+    const sync = () => { setIds(read()); setStarted(readStarted()); };
     window.addEventListener(EVENT, sync);
     window.addEventListener('storage', sync); // autres onglets
     return () => {
@@ -33,9 +40,12 @@ export function useVisited() {
     const cur = read();
     const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
     try { localStorage.setItem(KEY, JSON.stringify(next)); memory = null; } catch (e) { memory = next; }
+    startedMemory = true;
+    try { localStorage.setItem(STARTED, '1'); } catch (e) { /* repli en mémoire */ }
     setIds(next);
+    setStarted(true);
     window.dispatchEvent(new Event(EVENT));
   }, []);
 
-  return [ids, toggle];
+  return [ids, toggle, started];
 }

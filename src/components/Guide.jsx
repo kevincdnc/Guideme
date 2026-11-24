@@ -148,6 +148,13 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
   const isPage = variant === 'page';
   const [visitedIds, toggleVisited] = useVisited();
   const isVisited = visitedIds.includes(place.id);
+  // En-tête en mosaïque : photo principale + vignettes (photos actuelles, puis archives)
+  const allImages = useMemo(() => [
+    ...(place.hero ? [{ src: place.hero.src, caption: place.hero.alt, credit: place.hero.credit }] : []),
+    ...(place.photos || []),
+    ...(place.archives || []),
+  ], [place]);
+  const mosaic = allImages.slice(0, 3);
   const blocks = useMemo(() => buildBlocks(place), [place]);
   const speech = useSpeech(blocks);
   const scroller = useRef(null);
@@ -249,16 +256,28 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
       </div>
 
       <div className="guide-scroll" ref={scroller}>
-        <header className="hero" ref={heroRef}>
-          {place.hero ? (
-            <>
-              <SafeImg src={place.hero.src} alt={place.hero.alt} fetchpriority="high" />
-              <div className="hero-shade" />
-              <span className="hero-credit">{place.hero.credit}</span>
-            </>
-          ) : (
+        <header className={`hero hero--n${mosaic.length}`} ref={heroRef}>
+          {mosaic.length ? mosaic.map((m, i) => (
+            <button key={m.src} className={`hero-tile hero-tile--${i}`} onClick={() => setLightbox({ items: allImages, start: i })} aria-label={`Agrandir : ${m.caption}`}>
+              <SafeImg src={m.src} alt={m.caption} fetchpriority={i === 0 ? 'high' : undefined} />
+              {i === mosaic.length - 1 && allImages.length > mosaic.length && (
+                <span className="hero-more"><Icon name="image" size={15} /> +{allImages.length - mosaic.length}</span>
+              )}
+            </button>
+          )) : (
             <div className="hero-empty"><Icon name={place.icon || 'pin'} size={56} stroke={1.6} /></div>
           )}
+          <div className="hero-shade" />
+          {place.hero && <span className="hero-credit">{place.hero.credit}</span>}
+          <button
+            role="checkbox"
+            aria-checked={isVisited}
+            className={`hero-visit ${isVisited ? 'is-checked' : ''}`}
+            onClick={() => toggleVisited(place.id)}
+          >
+            <span className="visit-box">{isVisited && <Icon name="check" size={14} stroke={3.4} />}</span>
+            {isVisited ? 'Visité' : 'Déjà visité ?'}
+          </button>
         </header>
 
         <div className="guide-layout">
@@ -277,15 +296,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                 <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
               </button>
             )}
-            <button
-              role="checkbox"
-              aria-checked={isVisited}
-              className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`}
-              onClick={() => toggleVisited(place.id)}
-            >
-              <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.2} />}</span>
-              {isVisited ? 'Visité' : 'Déjà visité ?'}
-            </button>
           </div>
         </div>
 

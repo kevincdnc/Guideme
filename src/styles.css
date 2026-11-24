@@ -1,6 +1,6 @@
 /* ==========================================================================
    guideme.bzh — thème clair, contrasté, mobile d'abord.
-   Typographie : Inter (texte), Sora (logo et titres).
+   Typographie : Inter (texte), Nunito (logo et titres).
    ========================================================================== */
 
 :root {
@@ -30,7 +30,7 @@
   --shadow-2: 0 2px 6px rgba(15,23,42,.05), 0 16px 40px rgba(15,23,42,.10);
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-title: 'Sora Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-title: 'Nunito Variable', 'Inter Variable', ui-sans-serif, sans-serif;
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -50,7 +50,7 @@ body {
 }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
 a { color: var(--sea); }
-h1, h2, h3 { font-family: var(--font-title); margin: 0; letter-spacing: -0.025em; }
+h1, h2, h3 { font-family: var(--font-title); margin: 0; font-weight: 800; letter-spacing: -0.01em; }
 img { display: block; max-width: 100%; }
 
 :focus-visible { outline: 3px solid rgba(20, 99, 194, .55); outline-offset: 2px; border-radius: 8px; }
@@ -62,7 +62,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Marque ---------- */
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
 .brand-mark { flex: 0 0 auto; color: #fff; }
-.brand-name { font-family: var(--font-title); font-weight: 700; font-size: 21px; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+.brand-name { font-family: var(--font-title); font-weight: 800; font-size: 22px; letter-spacing: -0.01em; color: #fff; line-height: 1; }
 .brand-name span { color: rgba(255,255,255,.5); }
 
 /* ---------- Barre du haut (mobile) ---------- */
@@ -90,6 +90,33 @@ img { display: block; max-width: 100%; }
 }
 .tool-btn:active { transform: scale(.96); }
 @media (max-width: 899px) { .has-guide .map-tools { display: none; } }
+
+/* ---------- Progression (lieux visités) ---------- */
+.progress { position: relative; }
+.progress-btn { position: relative; width: 44px; height: 44px; padding: 0; animation: popIn .35s cubic-bezier(.3,1.6,.5,1); }
+@keyframes popIn { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.progress-ring { position: absolute; inset: 3px; width: 38px; height: 38px; transform: rotate(-90deg); }
+.progress-track { fill: none; stroke: #e7ecef; stroke-width: 3.5; }
+.progress-value { fill: none; stroke: #16a34a; stroke-width: 3.5; stroke-linecap: round; transition: stroke-dashoffset .5s ease; }
+.progress-pct { position: relative; font-family: var(--font-title); font-weight: 800; font-size: 12.5px; color: var(--ink); letter-spacing: -0.02em; }
+.progress-pct small { font-size: 9px; margin-left: 1px; }
+.progress-menu {
+  position: absolute; z-index: 20; top: 0; right: calc(100% + 8px); width: 240px;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px;
+  box-shadow: 0 12px 34px rgba(15,23,42,.18); animation: fade .15s ease;
+}
+@media (min-width: 900px) { .progress-menu { right: auto; left: 0; top: calc(100% + 8px); } }
+.progress-head { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+.progress-head strong { font-family: var(--font-title); font-weight: 800; font-size: 17px; }
+.progress-head span { font-size: 13px; color: var(--ink-3); }
+.progress-bar { height: 8px; border-radius: 4px; background: #e7ecef; overflow: hidden; margin-bottom: 10px; }
+.progress-bar span { display: block; height: 100%; background: #16a34a; border-radius: 4px; transition: width .5s ease; }
+.progress-menu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.progress-menu li button { width: 100%; display: flex; align-items: center; gap: 9px; padding: 7px 6px; border-radius: var(--r-md); font-size: 14px; font-weight: 500; text-align: left; color: var(--ink-2); }
+.progress-menu li button:hover { background: var(--surface-2); }
+.progress-menu li button.is-done { color: var(--ink); font-weight: 600; }
+.progress-check { flex: 0 0 18px; height: 18px; border-radius: 5px; border: 2px solid var(--line-2); display: grid; place-items: center; }
+.is-done .progress-check { background: #16a34a; border-color: #16a34a; color: #fff; }
 
 /* ---------- Repères ---------- */
 .gm-marker { background: none; border: 0; padding: 0; cursor: pointer; }
@@ -276,11 +303,33 @@ img { display: block; max-width: 100%; }
 .guide-bar.is-compact .icon-btn { box-shadow: none; background: var(--surface-2); }
 .icon-btn--dark { background: rgba(255,255,255,.14); color: #fff; box-shadow: none; }
 
-.hero { position: relative; height: min(36vh, 320px); background: #9fb6c7; overflow: hidden; }
+.hero {
+  position: relative; height: min(40vh, 340px); background: #9fb6c7; overflow: hidden;
+  display: grid; gap: 3px; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr;
+}
+.hero--n1, .hero--n0 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.hero--n2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+.hero--n3 .hero-tile--0 { grid-row: 1 / 3; }
+.hero-tile { position: relative; display: block; overflow: hidden; min-height: 0; background: #b9c9d6; }
+.hero-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.hero-tile:hover img { transform: scale(1.04); }
+.hero-more { position: absolute; right: 8px; top: 8px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: var(--r-md); background: rgba(15,23,42,.72); color: #fff; font-size: 13px; font-weight: 700; }
+.hero-shade { pointer-events: none; }
+/* « Déjà visité ? » posé sur les photos, bien visible */
+.hero-visit {
+  position: absolute; z-index: 2; right: 14px; bottom: 30px;
+  display: inline-flex; align-items: center; gap: 9px; height: 44px; padding: 0 16px 0 12px;
+  border-radius: var(--r-lg); background: #fff; color: var(--ink); font-size: 15px; font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0,0,0,.28); transition: background .15s, color .15s, transform .12s;
+}
+.hero-visit:active { transform: scale(.96); }
+.hero-visit .visit-box { width: 22px; height: 22px; }
+.hero-visit.is-checked { background: #16a34a; color: #fff; }
+.hero-visit.is-checked .visit-box { background: #fff; border-color: #fff; color: #16a34a; }
 .hero img { width: 100%; height: 100%; object-fit: cover; }
 .hero-empty { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.85); background: linear-gradient(135deg, #7cc6ee, #0a6cff); }
 .hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,.22) 0%, rgba(15,23,42,0) 28%); }
-.hero-credit { position: absolute; right: 10px; bottom: 34px; font-size: 10.5px; color: rgba(255,255,255,.92); text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+.hero-credit { position: absolute; z-index: 1; left: 10px; bottom: 22px; max-width: 52%; font-size: 10.5px; line-height: 1.3; color: rgba(255,255,255,.92); text-shadow: 0 1px 2px rgba(0,0,0,.7); }
 
 .guide-head {
   position: relative; margin-top: -14px;
@@ -476,7 +525,7 @@ img { display: block; max-width: 100%; }
   }
   @keyframes guideInSide { from { transform: translateX(-24px); opacity: 0; } to { transform: none; opacity: 1; } }
   .guide--panel .guide-aside { display: none; }
-  .guide--panel .hero { height: min(42vh, 400px); }
+  .guide--panel .hero { height: min(44vh, 420px); }
   .guide--panel .guide-head { padding: 34px 56px 8px; }
   .guide--panel .guide-head h1 { font-size: 40px; }
   .guide--panel .guide-teaser { font-size: 17px; max-width: 36em; }

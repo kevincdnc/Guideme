@@ -44,7 +44,9 @@ export default function Lightbox({ items, start, onClose }) {
       <div className="lightbox-caption">
         {item.year && <span className="year-badge">{item.year}</span>}
         <p>{item.caption}</p>
-        <a href={item.page} target="_blank" rel="noreferrer" className="credit-link">{item.credit} <Icon name="external" size={13} /></a>
+        {item.page
+          ? <a href={item.page} target="_blank" rel="noreferrer" className="credit-link">{item.credit} <Icon name="external" size={13} /></a>
+          : <span className="credit-link">{item.credit}</span>}
       </div>
     </div>
   );
