@@ -124,12 +124,15 @@ img { display: block; max-width: 100%; }
 .gm-poi-label { font-family: var(--font-title); font-weight: 600; font-size: 12.5px; color: var(--navy); background: rgba(255,255,255,.92); padding: 3px 7px; border-radius: 6px; box-shadow: 0 1px 4px rgba(11,21,38,.18); white-space: nowrap; }
 .gm-me { width: 18px; height: 18px; border-radius: 50%; background: var(--sea); border: 3px solid #fff; box-shadow: 0 0 0 6px rgba(20,99,194,.2); }
 
-.maplibregl-ctrl-bottom-left { margin-bottom: var(--rail-h, 0px); transition: margin .2s; }
+.maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: var(--rail-h, 0px); transition: margin .2s; }
+.maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: none; }
+.map.is-far .gm-marker.is-soon .gm-marker-pin { width: 24px; height: 24px; border-width: 2px; }
+.map.is-far .gm-marker.is-soon .gm-marker-pin svg { width: 11px; height: 11px; }
 .maplibregl-ctrl-attrib.maplibregl-compact { background: rgba(255,255,255,.85); }
 .maplibregl-ctrl-scale { border-color: var(--ink-2); color: var(--ink-2); background: rgba(255,255,255,.75); font-family: var(--font); }
 
 /* ---------- Carrousel (mobile) ---------- */
-.app:not(.has-guide) { --rail-h: 214px; }
+.app:not(.has-guide) { --rail-h: 228px; }
 .rail-wrap {
   position: absolute; z-index: 5; left: 0; right: 0; bottom: 0;
   padding-bottom: calc(12px + var(--safe-bottom));
@@ -393,6 +396,7 @@ img { display: block; max-width: 100%; }
   .player { left: 16px; right: 16px; }
   .gallery-item { flex-basis: 72%; }
   .app { --rail-h: 0px; }
+  .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
   .maplibregl-ctrl-bottom-left { margin-left: 400px; }
   .has-guide .maplibregl-ctrl-bottom-left { margin-left: 560px; }
 }

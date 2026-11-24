@@ -61,7 +61,8 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       if (!map.current || !points.length) return;
       const b = new maplibregl.LngLatBounds(points[0], points[0]);
       points.forEach((c) => b.extend(c));
-      map.current.fitBounds(b, { padding: padding || 40, maxZoom: 13, duration: 1200 });
+      const pad = padding ? { ...padding, right: (padding.right || 0) + 150 } : 60; // place pour les étiquettes à droite des points
+      map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 1200 });
     },
     fitFinistere() {
       map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, duration: 900 });
@@ -100,7 +101,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       touchPitch: false,
     });
     m.touchZoomRotate.disableRotation();
-    m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
+    m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
     m.addControl(new maplibregl.ScaleControl({ unit: 'metric', maxWidth: 90 }), 'bottom-left');
     m.on('click', () => onSelectRef.current(null));
     // Étiquettes des lieux « bientôt » masquées de loin, pour éviter les chevauchements

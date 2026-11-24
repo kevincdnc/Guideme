@@ -39,7 +39,6 @@ le build marche à la racine d'un domaine (guideme.bzh) comme dans un sous-dossi
 | `src/hooks/useSpeech.js` | Lecture audio par la synthèse vocale de l'appareil (Web Speech API) |
 | `src/components/Lightbox.jsx` | Visionneuse d'images plein écran |
 | `src/styles.css` | Thème clair (jetons de couleur en tête de fichier) |
-| `public/media/` | Images de la fiche, hébergées avec l'app |
 
 ## Ajouter un lieu
 
@@ -50,7 +49,7 @@ apparaît en gris « Bientôt » ; passer à `true` et remplir `sections`, `arch
 ## Médias et droits
 
 - Textes rédigés pour l'app à partir des articles Wikipédia cités en bas de fiche.
-- Images et vidéos : Wikimedia Commons, domaine public ou licences libres (CC BY, CC BY-SA),
+- Images et vidéos : chargées depuis Wikimedia Commons (gardées en cache par l'app pour le hors ligne), domaine public ou licences libres (CC BY, CC BY-SA),
   auteur et licence affichés sous chaque média avec un lien vers la page du fichier.
 - Fond de carte : Esri World Topo Map. Les conditions d'Esri encadrent l'usage commercial :
   à vérifier avant une mise en production commerciale (alternative : un style vectoriel
