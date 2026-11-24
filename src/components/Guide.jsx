@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
 import Lightbox from './Lightbox.jsx';
+import SafeImg from './SafeImg.jsx';
 import { useSpeech } from '../hooks/useSpeech.js';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
@@ -24,7 +25,7 @@ function buildBlocks(place) {
 
 const RATES = [1, 1.25, 1.5, 0.85];
 
-function AudioPlayer({ speech, blocks, title }) {
+function AudioPlayer({ speech, blocks, title, minutes }) {
   const { supported, error, state, index, rate, play, pause, next, prev, changeRate, stop } = speech;
   if (!supported) return null;
   const active = state !== 'idle';
@@ -64,7 +65,7 @@ function AudioPlayer({ speech, blocks, title }) {
           <button className="player-btn" onClick={stop} aria-label="Arrêter la lecture"><Icon name="close" size={18} /></button>
         </div>
       ) : (
-        <span className="player-duration"><Icon name="clock" size={14} /> 7 min</span>
+        <span className="player-duration"><Icon name="clock" size={14} /> {minutes} min</span>
       )}
     </div>
   );
@@ -76,7 +77,7 @@ function Gallery({ items, onOpen, variant }) {
       {items.map((it, i) => (
         <figure key={it.src} className="gallery-item">
           <button className="gallery-btn" onClick={() => onOpen(i)} aria-label={`Agrandir : ${it.caption}`}>
-            <img src={it.src} alt={it.caption} loading="lazy" decoding="async" />
+            <SafeImg src={it.src} alt={it.caption} loading="lazy" decoding="async" />
             {it.year && <span className="year-badge year-badge--on-img">{it.year}</span>}
           </button>
           <figcaption>
@@ -190,9 +191,15 @@ export default function Guide({ place, onClose }) {
 
       <div className="guide-scroll" ref={scroller}>
         <header className="hero" ref={heroRef}>
-          <img src={place.hero.src} alt={place.hero.alt} fetchpriority="high" />
-          <div className="hero-shade" />
-          <span className="hero-credit">{place.hero.credit}</span>
+          {place.hero ? (
+            <>
+              <SafeImg src={place.hero.src} alt={place.hero.alt} fetchpriority="high" />
+              <div className="hero-shade" />
+              <span className="hero-credit">{place.hero.credit}</span>
+            </>
+          ) : (
+            <div className="hero-empty"><Icon name={place.icon || 'pin'} size={56} stroke={1.6} /></div>
+          )}
         </header>
 
         <div className="guide-layout">
@@ -339,7 +346,7 @@ export default function Guide({ place, onClose }) {
         <div className="guide-end" />
       </div>
 
-      <AudioPlayer speech={speech} blocks={blocks} title={place.shortTitle} />
+      <AudioPlayer speech={speech} blocks={blocks} title={place.shortTitle} minutes={place.readingMinutes} />
 
       {lightbox && <Lightbox items={lightbox.items} start={lightbox.start} onClose={() => setLightbox(null)} />}
     </article>

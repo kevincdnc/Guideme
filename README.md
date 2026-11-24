@@ -8,12 +8,13 @@ anecdotes insolites, archives d'époque, vidéos et **lecture audio** du texte.
 
 | Écran | Mobile | Desktop |
 |---|---|---|
-| Carte | Carte plein écran (fond relief Esri, comme la carte « Relief » de Printrace), carrousel de lieux en bas | Panneau de lieux à gauche, carte à droite |
-| Fiche | Plein écran : image, chiffres clés, sections, anecdotes, frise, archives, vidéos, infos pratiques | Panneau de 560 px à gauche, la carte montre le lieu et les points cités |
+| Carte | Carte vectorielle plein écran avec relief, repères regroupés quand ils sont proches, filtres par catégorie, carrousel de lieux en bas | Panneau de lieux et filtres à gauche, carte à droite |
+| Fiche | Plein écran : image, chiffres clés, sections, anecdotes, frise, archives, vidéos, infos pratiques | Plein écran sur deux colonnes (« En bref » et infos pratiques à droite), bouton Fermer ou Échap |
 | Audio | Lecteur flottant : lecture paragraphe par paragraphe, surlignage, précédent / suivant, vitesse | idem |
 
-- **Fiche disponible** : Pointe du Raz & phare de la Vieille.
-- **Repères « bientôt »** (grisés, non cliquables vers une fiche) : Pointe du Millier, Menez Dregan, Audierne.
+- **Fiches disponibles** : Pointe du Raz & phare de la Vieille, Baie des Trépassés, Pointe du Van & chapelle Saint-They,
+  Audierne, Menez Dregan, Pointe du Millier.
+- **Repère « bientôt »** (grisé, sans fiche) : Île de Sein.
 - **PWA** : installable sur l'écran d'accueil ; tuiles de carte et images déjà vues restent disponibles hors ligne.
 
 ## Développer
@@ -32,9 +33,11 @@ le build marche à la racine d'un domaine (guideme.bzh) comme dans un sous-dossi
 
 | Fichier | Rôle |
 |---|---|
-| `src/data/places.js` | Contenu des lieux : textes, chiffres, anecdotes, frise, médias, sources |
+| `src/data/places.js` | Liste des lieux, catégories (`TAGS`), lieux « bientôt », durée d'écoute calculée |
+| `src/data/places/*.js` | Une fiche par fichier : textes, chiffres, anecdotes, frise, médias, sources |
+| `src/data/map-style.json` | Style de carte, généré par `node scripts/build-map-style.mjs` |
 | `src/App.jsx` | Écran carte : carrousel mobile, panneau desktop, navigation |
-| `src/components/MapView.jsx` | Carte MapLibre (fond raster Esri World Topo), repères, points secondaires |
+| `src/components/MapView.jsx` | Carte MapLibre (tuiles vectorielles OpenFreeMap + relief), repères, regroupement, points secondaires |
 | `src/components/Guide.jsx` | Fiche lieu et lecteur audio |
 | `src/hooks/useSpeech.js` | Lecture audio par la synthèse vocale de l'appareil (Web Speech API) |
 | `src/components/Lightbox.jsx` | Visionneuse d'images plein écran |
@@ -42,18 +45,18 @@ le build marche à la racine d'un domaine (guideme.bzh) comme dans un sous-dossi
 
 ## Ajouter un lieu
 
-Ajouter un objet dans `PLACES` (`src/data/places.js`). Avec `available: false`, le repère
-apparaît en gris « Bientôt » ; passer à `true` et remplir `sections`, `archives`, `photos`,
-`videos`, `practical`, `sources` pour publier la fiche (modèle : `pointe-du-raz`).
+Créer un fichier dans `src/data/places/` (modèle : `pointe-du-raz.js`) et l'ajouter à la liste
+dans `src/data/places.js`. `tags` place le lieu dans les filtres, `icon` choisit le pictogramme du repère
+(`lighthouse`, `beach`, `cliff`, `port`, `fire`). Un lieu sans fiche va dans `SOON`.
 
 ## Médias et droits
 
 - Textes rédigés pour l'app à partir des articles Wikipédia cités en bas de fiche.
 - Images et vidéos : chargées depuis Wikimedia Commons (gardées en cache par l'app pour le hors ligne), domaine public ou licences libres (CC BY, CC BY-SA),
   auteur et licence affichés sous chaque média avec un lien vers la page du fichier.
-- Fond de carte : Esri World Topo Map. Les conditions d'Esri encadrent l'usage commercial :
-  à vérifier avant une mise en production commerciale (alternative : un style vectoriel
-  OpenFreeMap / OpenMapTiles).
+- Fond de carte : tuiles vectorielles OpenFreeMap (données © OpenStreetMap, schéma OpenMapTiles),
+  style recoloré par `scripts/build-map-style.mjs` ; relief ombré à partir des tuiles d'altitude
+  Terrarium (Mapzen, AWS Open Data). Sans clé ni compte.
 
 ## Audio
 

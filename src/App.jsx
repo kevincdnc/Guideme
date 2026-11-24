@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import MapView from './components/MapView.jsx';
 import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
-import { PLACES, getPlace } from './data/places.js';
+import SafeImg from './components/SafeImg.jsx';
+import { PLACES, TAGS, getPlace } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
 function readRoute() {
@@ -31,7 +32,7 @@ function Brand() {
   );
 }
 
-// Carte de lieu simplifiée : vignette, nom, commune, durée (ou « Bientôt »)
+// Carte de lieu : vignette avec pictogramme de catégorie, catégorie, nom, commune, durée
 function PlaceCard({ place, selected, onOpen, onSelect }) {
   const soon = !place.available;
   const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
@@ -46,16 +47,36 @@ function PlaceCard({ place, selected, onOpen, onSelect }) {
       aria-label={soon ? `${place.shortTitle}, bientôt disponible` : `Ouvrir le guide : ${place.shortTitle}`}
     >
       <div className="pc-thumb">
-        {place.thumb || place.hero ? <img src={place.thumb || place.hero.src} alt="" loading="lazy" /> : <Icon name="lock" size={20} />}
+        {place.thumb || place.hero ? <SafeImg src={place.thumb || place.hero.src} alt="" loading="lazy" /> : <span className="pc-thumb-empty"><Icon name={place.icon || 'pin'} size={22} /></span>}
+        {!soon && <span className="pc-badge"><Icon name={place.icon || 'pin'} size={13} stroke={2.2} /></span>}
       </div>
       <div className="pc-body">
+        <span className="pc-cat">{place.category}</span>
         <h3>{place.shortTitle}</h3>
         <span className="pc-meta">
-          {place.commune.split(' · ')[0]}
-          {!soon && <> · <b>{place.readingMinutes} min</b></>}
+          <span><Icon name="pin" size={13} /> {place.commune.split(' · ')[0].split(' & ')[0]}</span>
+          {!soon && <span><Icon name="headphones" size={13} /> {place.readingMinutes} min</span>}
         </span>
       </div>
-      {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go"><Icon name="chevron" size={18} stroke={2.4} /></span>}
+      {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go" aria-hidden="true"><Icon name="chevron" size={18} stroke={2.2} /></span>}
+    </div>
+  );
+}
+
+// Puces de catégories : filtrent la liste et les repères de la carte
+function TagBar({ value, onChange, places }) {
+  const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
+  return (
+    <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
+      <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => onChange(null)} aria-pressed={!value}>
+        <Icon name="grid" size={14} /> Tous
+      </button>
+      {used.map((t) => (
+        <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => onChange(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
+          <Icon name={t.icon} size={14} /> {t.label}
+          <span className="tag-count">{places.filter((p) => p.tags?.includes(t.id)).length}</span>
+        </button>
+      ))}
     </div>
   );
 }
@@ -64,11 +85,29 @@ export default function App() {
   const desktop = useIsDesktop();
   const mapRef = useRef(null);
   const railRef = useRef(null);
+  const railWrapRef = useRef(null);
+  const appRef = useRef(null);
+  // Hauteur réelle du bandeau du bas (mobile) : les contrôles de carte se posent juste au-dessus
+  useEffect(() => {
+    const el = railWrapRef.current;
+    if (!el || !window.ResizeObserver) return;
+    const ro = new ResizeObserver(() => appRef.current?.style.setProperty('--rail-measured', `${el.offsetHeight}px`));
+    ro.observe(el);
+    return () => ro.disconnect();
+  });
   const [route, setRoute] = useState(readRoute);
   const [selected, setSelected] = useState(() => readRoute());
   const fromRail = useRef(false);
   const place = route ? getPlace(route) : null;
-  const available = PLACES.filter((p) => p.available).length;
+  const [tag, setTag] = useState(null);
+  const visible = useMemo(() => PLACES.filter((p) => !tag || p.tags?.includes(tag)), [tag]);
+  const available = visible.filter((p) => p.available).length;
+  const changeTag = useCallback((t) => {
+    setTag(t);
+    const list = PLACES.filter((p) => !t || p.tags?.includes(t));
+    if (list.length) setTimeout(() => mapRef.current?.fitPoints(list.map((p) => p.coords)), 30);
+    railRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     const on = () => setRoute(readRoute());
@@ -78,7 +117,7 @@ export default function App() {
 
   // Espace laissé à la carte : carrousel en bas (mobile), panneau à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: 440, right: 60 } : { top: 90, bottom: place ? 40 : 140, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: 440, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -133,8 +172,8 @@ export default function App() {
   };
 
   return (
-    <div className={`app ${place ? 'has-guide' : ''}`}>
-      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} />
+    <div ref={appRef} className={`app ${place ? 'has-guide' : ''}`}>
+      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -156,11 +195,14 @@ export default function App() {
             <h1>Le bout du monde, raconté lieu par lieu.</h1>
             <p>Histoire, anecdotes insolites, cartes postales d'époque et lecture audio, à consulter sur place ou depuis chez vous.</p>
           </div>
-          <div className="sidebar-count">
-            <strong>{available} guide{available > 1 ? 's' : ''}</strong> disponible{available > 1 ? 's' : ''}{PLACES.length > available ? ` · ${PLACES.length - available} en préparation` : ''}
+          <div className="sidebar-nav">
+            <div className="sidebar-count">
+              <strong>{available} guide{available > 1 ? 's' : ''}</strong>{tag ? ` · ${TAGS.find((t) => t.id === tag).label.toLowerCase()}` : ' autour de la pointe du Raz'}
+            </div>
+            <TagBar value={tag} onChange={changeTag} places={PLACES} />
           </div>
           <div className="sidebar-list">
-            {PLACES.map((p) => (
+            {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
@@ -169,12 +211,10 @@ export default function App() {
       )}
 
       {!desktop && !place && (
-        <div className="rail-wrap">
-          <div className="rail-head">
-            <span><strong>{available} guide{available > 1 ? 's' : ''}</strong> autour de la pointe du Raz</span>
-          </div>
+        <div className="rail-wrap" ref={railWrapRef}>
+          <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
-            {PLACES.map((p) => (
+            {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
