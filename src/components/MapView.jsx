@@ -4,6 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { FINISTERE_BOUNDS } from '../data/places.js';
 
 import MAP_STYLE from '../data/map-style.json';
+import FINISTERE_MASK from '../data/finistere.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
 // nette à tous les zooms, avec relief ombré. L'attribution complète est déclarée dans le style.
@@ -11,7 +12,8 @@ MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" 
 
 // Pictogrammes des repères, selon le type de lieu
 const PIN_ICONS = {
-  lighthouse: '<path d="M9 21l1.5-12h3L15 21z"/><path d="M8 9h8M10 6h4v3h-4zM12 3v3"/>',
+  // Phare : lanterne et dôme, galerie, tour effilée à bande, faisceaux
+  lighthouse: '<path d="M10 4.5h4v3.5h-4z"/><path d="M10.5 4.5Q12 2.2 13.5 4.5"/><path d="M8 9h8"/><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5"/><path d="M8.9 14.5h6.2"/><path d="M6 20.5h12"/><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7"/>',
   beach: '<path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18"/><path d="M12 14V5"/><path d="M5 9a7 7 0 0114 0z"/>',
   cliff: '<path d="M3 20h18"/><path d="M4 20l4-11 3 4 3-8 6 15"/>',
   port: '<circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M5 13a7 7 0 0014 0"/><path d="M8 10h8"/>',
@@ -19,7 +21,7 @@ const PIN_ICONS = {
 };
 
 // Couleur du badge selon le type de lieu
-const PIN_COLORS = { lighthouse: '#ff5a36', beach: '#ffb020', cliff: '#22b573', port: '#2f80ff', fire: '#ff7a1a' };
+const PIN_COLORS = { lighthouse: '#ff5a36', beach: '#ffb020', cliff: '#ec4899', port: '#2f80ff', fire: '#ff7a1a' };
 
 // Motifs dessinés à la volée (pas de fichier image) : petites vagues sur la mer, arbres sur les forêts.
 function patternImage(draw, size) {
@@ -47,25 +49,56 @@ const drawTrees = (ctx) => {
   tree(9, 10, 5); tree(28, 22, 6); tree(12, 32, 4.5);
 };
 
+// Navigation limitée à la pointe de la Bretagne : moins de tuiles, zoom plus fluide
 const MAX_BOUNDS = [
-  [-6.3, 47.2],
-  [-2.4, 49.25],
+  [-6.1, 47.35],
+  [-2.9, 49.05],
 ];
 
+// Précharge en arrière-plan les tuiles du Finistère aux petits zooms (mises en cache par
+// l'app hors ligne), pour que le zoom soit immédiat. Désactivé en mode « économie de données ».
+async function prefetchTiles() {
+  try {
+    if (navigator.connection?.saveData) return;
+    const tj = await (await fetch(MAP_STYLE.sources.openmaptiles.url)).json();
+    const tpl = tj.tiles[0];
+    const [[w, so], [e, n]] = FINISTERE_BOUNDS;
+    const urls = [];
+    for (let z = 7; z <= 10; z++) {
+      const x = (lon) => Math.floor(((lon + 180) / 360) * 2 ** z);
+      const y = (lat) => Math.floor(((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) * 2 ** z);
+      for (let tx = x(w); tx <= x(e); tx++) for (let ty = y(n); ty <= y(so); ty++) urls.push(tpl.replace('{z}', z).replace('{x}', tx).replace('{y}', ty));
+    }
+    for (let i = 0; i < urls.length; i += 6) await Promise.all(urls.slice(i, i + 6).map((u) => fetch(u).catch(() => {})));
+  } catch (e) { /* préchargement facultatif */ }
+}
+
+// Épingle en goutte (un seul tracé SVG : pas de pièce rapportée), pictogramme blanc,
+// petite coche quand le lieu est visité, pastille simple vue de loin.
+const PIN_PATH = 'M22 52C22 52 5 34.5 5 21.5A17 17 0 1 1 39 21.5C39 34.5 22 52 22 52Z';
+const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>';
 function markerEl(place, onSelect) {
   const el = document.createElement('button');
   el.type = 'button';
   el.className = `gm-marker ${place.available ? 'is-available' : 'is-soon'}`;
+  el.dataset.color = place.available ? PIN_COLORS[place.icon] || '#ff5a36' : '#9aa3b2';
+  el.style.setProperty('--c', el.dataset.color);
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
-  el.style.setProperty('--c', place.available ? PIN_COLORS[place.icon] || '#ff5a36' : '#9aa3b2');
+  const icon = place.available ? PIN_ICONS[place.icon] || PIN_ICONS.lighthouse : LOCK;
   el.innerHTML = `<span class="gm-marker-body">
-    <span class="gm-marker-pin">
-      ${place.available
-        ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${PIN_ICONS[place.icon] || PIN_ICONS.lighthouse}</svg>`
-        : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>'}
-    </span>
     <span class="gm-marker-label">${place.shortTitle}</span>
-    <span class="gm-marker-ground"></span></span>`;
+    <span class="gm-pin">
+      <svg class="gm-pin-shape" viewBox="0 0 44 56" aria-hidden="true">
+        <path d="${PIN_PATH}" transform="translate(0 2.5)" fill="rgba(0,0,0,.22)"/>
+        <path d="${PIN_PATH}" fill="var(--c)" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/>
+        <ellipse cx="16" cy="13" rx="6" ry="3.6" fill="#fff" opacity=".28" transform="rotate(-25 16 13)"/>
+      </svg>
+      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+      <span class="gm-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    </span>
+    <span class="gm-dot" aria-hidden="true"></span>
+    <span class="gm-marker-ground"></span>
+  </span>`;
   el.addEventListener('click', (e) => {
     e.stopPropagation();
     onSelect(place.id);
@@ -73,7 +106,7 @@ function markerEl(place, onSelect) {
   return el;
 }
 
-const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds }, ref) {
+const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds }, ref) {
   const box = useRef(null);
   const map = useRef(null);
   const markers = useRef({});
@@ -82,17 +115,17 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
 
   useImperativeHandle(ref, () => ({
     flyTo(coords, zoom = 11.5) {
-      map.current?.flyTo({ center: coords, zoom, pitch: zoom >= 11 ? 50 : 0, padding: padding || undefined, speed: 1.2, essential: true });
+      map.current?.flyTo({ center: coords, zoom, padding: padding || undefined, speed: 1.4, essential: true });
     },
     fitPoints(points) {
       if (!map.current || !points.length) return;
       const b = new maplibregl.LngLatBounds(points[0], points[0]);
       points.forEach((c) => b.extend(c));
       const pad = padding ? { ...padding, left: (padding.left || 0) + 60, right: (padding.right || 0) + 150, top: (padding.top || 0) + 40 } : 60; // place pour les étiquettes à droite des points
-      map.current.fitBounds(b, { padding: pad, maxZoom: 13, pitch: 45, duration: 1200 });
+      map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 1000 });
     },
     fitFinistere() {
-      map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, pitch: 0, bearing: 0, duration: 900 });
+      map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, duration: 900 });
     },
     locate() {
       if (!navigator.geolocation) return;
@@ -121,9 +154,10 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       fitBoundsOptions: { padding: 20 },
       maxBounds: MAX_BOUNDS,
       minZoom: 7,
-      maxZoom: 18,
-      maxPitch: 60,
-      fadeDuration: 150,
+      maxZoom: 17,
+      maxPitch: 0, // carte 2D
+      fadeDuration: 0, // pas de fondu des tuiles : moins de travail pendant le zoom
+      refreshExpiredTiles: false,
       // Rendu net sur écrans haute densité, transitions de zoom douces
       pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
       cooperativeGestures: false,
@@ -153,8 +187,18 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       m.addLayer({ id: 'wood_trees', type: 'fill', source: 'openmaptiles', 'source-layer': 'landcover', minzoom: 10.5,
         filter: ['==', ['get', 'class'], 'wood'],
         paint: { 'fill-pattern': 'gm-trees', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10.5, 0, 12, 1] } }, 'hillshade');
-      // Relief en 3D (falaises, vallons) quand la carte est inclinée
-      m.setTerrain({ source: 'terrain3d', exaggeration: 1.6 });
+      // Le Finistère en avant : le reste est grisé, la limite du département est dessinée
+      m.addSource('finistere', { type: 'geojson', data: FINISTERE_MASK, tolerance: 0.6 });
+      m.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'],
+        paint: { 'fill-color': '#e6e8ee', 'fill-opacity': 0.88 } });
+      m.addLayer({ id: 'finistere-halo', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: { 'line-color': '#ffffff', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 5, 12, 10] } });
+      m.addLayer({ id: 'finistere-limite', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: { 'line-color': '#7b6cf6', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 12, 3.5], 'line-dasharray': [1.5, 1.6] } });
+      // Préchargement après l'affichage initial
+      m.once('idle', () => (window.requestIdleCallback || setTimeout)(prefetchTiles));
       // Attribution repliée par défaut (toujours accessible par le bouton « i »)
       box.current?.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
     });
@@ -188,6 +232,16 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     });
     return () => list.forEach((mk) => mk.remove());
   }, [pois]);
+
+  // Lieux visités : épingle verte et petite coche
+  useEffect(() => {
+    Object.entries(markers.current).forEach(([id, mk]) => {
+      const el = mk.getElement();
+      const v = !!visitedIds?.includes(id);
+      el.classList.toggle('is-visited', v);
+      el.style.setProperty('--c', v ? '#16a34a' : el.dataset.color);
+    });
+  }, [visitedIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Repères masqués par le filtre de catégorie
   useEffect(() => {

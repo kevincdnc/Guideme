@@ -6,6 +6,7 @@ import Brand from './Brand.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
+import { useVisited } from '../hooks/useVisited.js';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
 function buildBlocks(place) {
@@ -30,7 +31,8 @@ const RATES = [1, 1.25, 1.5, 0.85];
 
 function AudioPlayer({ speech, blocks, title, minutes }) {
   const { supported, error, state, index, rate, play, pause, next, prev, changeRate, stop } = speech;
-  if (!supported) return null;
+  // Le lecteur n'apparaît qu'une fois la lecture lancée (bouton « Écouter » de l'en-tête)
+  if (!supported || (state === 'idle' && !error)) return null;
   const active = state !== 'idle';
   const cur = blocks[index];
   const progress = active ? (index + (state === 'playing' ? 0.5 : 0)) / blocks.length : 0;
@@ -144,6 +146,8 @@ function Practical({ place, directions }) {
 
 export default function Guide({ place, onClose, variant = 'panel' }) {
   const isPage = variant === 'page';
+  const [visitedIds, toggleVisited] = useVisited();
+  const isVisited = visitedIds.includes(place.id);
   const blocks = useMemo(() => buildBlocks(place), [place]);
   const speech = useSpeech(blocks);
   const scroller = useRef(null);
@@ -197,7 +201,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
   const goTo = (id) => {
     const el = scroller.current.querySelector(`#sec-${id}`);
-    if (el) scroller.current.scrollTo({ top: el.offsetTop - 104, behavior: 'smooth' });
+    if (el) scroller.current.scrollTo({ top: el.offsetTop - 120, behavior: 'smooth' });
   };
 
   const share = async () => {
@@ -226,6 +230,11 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <button className="icon-btn guide-back" onClick={onClose} aria-label="Retour à la carte"><Icon name="back" /></button>
         )}
         <span className="guide-bar-title">{place.shortTitle}</span>
+        <nav className="guide-nav" aria-label="Sections">
+          {nav.map((n) => (
+            <button key={n.id} className={`nav-chip ${activeNav === n.id ? 'is-active' : ''} ${n.mobileOnly ? 'mobile-only' : ''}`} onClick={() => goTo(n.id)}>{n.label}</button>
+          ))}
+        </nav>
         <button className="icon-btn" onClick={share} aria-label="Partager"><Icon name="share" size={19} /></button>
         {isPage ? (
           <a className="pill-btn" href={`${BASE}#/lieu/${place.id}`}><Icon name="map" size={17} /> <span>Voir sur la carte</span></a>
@@ -255,32 +264,44 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         <div className="guide-layout">
         <div className="guide-main">
         <div className="guide-head">
-          <span className="chip chip--accent">{place.category}</span>
+          <div className="gwenn-ha-du" aria-hidden="true" />
           <h1>{place.title}</h1>
-          <p className="guide-commune"><Icon name="pin" size={16} /> {place.commune}</p>
+          <p className="guide-meta">
+            <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
+            <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
+          </p>
           <p className="guide-teaser">{place.teaser}</p>
-          <div className="labels">
-            {place.labels.map((l) => <span key={l} className="label">{l}</span>)}
+          <div className="guide-actions">
+            {speech.supported && (
+              <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
+                <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
+              </button>
+            )}
+            <button
+              role="checkbox"
+              aria-checked={isVisited}
+              className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`}
+              onClick={() => toggleVisited(place.id)}
+            >
+              <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.2} />}</span>
+              {isVisited ? 'Visité' : 'Déjà visité ?'}
+            </button>
           </div>
         </div>
 
-        <nav className="guide-nav" aria-label="Sections">
-          {nav.map((n) => (
-            <button key={n.id} className={`nav-chip ${activeNav === n.id ? 'is-active' : ''} ${n.mobileOnly ? 'mobile-only' : ''}`} onClick={() => goTo(n.id)}>{n.label}</button>
-          ))}
-        </nav>
-
-        <div className="facts mobile-only">
-          {place.facts.map((f) => (
-            <div key={f.label} className="fact">
-              <span className="fact-value">{f.value}</span>
-              <span className="fact-label">{f.label}</span>
-            </div>
-          ))}
-        </div>
 
         {place.sections.map((s, si) => (
           <Fragment key={s.id}>
+          {si === 1 && (
+            <div className="facts mobile-only">
+              {place.facts.map((f) => (
+                <div key={f.label} className="fact">
+                  <span className="fact-value">{f.value}</span>
+                  <span className="fact-label">{f.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
           {si === 1 && place.film && <FilmBlock film={place.film} />}
           <section id={`sec-${s.id}`} data-nav={s.id} className="section">
             <div className="section-head">

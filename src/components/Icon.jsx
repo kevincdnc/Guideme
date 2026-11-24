@@ -30,9 +30,12 @@ const PATHS = {
   beach: (<><path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18" /><path d="M12 14V5" /><path d="M5 9a7 7 0 0114 0z" /></>),
   port: (<><circle cx="12" cy="5" r="2" /><path d="M12 7v13" /><path d="M5 13a7 7 0 0014 0" /><path d="M8 10h8" /></>),
   fire: <path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z" />,
+  // Moucheture d'hermine, le motif du Gwenn-ha-Du
+  hermine: (<><circle cx="12" cy="3.4" r="1.7" fill="currentColor" stroke="none" /><circle cx="8.4" cy="5.6" r="1.5" fill="currentColor" stroke="none" /><circle cx="15.6" cy="5.6" r="1.5" fill="currentColor" stroke="none" /><path d="M12 6.8C13.3 9.8 13.7 13.2 13.3 16.6L16.8 21.2L13.5 19.6L12 22.4L10.5 19.6L7.2 21.2L10.7 16.6C10.3 13.2 10.7 9.8 12 6.8Z" fill="currentColor" stroke="none" /></>),
+  check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
   plus: <path d="M12 5v14M5 12h14" />,
   grid: (<><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>),
-  lighthouse: (<><path d="M9 21l1.5-12h3L15 21z" /><path d="M8 9h8M10 6h4v3h-4zM12 3v3" /><path d="M16 6.5l4-1.5M8 6.5L4 5" /></>),
+  lighthouse: (<><path d="M10 4.5h4v3.5h-4z" /><path d="M10.5 4.5Q12 2.2 13.5 4.5" /><path d="M8 9h8" /><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5" /><path d="M8.9 14.5h6.2" /><path d="M6 20.5h12" /><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7" /></>),
 };
 
 export default function Icon({ name, size = 20, stroke = 2, className, style }) {
