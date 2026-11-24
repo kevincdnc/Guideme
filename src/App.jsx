@@ -4,6 +4,7 @@ import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
 import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
+import Hermine from './components/Hermine.jsx';
 import { useVisited } from './hooks/useVisited.js';
 import { PLACES, TAGS, getPlace } from './data/places.js';
 
@@ -60,11 +61,16 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
 // Progression : part des lieux du Finistère déjà visités. Apparaît au premier lieu coché.
 function ProgressButton({ visited, onPick }) {
   const [open, setOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   const boxRef = useRef(null);
   const places = PLACES.filter((p) => p.available);
   const done = places.filter((p) => visited.includes(p.id));
   const pct = places.length ? Math.round((done.length / places.length) * 100) : 0;
   const R = 15, L = 2 * Math.PI * R;
+  const left = places.length - done.length;
+  const encouragement = done.length === 0 ? 'Coche ton premier lieu pour commencer !'
+    : left === 0 ? 'Bravo, tu as tout exploré !'
+    : `Plus que ${left} lieu${left > 1 ? 'x' : ''} à découvrir.`;
   useEffect(() => {
     if (!open) return;
     const close = (e) => { if (!boxRef.current?.contains(e.target)) setOpen(false); };
@@ -73,33 +79,43 @@ function ProgressButton({ visited, onPick }) {
   }, [open]);
   return (
     <div className="progress" ref={boxRef}>
-      <button className="tool-btn progress-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Finistère visité à ${pct} %`}>
+      <button className="tool-btn progress-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
         <svg viewBox="0 0 36 36" className="progress-ring" aria-hidden="true">
           <circle cx="18" cy="18" r={R} className="progress-track" />
           <circle cx="18" cy="18" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} />
         </svg>
-        <span className="progress-pct">{pct}<small>%</small></span>
+        <Hermine height={17} className="progress-mark" />
       </button>
       {open && (
         <div className="progress-menu">
           <div className="progress-head">
-            <strong>Ton Finistère</strong>
-            <span>{done.length} / {places.length} lieux visités</span>
+            <strong>Ta conquête du bout du monde</strong>
+            <span><b>{done.length}</b> lieu{done.length > 1 ? 'x' : ''} visité{done.length > 1 ? 's' : ''} sur {places.length}</span>
           </div>
-          <div className="progress-bar"><span style={{ width: `${pct}%` }} /></div>
-          <ul>
-            {places.map((p) => {
-              const v = visited.includes(p.id);
-              return (
-                <li key={p.id}>
-                  <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
-                    <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
-                    {p.shortTitle}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="progress-bar-row">
+            <div className="progress-bar"><span style={{ width: `${pct}%` }} /></div>
+            <b className="progress-bar-pct">{pct} %</b>
+          </div>
+          <p className="progress-hint">{encouragement}</p>
+          <button className="progress-toggle" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
+            {showAll ? 'Masquer les spots' : 'Afficher tous les spots'}
+            <Icon name="chevron" size={15} style={{ transform: showAll ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
+          </button>
+          {showAll && (
+            <ul>
+              {places.map((p) => {
+                const v = visited.includes(p.id);
+                return (
+                  <li key={p.id}>
+                    <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
+                      <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
+                      {p.shortTitle}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       )}
     </div>

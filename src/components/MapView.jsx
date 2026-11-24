@@ -49,10 +49,10 @@ const drawTrees = (ctx) => {
   tree(9, 10, 5); tree(28, 22, 6); tree(12, 32, 4.5);
 };
 
-// Navigation limitée à la pointe de la Bretagne : moins de tuiles, zoom plus fluide
+// Navigation : toute la Bretagne, le début de la Normandie et la Vendée
 const MAX_BOUNDS = [
-  [-6.1, 47.35],
-  [-2.9, 49.05],
+  [-7.2, 45.7],
+  [1.4, 50.3],
 ];
 
 // Précharge en arrière-plan les tuiles du Finistère aux petits zooms (mises en cache par
@@ -153,7 +153,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       bounds: FINISTERE_BOUNDS,
       fitBoundsOptions: { padding: 20 },
       maxBounds: MAX_BOUNDS,
-      minZoom: 7,
+      minZoom: 6,
       maxZoom: 17,
       maxPitch: 0, // carte 2D
       fadeDuration: 0, // pas de fondu des tuiles : moins de travail pendant le zoom

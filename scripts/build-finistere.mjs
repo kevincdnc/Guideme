@@ -31,8 +31,12 @@ const area = (r) => Math.abs(r.reduce((s, p, i) => { const q = r[(i + 1) % r.len
 const fin = rings(read('29-finistere'));
 const neighbours = ['22-cotes-d-armor', '56-morbihan', '35-ille-et-vilaine'].flatMap((d) => rings(read(d)));
 
-// Départements voisins, simplifiés (les îlots minuscules sont ignorés)
-const voisins = neighbours.filter((r) => area(r) > 1e-4).map((r) => [simplify(r, 0.002)]);
+// Tous les départements visibles sur la carte sauf le Finistère (Bretagne, Normandie, Pays de la
+// Loire, Vendée…), d'après la version simplifiée nationale ; les îlots minuscules sont ignorés.
+const VIEW = [-7, 45.8, 1.2, 50.4];
+const inView = (r) => r.some(([x, y]) => x >= VIEW[0] && x <= VIEW[2] && y >= VIEW[1] && y <= VIEW[3]);
+const france = read('departements-simplifies').features.filter((f) => f.properties.code !== '29');
+const voisins = france.flatMap(rings).filter((r) => inView(r) && area(r) > 1e-4).map((r) => [simplify(r, 0.002)]);
 
 // Frontière terrestre : sommets du Finistère partagés avec un voisin, enchaînés
 const shared = new Set(neighbours.flat().map(key));
