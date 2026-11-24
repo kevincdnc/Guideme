@@ -1,6 +1,6 @@
 /* ==========================================================================
    guideme.bzh — thème clair, contrasté, mobile d'abord.
-   Typographie : Inter (texte), Bricolage Grotesque (titres).
+   Typographie : Inter (texte), Sora (logo et titres).
    ========================================================================== */
 
 :root {
@@ -30,7 +30,7 @@
   --shadow-2: 0 2px 6px rgba(15,23,42,.05), 0 16px 40px rgba(15,23,42,.10);
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-title: 'Bricolage Grotesque Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-title: 'Sora Variable', 'Inter Variable', ui-sans-serif, sans-serif;
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -50,7 +50,7 @@ body {
 }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
 a { color: var(--sea); }
-h1, h2, h3 { font-family: var(--font-title); margin: 0; font-optical-sizing: auto; letter-spacing: -0.015em; font-variation-settings: 'wdth' 92; }
+h1, h2, h3 { font-family: var(--font-title); margin: 0; letter-spacing: -0.025em; }
 img { display: block; max-width: 100%; }
 
 :focus-visible { outline: 3px solid rgba(20, 99, 194, .55); outline-offset: 2px; border-radius: 8px; }
@@ -60,31 +60,27 @@ img { display: block; max-width: 100%; }
 .map, .map.maplibregl-map { position: absolute; inset: 0; background: #cfe3ee; }
 
 /* ---------- Marque ---------- */
-.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
-.brand img { border-radius: 9px; }
-.brand-name { font-family: var(--font-title); font-weight: 700; font-size: 22px; letter-spacing: -0.03em; }
-.brand-name span { color: var(--ink-3); }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+.brand-mark { flex: 0 0 auto; color: #fff; }
+.brand-name { font-family: var(--font-title); font-weight: 700; font-size: 21px; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+.brand-name span { color: rgba(255,255,255,.5); }
 
 /* ---------- Barre du haut (mobile) ---------- */
 .topbar {
-  position: absolute; z-index: 5;
-  top: calc(10px + var(--safe-top)); left: 12px; right: 12px;
+  position: absolute; z-index: 5; top: 0; left: 0; right: 0;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 10px 8px 8px;
-  background: #ffffff;
-  /* fond opaque : un flou par-dessus la carte coûte cher pendant le zoom */
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-1);
+  padding: calc(12px + var(--safe-top)) 16px 12px;
+  background: #111;
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
 }
 .topbar-region {
   font-family: var(--font); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
-  color: #fff; background: #111; padding: 6px 10px; border-radius: var(--r-sm); font-size: 11.5px;
+  color: rgba(255,255,255,.75); background: transparent; border: 1px solid rgba(255,255,255,.3); padding: 5px 9px; border-radius: var(--r-sm); font-size: 11px;
 }
 
 /* ---------- Outils carte ---------- */
 .map-tools {
-  position: absolute; z-index: 5; right: 12px; top: calc(76px + var(--safe-top));
+  position: absolute; z-index: 5; right: 12px; top: calc(66px + var(--safe-top));
   display: flex; flex-direction: column; gap: 8px;
 }
 .tool-btn {
@@ -503,8 +499,8 @@ img { display: block; max-width: 100%; }
   .guide--page .mobile-only { display: none !important; }
   .guide-brand { margin-right: auto; }
   .guide--page .guide-bar:not(.is-compact) .guide-bar-title { display: none; }
-  .guide--page .guide-bar .brand { background: rgba(255,255,255,.96); padding: 4px 14px 4px 4px; border-radius: var(--r-pill); box-shadow: 0 2px 10px rgba(15,23,42,.16); }
-  .guide--page .guide-bar.is-compact .brand { box-shadow: none; background: transparent; }
+  .guide--page .guide-bar .brand { background: #111; padding: 8px 14px; border-radius: var(--r-md); box-shadow: 0 2px 10px rgba(15,23,42,.2); }
+  .guide--page .guide-bar.is-compact .brand { box-shadow: none; }
   .guide--page .hero { height: min(52vh, 480px); }
   .guide--page .guide-layout {
     max-width: 1180px; margin: 0 auto; padding: 0 32px;
@@ -573,7 +569,13 @@ img { display: block; max-width: 100%; }
 }
 .sources h2::before { display: none; }
 :root {
-  --hermine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='3.4' r='1.7'/%3E%3Ccircle cx='8.4' cy='5.6' r='1.5'/%3E%3Ccircle cx='15.6' cy='5.6' r='1.5'/%3E%3Cpath d='M12 6.8C13.3 9.8 13.7 13.2 13.3 16.6L16.8 21.2L13.5 19.6L12 22.4L10.5 19.6L7.2 21.2L10.7 16.6C10.3 13.2 10.7 9.8 12 6.8Z'/%3E%3C/svg%3E");
+  --hermine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 100'%3E%3Cpath d='M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z'/%3E%3Cpath d='M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z'/%3E%3Cpath d='M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z'/%3E%3Cpath d='M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z'/%3E%3C/svg%3E");
 }
 .anecdote-num { color: var(--ink-3); }
 .guide-head .gwenn-ha-du { width: 72px; margin-bottom: 14px; }
+
+/* ---------- Barre de marque noire, pleine largeur ---------- */
+.brand-bar { background: #111; margin: -22px -20px 0; padding: 16px 20px; }
+.sidebar { padding-top: 22px; }
+/* Logo de la page complète : sur fond noir, comme la barre de marque */
+.guide-brand .brand { background: #111; padding: 8px 10px; border-radius: var(--r-md); }

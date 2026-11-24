@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '@fontsource-variable/inter';
-import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/sora';
 import './styles.css';
 import App from './App.jsx';
 import Guide from './components/Guide.jsx';

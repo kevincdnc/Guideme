@@ -189,14 +189,19 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
         paint: { 'fill-pattern': 'gm-trees', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10.5, 0, 12, 1] } }, 'hillshade');
       // Le Finistère en avant : le reste est grisé, la limite du département est dessinée
       m.addSource('finistere', { type: 'geojson', data: FINISTERE_MASK, tolerance: 0.6 });
+      // Tous ces calques passent SOUS les noms de lieux : les textes restent nets et entiers
+      const firstLabel = m.getStyle().layers.find((l) => l.type === 'symbol')?.id;
+      // Voile blanc léger sur le fond de carte : les repères ressortent mieux
+      m.addSource('voile', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[[-12, 44], [4, 44], [4, 52], [-12, 52], [-12, 44]]] } } });
+      m.addLayer({ id: 'voile', type: 'fill', source: 'voile', paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.22 } }, firstLabel);
       m.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'],
-        paint: { 'fill-color': '#e6e8ee', 'fill-opacity': 0.88 } });
+        paint: { 'fill-color': '#e6e8ee', 'fill-opacity': 0.45 } }, firstLabel);
       m.addLayer({ id: 'finistere-halo', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
         layout: { 'line-cap': 'round', 'line-join': 'round' },
-        paint: { 'line-color': '#ffffff', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 5, 12, 10] } });
+        paint: { 'line-color': '#ffffff', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 4, 12, 8] } }, firstLabel);
       m.addLayer({ id: 'finistere-limite', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
         layout: { 'line-cap': 'round', 'line-join': 'round' },
-        paint: { 'line-color': '#7b6cf6', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 12, 3.5], 'line-dasharray': [1.5, 1.6] } });
+        paint: { 'line-color': '#7b6cf6', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 12, 3.5], 'line-dasharray': [1.5, 1.6] } }, firstLabel);
       // Préchargement après l'affichage initial
       m.once('idle', () => (window.requestIdleCallback || setTimeout)(prefetchTiles));
       // Attribution repliée par défaut (toujours accessible par le bouton « i »)

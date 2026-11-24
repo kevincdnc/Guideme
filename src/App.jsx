@@ -207,8 +207,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <div className="gwenn-ha-du" aria-hidden="true" />
-          <Brand />
+          <header className="brand-bar"><Brand /></header>
           <div className="sidebar-intro">
             <h1>Le Finistère, lieu par lieu</h1>
             <p>Histoires, anecdotes et archives, à écouter sur place.</p>
