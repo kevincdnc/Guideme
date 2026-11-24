@@ -124,7 +124,7 @@ function ProgressButton({ visited, onPick }) {
 }
 
 // Puces de catégories sur une seule ligne ; « + » en bout de ligne ouvre la liste complète.
-function TagBar({ value, onChange, places }) {
+function TagBar({ value, onChange, places, wrap }) {
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
@@ -139,18 +139,18 @@ function TagBar({ value, onChange, places }) {
     return () => document.removeEventListener('pointerdown', close);
   }, [open]);
   return (
-    <div className="tagbar-wrap" ref={boxRef}>
+    <div className={`tagbar-wrap ${wrap ? 'is-wrap' : ''}`} ref={boxRef}>
       <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
         <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
-        {ordered.map((t) => (
+        {(wrap ? used : ordered).map((t) => (
           <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
             <Icon name={t.icon} size={14} /> {t.label}
           </button>
         ))}
       </div>
-      <button className={`tag-more ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
+      {!wrap && <button className={`tag-more ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
         <Icon name="plus" size={16} stroke={2.4} />
-      </button>
+      </button>}
       {open && (
         <div className="tag-menu" role="menu">
           {used.map((t) => (
@@ -282,23 +282,23 @@ export default function App() {
         <aside className="sidebar">
           <header className="brand-bar"><Brand /></header>
           <div className="sidebar-intro">
-            <h1>Le Finistère, lieu par lieu</h1>
-            <p>Histoires, anecdotes et archives, à écouter sur place.</p>
+            <h1>Les spots emblématiques du Finistère <img className="flag-emoji" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="Drapeau du Finistère" /></h1>
+            <p>Phares, ports, patrimoine, sites naturels…</p>
           </div>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} wrap />
+          {visitedList.length > 0 && (
+            <button className="visited-toggle" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
+              <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
+              Déjà visités <b>{visitedList.length}</b>
+              <Icon name="chevron" size={15} style={{ marginLeft: 'auto', transform: showVisited ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
+            </button>
+          )}
           <div className="sidebar-list">
-            {toVisit.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
-            ))}
-            {visitedList.length > 0 && (
-              <button className="visited-toggle" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
-                <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
-                Déjà visités <b>{visitedList.length}</b>
-                <Icon name="chevron" size={15} style={{ marginLeft: 'auto', transform: showVisited ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
-              </button>
-            )}
             {showVisited && visitedList.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited />
+            ))}
+            {toVisit.map((p) => (
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
         </aside>

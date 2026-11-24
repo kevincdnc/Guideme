@@ -699,3 +699,16 @@ img { display: block; max-width: 100%; }
 .funfact-kicker { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--primary-ink); }
 .funfact strong { display: block; font-family: var(--font-title); font-size: 16px; line-height: 1.25; margin: 1px 0 3px; letter-spacing: -0.01em; }
 .funfact p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+
+/* ---------- Barre latérale : titre compact, tags sur deux lignes, alignements ---------- */
+.sidebar-intro { padding: 0 9px; } /* aligné sur le texte des tags (marge 8 px + bordure 1 px) */
+.sidebar-intro h1 { font-size: 19px; line-height: 1.25; margin: 0 0 4px; letter-spacing: -0.02em; }
+.sidebar-intro p { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.flag-emoji { display: inline-block; height: 0.95em; width: auto; vertical-align: -0.12em; margin-left: 2px; border-radius: 2px; }
+.sidebar .tagbar-wrap.is-wrap { position: static; margin: 0; padding: 0; background: none; }
+.sidebar .tagbar-wrap.is-wrap .tagbar { flex-wrap: wrap; overflow: visible; -webkit-mask-image: none; mask-image: none; gap: 6px; }
+.sidebar .tagbar-wrap.is-wrap .tag { height: 30px; padding: 0 8px; font-size: 12.5px; gap: 4px; }
+.sidebar .tagbar-wrap.is-wrap .tagbar { gap: 5px; }
+.sidebar .tagbar-wrap.is-wrap .tag svg { width: 13px; height: 13px; }
+.sidebar .visited-toggle { margin: -4px 0 -6px; padding: 9px 13px; border: 1px solid #dcefe1; border-radius: var(--r-lg); background: #f6fbf7; }
+.sidebar .pc-body h3 { font-size: 16.5px; }
