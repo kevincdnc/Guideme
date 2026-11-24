@@ -32,6 +32,11 @@ export default {
     { value: '7 nœuds', label: 'courant du raz en grande marée' },
     { value: '1 million', label: 'de visiteurs par an' },
   ],
+  records: [
+    { medal: 'or', scope: 'France', title: 'Le plus médiatisé des drames de phares en mer', text: 'L\'hiver 1926 à la Vieille, jusqu\'au Parlement.' },
+    { medal: 'argent', scope: 'France', title: 'Avant-dernier phare en mer automatisé', text: 'En 1995, juste avant Kéréon.' },
+    { medal: 'bronze', scope: 'France', title: 'La route la plus courte entre l\'Atlantique et la Manche', text: 'Le raz de Sein, et aussi l\'une des plus dangereuses.' },
+  ],
   sections: [
     {
       id: 'essentiel',

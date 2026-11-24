@@ -25,6 +25,10 @@ export default {
     { value: '150 000', label: 'objets inventoriés' },
     { value: '5', label: 'sites au monde aux foyers aussi anciens' },
   ],
+  records: [
+    { medal: 'or', scope: 'Monde', title: 'Parmi les plus anciennes traces de feu maîtrisé', text: 'Des indices de combustion vieux d\'environ 465 000 ans.' },
+    { medal: 'argent', scope: 'Monde', title: 'L\'un des 5 sites au monde aux foyers aussi anciens', text: 'Avec Terra Amata, Bilzingsleben, Vértesszőlős et Zhoukoudian.' },
+  ],
   sections: [
     {
       id: 'essentiel',

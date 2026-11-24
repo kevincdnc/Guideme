@@ -25,6 +25,9 @@ export default {
     { value: '1373', label: 'Du Guesclin chasse les Anglais' },
     { value: '1905', label: 'première fête des Filets Bleus' },
   ],
+  records: [
+    { medal: 'or', scope: 'Bretagne', title: 'Monument préféré des Bretons', text: 'En 2014, devant Carnac et le phare d\'Eckmühl ; 6e en France.' },
+  ],
   sections: [
     {
       id: 'essentiel',

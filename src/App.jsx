@@ -51,6 +51,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
         <span className="pc-meta">
           <span><Icon name="pin" size={13} /> {place.commune.split(' · ')[0].split(' & ')[0]}</span>
           {!soon && <span><Icon name="headphones" size={13} /> {place.readingMinutes} min</span>}
+          {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={13} /> {place.records.length}</span>}
         </span>
       </div>
       {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go" aria-hidden="true"><Icon name="chevron" size={18} stroke={2.2} /></span>}

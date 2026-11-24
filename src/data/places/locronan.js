@@ -25,6 +25,9 @@ export default {
     { value: '12', label: 'stations de la Grande Troménie' },
     { value: '26+', label: 'films tournés depuis 1921' },
   ],
+  records: [
+    { medal: 'or', scope: 'Unique', title: 'Le seul nemeton encore visible', text: 'Un bois sacré gaulois, dont la Troménie suit le tour.' },
+  ],
   sections: [
     {
       id: 'essentiel',

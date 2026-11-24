@@ -298,6 +298,20 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </div>
             ))}
           </dl>
+          {place.records?.length > 0 && (
+            <ul className="records" aria-label="Records">
+              {place.records.map((r) => (
+                <li key={r.title} className={`record record--${r.medal}`}>
+                  <span className="record-medal"><Icon name="medal" size={22} stroke={1.8} /></span>
+                  <div className="record-body">
+                    <span className="record-scope">{r.scope}</span>
+                    <strong>{r.title}</strong>
+                    <span className="record-text">{r.text}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="guide-actions">
             {speech.supported && (
               <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>

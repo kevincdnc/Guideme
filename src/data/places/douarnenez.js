@@ -25,6 +25,12 @@ export default {
     { value: '1924', label: 'grève des Penn Sardin, 46 jours' },
     { value: '1921', label: 'premier maire communiste de France' },
   ],
+  records: [
+    { medal: 'or', scope: 'Monde', title: 'La plus ancienne conserverie encore en activité', text: 'Chancerelle, née à Tréboul en 1853.' },
+    { medal: 'or', scope: 'France', title: 'Premier maire élu comme communiste', text: 'Sébastien Velly, en juillet 1921.' },
+    { medal: 'argent', scope: 'France', title: 'Premier port sardinier au XIXe siècle', text: 'Puis premier port de pêche côtière en 1900.' },
+    { medal: 'bronze', scope: 'France', title: 'Parmi les 10 premières femmes élues', text: 'Joséphine Pencalet, conseillère municipale en 1925.' },
+  ],
   sections: [
     {
       id: 'essentiel',

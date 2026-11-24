@@ -25,6 +25,9 @@ export default {
     { value: '1924', label: 'le cargo Trane coule au large' },
     { value: '2013', label: 'la foudre abat trois clochetons' },
   ],
+  records: [
+    { medal: 'or', scope: 'Cap Sizun', title: 'La plus vaste chapelle de Cléden', text: 'La chapelle Saint-They, au bord de la falaise.' },
+  ],
   sections: [
     {
       id: 'essentiel',

@@ -25,6 +25,9 @@ export default {
     { value: '1890', label: 'naissance de la galette de Pont-Aven' },
     { value: '40', label: 'hôtels, auberges et cafés en 1900' },
   ],
+  records: [
+    { medal: 'bronze', scope: 'France', title: '« La population la plus pauvre de France »', text: 'Selon Madame de La Villemarqué, vers 1860.' },
+  ],
   sections: [
     {
       id: 'essentiel',

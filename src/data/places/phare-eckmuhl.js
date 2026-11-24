@@ -25,6 +25,12 @@ export default {
     { value: '307', label: 'marches jusqu\'à la lanterne' },
     { value: '300 000 F', label: 'légués par la marquise d\'Eckmühl' },
   ],
+  records: [
+    { medal: 'or', scope: 'Monde', title: 'Le phare le plus puissant du monde en 1901', text: 'À égalité avec le Créac\'h, à Ouessant.' },
+    { medal: 'or', scope: 'France', title: 'Le premier phare à deux optiques', text: 'Un faisceau plus puissant pour la même électricité.' },
+    { medal: 'argent', scope: 'Pays bigouden', title: 'Première attraction payante', text: 'Et 6e du Finistère, avec près de 55 000 entrées en 2009.' },
+    { medal: 'bronze', scope: 'Penmarc\'h', title: 'Le plus grand des trois phares du site', text: 'Plus de 60 mètres, à côté de la Vieille tour et du phare de 1835.' },
+  ],
   sections: [
     {
       id: 'essentiel',

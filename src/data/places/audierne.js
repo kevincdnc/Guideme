@@ -25,6 +25,11 @@ export default {
     { value: '656', label: 'bateaux de pêche en 1902' },
     { value: '2e', label: 'port de France au prix moyen du poisson' },
   ],
+  records: [
+    { medal: 'or', scope: 'France', title: 'L\'un des 2 premiers postes de sauvetage en mer', text: 'Créé en 1865, avec Saint-Malo.' },
+    { medal: 'argent', scope: 'France', title: '2e port pour le prix moyen du poisson', text: 'En 2020 : bar, sole, saint-pierre…' },
+    { medal: 'bronze', scope: 'Cornouaille', title: 'Le seul vrai havre entre la Torche et le Raz', text: 'Un port de refuge, malgré sa barre redoutée.' },
+  ],
   sections: [
     {
       id: 'essentiel',

@@ -42,6 +42,11 @@ export default {
       "Ils participèrent à un sauvetage en mer et à la relève des gardiens de phare par gros temps. Un naufrage réel a été filmé pendant le tournage. Puis vint le drame : pris par le mal de mer, Alain Kaminker refusa de rentrer, s'entêta, et fut emporté par une lame de fond.",
     ],
   },
+  records: [
+    { medal: 'or', scope: 'France', title: 'La commune la plus décorée de 1939-1945', text: 'Croix de la Libération, croix de guerre et médaille de la Résistance.' },
+    { medal: 'or', scope: 'France', title: 'La seule commune avec plus de morts en 1939-1945 qu\'en 1914-1918', text: '27 contre 21.' },
+    { medal: 'argent', scope: 'France', title: 'Première station à recevoir le nouveau canot tous temps', text: 'En 2017, l\'Yves et François Olivaux (SNS 001).' },
+  ],
   sections: [
     {
       id: 'essentiel',
