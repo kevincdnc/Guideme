@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#0b2545"/>
+  <!-- faisceau -->
+  <path d="M256 168 L470 118 L470 218 Z" fill="#ffb703" opacity=".9"/>
+  <path d="M256 168 L42 118 L42 218 Z" fill="#ffb703" opacity=".35"/>
+  <!-- phare -->
+  <path d="M222 196 h68 l14 206 h-96 z" fill="#ffffff"/>
+  <rect x="210" y="186" width="92" height="16" rx="4" fill="#ffffff"/>
+  <rect x="228" y="138" width="56" height="48" rx="8" fill="#ffb703"/>
+  <path d="M220 138 L256 104 L292 138 Z" fill="#ffffff"/>
+  <rect x="216" y="260" width="80" height="22" fill="#ff5a36"/>
+  <rect x="212" y="330" width="88" height="22" fill="#ff5a36"/>
+  <!-- vagues -->
+  <path d="M60 420 q32 -22 64 0 t64 0 t64 0 t64 0 t64 0 t64 0 v40 h-384 z" fill="#2a9df4"/>
+</svg>
