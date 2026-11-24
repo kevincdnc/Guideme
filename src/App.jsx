@@ -3,6 +3,7 @@ import MapView from './components/MapView.jsx';
 import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
 import SafeImg from './components/SafeImg.jsx';
+import Brand from './components/Brand.jsx';
 import { PLACES, TAGS, getPlace } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
@@ -21,15 +22,6 @@ function useIsDesktop() {
     return () => mq.removeEventListener('change', on);
   }, []);
   return v;
-}
-
-function Brand() {
-  return (
-    <a className="brand" href="#/" aria-label="guideme.bzh, accueil">
-      <img src="icons/icon.svg" alt="" width="34" height="34" />
-      <span className="brand-name">guideme<span>.bzh</span></span>
-    </a>
-  );
 }
 
 // Carte de lieu : vignette avec pictogramme de catégorie, catégorie, nom, commune, durée
@@ -117,7 +109,7 @@ export default function App() {
 
   // Espace laissé à la carte : carrousel en bas (mobile), panneau à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: 440, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: place ? Math.max(window.innerWidth / 2, 560) + 40 : 440, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -221,7 +213,7 @@ export default function App() {
         </div>
       )}
 
-      {place && <Guide key={place.id} place={place} onClose={close} />}
+      {place && <Guide key={place.id} place={place} onClose={close} variant="panel" />}
     </div>
   );
 }

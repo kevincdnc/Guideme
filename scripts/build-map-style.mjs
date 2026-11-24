@@ -10,21 +10,22 @@ style.name = 'guideme.bzh';
 
 // ---- Palette
 const P = {
-  land: '#f6f1e4',
-  water: '#9dd8f5',
-  waterDeep: '#7cc6ee',
-  waterLine: '#5aaee0',
-  wood: '#a9d38c',
-  grass: '#cfe7b0',
-  park: '#c4e3a6',
-  sand: '#f6e7b0',
-  residential: '#efe6d6',
-  roadMajor: '#ffd27a',
-  roadMajorCase: '#e6a94b',
+  // Palette sobre : terres claires, mer bleu-gris, végétation à peine teintée
+  land: '#f3f1ec',
+  water: '#cfe1ec',
+  waterDeep: '#c4d9e6',
+  waterLine: '#a9c6d8',
+  wood: '#dbe5d0',
+  grass: '#e4ebda',
+  park: '#dce7d1',
+  sand: '#efe8d4',
+  residential: '#ebe7e0',
+  roadMajor: '#ffffff',
+  roadMajorCase: '#dcd5ca',
   roadMinor: '#ffffff',
-  label: '#1f2a37',
-  labelWater: '#1d5f93',
-};
+  label: '#3d4450',
+  labelWater: '#5f7f97',
+}
 
 // Noms : français d'abord, puis nom local
 const NAME = ['coalesce', ['get', 'name:fr'], ['get', 'name'], ['get', 'name_en']];
@@ -38,9 +39,10 @@ const DROP = new Set([
 
 const recolor = {
   background: { 'background-color': P.land },
-  park: { 'fill-color': P.park, 'fill-opacity': 0.55, 'fill-outline-color': 'rgba(120,180,90,0.25)' },
-  landcover_wood: { 'fill-color': P.wood, 'fill-opacity': 0.55 },
-  landcover_grass: { 'fill-color': P.grass, 'fill-opacity': 0.55 },
+  park: { 'fill-color': P.park, 'fill-opacity': 0.7, 'fill-outline-color': 'rgba(0,0,0,0)' },
+  landcover_wood: { 'fill-color': P.wood, 'fill-opacity': 0.8 },
+  landcover_grass: { 'fill-color': P.grass, 'fill-opacity': 0.7 },
+  natural_earth: { 'raster-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0.25, 6, 0.05], 'raster-saturation': -0.8 },
   landcover_sand: { 'fill-color': P.sand },
   landuse_residential: { 'fill-color': P.residential, 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 8, 0.5, 13, 0.8] },
   water: { 'fill-color': ['interpolate', ['linear'], ['zoom'], 6, P.waterDeep, 12, P.water] },
@@ -57,6 +59,8 @@ style.layers = style.layers
     // Routes : jaune doux, contours orangés
     if (l.type === 'line' && /^(road|bridge|tunnel)_(trunk_primary|secondary_tertiary|link|motorway)(?!_casing)/.test(l.id)) out.paint['line-color'] = P.roadMajor;
     if (l.type === 'line' && /_casing$/.test(l.id) && /(trunk|secondary|motorway|link)/.test(l.id)) out.paint['line-color'] = P.roadMajorCase;
+    if (l.type === 'line' && /_casing$/.test(l.id) && !/(trunk|secondary|motorway|link)/.test(l.id)) out.paint['line-color'] = '#e3dfd8';
+    if (l.id === 'boundary_3') out.paint = { ...out.paint, 'line-color': 'rgba(120,120,130,0.35)' };
     // Libellés
     if (l.type === 'symbol' && out.layout && out.layout['text-field']) {
       // Seulement les libellés de nom (pas les numéros de route des cartouches)
@@ -65,7 +69,7 @@ style.layers = style.layers
         out.paint = { ...out.paint, 'text-color': P.label, 'text-halo-color': 'rgba(255,255,255,0.92)', 'text-halo-width': 1.6, 'text-halo-blur': 0.3 };
       }
       if (l.id.startsWith('water_name')) {
-        out.paint = { ...out.paint, 'text-color': P.labelWater, 'text-halo-color': 'rgba(255,255,255,0.6)' };
+        out.paint = { ...out.paint, 'text-color': P.labelWater, 'text-halo-color': 'rgba(255,255,255,0.5)' };
       }
     }
     if (l.id === 'label_other') {
@@ -93,10 +97,10 @@ const hillshade = {
   type: 'hillshade',
   source: 'terrain',
   paint: {
-    'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'], 6, 0.55, 10, 0.4, 14, 0.25],
-    'hillshade-shadow-color': '#5b4a33',
-    'hillshade-highlight-color': '#fffdf5',
-    'hillshade-accent-color': '#6f6047',
+    'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'], 6, 0.35, 10, 0.25, 14, 0.15],
+    'hillshade-shadow-color': '#8b8579',
+    'hillshade-highlight-color': '#ffffff',
+    'hillshade-accent-color': '#8b8579',
     'hillshade-illumination-direction': 315,
   },
 };
@@ -108,7 +112,7 @@ style.layers.splice(iWater, 0, hillshade);
 const iAfterWater = style.layers.findIndex((l) => l.id === 'water') + 1;
 style.layers.splice(iAfterWater, 0, {
   id: 'water_outline', type: 'line', source: 'openmaptiles', 'source-layer': 'water',
-  paint: { 'line-color': 'rgba(60,140,200,0.45)', 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.4, 14, 1.2] },
+  paint: { 'line-color': 'rgba(95,127,151,0.35)', 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 0.3, 14, 1] },
 });
 
 fs.writeFileSync(new URL('../src/data/map-style.json', import.meta.url), JSON.stringify(style));

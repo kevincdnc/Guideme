@@ -18,7 +18,6 @@ export default {
     { name: 'Phare de la Vieille', coords: [-4.75638889, 48.04055556] },
     { name: 'Phare de Tévennec', coords: [-4.79333, 48.06972] },
     { name: 'Notre-Dame des Naufragés', coords: [-4.73305556, 48.03888889] },
-    { name: 'Baie des Trépassés', coords: [-4.714851, 48.048136] },
   ],
   teaser:
     "Une proue de granit de 72 m face au raz de Sein, et un phare-donjon bâti sur une roche où l'on ne pouvait accoster qu'une trentaine de fois par an.",

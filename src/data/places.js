@@ -5,6 +5,7 @@ import pointeDuVan from './places/pointe-du-van.js';
 import audierne from './places/audierne.js';
 import menezDregan from './places/menez-dregan.js';
 import pointeDuMillier from './places/pointe-du-millier.js';
+import ileDeSein from './places/ile-de-sein.js';
 
 export const FINISTERE_BOUNDS = [
   [-5.2, 47.68], // sud-ouest (Sein, Glénan)
@@ -23,29 +24,18 @@ export const TAGS = [
 ];
 
 // Lieux annoncés, sans fiche pour l'instant
-const SOON = [
-  {
-    id: 'ile-de-sein',
-    available: false,
-    title: 'Île de Sein',
-    shortTitle: 'Île de Sein',
-    commune: 'Île-de-Sein',
-    coords: [-4.8506, 48.0375],
-    category: 'Île',
-    tags: ['nature', 'port'],
-    teaser: 'Une île plate au bout du raz, à peine au-dessus des vagues.',
-  },
-];
+const SOON = [];
 
 // Durée de lecture à voix haute (~150 mots par minute)
 function readingMinutes(place) {
   const text = (place.sections || [])
     .flatMap((s) => [s.title, ...(s.paragraphs || []), ...(s.anecdotes || []).flatMap((a) => [a.title, a.text])])
+    .concat(place.film?.summary || [])
     .join(' ');
   return Math.max(1, Math.round(text.split(/\s+/).length / 150));
 }
 
-export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, audierne, menezDregan, pointeDuMillier, ...SOON].map((p) =>
+export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, ...SOON].map((p) =>
   p.available ? { ...p, readingMinutes: readingMinutes(p) } : p,
 );
 

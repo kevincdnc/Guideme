@@ -47,50 +47,6 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
   const map = useRef(null);
   const markers = useRef({});
   const onSelectRef = useRef(onSelect);
-  const clusters = useRef([]);
-  const reclusterRef = useRef(() => {});
-  const visibleRef = useRef(visibleIds);
-  visibleRef.current = visibleIds;
-  const selectedRef = useRef(selectedId);
-  selectedRef.current = selectedId;
-
-  // Regroupement des repères trop proches à l'écran : une pastille avec le nombre de lieux,
-  // qui zoome sur le groupe quand on la touche.
-  function recluster() {
-    const m = map.current;
-    if (!m) return;
-    clusters.current.forEach((c) => c.remove());
-    clusters.current = [];
-    const RADIUS = 96; // largeur d'une pastille de groupe
-    const items = places
-      .filter((p) => !visibleRef.current || visibleRef.current.includes(p.id))
-      .map((p) => ({ p, pt: m.project(p.coords) }));
-    const groups = [];
-    items.forEach((it) => {
-      if (it.p.id === selectedRef.current) { groups.push([it]); return; }
-      const g = groups.find((gr) => gr[0].p.id !== selectedRef.current && Math.hypot(gr[0].pt.x - it.pt.x, gr[0].pt.y - it.pt.y) < RADIUS);
-      if (g) g.push(it); else groups.push([it]);
-    });
-    places.forEach((p) => markers.current[p.id]?.getElement().classList.remove('is-clustered'));
-    groups.filter((g) => g.length > 1).forEach((g) => {
-      g.forEach((it) => markers.current[it.p.id].getElement().classList.add('is-clustered'));
-      const lng = g.reduce((a, it) => a + it.p.coords[0], 0) / g.length;
-      const lat = g.reduce((a, it) => a + it.p.coords[1], 0) / g.length;
-      const ready = g.filter((it) => it.p.available).length;
-      const el = document.createElement('button');
-      el.type = 'button';
-      el.className = 'gm-cluster';
-      el.setAttribute('aria-label', `${g.length} lieux, zoomer`);
-      el.innerHTML = `<span class="gm-cluster-count">${g.length}</span><span class="gm-cluster-label">${ready} guide${ready > 1 ? 's' : ''}</span>`;
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const b = new maplibregl.LngLatBounds(g[0].p.coords, g[0].p.coords);
-        g.forEach((it) => b.extend(it.p.coords));
-        m.fitBounds(b, { padding: { ...(padding || {}), top: (padding?.top || 40) + 60, left: (padding?.left || 40) + 40, right: (padding?.right || 40) + 40, bottom: (padding?.bottom || 40) + 20 }, maxZoom: 13, duration: 900 });
-      });
-      clusters.current.push(new maplibregl.Marker({ element: el }).setLngLat([lng, lat]).addTo(m));
-    });
-  }
   onSelectRef.current = onSelect;
 
   useImperativeHandle(ref, () => ({
@@ -148,8 +104,13 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
     m.addControl(new maplibregl.ScaleControl({ unit: 'metric', maxWidth: 90 }), 'bottom-left');
     m.on('click', () => onSelectRef.current(null));
-    // Étiquettes des lieux « bientôt » masquées de loin, pour éviter les chevauchements
-    const onZoom = () => box.current?.classList.toggle('is-far', m.getZoom() < 9.6);
+    // Taille des repères selon le zoom : petits points de loin (vue d'ensemble du Finistère),
+    // repères sans étiquette à mi-distance, repères complets de près. Jamais de regroupement.
+    const onZoom = () => {
+      const z = m.getZoom();
+      box.current?.classList.toggle('z-far', z < 9.4);
+      box.current?.classList.toggle('z-mid', z >= 9.4 && z < 11.2);
+    };
     m.on('zoom', onZoom);
     m.once('load', () => {
       onZoom();
@@ -164,12 +125,8 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
         .addTo(m);
       markers.current[p.id] = mk;
     });
-    let raf = 0;
-    const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(recluster); };
-    m.on('zoom', schedule);
-    m.on('load', schedule);
-    reclusterRef.current = schedule;
-    return () => { cancelAnimationFrame(raf); clusters.current.forEach((c) => c.remove()); clusters.current = []; m.remove(); };
+    onZoom();
+    return () => m.remove();
   }, [places]);
 
   // Recadrage quand la place disponible change (panneau latéral, carrousel)
@@ -195,14 +152,12 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     Object.entries(markers.current).forEach(([id, mk]) => {
       mk.getElement().classList.toggle('is-hidden', !!visibleIds && !visibleIds.includes(id));
     });
-    reclusterRef.current();
   }, [visibleIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     Object.entries(markers.current).forEach(([id, mk]) => {
       mk.getElement().classList.toggle('is-selected', id === selectedId);
     });
-    reclusterRef.current();
   }, [selectedId]);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;

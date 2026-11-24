@@ -1,17 +1,24 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import prerender from './scripts/prerender.mjs';
 
-// Base relative : l'app fonctionne aussi bien sur guideme.bzh (racine)
-// que sur une sous-adresse GitHub Pages. Navigation par hash (#/lieu/...).
+// Adresse publique du site. Par défaut GitHub Pages (/Guideme/) ; pour guideme.bzh :
+//   GUIDEME_BASE=/ GUIDEME_SITE=https://guideme.bzh/ npm run build
+const BASE = process.env.GUIDEME_BASE || '/Guideme/';
+const SITE = process.env.GUIDEME_SITE || `https://kevincdnc.github.io${BASE}`;
+
+// Carte : BASE (#/lieu/<id> ouvre la fiche en panneau).
+// Fiche complète : BASE + lieu/<id>/ (vraie page HTML, générée au build pour le référencement).
 export default defineConfig({
-  base: './',
+  base: BASE,
   build: {
     chunkSizeWarningLimit: 900,
     rollupOptions: { output: { manualChunks: { maplibre: ['maplibre-gl'] } } },
   },
   plugins: [
     react(),
+    prerender({ base: BASE, site: SITE }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/icon.svg', 'icons/apple-touch-icon.png'],
@@ -20,8 +27,8 @@ export default defineConfig({
         short_name: 'guideme.bzh',
         description: 'Fiches de lieux du Finistère : histoire, anecdotes, archives et lecture audio.',
         lang: 'fr',
-        start_url: './',
-        scope: './',
+        start_url: BASE,
+        scope: BASE,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#fbfaf6',
@@ -34,6 +41,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // Les pages de lieux sont de vraies pages : ne pas les remplacer par la carte
+        navigateFallbackDenylist: [/\/lieu\//],
         // Hors ligne : tuiles de carte et images d'archives déjà vues restent disponibles
         // (utile à la Pointe du Raz, où le réseau est faible).
         runtimeCaching: [

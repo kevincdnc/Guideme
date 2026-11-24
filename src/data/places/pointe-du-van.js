@@ -130,6 +130,5 @@ export default {
   ],
   pois: [
     { name: 'Chapelle Saint-They', coords: [-4.712046, 48.060158] },
-    { name: 'Baie des Trépassés', coords: [-4.714851, 48.048136] },
   ],
 };

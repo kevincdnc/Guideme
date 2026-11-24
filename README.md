@@ -8,13 +8,14 @@ anecdotes insolites, archives d'époque, vidéos et **lecture audio** du texte.
 
 | Écran | Mobile | Desktop |
 |---|---|---|
-| Carte | Carte vectorielle plein écran avec relief, repères regroupés quand ils sont proches, filtres par catégorie, carrousel de lieux en bas | Panneau de lieux et filtres à gauche, carte à droite |
-| Fiche | Plein écran : image, chiffres clés, sections, anecdotes, frise, archives, vidéos, infos pratiques | Plein écran sur deux colonnes (« En bref » et infos pratiques à droite), bouton Fermer ou Échap |
+| Carte | Carte vectorielle sobre avec relief ; de loin, petits points pour une vue d'ensemble du Finistère ; filtres par catégorie ; carrousel de lieux en bas | Panneau de lieux et filtres à gauche, carte à droite |
+| Fiche (panneau) `#/lieu/<id>` | Plein écran | Moitié gauche de l'écran, carte visible à droite avec les points cités ; bouton « Fiche complète » |
+| Fiche complète `lieu/<id>/` | Page complète | Vraie page sur deux colonnes (« En bref » et infos pratiques à droite), générée en HTML au build (titre, description, données structurées) pour le référencement |
 | Audio | Lecteur flottant : lecture paragraphe par paragraphe, surlignage, précédent / suivant, vitesse | idem |
 
 - **Fiches disponibles** : Pointe du Raz & phare de la Vieille, Baie des Trépassés, Pointe du Van & chapelle Saint-They,
+  Île de Sein (avec le film « La Mer et les Jours », 1958, lecteur Vimeo de la Cinémathèque de Bretagne),
   Audierne, Menez Dregan, Pointe du Millier.
-- **Repère « bientôt »** (grisé, sans fiche) : Île de Sein.
 - **PWA** : installable sur l'écran d'accueil ; tuiles de carte et images déjà vues restent disponibles hors ligne.
 
 ## Développer
@@ -26,8 +27,12 @@ npm run build    # dossier dist/
 npm run preview  # sert dist/ sur http://localhost:4173
 ```
 
-Navigation par hash : `#/` (carte), `#/lieu/pointe-du-raz` (fiche). La base est relative (`./`) :
-le build marche à la racine d'un domaine (guideme.bzh) comme dans un sous-dossier.
+Adresses : `/Guideme/` (carte), `/Guideme/#/lieu/<id>` (fiche en panneau), `/Guideme/lieu/<id>/` (fiche complète).
+Le build génère aussi `sitemap.xml` et `robots.txt` (`scripts/prerender.mjs`). Pour le domaine guideme.bzh :
+
+```bash
+GUIDEME_BASE=/ GUIDEME_SITE=https://guideme.bzh/ npm run build
+```
 
 ## Organisation
 

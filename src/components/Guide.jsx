@@ -1,7 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
 import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
+import Brand from './Brand.jsx';
+
+const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
@@ -90,6 +93,37 @@ function Gallery({ items, onOpen, variant }) {
   );
 }
 
+// Film d'archives : fiche technique et résumé au-dessus du lecteur intégré (lecteur officiel de l'hébergeur)
+function FilmBlock({ film }) {
+  return (
+    <section id="sec-film" data-nav="film" className="section film">
+      <div className="section-head"><h2>Film d'archives</h2></div>
+      <div className="film-card">
+        <div className="film-head">
+          <span className="year-badge">{film.year}</span>
+          <h3>« {film.title} »</h3>
+        </div>
+        <dl className="film-details">
+          {film.details.map((d) => (
+            <div key={d.label}><dt>{d.label}</dt><dd>{d.value}</dd></div>
+          ))}
+        </dl>
+        {film.summary.map((t, i) => <p key={i} className="film-summary">{t}</p>)}
+        <div className="film-player">
+          <iframe
+            src={film.embed}
+            title={`${film.title} (${film.year})`}
+            loading="lazy"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+        <a className="credit-link" href={film.page} target="_blank" rel="noreferrer">Voir le film sur Vimeo <Icon name="external" size={12} /></a>
+      </div>
+    </section>
+  );
+}
+
 function Practical({ place, directions }) {
   return (
     <>
@@ -108,7 +142,8 @@ function Practical({ place, directions }) {
   );
 }
 
-export default function Guide({ place, onClose }) {
+export default function Guide({ place, onClose, variant = 'panel' }) {
+  const isPage = variant === 'page';
   const blocks = useMemo(() => buildBlocks(place), [place]);
   const speech = useSpeech(blocks);
   const scroller = useRef(null);
@@ -143,7 +178,10 @@ export default function Guide({ place, onClose }) {
   }, [currentId]);
 
   const nav = [
-    ...place.sections.map((s) => ({ id: s.id, label: s.nav })),
+    ...place.sections.flatMap((s, i) => [
+      ...(i === 1 && place.film ? [{ id: 'film', label: `Film ${place.film.year}` }] : []),
+      { id: s.id, label: s.nav },
+    ]),
     ...(place.timeline?.length ? [{ id: 'reperes', label: 'Repères' }] : []),
     ...(place.archives?.length || place.photos?.length ? [{ id: 'archives', label: place.archives?.length ? 'Archives' : 'Photos' }] : []),
     ...(place.videos?.length ? [{ id: 'videos', label: 'Vidéos' }] : []),
@@ -152,7 +190,7 @@ export default function Guide({ place, onClose }) {
 
   // Échap ferme la fiche (desktop)
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape' && !lightbox) onClose(); };
+    const onKey = (e) => { if (e.key === 'Escape' && !lightbox && onClose) onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [lightbox, onClose]);
@@ -163,10 +201,11 @@ export default function Guide({ place, onClose }) {
   };
 
   const share = async () => {
-    const data = { title: `${place.title} · guideme.bzh`, text: place.teaser, url: location.href };
+    const url = `${location.origin}${BASE}lieu/${place.id}/`;
+    const data = { title: `${place.title} · guideme.bzh`, text: place.teaser, url };
     try {
       if (navigator.share) await navigator.share(data);
-      else { await navigator.clipboard.writeText(location.href); alert('Lien copié'); }
+      else { await navigator.clipboard.writeText(url); alert('Lien copié'); }
     } catch (e) { /* partage annulé */ }
   };
 
@@ -179,14 +218,25 @@ export default function Guide({ place, onClose }) {
   };
 
   return (
-    <article className="guide" aria-label={place.title}>
+    <article className={`guide guide--${variant}`} aria-label={place.title}>
       <div className={`guide-bar ${compact ? 'is-compact' : ''}`}>
-        <button className="icon-btn guide-back" onClick={onClose} aria-label="Retour à la carte"><Icon name="back" /></button>
+        {isPage ? (
+          <span className="guide-brand"><Brand /></span>
+        ) : (
+          <button className="icon-btn guide-back" onClick={onClose} aria-label="Retour à la carte"><Icon name="back" /></button>
+        )}
         <span className="guide-bar-title">{place.shortTitle}</span>
         <button className="icon-btn" onClick={share} aria-label="Partager"><Icon name="share" size={19} /></button>
-        <button className="close-btn" onClick={onClose} aria-label="Fermer la fiche">
-          <Icon name="close" size={18} /> <span>Fermer</span>
-        </button>
+        {isPage ? (
+          <a className="pill-btn" href={`${BASE}#/lieu/${place.id}`}><Icon name="map" size={17} /> <span>Voir sur la carte</span></a>
+        ) : (
+          <>
+            <a className="pill-btn pill-btn--primary" href={`${BASE}lieu/${place.id}/`}><Icon name="external" size={16} /> <span>Fiche complète</span></a>
+            <button className="close-btn" onClick={onClose} aria-label="Fermer la fiche">
+              <Icon name="close" size={18} /> <span>Fermer</span>
+            </button>
+          </>
+        )}
       </div>
 
       <div className="guide-scroll" ref={scroller}>
@@ -229,8 +279,10 @@ export default function Guide({ place, onClose }) {
           ))}
         </div>
 
-        {place.sections.map((s) => (
-          <section key={s.id} id={`sec-${s.id}`} data-nav={s.id} className="section">
+        {place.sections.map((s, si) => (
+          <Fragment key={s.id}>
+          {si === 1 && place.film && <FilmBlock film={place.film} />}
+          <section id={`sec-${s.id}`} data-nav={s.id} className="section">
             <div className="section-head">
               <h2>{s.title}</h2>
               {speech.supported && (
@@ -254,6 +306,7 @@ export default function Guide({ place, onClose }) {
               </ol>
             )}
           </section>
+          </Fragment>
         ))}
 
         {place.timeline?.length > 0 && (

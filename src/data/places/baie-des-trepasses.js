@@ -22,7 +22,7 @@ export default {
   facts: [
     { value: '290 Ma', label: 'âge du fossé où s\'est creusée la baie' },
     { value: '70 à 80 m', label: 'hauteur des plateaux qui l\'encadrent' },
-    { value: '1794', label: 'premier récit de voyageur, par Jacques Cambry' },
+    { value: '1794', label: 'Jacques Cambry la décrit dans son Voyage dans le Finistère' },
     { value: 'Ouest', label: 'houle et vent de face toute l\'année' },
   ],
   sections: [
@@ -118,7 +118,5 @@ export default {
     { label: 'Wikipédia : Baie des Trépassés', url: 'https://fr.wikipedia.org/wiki/Baie_des_Tr%C3%A9pass%C3%A9s' },
   ],
   pois: [
-    { name: 'Pointe du Raz', coords: [-4.741111, 48.040278] },
-    { name: 'Pointe du Van', coords: [-4.7149822, 48.064501] },
   ],
 };
