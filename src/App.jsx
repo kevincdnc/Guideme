@@ -187,6 +187,7 @@ export default function App() {
   const available = visible.filter((p) => p.available).length;
   // Lieux visités en tête de liste
   const visitedList = visible.filter((p) => visited.includes(p.id));
+  const [showVisited, setShowVisited] = useState(false);
   const toVisit = visible.filter((p) => !visited.includes(p.id));
   const changeTag = useCallback((t) => {
     setTag(t);
@@ -285,23 +286,18 @@ export default function App() {
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="sidebar-list">
-            {visitedList.length > 0 && (
-              <div className="list-sep list-sep--done">
-                <strong><i><Icon name="check" size={12} stroke={3.4} /></i> Déjà visités</strong>
-                <span>{visitedList.length}</span>
-              </div>
-            )}
-            {visitedList.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited />
-            ))}
-            {visitedList.length > 0 && toVisit.length > 0 && (
-              <div className="list-sep">
-                <strong>À découvrir</strong>
-                <span>{toVisit.length} restant{toVisit.length > 1 ? 's' : ''}</span>
-              </div>
-            )}
             {toVisit.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
+            ))}
+            {visitedList.length > 0 && (
+              <button className="visited-toggle" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
+                <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
+                Déjà visités <b>{visitedList.length}</b>
+                <Icon name="chevron" size={15} style={{ marginLeft: 'auto', transform: showVisited ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
+              </button>
+            )}
+            {showVisited && visitedList.map((p) => (
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited />
             ))}
           </div>
         </aside>
@@ -311,7 +307,7 @@ export default function App() {
         <div className="rail-wrap" ref={railWrapRef}>
           <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
-            {[...visitedList, ...toVisit].map((p) => (
+            {[...toVisit, ...visitedList].map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} />
             ))}
           </div>
