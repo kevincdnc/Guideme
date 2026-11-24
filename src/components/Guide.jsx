@@ -89,6 +89,24 @@ function Gallery({ items, onOpen, variant }) {
   );
 }
 
+function Practical({ place, directions }) {
+  return (
+    <>
+      <ul className="practical">
+        {place.practical.map((p) => (
+          <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
+            <span className="practical-icon"><Icon name={p.icon} size={20} /></span>
+            <div><strong>{p.title}</strong><p>{p.text}</p></div>
+          </li>
+        ))}
+      </ul>
+      <a className="btn btn--primary btn--block" href={directions} target="_blank" rel="noreferrer">
+        <Icon name="route" size={19} /> Itinéraire
+      </a>
+    </>
+  );
+}
+
 export default function Guide({ place, onClose }) {
   const blocks = useMemo(() => buildBlocks(place), [place]);
   const speech = useSpeech(blocks);
@@ -125,11 +143,18 @@ export default function Guide({ place, onClose }) {
 
   const nav = [
     ...place.sections.map((s) => ({ id: s.id, label: s.nav })),
-    { id: 'reperes', label: 'Repères' },
-    { id: 'archives', label: 'Archives' },
+    ...(place.timeline?.length ? [{ id: 'reperes', label: 'Repères' }] : []),
+    ...(place.archives?.length || place.photos?.length ? [{ id: 'archives', label: place.archives?.length ? 'Archives' : 'Photos' }] : []),
     ...(place.videos?.length ? [{ id: 'videos', label: 'Vidéos' }] : []),
-    { id: 'pratique', label: 'Pratique' },
+    { id: 'pratique', label: 'Pratique', mobileOnly: true },
   ];
+
+  // Échap ferme la fiche (desktop)
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape' && !lightbox) onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox, onClose]);
 
   const goTo = (id) => {
     const el = scroller.current.querySelector(`#sec-${id}`);
@@ -155,9 +180,12 @@ export default function Guide({ place, onClose }) {
   return (
     <article className="guide" aria-label={place.title}>
       <div className={`guide-bar ${compact ? 'is-compact' : ''}`}>
-        <button className="icon-btn" onClick={onClose} aria-label="Retour à la carte"><Icon name="back" /></button>
+        <button className="icon-btn guide-back" onClick={onClose} aria-label="Retour à la carte"><Icon name="back" /></button>
         <span className="guide-bar-title">{place.shortTitle}</span>
         <button className="icon-btn" onClick={share} aria-label="Partager"><Icon name="share" size={19} /></button>
+        <button className="close-btn" onClick={onClose} aria-label="Fermer la fiche">
+          <Icon name="close" size={18} /> <span>Fermer</span>
+        </button>
       </div>
 
       <div className="guide-scroll" ref={scroller}>
@@ -167,6 +195,8 @@ export default function Guide({ place, onClose }) {
           <span className="hero-credit">{place.hero.credit}</span>
         </header>
 
+        <div className="guide-layout">
+        <div className="guide-main">
         <div className="guide-head">
           <span className="chip chip--accent">{place.category}</span>
           <h1>{place.title}</h1>
@@ -179,11 +209,11 @@ export default function Guide({ place, onClose }) {
 
         <nav className="guide-nav" aria-label="Sections">
           {nav.map((n) => (
-            <button key={n.id} className={`nav-chip ${activeNav === n.id ? 'is-active' : ''}`} onClick={() => goTo(n.id)}>{n.label}</button>
+            <button key={n.id} className={`nav-chip ${activeNav === n.id ? 'is-active' : ''} ${n.mobileOnly ? 'mobile-only' : ''}`} onClick={() => goTo(n.id)}>{n.label}</button>
           ))}
         </nav>
 
-        <div className="facts">
+        <div className="facts mobile-only">
           {place.facts.map((f) => (
             <div key={f.label} className="fact">
               <span className="fact-value">{f.value}</span>
@@ -219,6 +249,7 @@ export default function Guide({ place, onClose }) {
           </section>
         ))}
 
+        {place.timeline?.length > 0 && (
         <section id="sec-reperes" data-nav="reperes" className="section">
           <div className="section-head"><h2>Repères</h2></div>
           <ol className="timeline">
@@ -230,16 +261,25 @@ export default function Guide({ place, onClose }) {
             ))}
           </ol>
         </section>
+        )}
 
+        {(place.archives?.length > 0 || place.photos?.length > 0) && (
         <section id="sec-archives" data-nav="archives" className="section section--wide">
-          <div className="section-head">
-            <h2>Archives & cartes postales</h2>
-          </div>
-          <p className="section-sub">Peintures, gravures et cartes postales anciennes, du domaine public.</p>
-          <Gallery items={place.archives} variant="archive" onOpen={(i) => setLightbox({ items: place.archives, start: i })} />
-          <h3 className="sub-title">Aujourd'hui</h3>
-          <Gallery items={place.photos} variant="photo" onOpen={(i) => setLightbox({ items: place.photos, start: i })} />
+          {place.archives?.length > 0 && (
+            <>
+              <div className="section-head"><h2>Archives & cartes postales</h2></div>
+              <p className="section-sub">{place.archivesIntro || 'Peintures, gravures et cartes postales anciennes, du domaine public.'}</p>
+              <Gallery items={place.archives} variant="archive" onOpen={(i) => setLightbox({ items: place.archives, start: i })} />
+            </>
+          )}
+          {place.photos?.length > 0 && (
+            <>
+              {place.archives?.length > 0 ? <h3 className="sub-title">Aujourd'hui</h3> : <div className="section-head"><h2>En images</h2></div>}
+              <Gallery items={place.photos} variant="photo" onOpen={(i) => setLightbox({ items: place.photos, start: i })} />
+            </>
+          )}
         </section>
+        )}
 
         {place.videos?.length > 0 && (
           <section id="sec-videos" data-nav="videos" className="section">
@@ -261,19 +301,9 @@ export default function Guide({ place, onClose }) {
           </section>
         )}
 
-        <section id="sec-pratique" data-nav="pratique" className="section">
+        <section id="sec-pratique" data-nav="pratique" className="section mobile-only">
           <div className="section-head"><h2>Infos pratiques</h2></div>
-          <ul className="practical">
-            {place.practical.map((p) => (
-              <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
-                <span className="practical-icon"><Icon name={p.icon} size={20} /></span>
-                <div><strong>{p.title}</strong><p>{p.text}</p></div>
-              </li>
-            ))}
-          </ul>
-          <a className="btn btn--primary btn--block" href={directions} target="_blank" rel="noreferrer">
-            <Icon name="route" size={19} /> Itinéraire jusqu'à la pointe
-          </a>
+          <Practical place={place} directions={directions} />
         </section>
 
         <section className="section sources">
@@ -286,6 +316,26 @@ export default function Guide({ place, onClose }) {
           </ul>
           <p>Images et vidéos : Wikimedia Commons, auteurs et licences indiqués sous chaque média (touchez une image pour voir le lien).</p>
         </section>
+        </div>
+
+        <aside className="guide-aside">
+          <div className="aside-card">
+            <h2 className="aside-title">En bref</h2>
+            <div className="facts facts--aside">
+              {place.facts.map((f) => (
+                <div key={f.label} className="fact">
+                  <span className="fact-value">{f.value}</span>
+                  <span className="fact-label">{f.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="aside-card">
+            <h2 className="aside-title">Infos pratiques</h2>
+            <Practical place={place} directions={directions} />
+          </div>
+        </aside>
+        </div>
         <div className="guide-end" />
       </div>
 

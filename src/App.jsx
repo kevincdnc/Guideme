@@ -31,36 +31,31 @@ function Brand() {
   );
 }
 
-function PlaceCard({ place, selected, onOpen, onSelect, compact }) {
+// Carte de lieu simplifiée : vignette, nom, commune, durée (ou « Bientôt »)
+function PlaceCard({ place, selected, onOpen, onSelect }) {
   const soon = !place.available;
+  const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
   return (
     <div
-      className={`place-card ${soon ? 'is-soon' : ''} ${selected ? 'is-selected' : ''} ${compact ? 'is-compact' : ''}`}
+      role="button"
+      tabIndex={0}
+      className={`place-card ${soon ? 'is-soon' : ''} ${selected ? 'is-selected' : ''}`}
       data-id={place.id}
-      onClick={() => onSelect(place.id)}
+      onClick={activate}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), activate())}
+      aria-label={soon ? `${place.shortTitle}, bientôt disponible` : `Ouvrir le guide : ${place.shortTitle}`}
     >
-      <div className="place-card-media">
-        {place.hero ? (
-          <img src={place.hero.src} alt="" loading="lazy" />
-        ) : (
-          <div className="place-card-placeholder"><Icon name="lock" size={22} /></div>
-        )}
-        {soon && <span className="soon-badge">Bientôt</span>}
+      <div className="pc-thumb">
+        {place.thumb || place.hero ? <img src={place.thumb || place.hero.src} alt="" loading="lazy" /> : <Icon name="lock" size={20} />}
       </div>
-      <div className="place-card-body">
-        <span className="place-card-cat">{place.category}</span>
+      <div className="pc-body">
         <h3>{place.shortTitle}</h3>
-        <span className="place-card-commune"><Icon name="pin" size={13} /> {place.commune}</span>
-        {!compact && <p className="place-card-teaser">{place.teaser}</p>}
-        {soon ? (
-          <span className="place-card-cta is-disabled"><Icon name="clock" size={15} /> Fiche en préparation</span>
-        ) : (
-          <button className="place-card-cta" onClick={(e) => { e.stopPropagation(); onOpen(place.id); }}>
-            <Icon name="headphones" size={16} /> Ouvrir le guide
-            <span className="place-card-meta">{place.readingMinutes} min</span>
-          </button>
-        )}
+        <span className="pc-meta">
+          {place.commune.split(' · ')[0]}
+          {!soon && <> · <b>{place.readingMinutes} min</b></>}
+        </span>
       </div>
+      {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go"><Icon name="chevron" size={18} stroke={2.4} /></span>}
     </div>
   );
 }
@@ -83,25 +78,35 @@ export default function App() {
 
   // Espace laissé à la carte : carrousel en bas (mobile), panneau à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 40, bottom: 40, left: (place ? 560 : 400) + 20, right: 40 } : { top: 80, bottom: place ? 40 : 230, left: 24, right: 24 }),
+    () => (desktop ? { top: 60, bottom: 60, left: 440, right: 60 } : { top: 90, bottom: place ? 40 : 140, left: 28, right: 28 }),
     [desktop, place],
   );
 
-  const open = useCallback((id) => { location.hash = `#/lieu/${id}`; setSelected(id); }, []);
-  const close = useCallback(() => { history.length > 1 && location.hash.startsWith('#/lieu') ? history.back() : (location.hash = '#/'); }, []);
+  // Retour arrière seulement si la fiche a été ouverte depuis l'app ;
+  // arrivé par un lien direct, « Fermer » mène à la carte sans quitter le site.
+  const openedInApp = useRef(false);
+  const open = useCallback((id) => { openedInApp.current = true; location.hash = `#/lieu/${id}`; setSelected(id); }, []);
+  const close = useCallback(() => {
+    if (openedInApp.current) { openedInApp.current = false; history.back(); }
+    else history.replaceState(null, '', location.pathname + location.search + '#/'), setRoute(null);
+  }, []);
 
-  const select = useCallback((id) => {
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
+  const select = useCallback((id, fromMarker) => {
+    // Deuxième clic sur le repère d'un lieu disponible : ouvre la fiche
+    if (fromMarker && id && id === selectedRef.current && getPlace(id).available) { open(id); return; }
     setSelected(id);
     if (!id) return;
     const p = getPlace(id);
-    mapRef.current?.flyTo(p.coords, 11);
+    mapRef.current?.flyTo(p.coords, 11.5);
     // Sur mobile, amène la carte correspondante au centre du carrousel
     if (!fromRail.current && railRef.current) {
       const card = railRef.current.querySelector(`[data-id="${id}"]`);
       card?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
     fromRail.current = false;
-  }, []);
+  }, [open]);
 
   // Quand on ouvre une fiche, la carte se cadre sur le lieu
   useEffect(() => {
@@ -129,7 +134,7 @@ export default function App() {
 
   return (
     <div className={`app ${place ? 'has-guide' : ''}`}>
-      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={place?.pois} />
+      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -138,7 +143,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: (place ? 560 : 400) + 16 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: 416 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
       </div>
@@ -152,11 +157,11 @@ export default function App() {
             <p>Histoire, anecdotes insolites, cartes postales d'époque et lecture audio, à consulter sur place ou depuis chez vous.</p>
           </div>
           <div className="sidebar-count">
-            <strong>{PLACES.length} lieux</strong> sur la carte · {available} guide disponible
+            <strong>{available} guide{available > 1 ? 's' : ''}</strong> disponible{available > 1 ? 's' : ''}{PLACES.length > available ? ` · ${PLACES.length - available} en préparation` : ''}
           </div>
           <div className="sidebar-list">
             {PLACES.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} compact={!p.available} />
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
           <footer className="sidebar-foot">guideme.bzh · version de démonstration</footer>
@@ -166,7 +171,7 @@ export default function App() {
       {!desktop && !place && (
         <div className="rail-wrap">
           <div className="rail-head">
-            <span><strong>{PLACES.length} lieux</strong> · {available} guide disponible</span>
+            <span><strong>{available} guide{available > 1 ? 's' : ''}</strong> autour de la pointe du Raz</span>
           </div>
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
             {PLACES.map((p) => (

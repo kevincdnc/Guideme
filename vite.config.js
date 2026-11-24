@@ -38,11 +38,11 @@ export default defineConfig({
         // (utile à la Pointe du Raz, où le réseau est faible).
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/(server|services)\.arcgisonline\.com\/.*/,
+            urlPattern: /^https:\/\/(tiles\.openfreemap\.org|elevation-tiles-prod\.s3\.amazonaws\.com)\/.*/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'map-tiles',
-              expiration: { maxEntries: 1500, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              expiration: { maxEntries: 3000, maxAgeSeconds: 60 * 60 * 24 * 30 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

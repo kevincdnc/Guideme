@@ -3,23 +3,19 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { FINISTERE_BOUNDS } from '../data/places.js';
 
-// Fond « relief » coloré (même fond que la carte Relief de Printrace) :
-// villes, routes et relief ombré lisibles, couleurs douces.
-const STYLE = {
-  version: 8,
-  sources: {
-    relief: {
-      type: 'raster',
-      tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'],
-      tileSize: 256,
-      maxzoom: 18,
-      attribution: 'Fond © Esri, HERE, Garmin, FAO, USGS · © les contributeurs OpenStreetMap',
-    },
-  },
-  layers: [
-    { id: 'bg', type: 'background', paint: { 'background-color': '#cfe3ee' } },
-    { id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-saturation': 0.3, 'raster-contrast': 0.08 } },
-  ],
+import MAP_STYLE from '../data/map-style.json';
+
+// Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
+// nette à tous les zooms, avec relief ombré. L'attribution complète est déclarée dans le style.
+MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/" target="_blank">OpenMapTiles</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank">les contributeurs OpenStreetMap</a>';
+
+// Pictogrammes des repères, selon le type de lieu
+const PIN_ICONS = {
+  lighthouse: '<path d="M9 21l1.5-12h3L15 21z"/><path d="M8 9h8M10 6h4v3h-4zM12 3v3"/>',
+  beach: '<path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18"/><path d="M12 14V5"/><path d="M5 9a7 7 0 0114 0z"/>',
+  cliff: '<path d="M3 20h18"/><path d="M4 20l4-11 3 4 3-8 6 15"/>',
+  port: '<circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M5 13a7 7 0 0014 0"/><path d="M8 10h8"/>',
+  fire: '<path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z"/>',
 };
 
 const MAX_BOUNDS = [
@@ -35,7 +31,7 @@ function markerEl(place, onSelect) {
   el.innerHTML = `
     <span class="gm-marker-pin">
       ${place.available
-        ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21l1.5-12h3L15 21z"/><path d="M8 9h8M10 6h4v3h-4zM12 3v3"/></svg>'
+        ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${PIN_ICONS[place.icon] || PIN_ICONS.lighthouse}</svg>`
         : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>'}
     </span>
     <span class="gm-marker-label">${place.shortTitle}</span>`;
@@ -89,12 +85,16 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
   useEffect(() => {
     const m = new maplibregl.Map({
       container: box.current,
-      style: STYLE,
+      style: MAP_STYLE,
       bounds: FINISTERE_BOUNDS,
       fitBoundsOptions: { padding: 20 },
       maxBounds: MAX_BOUNDS,
       minZoom: 7,
-      maxZoom: 17.5,
+      maxZoom: 18,
+      fadeDuration: 150,
+      // Rendu net sur écrans haute densité, transitions de zoom douces
+      pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      cooperativeGestures: false,
       attributionControl: false,
       dragRotate: false,
       pitchWithRotate: false,
@@ -115,7 +115,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     map.current = m;
 
     places.forEach((p) => {
-      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id)), anchor: 'bottom' })
+      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true)), anchor: 'bottom' })
         .setLngLat(p.coords)
         .addTo(m);
       markers.current[p.id] = mk;
