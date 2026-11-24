@@ -129,7 +129,7 @@ export default {
     },
     {
       year: '1895',
-      src: `${C}/f/f4/La_marque_du_bureau_des_toiles_de_Locronan.jpg`,
+      src: `${C}/thumb/f/f4/La_marque_du_bureau_des_toiles_de_Locronan.jpg/960px-La_marque_du_bureau_des_toiles_de_Locronan.jpg`,
       caption: 'La marque du bureau des toiles de Locronan, apposée sur les pièces avant leur expédition.',
       credit: 'M. Serret, domaine public',
       page: 'https://commons.wikimedia.org/wiki/File:La_marque_du_bureau_des_toiles_de_Locronan.jpg',
@@ -143,7 +143,7 @@ export default {
       page: 'https://commons.wikimedia.org/wiki/File:Bretagne_Finistere_Locronan1_tango7174.jpg',
     },
     {
-      src: `${C}/6/65/Bretagne_Finistere_Locronan2_tango7174.jpg`,
+      src: `${C}/thumb/6/65/Bretagne_Finistere_Locronan2_tango7174.jpg/500px-Bretagne_Finistere_Locronan2_tango7174.jpg`,
       caption: 'Le tombeau de saint Ronan, dans la chapelle du Pénity.',
       credit: 'Tango7174, CC BY-SA 4.0',
       page: 'https://commons.wikimedia.org/wiki/File:Bretagne_Finistere_Locronan2_tango7174.jpg',

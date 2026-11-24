@@ -9,6 +9,8 @@ import ileDeSein from './places/ile-de-sein.js';
 import locronan from './places/locronan.js';
 import douarnenez from './places/douarnenez.js';
 import phareEckmuhl from './places/phare-eckmuhl.js';
+import concarneau from './places/concarneau.js';
+import pontAven from './places/pont-aven.js';
 
 export const FINISTERE_BOUNDS = [
   [-5.2, 47.68], // sud-ouest (Sein, Glénan)
@@ -38,7 +40,7 @@ function readingMinutes(place) {
   return Math.max(1, Math.round(text.split(/\s+/).length / 150));
 }
 
-export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, ...SOON].map((p) =>
+export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, ...SOON].map((p) =>
   p.available ? { ...p, readingMinutes: readingMinutes(p) } : p,
 );
 
