@@ -20,10 +20,10 @@ export default {
     credit: 'Moreau.henri, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
-    { value: '465 000', label: 'ans : âge de la couche la plus ancienne' },
-    { value: '32 ans', label: 'de fouilles, de 1988 à 2020' },
-    { value: '150 000', label: 'objets inventoriés et étudiés' },
-    { value: '5', label: 'sites au monde avec des foyers aussi anciens' },
+    { value: '465 000 ans', label: 'âge de la couche la plus ancienne' },
+    { value: '1985', label: 'découverte du site' },
+    { value: '150 000', label: 'objets inventoriés' },
+    { value: '5', label: 'sites au monde aux foyers aussi anciens' },
   ],
   sections: [
     {

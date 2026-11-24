@@ -20,10 +20,10 @@ export default {
     credit: 'Carsten Steger, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
-    { value: '290 Ma', label: 'âge du fossé où s\'est creusée la baie' },
-    { value: '70 à 80 m', label: 'hauteur des plateaux qui l\'encadrent' },
-    { value: '1794', label: 'Jacques Cambry la décrit dans son Voyage dans le Finistère' },
-    { value: 'Ouest', label: 'houle et vent de face toute l\'année' },
+    { value: '290 Ma', label: 'âge du fossé qui a creusé la baie' },
+    { value: '1794', label: 'premier récit, par Jacques Cambry' },
+    { value: '70-80 m', label: 'hauteur des pointes qui l\'encadrent' },
+    { value: '1968', label: 'roman « La Baie des Trépassés » de Catherine Arley' },
   ],
   sections: [
     {

@@ -20,10 +20,10 @@ export default {
     credit: 'Carsten Steger, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
-    { value: 'XVIIe', label: 'siècle de construction de la chapelle' },
+    { value: 'XVIIe s.', label: 'construction de la chapelle Saint-They' },
     { value: '1914', label: 'chapelle classée monument historique' },
-    { value: '1772', label: 'date de la croix de l\'enclos' },
-    { value: '4', label: 'pardons par an autrefois, un seul aujourd\'hui' },
+    { value: '1924', label: 'le cargo Trane coule au large' },
+    { value: '2013', label: 'la foudre abat trois clochetons' },
   ],
   sections: [
     {

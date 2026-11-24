@@ -642,3 +642,17 @@ img { display: block; max-width: 100%; }
 .list-sep span { font-size: 14px; color: var(--ink-3); }
 .list-sep--done strong { color: #15803d; }
 .list-sep--done strong i { width: 18px; height: 18px; border-radius: 5px; background: #16a34a; color: #fff; display: grid; place-items: center; }
+
+/* ---------- Chiffres clés, tout en haut de la fiche ---------- */
+.keyfigs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 18px 0 0; }
+.keyfig { margin: 0; padding: 12px 14px 12px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; gap: 3px; }
+.keyfig dt { font-family: var(--font-title); font-weight: 700; font-size: 26px; line-height: 1.05; letter-spacing: -0.03em; color: var(--ink); white-space: nowrap; }
+.keyfig dd { margin: 0; font-size: 13.5px; line-height: 1.3; color: var(--ink-3); }
+/* Les dates ressortent : fond noir, comme la barre du logo */
+.keyfig.is-date { background: #111; border-color: #111; }
+.keyfig.is-date dt { color: #fff; }
+.keyfig.is-date dd { color: rgba(255,255,255,.65); }
+@media (min-width: 900px) {
+  .guide--panel .keyfigs, .guide--page .keyfigs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .guide--panel .keyfig dt { font-size: 24px; }
+}

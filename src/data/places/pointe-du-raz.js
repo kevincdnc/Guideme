@@ -27,10 +27,10 @@ export default {
     credit: 'Carsten Steger, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
-    { value: '72 m', label: 'hauteur de la proue' },
-    { value: '7 nœuds', label: 'courant du raz en vives eaux' },
-    { value: '1887', label: 'premier allumage de la Vieille' },
-    { value: '18 milles', label: 'portée du feu' },
+    { value: '1887', label: 'allumage du phare de la Vieille' },
+    { value: '72 m', label: 'hauteur de la proue de granit' },
+    { value: '7 nœuds', label: 'courant du raz en grande marée' },
+    { value: '1 million', label: 'de visiteurs par an' },
   ],
   sections: [
     {

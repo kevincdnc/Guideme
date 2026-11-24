@@ -20,10 +20,10 @@ export default {
     credit: 'Tilly antoine, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
-    { value: '1321', label: 'première mention, « Odierna », sur un atlas vénitien' },
-    { value: '1865', label: 'l\'un des deux premiers postes de sauvetage en mer' },
-    { value: '656', label: 'bateaux de pêche armés en 1902' },
-    { value: '2e', label: 'port français pour le prix moyen du poisson (2020)' },
+    { value: '1321', label: 'première mention, « Odierna »' },
+    { value: '1865', label: 'un des 2 premiers postes de sauvetage' },
+    { value: '656', label: 'bateaux de pêche en 1902' },
+    { value: '2e', label: 'port de France au prix moyen du poisson' },
   ],
   sections: [
     {

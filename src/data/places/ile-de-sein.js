@@ -20,9 +20,9 @@ export default {
     credit: 'Carsten Steger, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
+    { value: '1940', label: '128 îliens rallient de Gaulle' },
     { value: '1,5 m', label: 'altitude moyenne de l\'île' },
-    { value: '7,2 km', label: 'de la pointe du Raz' },
-    { value: '128', label: 'îliens partis en Angleterre fin juin 1940' },
+    { value: '0,56 km²', label: 'de terre, sans voiture' },
     { value: '1958', label: 'tournage de « La Mer et les Jours »' },
   ],
   film: {

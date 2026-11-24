@@ -290,6 +290,14 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
           </p>
           <p className="guide-teaser">{place.teaser}</p>
+          <dl className="keyfigs" aria-label="Chiffres clés">
+            {place.facts.map((f) => (
+              <div key={f.label} className={`keyfig ${/^(\d{3,4}|[IVX]+e s\.)$/.test(f.value) ? 'is-date' : ''}`}>
+                <dt>{f.value}</dt>
+                <dd>{f.label}</dd>
+              </div>
+            ))}
+          </dl>
           <div className="guide-actions">
             {speech.supported && (
               <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
@@ -302,16 +310,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         {place.sections.map((s, si) => (
           <Fragment key={s.id}>
-          {si === 1 && (
-            <div className="facts mobile-only">
-              {place.facts.map((f) => (
-                <div key={f.label} className="fact">
-                  <span className="fact-value">{f.value}</span>
-                  <span className="fact-label">{f.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
           {si === 1 && place.film && <FilmBlock film={place.film} />}
           <section id={`sec-${s.id}`} data-nav={s.id} className="section">
             <div className="section-head">
@@ -410,17 +408,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         </div>
 
         <aside className="guide-aside">
-          <div className="aside-card">
-            <h2 className="aside-title">En bref</h2>
-            <div className="facts facts--aside">
-              {place.facts.map((f) => (
-                <div key={f.label} className="fact">
-                  <span className="fact-value">{f.value}</span>
-                  <span className="fact-label">{f.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
           <div className="aside-card">
             <h2 className="aside-title">Infos pratiques</h2>
             <Practical place={place} directions={directions} />

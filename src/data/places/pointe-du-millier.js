@@ -20,10 +20,10 @@ export default {
     credit: 'Moreau.henri, CC BY-SA 4.0, Wikimedia Commons',
   },
   facts: [
+    { value: '1881', label: 'allumage de la maison-feu' },
     { value: '70 m', label: 'hauteur des falaises' },
-    { value: '12 milles', label: 'portée du feu, allumé en 1881' },
-    { value: '8 m', label: 'diamètre de la roue du moulin de Kériolet' },
-    { value: '20 t', label: 'poids du bateau de pierre de saint Conogan' },
+    { value: '1868', label: 'construction du moulin de Kériolet' },
+    { value: '20 t', label: 'le bateau de pierre de saint Conogan' },
   ],
   sections: [
     {
