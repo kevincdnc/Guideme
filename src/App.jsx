@@ -33,7 +33,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
     <div
       role="button"
       tabIndex={0}
-      className={`place-card ${soon ? 'is-soon' : ''} ${selected ? 'is-selected' : ''}`}
+      className={`place-card ${soon ? 'is-soon' : ''} ${selected ? 'is-selected' : ''} ${visited ? 'is-visited' : ''}`}
       data-id={place.id}
       onClick={activate}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), activate())}
@@ -169,6 +169,9 @@ export default function App() {
   const [tag, setTag] = useState(null);
   const visible = useMemo(() => PLACES.filter((p) => !tag || p.tags?.includes(tag)), [tag]);
   const available = visible.filter((p) => p.available).length;
+  // Lieux visités en tête de liste
+  const visitedList = visible.filter((p) => visited.includes(p.id));
+  const toVisit = visible.filter((p) => !visited.includes(p.id));
   const changeTag = useCallback((t) => {
     setTag(t);
     const list = PLACES.filter((p) => !t || p.tags?.includes(t));
@@ -182,9 +185,11 @@ export default function App() {
     return () => window.removeEventListener('hashchange', on);
   }, []);
 
-  // Espace laissé à la carte : carrousel en bas (mobile), panneau à gauche (desktop)
+  // Desktop : la fiche s'ouvre à droite de la liste (400 px), la carte garde une bande à droite
+  const panelW = desktop ? Math.round(Math.max(520, Math.min(window.innerWidth * 0.5, window.innerWidth - 620))) : 0;
+  // Espace laissé à la carte : carrousel en bas (mobile), liste et fiche à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: place ? Math.max(window.innerWidth / 2, 560) + 40 : 440, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: place ? 400 + panelW + 30 : 440, right: place ? 30 : 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -239,7 +244,7 @@ export default function App() {
   };
 
   return (
-    <div ref={appRef} className={`app ${place ? 'has-guide' : ''}`}>
+    <div ref={appRef} className={`app ${place ? 'has-guide' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
       <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} />
 
       {!desktop && !place && (
@@ -249,7 +254,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: place ? Math.max(window.innerWidth / 2, 560) + 16 : 416 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: place ? 400 + panelW + 16 : 416 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
         {started && <ProgressButton visited={visited} onPick={select} />}
@@ -264,8 +269,23 @@ export default function App() {
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="sidebar-list">
-            {visible.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} />
+            {visitedList.length > 0 && (
+              <div className="list-sep list-sep--done">
+                <strong><i><Icon name="check" size={12} stroke={3.4} /></i> Déjà visités</strong>
+                <span>{visitedList.length}</span>
+              </div>
+            )}
+            {visitedList.map((p) => (
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited />
+            ))}
+            {visitedList.length > 0 && toVisit.length > 0 && (
+              <div className="list-sep">
+                <strong>À découvrir</strong>
+                <span>{toVisit.length} restant{toVisit.length > 1 ? 's' : ''}</span>
+              </div>
+            )}
+            {toVisit.map((p) => (
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} />
             ))}
           </div>
         </aside>
@@ -275,7 +295,7 @@ export default function App() {
         <div className="rail-wrap" ref={railWrapRef}>
           <TagBar value={tag} onChange={changeTag} places={PLACES} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
-            {visible.map((p) => (
+            {[...visitedList, ...toVisit].map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} />
             ))}
           </div>

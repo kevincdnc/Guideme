@@ -1,6 +1,6 @@
 /* ==========================================================================
    guideme.bzh — thème clair, contrasté, mobile d'abord.
-   Typographie : Inter (texte), Nunito (logo et titres).
+   Typographie : Inter (texte), Fraunces douce (logo et titres).
    ========================================================================== */
 
 :root {
@@ -30,7 +30,8 @@
   --shadow-2: 0 2px 6px rgba(15,23,42,.05), 0 16px 40px rgba(15,23,42,.10);
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-title: 'Nunito Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-title: 'Fraunces Variable', Georgia, serif;
+  --font-title-axes: 'SOFT' 100, 'WONK' 1; /* Fraunces dans sa version arrondie et « bancale » */
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -50,7 +51,7 @@ body {
 }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
 a { color: var(--sea); }
-h1, h2, h3 { font-family: var(--font-title); margin: 0; font-weight: 800; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--font-title); font-variation-settings: var(--font-title-axes); margin: 0; font-weight: 700; letter-spacing: -0.01em; }
 img { display: block; max-width: 100%; }
 
 :focus-visible { outline: 3px solid rgba(20, 99, 194, .55); outline-offset: 2px; border-radius: 8px; }
@@ -62,7 +63,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Marque ---------- */
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
 .brand-mark { flex: 0 0 auto; color: #fff; }
-.brand-name { font-family: var(--font-title); font-weight: 800; font-size: 22px; letter-spacing: -0.01em; color: #fff; line-height: 1; }
+.brand-name { font-family: var(--font-title); font-variation-settings: var(--font-title-axes); font-weight: 700; font-size: 23px; letter-spacing: -0.01em; color: #fff; line-height: 1; }
 .brand-name span { color: rgba(255,255,255,.5); }
 
 /* ---------- Barre du haut (mobile) ---------- */
@@ -500,7 +501,7 @@ img { display: block; max-width: 100%; }
   .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: 0; }
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
   .maplibregl-ctrl-bottom-left { margin-left: 400px; }
-  .has-guide .maplibregl-ctrl-bottom-left { margin-left: max(50vw, 560px); }
+  .has-guide .maplibregl-ctrl-bottom-left { margin-left: calc(400px + var(--panel-w, 50vw)); }
 
   /* Barre du haut commune */
   .guide-bar { padding: 14px 24px; gap: 10px; }
@@ -517,28 +518,28 @@ img { display: block; max-width: 100%; }
   .guide-bar.is-compact .close-btn, .guide-bar.is-compact .pill-btn:not(.pill-btn--primary) { box-shadow: none; background: var(--surface-2); }
 
   /* ---- Panneau : moitié gauche de l'écran, une colonne aérée ---- */
-  /* Fiche sur la moitié gauche de l'écran, la carte à droite */
+  /* Fiche ouverte à droite de la liste, qui reste visible ; la carte garde une bande à droite */
   .guide--panel {
-    right: auto; left: 0; width: max(50vw, 560px);
-    border-right: 1px solid var(--line); box-shadow: 8px 0 40px rgba(15,23,42,.12);
+    right: auto; left: 400px; width: var(--panel-w, 50vw);
+    border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 8px 0 40px rgba(15,23,42,.12);
     animation: guideInSide .3s cubic-bezier(.2,.8,.25,1);
   }
   @keyframes guideInSide { from { transform: translateX(-24px); opacity: 0; } to { transform: none; opacity: 1; } }
   .guide--panel .guide-aside { display: none; }
   .guide--panel .hero { height: min(44vh, 420px); }
-  .guide--panel .guide-head { padding: 34px 56px 8px; }
+  .guide--panel .guide-head { padding: 30px 44px 8px; }
   .guide--panel .guide-head h1 { font-size: 40px; }
   .guide--panel .guide-teaser { font-size: 17px; max-width: 36em; }
-  .guide--panel .facts { padding: 20px 56px 4px; grid-template-columns: repeat(4, 1fr); }
+  .guide--panel .facts { padding: 20px 44px 4px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
   .guide--panel .facts .fact-value { font-size: 22px; }
-  .guide--panel .section { padding: 36px 56px 6px; }
+  .guide--panel .section { padding: 34px 44px 6px; }
   .guide--panel .section h2 { font-size: 30px; }
   .guide--panel .para { font-size: 17.5px; line-height: 1.7; max-width: 38em; }
   .guide--panel .anecdote { padding: 20px 22px 18px; }
-  .guide--panel .gallery { margin: 0 -56px; padding: 2px 56px 8px; scroll-padding: 0 56px; }
+  .guide--panel .gallery { margin: 0 -44px; padding: 2px 44px 8px; scroll-padding: 0 44px; }
   .guide--panel .gallery-item { flex-basis: 62%; }
   .guide--panel .gallery--photo .gallery-item { flex-basis: 44%; }
-  .guide--panel .player { left: 24px; right: auto; width: min(560px, calc(max(50vw, 560px) - 48px)); }
+  .guide--panel .player { left: 24px; right: auto; width: min(560px, calc(var(--panel-w, 50vw) - 48px)); }
 
   /* ---- Page complète : deux colonnes, colonne « En bref » à droite ---- */
   .guide--page { animation: none; }
@@ -624,3 +625,17 @@ img { display: block; max-width: 100%; }
 .brand-bar { background: #111; padding: 16px 18px; border-radius: var(--r-lg); box-shadow: 0 4px 14px rgba(0,0,0,.14); }
 /* Logo de la page complète : sur fond noir, comme la barre de marque */
 .guide-brand .brand { background: #111; padding: 8px 10px; border-radius: var(--r-md); }
+
+/* Mêmes réglages de Fraunces partout où la police des titres est utilisée */
+.progress-pct, .progress-head strong, .gm-marker-label, .fact-value, .video strong, .list-sep strong { font-variation-settings: var(--font-title-axes); }
+
+/* ---------- Lieux visités dans la liste ---------- */
+.place-card.is-visited { background: #effaf2; border-color: #bfe8cb; }
+.place-card.is-visited .pc-body h3 { color: #14532d; }
+.place-card.is-visited .pc-go { background: #d6f2de; color: #15803d; }
+.place-card.is-visited:hover .pc-go { background: #16a34a; color: #fff; }
+.list-sep { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 6px 2px -2px; }
+.list-sep strong { font-family: var(--font-title); font-weight: 700; font-size: 16px; color: var(--ink); display: inline-flex; align-items: center; gap: 7px; }
+.list-sep span { font-size: 12.5px; color: var(--ink-3); }
+.list-sep--done strong { color: #15803d; }
+.list-sep--done strong i { width: 18px; height: 18px; border-radius: 5px; background: #16a34a; color: #fff; display: grid; place-items: center; }
