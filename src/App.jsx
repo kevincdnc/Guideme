@@ -42,11 +42,10 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
     >
       <div className="pc-thumb">
         {place.thumb || place.hero ? <SafeImg src={place.thumb || place.hero.src} alt="" loading="lazy" /> : <span className="pc-thumb-empty"><Icon name={place.icon || 'pin'} size={22} /></span>}
-        {!soon && (visited
-          ? <span className="pc-badge is-visited" title="Déjà visité"><Icon name="check" size={13} stroke={3} /></span>
-          : <span className="pc-badge"><Icon name={place.icon || 'pin'} size={13} stroke={2.2} /></span>)}
+        {visited && <span className="pc-badge is-visited" title="Déjà visité"><Icon name="check" size={11} stroke={3.2} /></span>}
       </div>
       <div className="pc-body">
+        <span className="pc-cat">{place.category}</span>
         <h3>{place.shortTitle}</h3>
         <span className="pc-meta">
           <span><Icon name="pin" size={13} /> {place.commune.split(' · ')[0].split(' & ')[0]}</span>
@@ -54,7 +53,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited }) {
           {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={13} /> {place.records.length}</span>}
         </span>
       </div>
-      {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go" aria-hidden="true"><Icon name="chevron" size={18} stroke={2.2} /></span>}
+      {soon ? <span className="pc-soon">Bientôt</span> : <span className="pc-go" aria-hidden="true"><Icon name="chevron" size={16} stroke={2} /></span>}
     </div>
   );
 }
@@ -282,7 +281,7 @@ export default function App() {
         <aside className="sidebar">
           <header className="brand-bar"><Brand /></header>
           <div className="sidebar-intro">
-            <h1>Les spots emblématiques du Finistère <img className="flag-emoji" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="Drapeau du Finistère" /></h1>
+            <h1>Tous les spots emblématiques du Finistère <img className="flag-emoji" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="Drapeau du Finistère" /></h1>
             <p>Phares, ports, patrimoine, sites naturels…</p>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} wrap />
