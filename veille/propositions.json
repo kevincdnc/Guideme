@@ -1,1 +1,341 @@
-[]
+[
+  {
+    "id": "P-0001",
+    "fiche": "ile-de-sein",
+    "type": "video",
+    "titre": "Actualités françaises : de Gaulle à Sein en 1946",
+    "contenu": "En septembre 1946, les Actualités françaises montrent la visite du général de Gaulle à l'île de Sein. Il vient remettre à l'île la croix de la Libération et rendre hommage aux Sénans, parmi les premiers à l'avoir rejoint à Londres. Le film dure 1 min 47.",
+    "section": "film",
+    "sources": [
+      {
+        "url": "https://www.ina.fr/ina-eclaire-actu/video/afe85001642/le-voyage-du-general-de-gaulle-a-l-ile-de-sein",
+        "editeur": "INA",
+        "titre": "Le voyage du général De Gaulle à l'île de Sein (Les Actualités Françaises)",
+        "date": "1946-09-05"
+      },
+      {
+        "url": "https://www.ina.fr/video/AFE85001642",
+        "editeur": "INA",
+        "titre": "Le voyage du général De Gaulle à l'île de Sein - Vidéo Ina.fr",
+        "date": "1946-09-05"
+      }
+    ],
+    "media": {
+      "page": "https://www.ina.fr/ina-eclaire-actu/video/afe85001642/le-voyage-du-general-de-gaulle-a-l-ile-de-sein",
+      "embed": "",
+      "licence": "Lecteur officiel INA (code d'intégration fourni par ina.fr, bouton Partager > Intégrer)"
+    },
+    "confiance": "moyenne",
+    "note": "Pages ina.fr inaccessibles depuis cette session (hôte bloqué par le proxy) : titre, date de diffusion (5 septembre 1946), durée et résumé viennent uniquement des extraits de recherche. L'URL d'intégration player.ina.fr contient une clé propre à chaque vidéo : elle n'a PAS pu être vérifiée, à récupérer sur la page avant intégration. Le 5 septembre est la date de diffusion du journal ; la cérémonie elle-même a eu lieu le 30 août 1946 (voir proposition suivante). Autres archives INA repérées, non vérifiées : réactions des îliens à la mort de De Gaulle (CAF97510689), pollution par le fioul en 1976 (CAB7601175901), « Cathy et François », dernier couple de pêcheurs de l'île, France 3 1993 (I00013727).",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0002",
+    "fiche": "ile-de-sein",
+    "type": "fait",
+    "titre": "1946 : la croix de la Libération remise sur l'île",
+    "contenu": "L'île de Sein est faite compagnon de la Libération par décret du 1er janvier 1946. Le 30 août 1946, le général de Gaulle vient lui-même lui remettre la croix, lors d'une cérémonie simple sur l'île. Seules cinq communes portent ce titre : Paris, Nantes, Grenoble, Vassieux-en-Vercors et l'île de Sein.",
+    "section": "histoire",
+    "sources": [
+      {
+        "url": "https://www.ordredelaliberation.fr/en/ile-de-sein",
+        "editeur": "Musée de l'ordre de la Libération",
+        "titre": "Île de Sein",
+        "date": ""
+      },
+      {
+        "url": "https://www.paris.fr/pages/paris-l-une-des-cinq-communes-compagnon-de-la-liberation-28168",
+        "editeur": "Ville de Paris",
+        "titre": "Paris, l'une des cinq communes « Compagnon de la Libération »",
+        "date": ""
+      }
+    ],
+    "media": null,
+    "confiance": "moyenne",
+    "note": "Site de l'Ordre de la Libération inaccessible depuis cette session : décret et date de remise lus seulement dans les extraits de recherche. Un article de 1950 repris par malraux.org donne le 31 août 1946. La date du 30 août, celle de l'Ordre, est à privilégier. Peut aussi alimenter la frise : « 1946 : de Gaulle remet la croix de la Libération à l'île (30 août) ».",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0003",
+    "fiche": "ile-de-sein",
+    "type": "anecdote",
+    "titre": "Le marin et la croix de Lorraine",
+    "contenu": "Sur l'île, un monument aux Forces françaises libres montre un jeune marin adossé à une croix de Lorraine. Il est l'œuvre du sculpteur René Quillivic. Le général de Gaulle, alors président de la République, l'a inauguré le 7 septembre 1960. Il porte la devise bretonne « Kentoc'h mervel ».",
+    "section": "insolite",
+    "sources": [
+      {
+        "url": "https://www.cheminsdememoire.gouv.fr/en/monument-ffl-ile-de-sein",
+        "editeur": "Chemins de mémoire (ministère des Armées)",
+        "titre": "Monument FFL - Ile de Sein",
+        "date": ""
+      },
+      {
+        "url": "https://www.ordredelaliberation.fr/sites/default/files/media/fichers/Fiche%20p%C3%A9dagogique%20vid%C3%A9o%20Nota%20Bene%208_0.pdf",
+        "editeur": "Musée de l'ordre de la Libération",
+        "titre": "Fiche pédagogique vidéo Nota Bene 8 (Les Bretons, premiers sur la Résistance - L'île de Sein)",
+        "date": ""
+      }
+    ],
+    "media": null,
+    "confiance": "moyenne",
+    "note": "Lu dans les extraits de recherche, pages non ouvertes. Chemins de mémoire indique « Quillivic » ; le prénom René vient de sa page « René Quillivic » sur le même site. Les extraits ne traduisent pas « Kentoc'h mervel » (couramment rendu par « plutôt mourir ») : traduction à vérifier avant de l'ajouter. Le monument n'est pas encore mentionné dans la fiche.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0004",
+    "fiche": "ile-de-sein",
+    "type": "fait",
+    "titre": "Une île qui boit l'eau de mer",
+    "contenu": "Sein n'a aucune source d'eau douce : depuis 1973, l'île produit son eau potable en dessalant l'eau de mer. L'usine est protégée par une digue construite en 2011. Lors des grandes marées de fin mars 2023, cette digue a été presque détruite sur 50 mètres. L'État a financé sa réfection, chiffrée à 562 400 euros.",
+    "section": "essentiel",
+    "sources": [
+      {
+        "url": "https://www.finistere.gouv.fr/contenu/telechargement/58012/446253/file/2023.06.22 - CP Point sur les travaux de l'Ile de Sein.pdf",
+        "editeur": "Préfecture du Finistère",
+        "titre": "Communiqué de presse : point sur les travaux de l'île de Sein",
+        "date": "2023-06-22"
+      },
+      {
+        "url": "https://www.assemblee-nationale.fr/dyn/16/questions/QANR5L16QE7500",
+        "editeur": "Assemblée nationale",
+        "titre": "Question écrite n° 7500 : Développement de la technique de désalinisation en France",
+        "date": "2023-04-25"
+      }
+    ],
+    "media": null,
+    "confiance": "moyenne",
+    "note": "Documents non ouverts (hôtes bloqués), contenu lu dans les extraits. La date de 1973 figure dans le texte d'une question de députée, pas dans une réponse ministérielle : la confirmer si possible auprès de la mairie ou d'Eau du Ponant. Financement 2023 d'après la préfecture : AFITF 72 400 €, DETR 170 000 €, Fonds vert 320 000 €. Des marchés publics de 2025 sur la « Digue du Phare » laissent penser que les travaux se poursuivent, mais leur état actuel n'est pas connu.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0005",
+    "fiche": "ile-de-sein",
+    "type": "chiffre",
+    "titre": "263 habitants",
+    "contenu": "L'île compte 263 habitants selon le recensement de l'Insee (population municipale 2023, en vigueur depuis le 1er janvier 2026).",
+    "section": "chiffres",
+    "sources": [
+      {
+        "url": "https://www.insee.fr/fr/statistiques/fichier/8680694/dep29.pdf",
+        "editeur": "Insee",
+        "titre": "Populations de référence 2023 : Finistère",
+        "date": "2025-12-29"
+      },
+      {
+        "url": "https://www.banatic.interieur.gouv.fr/commune/29083-%C3%8Ele-de-Sein",
+        "editeur": "Ministère de l'Intérieur (Banatic)",
+        "titre": "Commune Île-de-Sein",
+        "date": ""
+      }
+    ],
+    "media": null,
+    "confiance": "moyenne",
+    "note": "Le chiffre 263 vient de la fiche Banatic et d'agrégateurs, lus en extraits. La ligne 29083 du PDF Insee n'a pas pu être lue : à vérifier. Les populations 2023 sont en vigueur au 1er janvier 2026 (décret n° 2025-1362 du 26 décembre 2025) ; la date du PDF Insee est approximative. Ce chiffre pourrait remplacer un des « facts » ou figurer dans l'essentiel.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0006",
+    "fiche": "ile-de-sein",
+    "type": "fait",
+    "titre": "« Mourir pour des images », le film sur le tournage",
+    "contenu": "En 1971, le cinéaste breton René Vautier revient sur le tournage de « La Mer et les Jours » et sur la mort d'Alain Kaminker dans « Mourir pour des images ». Le commentaire est signé Chris Marker. Le film rend hommage à André Dumaître, Raymond Vogel et Alain Kaminker.",
+    "section": "film",
+    "sources": [
+      {
+        "url": "https://www.centrepompidou.fr/fr/programme/agenda/evenement/ciyoyX",
+        "editeur": "Centre Pompidou",
+        "titre": "Cinéma / Vidéo : Mourir pour des images (programme)",
+        "date": ""
+      },
+      {
+        "url": "https://www.unifrance.org/film/49967/mourir-pour-des-images",
+        "editeur": "Unifrance",
+        "titre": "Mourir pour des images",
+        "date": ""
+      }
+    ],
+    "media": null,
+    "confiance": "moyenne",
+    "note": "Lu uniquement dans les extraits de recherche. L'année 1971 et le nom de Chris Marker viennent des extraits (Centre Pompidou) : à confirmer sur la notice Unifrance. Unifrance écrit « Kamenker », d'autres sources « Kaminker », l'orthographe de la fiche. Aucun lecteur officiel repéré pour ce film : pas de proposition d'intégration.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0007",
+    "fiche": "pointe-du-raz",
+    "type": "correction",
+    "titre": "Fréquentation : plutôt 800 000 visiteurs par an",
+    "contenu": "La pointe du Raz reçoit environ 800 000 visiteurs par an. Dans les années 1990, avant la réhabilitation du site, on en comptait plus d'un million.",
+    "section": "chiffres",
+    "sources": [
+      {
+        "url": "https://www.ouest-france.fr/bretagne/quimper-29000/finistere-800-000-visiteurs-par-la-pointe-du-raz-6064640",
+        "editeur": "Ouest-France",
+        "titre": "Finistère. 800 000 visiteurs par an à la pointe du Raz",
+        "date": "2018-11"
+      },
+      {
+        "url": "https://figaronautisme.meteoconsult.fr/actus-nautisme-escales/2024-09-29/36876-pointe-du-raz-escale-aux-airs-de-bout-du-monde",
+        "editeur": "Figaro Nautisme / Météo Consult",
+        "titre": "Pointe du Raz : escale aux airs de bout du monde",
+        "date": "2024-09-29"
+      }
+    ],
+    "confiance": "moyenne",
+    "note": "Le million correspond aux années 1990-2000 (INA, dossier de labellisation 2004). Ouest-France 2018 et Figaro Nautisme 2024 donnent 800 000, sans méthode de comptage publiée.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0008",
+    "fiche": "pointe-du-raz",
+    "type": "video",
+    "titre": "Archive INA : la pointe du Raz avant la réhabilitation (1994)",
+    "contenu": "Au début des années 1990, la pointe est défigurée par les parkings et la cité commerciale de 1962. L'État prévoit de les démolir et réserve 40 millions de francs pour rendre au site son aspect d'origine. Ce reportage montre la pointe juste avant les travaux.",
+    "section": "film",
+    "sources": [
+      {
+        "url": "https://fresques.ina.fr/ouest-en-memoire/fiche-media/Region00308/la-pointe-du-raz.html",
+        "editeur": "INA, fresque l'Ouest en mémoire",
+        "titre": "La pointe du Raz",
+        "date": ""
+      },
+      {
+        "url": "http://www.ina.fr/video/CAB94027075",
+        "editeur": "INA",
+        "titre": "La pointe du Raz (Journal de France 2)",
+        "date": "1994-02-22"
+      }
+    ],
+    "media": {
+      "page": "https://fresques.ina.fr/ouest-en-memoire/fiche-media/Region00308/la-pointe-du-raz.html",
+      "embed": "",
+      "licence": "Lecteur officiel INA (à confirmer)"
+    },
+    "confiance": "moyenne",
+    "note": "Code d'intégration à récupérer sur la page INA. Autres archives repérées : « A Raz, la pointe » (1993), « La revégétalisation de la Pointe du Raz » (1997), un sujet en breton (1984).",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0009",
+    "fiche": "pointe-du-raz",
+    "type": "anecdote",
+    "titre": "2022 : un hélicoptère frôle les rochers de la Vieille",
+    "contenu": "Le 6 juillet 2022, un hélicoptère travaille pour les Phares et Balises au-dessus de la Vieille, pendant le chantier de la lanterne. Filmé par une caméra fixe, il plonge vers les rochers et se redresse au dernier moment. Un agent, en haut du phare, est blessé et transporté à l'hôpital de la Cavale Blanche, à Brest, sans que ses jours soient en danger. La gendarmerie des transports aériens ouvre une enquête.",
+    "section": "insolite",
+    "sources": [
+      {
+        "url": "https://www.francebleu.fr/infos/faits-divers-justice/phare-de-la-vieille-grosse-frayeur-lors-d-une-manoeuvre-d-helcioptere-1657235101",
+        "editeur": "France Bleu (ICI)",
+        "titre": "Grosse frayeur lors d'une manœuvre d'hélicoptère au Phare de la Vieille",
+        "date": "2022-07-07"
+      },
+      {
+        "url": "https://www.radioscoop.com/infos/video-un-crash-d-helicoptere-evite-de-justesse-dans-le-finistere_250192",
+        "editeur": "Radio Scoop",
+        "titre": "Un crash d'hélicoptère évité de justesse dans le Finistère",
+        "date": "2022-07"
+      }
+    ],
+    "confiance": "moyenne",
+    "note": "La cause avancée (charge coincée) n'est qu'une hypothèse syndicale : non reprise.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0010",
+    "fiche": "pointe-du-raz",
+    "type": "fait",
+    "titre": "Notre-Dame des Naufragés, inaugurée le 3 juillet 1904",
+    "contenu": "La statue de Notre-Dame des Naufragés, en marbre de Carrare, est inaugurée et bénie le dimanche 3 juillet 1904, sur un socle de granit dessiné par le chanoine Jean-Marie Abgrall.",
+    "section": "essentiel",
+    "sources": [
+      {
+        "url": "https://musee-breton.finistere.fr/fr/notice/2017-15-17-statue-notre-dame-des-naufrages-a-la-pointe-du-raz-musee-departemental-breton-ea1ae1f4-70ca-4ed1-9857-528d5834d79b",
+        "editeur": "Musée départemental breton (Quimper)",
+        "titre": "Statue Notre-Dame des Naufragés à la Pointe du Raz",
+        "date": ""
+      },
+      {
+        "url": "https://pop.culture.gouv.fr/notice/merimee/IA00006276",
+        "editeur": "Ministère de la Culture, POP (Mérimée)",
+        "titre": "Monument Notre-Dame-des-Naufragés (Plogoff)",
+        "date": ""
+      }
+    ],
+    "confiance": "moyenne",
+    "note": "L'Inventaire met un point d'interrogation à l'année ; le don du terrain par Yves Kersaudy ne vient que d'extraits secondaires.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0011",
+    "fiche": "pointe-du-raz",
+    "type": "fait",
+    "titre": "Le radar allemand du Men Tan, à Lescoff",
+    "contenu": "Sous l'Occupation, l'armée allemande installe une station radar au Men Tan, à Lescoff, tout près de la pointe : un bunker portant une grande antenne de radar Mammut. Le chantier commence en septembre 1942 et emploie environ 400 ouvriers français jusqu'en mars 1943. L'antenne est démantelée vers 1946. Le site se visite parfois lors des Journées européennes du patrimoine.",
+    "section": "insolite",
+    "sources": [
+      {
+        "url": "https://relecture.patrimoine.bzh/dossier/pdf/787944b0-b937-470d-8704-5efd5a9f55ef/station-radar-du-men-tan-qu-13-lescoff-pointe-du-raz-plogoff.pdf",
+        "editeur": "Inventaire du patrimoine culturel, Région Bretagne",
+        "titre": "Station radar du Men Tan (Qu 13), Lescoff, pointe du Raz (Plogoff)",
+        "date": "2025-09"
+      },
+      {
+        "url": "https://www.capsizuntourisme.fr/agenda-des-festivites-et-programme-des-activites/journees-europeennes-du-patrimoine-visite-de-l-ancienne-station-radar-du-men-tan-6686510",
+        "editeur": "Office de tourisme Cap Sizun",
+        "titre": "Visite de l'ancienne station radar du Men Tan",
+        "date": ""
+      }
+    ],
+    "confiance": "moyenne",
+    "note": "Relire le dossier d'Inventaire complet avant intégration.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  },
+  {
+    "id": "P-0012",
+    "fiche": "pointe-du-raz",
+    "type": "pratique",
+    "titre": "Parking : tarifs et navettes à jour",
+    "contenu": "Le parking est payant d'avril à fin octobre, gratuit de novembre à mars : 8 € par voiture, moto ou camping-car, 30 € pour un car ; abonnement annuel voiture à 20 €. Une navette relie la Maison de site au sémaphore, 800 m plus loin. En juillet et août, une navette sur réservation ramène les randonneurs de la pointe du Van à la pointe du Raz.",
+    "section": "pratique",
+    "sources": [
+      {
+        "url": "https://www.toutcommenceenfinistere.com/pointe-du-raz/infos-pratiques/",
+        "editeur": "Tout commence en Finistère (gestionnaire du Grand Site)",
+        "titre": "Pointe du Raz - Infos pratiques",
+        "date": ""
+      },
+      {
+        "url": "https://www.capsizuntourisme.fr/services/navette-pointe-du-raz-pointe-du-van-6349653",
+        "editeur": "Office de tourisme Cap Sizun",
+        "titre": "Navette Pointe du Raz - Pointe du Van",
+        "date": ""
+      }
+    ],
+    "confiance": "moyenne",
+    "note": "Lu par extraits de recherche ; à revérifier chaque printemps.",
+    "proposeLe": "2026-11-25",
+    "statut": "a-valider",
+    "decision": ""
+  }
+]
