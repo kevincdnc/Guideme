@@ -511,7 +511,7 @@ img { display: block; max-width: 100%; }
   .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: 0; }
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
   .maplibregl-ctrl-bottom-left { margin-left: 480px; }
-  .has-guide .maplibregl-ctrl-bottom-left { margin-left: var(--panel-w, 600px); }
+  .has-guide .maplibregl-ctrl-bottom-left { margin-left: 480px; }
 
   /* Barre du haut commune */
   .guide-bar { padding: 14px 24px; gap: 10px; }
@@ -920,3 +920,51 @@ img { display: block; max-width: 100%; }
 .brand-bar .progress-dial, .brand-bar .progress-ring { width: 34px; height: 34px; }
 .brand-bar .progress-pct { font-size: 9.5px; }
 .brand-bar .progress-pct small { font-size: 7px; }
+
+/* ---------- Fiche en pop-up (desktop) : largeur fixe, deux colonnes, carte du Finistère à droite ---------- */
+@media (min-width: 900px) {
+  .guide--modal { animation: none; }
+  .guide--modal .mobile-only { display: none !important; }
+  .guide--modal .guide-bar:not(.is-compact) .guide-bar-title { display: none; }
+  .guide--modal .guide-bar .brand { background: rgba(255,255,255,.96); padding: 8px 14px; border-radius: var(--r-md); box-shadow: 0 2px 10px rgba(15,23,42,.12); }
+  .guide--modal .guide-bar.is-compact .brand { box-shadow: none; }
+  .guide--modal .hero { height: min(52vh, 480px); }
+  .guide--modal .guide-layout { max-width: none; margin: 0; display: grid; align-items: start; }
+  .guide--modal .guide-main { min-width: 0; }
+  .guide--modal .guide-head { margin-top: -56px; padding: 30px 36px 8px; border-radius: var(--r-xl); margin-left: -36px; margin-right: -36px; }
+  .guide--modal .guide-head h1 { font-size: 54px; }
+  .guide--modal .guide-teaser { font-size: 19px; max-width: 40em; }
+  .guide--modal .section { padding: 34px 0 6px; }
+  .guide--modal .section h2 { font-size: 32px; }
+  .guide--modal .para { font-size: 17.5px; max-width: 40em; }
+  .guide--modal .anecdotes { display: block; columns: 2; column-gap: 14px; }
+  .guide--modal .anecdote { break-inside: avoid; margin-bottom: 14px; }
+  .guide--modal .gallery { margin: 0; padding: 2px 0 8px; scroll-padding: 0; }
+  .guide--modal .gallery-item { flex-basis: 46%; max-width: none; }
+  .guide--modal .gallery--photo .gallery-item { flex-basis: 32%; max-width: none; }
+  .guide--modal .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .guide--modal .guide-aside { position: sticky; top: 86px; margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .guide--modal .player { left: max(32px, calc((100vw - 1180px) / 2 + 32px)); right: auto; width: min(520px, calc(100vw - 340px - 56px - 96px)); bottom: 20px; }
+  .guide-backdrop { position: absolute; z-index: 19; inset: 0; background: rgba(15,23,42,.42); animation: fade .2s ease; }
+  .guide--modal {
+    inset: 24px auto 24px 50%; width: min(1160px, calc(100vw - 64px)); transform: translateX(-50%);
+    border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(15,23,42,.35);
+    animation: guideModalIn .28s cubic-bezier(.2,.8,.25,1);
+  }
+  @keyframes guideModalIn { from { opacity: 0; transform: translate(-50%, 18px) scale(.985); } to { opacity: 1; transform: translateX(-50%); } }
+  .guide--modal .hero { height: min(42vh, 400px); }
+  .guide--modal .guide-head h1 { font-size: 44px; }
+  .guide--modal .guide-layout { padding: 0 36px; gap: 44px; grid-template-columns: minmax(0, 1fr) 320px; }
+  .guide--modal .guide-aside { top: 78px; }
+  .guide--modal .section--pratique { display: none; }
+  .guide--modal .guide-bar { padding-left: 20px; padding-right: 20px; }
+  .guide--modal .player { left: 24px; right: auto; width: min(520px, 50%); bottom: 20px; }
+  .minimap--overview { height: 320px; }
+  .minimap--overview .minimap-pin { width: 20px; height: 20px; }
+}
+@media (min-width: 900px) {
+  .guide-backdrop { background: rgba(15,23,42,.5); backdrop-filter: blur(2px); }
+  .guide--modal .hero-credit { bottom: 66px; }
+  .guide--modal .keyfigs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .guide--modal .keyfig dt { font-size: 24px; }
+}

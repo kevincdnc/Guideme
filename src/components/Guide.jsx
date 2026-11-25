@@ -9,6 +9,7 @@ import { useSpeech } from '../hooks/useSpeech.js';
 import { useVisited } from '../hooks/useVisited.js';
 import maplibregl from 'maplibre-gl';
 import MAP_STYLE from '../data/map-style.json';
+import { FINISTERE_BOUNDS } from '../data/places.js';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
 function buildBlocks(place) {
@@ -129,21 +130,21 @@ function FilmBlock({ film }) {
 }
 
 // Petite carte du lieu (non interactive) : un clic ouvre la grande carte
-function MiniMap({ place }) {
+function MiniMap({ place, overview }) {
   const ref = useRef(null);
   useEffect(() => {
     if (!ref.current) return undefined;
     let map;
     try {
-      map = new maplibregl.Map({ container: ref.current, style: MAP_STYLE, center: place.coords, zoom: place.miniZoom || 10.4, interactive: false, attributionControl: false, fadeDuration: 0 });
+      map = new maplibregl.Map({ container: ref.current, style: MAP_STYLE, ...(overview ? { bounds: FINISTERE_BOUNDS, fitBoundsOptions: { padding: 14 } } : { center: place.coords, zoom: place.miniZoom || 10.4 }), interactive: false, attributionControl: false, fadeDuration: 0 });
       const el = document.createElement('div');
       el.className = 'minimap-pin';
       new maplibregl.Marker({ element: el }).setLngLat(place.coords).addTo(map);
     } catch (e) { /* WebGL indisponible : la carte reste vide */ }
     return () => map?.remove();
-  }, [place]);
+  }, [place, overview]);
   return (
-    <div className="minimap" aria-label={`Carte : ${place.shortTitle}`}>
+    <div className={`minimap ${overview ? 'minimap--overview' : ''}`} aria-label={`Carte : ${place.shortTitle}`}>
       <div ref={ref} className="minimap-canvas" />
       <span className="minimap-label"><Icon name="pin" size={14} /> {place.commune.split(' · ')[0]}</span>
     </div>
@@ -151,10 +152,10 @@ function MiniMap({ place }) {
 }
 
 // Carte, itinéraire, puis infos pratiques repliées
-function Practical({ place, directions }) {
+function Practical({ place, directions, overview }) {
   return (
     <div className="practical-box">
-      <MiniMap place={place} />
+      <MiniMap place={place} overview={overview} />
       <a className="btn btn--primary btn--block" href={directions} target="_blank" rel="noreferrer">
         <Icon name="route" size={19} /> Itinéraire
       </a>
@@ -499,8 +500,8 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         <aside className="guide-aside">
           <div className="aside-card">
-            <h2 className="aside-title">Y aller</h2>
-            <Practical place={place} directions={directions} />
+            <h2 className="aside-title">Dans le Finistère</h2>
+            <Practical place={place} directions={directions} overview />
           </div>
         </aside>
         </div>

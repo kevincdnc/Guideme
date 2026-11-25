@@ -263,7 +263,7 @@ export default function App() {
   const panelW = desktop ? Math.round(Math.max(560, Math.min(window.innerWidth * 0.44, 680))) : 0;
   // Espace laissé à la carte : carrousel en bas (mobile), liste et fiche à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: place ? panelW + 40 : SIDEBAR_W + 40, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: SIDEBAR_W + 40, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -332,7 +332,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: place ? panelW + 16 : SIDEBAR_W + 16 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: SIDEBAR_W + 16 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
       </div>
@@ -365,7 +365,8 @@ export default function App() {
         </div>
       )}
 
-      {place && <Guide key={place.id} place={place} onClose={close} variant="panel" />}
+      {place && desktop && <div className="guide-backdrop" onClick={close} aria-hidden="true" />}
+      {place && <Guide key={place.id} place={place} onClose={close} variant="modal" />}
     </div>
   );
 }
