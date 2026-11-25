@@ -968,3 +968,16 @@ img { display: block; max-width: 100%; }
   .guide--modal .keyfigs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .guide--modal .keyfig dt { font-size: 24px; }
 }
+
+/* Pop-up : photos en couverture, puis deux colonnes alignées sur le même plan, plus d'air */
+@media (min-width: 900px) {
+  .guide--modal .hero { height: min(40vh, 380px); }
+  .guide--modal .hero-credit { bottom: 12px; }
+  .guide--modal .guide-layout { padding: 0 64px; gap: 56px; grid-template-columns: minmax(0, 1fr) 320px; }
+  .guide--modal .guide-head { margin: 0; padding: 40px 0 8px; border-radius: 0; background: none; }
+  .guide--modal .guide-head h1 { font-size: 36px; line-height: 1.1; }
+  .guide--modal .guide-aside { margin-top: 40px; top: 120px; }
+  .guide--modal .section { padding: 56px 0 8px; }
+  .guide--modal .section h2 { font-size: 28px; }
+  .guide--modal .guide-bar { padding-left: 64px; padding-right: 24px; }
+}
