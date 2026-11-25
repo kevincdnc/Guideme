@@ -64,9 +64,9 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
           onClick={(e) => { e.stopPropagation(); onToggleVisited(place.id); }}
           aria-pressed={!!visited}
           aria-label={visited ? `${place.shortTitle} : déjà visité (décocher)` : `Marquer ${place.shortTitle} comme déjà visité`}
-          title={visited ? 'Déjà visité' : 'Déjà visité ?'}
         >
           <Icon name="check" size={12} stroke={3.2} />
+          <span className="pc-tip" aria-hidden="true">{visited ? 'Déjà visité · retirer' : 'Je l\'ai déjà visité'}</span>
         </button>
       )}
     </div>
@@ -238,10 +238,9 @@ export default function App() {
     return () => clearTimeout(t);
   }, [query, visible]);
   const available = visible.filter((p) => p.available).length;
-  // Lieux visités en tête de liste
-  const visitedList = visible.filter((p) => visited.includes(p.id));
   const [showVisited, setShowVisited] = useState(false);
-  const toVisit = visible.filter((p) => !visited.includes(p.id));
+  const allVisited = PLACES.filter((p) => visited.includes(p.id));
+  const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
     setTag(t);
     const list = PLACES.filter((p) => !t || p.tags?.includes(t));
@@ -336,21 +335,35 @@ export default function App() {
             <h1>Tous les spots emblématiques du Finistère</h1>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} wrap query={query} onQuery={setQuery} />
-          {visitedList.length > 0 && (
-            <button className="visited-toggle" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
-              <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
-              Déjà visités <b>{visitedList.length}</b>
-              <Icon name="chevron" size={15} style={{ marginLeft: 'auto', transform: showVisited ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
-            </button>
-          )}
           <div className="sidebar-list">
             {visible.length === 0 && <p className="sidebar-empty">Aucun spot ne correspond à « {query} ».</p>}
-            {showVisited && visitedList.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited onToggleVisited={toggleVisited} />
+            {visible.map((p) => (
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
             ))}
-            {toVisit.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} onToggleVisited={toggleVisited} />
-            ))}
+          </div>
+          <div className="visited-dock-wrap">
+          <div className={`visited-dock ${showVisited ? 'is-open' : ''}`}>
+            {showVisited && (
+              <ul className="visited-dock-list">
+                {allVisited.length === 0 && <li className="visited-dock-empty">Coche la case d'un spot pour l'ajouter ici.</li>}
+                {allVisited.map((p) => (
+                  <li key={p.id}>
+                    <button onClick={() => open(p.id)}>
+                      {p.hero && <SafeImg src={p.thumb || p.hero.src} alt="" loading="lazy" />}
+                      <span>{p.shortTitle}</span>
+                      <small>{p.commune.split(' · ')[0].split(' & ')[0]}</small>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <button className="visited-dock-bar" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
+              <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
+              Déjà visités <b>{allVisited.length}</b>
+              <span className="visited-dock-total">{totalSpots} spots sur guideme</span>
+              <Icon name="chevron" size={15} style={{ transform: showVisited ? 'rotate(90deg)' : 'rotate(-90deg)', transition: 'transform .2s' }} />
+            </button>
+          </div>
           </div>
         </aside>
       )}
@@ -359,7 +372,7 @@ export default function App() {
         <div className="rail-wrap" ref={railWrapRef}>
           <TagBar value={tag} onChange={changeTag} places={PLACES} query={query} onQuery={setQuery} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
-            {[...toVisit, ...visitedList].map((p) => (
+            {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
             ))}
           </div>
