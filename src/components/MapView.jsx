@@ -83,6 +83,7 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 // Vignette légère (120 px) pour l'info-bulle
 const thumbOf = (p) => { const src = p.thumb || p.hero?.src; return src ? src.replace(/\/(\d+)px-/, '/120px-') : ''; };
 
+const STAR_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.25 4.1 1 5.8L12 16.9l-5.25 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg>';
 const FLAG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4" fill="none"/><path d="M6 4.5c2.6-1.4 5-.2 7 .8s4.2 1.6 6-.3v8.4c-1.8 1.9-4 1.3-6 .3s-4.4-2.2-7-.8"/></svg>';
 
 function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace) {
@@ -97,9 +98,9 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
     <span class="gm-marker-label">
       ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
       <span class="gm-pop-main">
-        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${FLAG_SVG}</i>${esc(place.shortTitle)}</span>
+        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
         ${place.available && place.facts?.length ? `<span class="gm-pop-facts">${place.facts.slice(0, 2).map((f) => `<span><b>${esc(f.value)}</b>${esc(f.label.split(',')[0])}</span>`).join('')}</span>` : ''}
-        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="À visiter" aria-label="À visiter">${FLAG_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="J'y suis allé" aria-label="J'y suis allé">${FLAG_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
+        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="Favori" aria-label="Ajouter aux favoris">${STAR_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="Déjà visité" aria-label="Je l'ai déjà visité">${CHECK_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
       </span>
     </span>
     <span class="gm-pin">
@@ -109,8 +110,8 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
         <ellipse cx="16" cy="13" rx="6" ry="3.6" fill="#fff" opacity=".28" transform="rotate(-25 16 13)"/>
       </svg>
       <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
-      <span class="gm-want" aria-hidden="true">${FLAG_SVG.replace('currentColor', '#fff').replace('currentColor', '#fff')}</span>
-      <span class="gm-check" aria-hidden="true">${FLAG_SVG}</span>
+      <span class="gm-want" aria-hidden="true">${STAR_SVG}</span>
+      <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
     <span class="gm-dot" aria-hidden="true"></span>
     <span class="gm-marker-ground"></span>

@@ -356,11 +356,12 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                 <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
               </button>
             )}
-            <button className={`action-btn flag-btn flag-btn--want ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav}>
-              <Icon name="flag" size={17} stroke={2} /> À visiter
+            <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
+              <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
+              {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
             </button>
-            <button className={`action-btn flag-btn flag-btn--done ${isVisited ? 'is-on' : ''}`} onClick={() => toggleVisited(place.id)} aria-pressed={isVisited}>
-              <Icon name="flag" size={17} stroke={2} /> {isVisited ? "J'y suis allé" : "J'y suis allé ?"}
+            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'} title={isFav ? 'Dans mes favoris' : 'Ajouter aux favoris'}>
+              <Icon name="star" size={18} stroke={2} />
             </button>
           </div>
           <p className="guide-teaser">{place.teaser}</p>

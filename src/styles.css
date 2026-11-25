@@ -1230,3 +1230,22 @@ img { display: block; max-width: 100%; }
 .profile-btn, .profile-btn:has(.avatar-ph) { overflow: visible; }
 .profile-btn .avatar-ph { border-radius: 50%; overflow: hidden; }
 .profile-badge { right: -5px; top: -5px; min-width: 15px; height: 15px; font-size: 9.5px; }
+
+/* ---------- Retour : coche verte « déjà visité », étoile jaune « favori » ---------- */
+.pc-flag.is-on svg { fill: none; }
+.pc-flag--want.is-on svg { fill: currentColor; }
+.pc-flag--want.is-on { color: #713f12; }
+.fav-btn.is-on { background: var(--flag-want-soft); border-color: var(--flag-want); color: #a16207; }
+.fav-btn.is-on svg { fill: var(--flag-want); color: #a16207; }
+.tag--visited svg { fill: none; }
+.tag--wanted svg { fill: var(--flag-want); }
+.progress-check svg { fill: none; }
+.gm-pop-flag--done svg, .gm-marker.is-visited .gm-pop-flag--done svg { fill: none !important; width: 15px; height: 15px; }
+.gm-check svg { fill: none; }
+.gm-label-check svg { fill: none; }
+.gm-want svg, .gm-want svg path { fill: #713f12; stroke: #713f12; }
+.gm-want svg path:first-child { fill: #713f12; }
+.gm-marker.is-visited .gm-dot::after { width: 7px; height: 4px; border: solid #fff; border-width: 0 0 2.4px 2.4px; background: none; transform: translateY(-1px) rotate(-45deg); }
+.map.z-far .gm-marker.is-visited .gm-dot::after { width: 5px; height: 3px; border-width: 0 0 2px 2px; }
+.pc-flag.is-on svg, .fav-btn.is-on svg, .visit-btn.is-checked .visit-box svg, .gm-marker.is-visited .gm-check svg { animation: flagPlant .45s cubic-bezier(.3,1.5,.5,1); transform-origin: 50% 50%; }
+.sidebar-made { color: var(--ink-3); font-style: italic; }
