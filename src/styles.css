@@ -981,3 +981,25 @@ img { display: block; max-width: 100%; }
   .guide--modal .section h2 { font-size: 28px; }
   .guide--modal .guide-bar { padding-left: 64px; padding-right: 24px; }
 }
+
+/* ---------- Info-bulle des repères : photo, nom, case « déjà visité » au survol ---------- */
+.gm-pop-main { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.gm-pop-name { display: inline-flex; align-items: center; gap: 5px; }
+.gm-pop-img, .gm-pop-visit { display: none; }
+.gm-marker:hover { z-index: 6; }
+@media (hover: hover) {
+  .gm-marker.is-available:hover .gm-marker-label { padding: 6px 12px 6px 6px; gap: 10px; border-radius: 12px; background: #111 !important; color: #fff !important; box-shadow: 0 10px 28px rgba(0,0,0,.32); }
+  .gm-marker.is-available:hover .gm-pop-img { display: block; width: 52px; height: 52px; border-radius: 8px; flex: 0 0 auto; background: #333 center / cover no-repeat; }
+  .gm-marker.is-available:hover .gm-pop-main { gap: 6px; }
+  .gm-marker.is-available:hover .gm-pop-name { font-size: 14px; }
+  .gm-marker.is-available:hover .gm-pop-visit { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font); font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.85); cursor: pointer; padding: 2px 0; }
+  .gm-pop-visit:hover { color: #fff; }
+  .gm-pop-box { width: 16px; height: 16px; border-radius: 4px; border: 1.8px solid rgba(255,255,255,.55); display: grid; place-items: center; color: transparent; flex: 0 0 auto; }
+  .gm-pop-box svg { width: 11px; height: 11px; }
+  .gm-pop-visit:hover .gm-pop-box { border-color: #4ade80; }
+  .gm-pop-on { display: none; }
+  .gm-marker.is-visited .gm-pop-box { background: #16a34a; border-color: #16a34a; color: #fff; }
+  .gm-marker.is-visited .gm-pop-on { display: inline; color: #4ade80; }
+  .gm-marker.is-visited .gm-pop-off { display: none; }
+  .gm-marker.is-available.is-visited:hover .gm-label-check { background: #16a34a; color: #fff; }
+}

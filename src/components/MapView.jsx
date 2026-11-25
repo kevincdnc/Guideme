@@ -78,7 +78,12 @@ async function prefetchTiles() {
 // petite coche quand le lieu est visité, pastille simple vue de loin.
 const PIN_PATH = 'M22 52C22 52 5 34.5 5 21.5A17 17 0 1 1 39 21.5C39 34.5 22 52 22 52Z';
 const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>';
-function markerEl(place, onSelect) {
+const CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+// Vignette légère (120 px) pour l'info-bulle
+const thumbOf = (p) => { const src = p.thumb || p.hero?.src; return src ? src.replace(/\/(\d+)px-/, '/120px-') : ''; };
+
+function markerEl(place, onSelect, onToggleVisited) {
   const el = document.createElement('button');
   el.type = 'button';
   el.className = `gm-marker ${place.available ? 'is-available' : 'is-soon'}`;
@@ -87,7 +92,13 @@ function markerEl(place, onSelect) {
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
   const icon = place.available ? PIN_ICONS[place.icon] || PIN_ICONS.lighthouse : LOCK;
   el.innerHTML = `<span class="gm-marker-body">
-    <span class="gm-marker-label"><i class="gm-label-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>${place.shortTitle}</span>
+    <span class="gm-marker-label">
+      ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
+      <span class="gm-pop-main">
+        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
+        ${place.available ? `<span class="gm-pop-visit" role="checkbox" tabindex="0" aria-checked="false" aria-label="Je l'ai déjà visité"><i class="gm-pop-box">${CHECK_SVG}</i><span class="gm-pop-off">Je l'ai déjà visité</span><span class="gm-pop-on">Déjà visité</span></span>` : ''}
+      </span>
+    </span>
     <span class="gm-pin">
       <svg class="gm-pin-shape" viewBox="0 0 44 56" aria-hidden="true">
         <path d="${PIN_PATH}" transform="translate(0 2.5)" fill="rgba(0,0,0,.22)"/>
@@ -104,15 +115,26 @@ function markerEl(place, onSelect) {
     e.stopPropagation();
     onSelect(place.id);
   });
+  // Info-bulle : la photo ne se charge qu'au premier survol
+  const img = el.querySelector('.gm-pop-img');
+  if (img) el.addEventListener('mouseenter', () => { if (!img.style.backgroundImage) img.style.backgroundImage = `url("${thumbOf(place)}")`; });
+  const visit = el.querySelector('.gm-pop-visit');
+  if (visit) {
+    const toggle = (e) => { e.stopPropagation(); e.preventDefault(); onToggleVisited?.(place.id); };
+    visit.addEventListener('click', toggle);
+    visit.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') toggle(e); });
+  }
   return el;
 }
 
-const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds }, ref) {
+const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited }, ref) {
   const box = useRef(null);
   const map = useRef(null);
   const markers = useRef({});
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const onToggleRef = useRef(onToggleVisited);
+  onToggleRef.current = onToggleVisited;
 
   useImperativeHandle(ref, () => ({
     flyTo(coords, zoom = 11.5) {
@@ -212,7 +234,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     box.current.__map = m; // accès pour les tests
 
     places.forEach((p) => {
-      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true)), anchor: 'bottom' })
+      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true), (id) => onToggleRef.current?.(id)), anchor: 'bottom' })
         .setLngLat(p.coords)
         .addTo(m);
       markers.current[p.id] = mk;
@@ -245,6 +267,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       const el = mk.getElement();
       const v = !!visitedIds?.includes(id);
       el.classList.toggle('is-visited', v);
+      el.querySelector('.gm-pop-visit')?.setAttribute('aria-checked', String(v));
       el.style.setProperty('--c', v ? '#16a34a' : el.dataset.color);
     });
   }, [visitedIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps

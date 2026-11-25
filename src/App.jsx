@@ -28,6 +28,19 @@ function useIsDesktop() {
 
 const TAG_BY_ID = Object.fromEntries(TAGS.map((t) => [t.id, t]));
 const SIDEBAR_W = 480;
+// « 30 spots à découvrir », « 18 phares à découvrir »… selon le filtre choisi
+const COUNT_WORDS = {
+  nature: ['site naturel', 'sites naturels'], phare: ['phare', 'phares'], histoire: ['lieu de patrimoine', 'lieux de patrimoine'],
+  legende: ['spot légendaire', 'spots légendaires'], plage: ['plage', 'plages'], port: ['port', 'ports'],
+  prehistoire: ['site préhistorique', 'sites préhistoriques'],
+};
+function countLabel(tag, n, query) {
+  const many = n > 1;
+  if (query?.trim()) return many ? 'spots trouvés' : 'spot trouvé';
+  if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
+  const w = COUNT_WORDS[tag] || ['spot', 'spots'];
+  return `${many ? w[1] : w[0]} à découvrir`;
+}
 
 // Carte de lieu : vignette, nom, commune et durée ; case « déjà visité » en haut à droite
 function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited }) {
@@ -323,7 +336,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
-      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} />
+      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -342,7 +355,7 @@ export default function App() {
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
           <div className="sidebar-intro">
             <h1>Les spots emblématiques du Finistère</h1>
-            <p className="sidebar-sub"><b>{totalSpots}</b> spots à découvrir</p>
+            <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}</p>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
           <div className="sidebar-list">
