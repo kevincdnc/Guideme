@@ -1320,3 +1320,57 @@ img { display: block; max-width: 100%; }
 }
 /* Cartes : punaise discrète devant la commune */
 .pc-pin { opacity: .4; }
+
+/* ---------- Fond derrière la fiche : plus léger ---------- */
+@media (min-width: 900px) { .guide-backdrop { background: rgba(15,23,42,.22); backdrop-filter: none; } }
+
+/* ---------- Itinéraire : Google Maps, Waze, Plans ---------- */
+.route-apps { display: flex; flex-direction: column; gap: 8px; }
+.route-apps-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.route-apps-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.route-app { display: flex; align-items: center; justify-content: center; gap: 7px; height: 40px; padding: 0 6px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: border-color .15s, background .15s; }
+.route-app:hover { border-color: var(--ink); background: var(--surface-2); }
+.route-app-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+.route-app--google .route-app-dot { background: #4285f4; box-shadow: 3px 0 0 -1px #34a853; }
+.route-app--waze .route-app-dot { background: #33ccff; }
+.route-app--apple .route-app-dot { background: #1c1c1e; }
+
+/* ---------- Anecdotes dans la colonne de droite ---------- */
+@media (min-width: 900px) {
+  .guide--modal .guide-aside { position: static; gap: 18px; }
+  .aside-anec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .aside-anec-head .aside-title { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 18px; }
+  .aside-anec-head .aside-title svg { color: var(--primary); }
+  .aside-anec-head .listen-btn { padding: 6px 8px; }
+  .anecdotes--aside { display: flex !important; flex-direction: column; gap: 0; columns: auto !important; margin: 0; padding: 0; }
+  .anecdotes--aside .anecdote { padding: 14px 0; margin: 0; background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+  .anecdotes--aside .anecdote:first-child { border-top: 0; padding-top: 4px; }
+  .anecdotes--aside .anecdote-num { font-family: var(--font-title); font-size: 12px; font-weight: 700; color: var(--primary); }
+  .anecdotes--aside .anecdote h3 { font-size: 15px; line-height: 1.3; margin: 2px 0 4px; }
+  .anecdotes--aside .anecdote p { font-size: 14px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+  .anecdotes--aside .anecdote.is-reading { background: var(--primary-soft); margin: 0 -12px; padding: 14px 12px; border-radius: 6px; }
+}
+
+/* ---------- Compteurs : icônes teintées, plus expressives ---------- */
+.keyfig { position: relative; }
+.keyfig-icon { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; margin: 0; border-radius: 50%; color: var(--kc, #2563eb); background: color-mix(in srgb, var(--kc, #2563eb) 13%, #fff); }
+.keyfig-icon svg { width: 18px; height: 18px; stroke-width: 2.2; }
+.keyfig.is-date .keyfig-icon { --kc: #fbbf24; background: rgba(251,191,36,.16); color: #fbbf24; }
+.keyfig--ruler { --kc: #7c3aed; } .keyfig--beam { --kc: #d97706; } .keyfig--users { --kc: #0d9488; }
+.keyfig--stairs { --kc: #db2777; } .keyfig--area { --kc: #16a34a; } .keyfig--hourglass { --kc: #b45309; }
+.keyfig--wave { --kc: #0284c7; } .keyfig--route { --kc: #4f46e5; } .keyfig--film { --kc: #9333ea; } .keyfig--spark { --kc: #2563eb; }
+.keyfig dt { margin-top: 30px; }
+.keyfig { padding: 16px 16px 16px; min-height: 128px; justify-content: flex-start; }
+
+/* ---------- Fiche : mise en page plus soignée ---------- */
+@media (min-width: 900px) {
+  .guide--modal .guide-head h1 { font-size: 38px; letter-spacing: -0.025em; }
+  .guide--modal .guide-meta { margin-top: 2px; }
+  .guide--modal .guide-teaser { font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 36em; }
+  .guide--modal .section { border-top: 1px solid var(--line); margin-top: 48px; padding-top: 44px; }
+  .guide--modal .section h2 { font-size: 26px; letter-spacing: -0.02em; }
+  .guide--modal .para { font-size: 17px; color: #2a3140; max-width: 38em; }
+  .guide--modal .records { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .guide--modal .funfact { margin-top: 12px; }
+  .guide--modal .aside-card { padding: 20px; border-radius: 12px; }
+}

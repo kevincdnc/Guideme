@@ -170,13 +170,30 @@ function MiniMap({ place, overview }) {
 }
 
 // Carte, itinéraire, puis infos pratiques repliées
+// Itinéraire : Google Maps, Waze ou Plans (Apple)
+function routeLinks(place) {
+  const [lon, lat] = place.coords;
+  return [
+    { id: 'google', label: 'Google Maps', url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}` },
+    { id: 'waze', label: 'Waze', url: `https://waze.com/ul?ll=${lat},${lon}&navigate=yes` },
+    { id: 'apple', label: 'Plans', url: `https://maps.apple.com/?daddr=${lat},${lon}` },
+  ];
+}
+
 function Practical({ place, directions, overview }) {
   return (
     <div className="practical-box">
       <MiniMap place={place} overview={overview} />
-      <a className="btn btn--primary btn--block" href={directions} target="_blank" rel="noreferrer">
-        <Icon name="route" size={19} /> Itinéraire
-      </a>
+      <div className="route-apps" aria-label="Itinéraire">
+        <span className="route-apps-label"><Icon name="route" size={15} /> Itinéraire avec</span>
+        <div className="route-apps-row">
+          {routeLinks(place).map((r) => (
+            <a key={r.id} className={`route-app route-app--${r.id}`} href={r.url} target="_blank" rel="noreferrer">
+              <span className="route-app-dot" aria-hidden="true" />{r.label}
+            </a>
+          ))}
+        </div>
+      </div>
       {place.practical?.length > 0 && (
         <details className="practical-details">
           <summary><span>Infos pratiques & accès</span> <Icon name="chevron" size={16} /></summary>
@@ -212,7 +229,10 @@ function LighthouseSheet({ lh }) {
   );
 }
 
+const isWide = () => typeof window !== 'undefined' && window.matchMedia('(min-width: 900px)').matches;
+
 export default function Guide({ place, onClose, variant = 'panel' }) {
+  const asideAnecdotes = variant === 'modal' && isWide();
   const isPage = variant === 'page';
   const [visitedIds, toggleVisited] = useVisited();
   const isVisited = visitedIds.includes(place.id);
@@ -367,7 +387,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f) => (
-              <div key={f.label} className={`keyfig ${isDate(f.value) ? 'is-date' : ''}`}>
+              <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''}`}>
                 <span className="keyfig-icon"><Icon name={f.icon || factIcon(f)} size={18} /></span>
                 <dt>{f.value}</dt>
                 <dd>{f.label}</dd>
@@ -404,7 +424,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         {place.lighthouse && <LighthouseSheet lh={place.lighthouse} />}
 
-        {place.sections.map((s, si) => (
+        {place.sections.filter((s) => !(asideAnecdotes && s.anecdotes && !s.paragraphs)).map((s, si) => (
           <Fragment key={s.id}>
           {si === 1 && place.film && <FilmBlock film={place.film} />}
           <section id={`sec-${s.id}`} data-nav={s.id} className="section">
@@ -526,6 +546,23 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             <h2 className="aside-title">Dans le Finistère</h2>
             <Practical place={place} directions={directions} overview />
           </div>
+          {asideAnecdotes && place.sections.filter((s) => s.anecdotes && !s.paragraphs).map((s) => (
+            <section key={s.id} id={`sec-${s.id}`} data-nav={s.id} className="aside-card aside-anecdotes">
+              <div className="aside-anec-head">
+                <h2 className="aside-title"><Icon name="spark" size={17} /> {s.title}</h2>
+                {speech.supported && <button className="listen-btn" onClick={() => readFrom(`${s.id}-0`)}><Icon name="headphones" size={14} /></button>}
+              </div>
+              <ol className="anecdotes anecdotes--aside">
+                {s.anecdotes.map((a, i) => (
+                  <li key={a.title} data-block={`${s.id}-${i}`} className={`anecdote ${currentId === `${s.id}-${i}` ? 'is-reading' : ''}`}>
+                    <span className="anecdote-num">{String(i + 1).padStart(2, '0')}</span>
+                    <h3>{a.title}</h3>
+                    <p>{a.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ))}
         </aside>
         </div>
         <div className="guide-end" />
