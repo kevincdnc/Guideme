@@ -1,0 +1,15 @@
+{
+  "frequence": "hebdomadaire",
+  "fiches": [
+    {
+      "id": "ile-de-sein",
+      "fichier": "src/data/places/ile-de-sein.js",
+      "pistes": ["Ralliement de juin 1940, compagnons de la Libération", "SNSM de Sein et sauvetages", "archives INA et Cinémathèque de Bretagne", "habitat, électricité, eau, montée des eaux", "vie actuelle : population, école, traversées Penn ar Bed", "archéologie sous-marine"]
+    },
+    {
+      "id": "pointe-du-raz",
+      "fichier": "src/data/places/pointe-du-raz.js",
+      "pistes": ["Grand Site de France : fréquentation, aménagements, restauration des landes", "phare de la Vieille : gardiens, sauvetage de 1926, automatisation de 1995, lanterne 2019", "archives INA du raz de Sein", "naufrages du raz", "Notre-Dame-des-Naufragés", "infos pratiques à jour (parking, navettes)"]
+    }
+  ]
+}
