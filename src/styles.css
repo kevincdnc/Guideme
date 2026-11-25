@@ -1056,3 +1056,8 @@ img { display: block; max-width: 100%; }
 .brand-bar .progress-btn { gap: 12px; padding: 5px 5px 5px 13px; }
 .brand-bar .progress-dial, .brand-bar .progress-ring { width: 30px; height: 30px; }
 .brand-bar .progress-pct, .topbar .progress-pct { font-size: 12px; letter-spacing: 0; }
+
+/* Profil tout à droite ; pourcentage plus petit dans l'anneau */
+.profile-menu { left: auto; right: -6px; }
+.brand-bar .progress-pct, .topbar .progress-pct { font-size: 8.5px; letter-spacing: -0.02em; }
+.brand-bar .progress-pct small, .topbar .progress-pct small { font-size: 6px; }

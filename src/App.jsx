@@ -117,7 +117,7 @@ function ProgressFlag({ visited, onPick }) {
             <circle cx="20" cy="20" r={R} className="progress-track" />
             <circle cx="20" cy="20" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} style={{ opacity: done.length ? 1 : 0 }} />
           </svg>
-          <span className="progress-pct">{done.length}</span>
+          <span className="progress-pct">{pct}<small>%</small></span>
         </span>
       </button>
       {open && (
@@ -398,7 +398,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><ProfileMenu onOpen={open} /><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
+          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /><ProfileMenu onOpen={open} /></header>
           <div className="sidebar-intro">
             <h1>Les spots emblématiques du Finistère</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}</p>
