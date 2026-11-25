@@ -4,6 +4,7 @@ import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
 import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
+import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
 import { PLACES, TAGS, getPlace } from './data/places.js';
 
@@ -424,6 +425,7 @@ export default function App() {
         </div>
       )}
 
+      <ColorTuner />{/* TEMPORAIRE : réglage de couleur */}
       {place && desktop && <div className="guide-backdrop" onClick={close} aria-hidden="true" />}
       {place && <Guide key={place.id} place={place} onClose={close} variant="modal" />}
       {place && desktop && (

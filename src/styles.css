@@ -1078,3 +1078,17 @@ img { display: block; max-width: 100%; }
   .gm-pop-box { border-radius: 3px; }
 }
 @media (hover: hover) { .gm-marker.is-available:hover .gm-pop-main, .gm-marker.is-available:hover .gm-pop-name { text-align: left; justify-content: flex-start; } }
+
+/* ---------- TEMPORAIRE : réglage de la couleur de fond de la carte ---------- */
+.tuner { position: absolute; z-index: 8; right: 16px; bottom: 44px; width: 232px; padding: 10px; background: #111; color: #fff; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.3); font-size: 13px; }
+.tuner-tabs { display: flex; gap: 4px; margin-bottom: 8px; }
+.tuner-tabs button { flex: 1; height: 28px; border-radius: 5px; font-weight: 600; color: rgba(255,255,255,.7); background: rgba(255,255,255,.08); }
+.tuner-tabs button.is-active { background: #fff; color: #111; }
+.tuner-row { display: flex; align-items: center; gap: 6px; }
+.tuner-swatch { position: relative; flex: 0 0 34px; height: 34px; border-radius: 5px; border: 2px solid rgba(255,255,255,.85); cursor: pointer; overflow: hidden; }
+.tuner-swatch input { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); opacity: 0; cursor: pointer; }
+.tuner-hex { flex: 1; min-width: 0; height: 34px; padding: 0 8px; border-radius: 5px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.06); color: #fff; font: 600 14px ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: lowercase; outline: 0; }
+.tuner-hex:focus { border-color: #fff; }
+.tuner-eye, .tuner-reset { flex: 0 0 34px; height: 34px; border-radius: 5px; display: grid; place-items: center; color: #fff; background: rgba(255,255,255,.1); font-size: 16px; }
+.tuner-eye:hover, .tuner-reset:hover { background: rgba(255,255,255,.2); }
+@media (max-width: 899px) { .tuner { bottom: auto; top: calc(84px + var(--safe-top)); right: 68px; width: 210px; } }
