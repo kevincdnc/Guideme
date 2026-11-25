@@ -914,3 +914,9 @@ img { display: block; max-width: 100%; }
 .map.z-far .gm-marker.is-selected .gm-pin-icon, .map.z-mid .gm-marker.is-selected .gm-pin-icon { left: 11px; top: 10px; width: 22px; height: 22px; }
 .map.z-far .gm-marker.is-selected .gm-dot { display: none !important; }
 .map.z-far .gm-marker.is-selected .gm-marker-body { transform: none; }
+
+/* Bandeau du logo : un peu plus large que les cartes et un peu plus haut ; compteur plus discret */
+.brand-bar { margin: -8px -8px 10px; padding: 9px 9px 9px 18px; }
+.brand-bar .progress-dial, .brand-bar .progress-ring { width: 34px; height: 34px; }
+.brand-bar .progress-pct { font-size: 9.5px; }
+.brand-bar .progress-pct small { font-size: 7px; }
