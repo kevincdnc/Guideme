@@ -46,7 +46,7 @@ function countLabel(tag, n, query) {
   const many = n > 1;
   if (query?.trim()) return many ? 'spots trouvés' : 'spot trouvé';
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
-  if (tag === 'wanted') return many ? 'spots où tu veux aller' : 'spot où tu veux aller';
+  if (tag === 'wanted') return many ? 'spots à visiter' : 'spot à visiter';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
   return `${many ? w[1] : w[0]} à découvrir`;
 }
@@ -82,10 +82,10 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             className={`pc-flag pc-flag--want ${wanted ? 'is-on' : ''}`}
             onClick={(e) => { e.stopPropagation(); onToggleWanted(place.id); }}
             aria-pressed={!!wanted}
-            aria-label={wanted ? `${place.shortTitle} : retirer de mes envies` : `${place.shortTitle} : je veux y aller`}
+            aria-label={wanted ? `${place.shortTitle} : retirer des lieux à visiter` : `${place.shortTitle} : à visiter`}
           >
             <Icon name="flag" size={15} stroke={2} />
-            <span className="pc-tip" aria-hidden="true">{wanted ? 'Je veux y aller · retirer' : 'Je veux y aller'}</span>
+            <span className="pc-tip" aria-hidden="true">{wanted ? 'À visiter · retirer' : 'À visiter'}</span>
           </button>
           <button
             className={`pc-flag pc-flag--done ${visited ? 'is-on' : ''}`}
@@ -155,7 +155,7 @@ function ProgressFlag({ visited, onPick }) {
                 return (
                   <li key={p.id}>
                     <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
-                      <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
+                      <span className="progress-check">{v && <Icon name="flag" size={12} stroke={2.4} />}</span>
                       {p.shortTitle}
                     </button>
                   </li>
@@ -220,8 +220,8 @@ function ProfileMenu({ onOpen }) {
             <span className="profile-avatar">{initials || <AvatarPlaceholder />}</span>
             <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
           </label>
-          <strong className="profile-title"><Icon name="flag" size={16} /> Je veux y aller</strong>
-          {list.length === 0 && <p className="profile-empty">Plante le drapeau orange sur un spot pour le retrouver ici.</p>}
+          <strong className="profile-title"><Icon name="flag" size={16} /> À visiter</strong>
+          {list.length === 0 && <p className="profile-empty">Plante le drapeau jaune sur un spot pour le retrouver ici.</p>}
           <ul>
             {list.map((p) => (
               <li key={p.id}>
@@ -277,7 +277,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         )}
         {(wantedCount > 0 || value === 'wanted') && (
           <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
-            <Icon name="flag" size={14} stroke={2.2} /> {wantedCount} à faire
+            <Icon name="flag" size={14} stroke={2.2} /> {wantedCount} à visiter
           </button>
         )}
         {(wrap ? used : ordered).map((t) => (

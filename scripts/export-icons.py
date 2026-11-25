@@ -19,8 +19,9 @@ pin_colors=dict(re.findall(r"(\w+): '(#[0-9a-f]{6})'",seg))
 herm=re.findall(r"'(M[^']+)'",open('src/components/Hermine.jsx').read())
 SECTIONS=[
  ('Catégories (tags)',[('cliff','Site naturel'),('lighthouse','Phare'),('book','Patrimoine'),('trophy','Légendaire'),('beach','Plage'),('port','Port'),('fire','Préhistoire'),('check','Coche')]),
- ('Drapeaux',[('flag','Pas encore (gris)','#b6bcc6',False),('flag','Je veux y aller','#f97316',True),('flag',"J'y suis allé",'#16a34a',True)]),
+ ('Drapeaux',[('flag','Pas encore (gris)','#b6bcc6',False),('flag','À visiter','#eab308',True),('flag',"J'y suis allé",'#16a34a',True)]),
  ('Lieux (repères)',[('church','Église / patrimoine'),('lighthouse','Phare'),('beach','Plage'),('cliff','Falaise'),('port','Port'),('fire','Préhistoire')]),
+ ('Compteurs',[('calendar','Date'),('ruler','Hauteur'),('beam','Portée'),('users','Personnes'),('stairs','Marches'),('area','Surface'),('hourglass','Âge'),('wave','Courant')]),
  ('Marque',[('hermine','Hermine'),('bigouden','Bigouden'),('medal','Médaille'),('star','Étoile'),('spark','Le saviez-vous'),('trophy','Records')]),
  ('Interface',[(n,n) for n in ['back','close','chevron','plus','check','share','external','map','locate','sliders','layers','list','pin','route','search','user','headphones','play','pause','next','prev','clock','image','film','lock','car','bus','hike','warn']]),
 ]

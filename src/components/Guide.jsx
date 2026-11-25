@@ -32,6 +32,24 @@ function buildBlocks(place) {
 
 const RATES = [1, 1.25, 1.5, 0.85];
 
+// Icône de chaque compteur, devinée d'après la valeur et le libellé (ou f.icon si précisé)
+const isDate = (v) => /^(\d{3,4}|[IVX]+e s\.)$/.test(v);
+function factIcon(f) {
+  const v = String(f.value), l = f.label.toLowerCase();
+  if (isDate(v)) return 'calendar';
+  if (/visiteur|entrée/.test(l)) return 'users';
+  if (/gardien|habitant|îlien/.test(l)) return 'users';
+  if (/marche/.test(l)) return 'stairs';
+  if (/portée/.test(l)) return 'beam';
+  if (/nœud/.test(v)) return 'wave';
+  if (/km²|m²/.test(v)) return 'area';
+  if (/\d\s?m$/.test(v) || /hauteur|altitude/.test(l)) return 'ruler';
+  if (/\bans?\b|âge/.test(l) || /ans$/.test(v)) return 'hourglass';
+  if (/film|tournage/.test(l)) return 'film';
+  if (/km/.test(v)) return 'route';
+  return 'spark';
+}
+
 function AudioPlayer({ speech, blocks, title, minutes }) {
   const { supported, error, state, index, rate, play, pause, next, prev, changeRate, stop } = speech;
   // Le lecteur n'apparaît qu'une fois la lecture lancée (bouton « Écouter » de l'en-tête)
@@ -327,7 +345,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         <div className="guide-layout">
         <div className="guide-main">
         <div className="guide-head">
-          <div className="gwenn-ha-du" aria-hidden="true" />
           <h1>{place.title}</h1>
           <p className="guide-meta">
             <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
@@ -340,7 +357,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </button>
             )}
             <button className={`action-btn flag-btn flag-btn--want ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav}>
-              <Icon name="flag" size={17} stroke={2} /> {isFav ? 'Dans mes envies' : 'Je veux y aller'}
+              <Icon name="flag" size={17} stroke={2} /> À visiter
             </button>
             <button className={`action-btn flag-btn flag-btn--done ${isVisited ? 'is-on' : ''}`} onClick={() => toggleVisited(place.id)} aria-pressed={isVisited}>
               <Icon name="flag" size={17} stroke={2} /> {isVisited ? "J'y suis allé" : "J'y suis allé ?"}
@@ -349,7 +366,8 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f) => (
-              <div key={f.label} className={`keyfig ${/^(\d{3,4}|[IVX]+e s\.)$/.test(f.value) ? 'is-date' : ''}`}>
+              <div key={f.label} className={`keyfig ${isDate(f.value) ? 'is-date' : ''}`}>
+                <span className="keyfig-icon"><Icon name={f.icon || factIcon(f)} size={18} /></span>
                 <dt>{f.value}</dt>
                 <dd>{f.label}</dd>
               </div>

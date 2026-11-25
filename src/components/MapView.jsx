@@ -97,9 +97,9 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
     <span class="gm-marker-label">
       ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
       <span class="gm-pop-main">
-        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
+        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${FLAG_SVG}</i>${esc(place.shortTitle)}</span>
         ${place.available && place.facts?.length ? `<span class="gm-pop-facts">${place.facts.slice(0, 2).map((f) => `<span><b>${esc(f.value)}</b>${esc(f.label.split(',')[0])}</span>`).join('')}</span>` : ''}
-        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="Je veux y aller" aria-label="Je veux y aller">${FLAG_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="J'y suis allé" aria-label="J'y suis allé">${FLAG_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
+        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="À visiter" aria-label="À visiter">${FLAG_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="J'y suis allé" aria-label="J'y suis allé">${FLAG_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
       </span>
     </span>
     <span class="gm-pin">
@@ -110,7 +110,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       </svg>
       <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
       <span class="gm-want" aria-hidden="true">${FLAG_SVG.replace('currentColor', '#fff').replace('currentColor', '#fff')}</span>
-      <span class="gm-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <span class="gm-check" aria-hidden="true">${FLAG_SVG}</span>
     </span>
     <span class="gm-dot" aria-hidden="true"></span>
     <span class="gm-marker-ground"></span>
