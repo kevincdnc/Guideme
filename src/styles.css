@@ -101,7 +101,7 @@ img { display: block; max-width: 100%; }
 .progress-dial { position: relative; width: 40px; height: 40px; display: grid; place-items: center; }
 .progress-ring { position: absolute; inset: 0; width: 40px; height: 40px; transform: rotate(-90deg); }
 .progress-track { fill: none; stroke: #e3e7eb; stroke-width: 3; }
-.progress-value { fill: none; stroke: #2c5be7; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .5s ease; }
+.progress-value { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .5s ease; }
 .progress-pct { position: relative; font-family: var(--font-title); font-size: 10.5px; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
 .progress-pct small { font-size: 7.5px; font-weight: 700; margin-left: 0.5px; color: var(--ink-3); }
 .topbar .progress { position: static; }
@@ -248,13 +248,13 @@ img { display: block; max-width: 100%; }
 .pc-thumb { position: relative; flex: 0 0 88px; height: 88px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
 .pc-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .pc-thumb-empty { position: absolute; inset: 0; display: grid; place-items: center; color: #a3abb8; background: var(--surface-2); }
-.pc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 3px 0 1px; }
-.pc-body h3, .pc-meta { padding-right: 26px; }
+.pc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.pc-body h3 { padding-right: 26px; }
 .pc-body h3 { font-size: 15.5px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pc-meta { display: flex; align-items: center; gap: 0; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; }
 .pc-meta > span { display: inline-flex; align-items: center; gap: 3px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pc-meta > span + span::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .5; margin: 0 7px; }
-.pc-tags { display: flex; gap: 6px; margin-top: auto; overflow: hidden; -webkit-mask-image: linear-gradient(90deg,#000 90%,transparent); mask-image: linear-gradient(90deg,#000 90%,transparent); }
+.pc-tags { display: flex; gap: 6px; margin-top: 8px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg,#000 90%,transparent); mask-image: linear-gradient(90deg,#000 90%,transparent); }
 .pc-tag { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px 0 7px; border-radius: 4px;
   font-size: 11.5px; font-weight: 500; letter-spacing: .005em; color: var(--ink-2); background: #fff; border: 1px solid var(--line); white-space: nowrap; }
 .pc-tag svg { color: var(--ink-3); }
@@ -757,3 +757,7 @@ img { display: block; max-width: 100%; }
 .visited-dock-list span { font-size: 14px; font-weight: 600; }
 .visited-dock-list small { margin-left: auto; font-size: 12.5px; color: var(--ink-3); }
 .visited-dock-empty { padding: 10px 8px; font-size: 13.5px; color: var(--ink-3); }
+
+.pc-pin { opacity: .55; margin-left: -1px; }
+.pc-meta svg { flex-shrink: 0; }
+.pc-meta > span + span { flex-shrink: 0; }

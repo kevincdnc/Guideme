@@ -48,7 +48,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
       <div className="pc-body">
         <h3>{place.shortTitle}</h3>
         <span className="pc-meta">
-          <span>{place.commune.split(' · ')[0].split(' & ')[0]}</span>
+          <span><Icon name="pin" size={12} className="pc-pin" />{place.commune.split(' · ')[0].split(' & ')[0]}</span>
           {!soon && <span><Icon name="headphones" size={12} /> {place.readingMinutes} min</span>}
           {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={12} /> {place.records.length}</span>}
         </span>
