@@ -1403,3 +1403,42 @@ img { display: block; max-width: 100%; }
 .brand-bar .profile { margin-left: auto; }
 .brand-bar .progress { margin-left: 0; }
 .profile-menu { left: -6px; right: auto; }
+
+/* ---------- Mini carte : titre cliquable ---------- */
+.pc-title { font: inherit; color: inherit; text-align: left; padding: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.pc-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Le saviez-vous : plus d'air ---------- */
+.funfact { padding: 22px 24px; gap: 16px; }
+.funfact-kicker { margin-bottom: 4px; }
+.funfact strong { margin: 2px 0 8px; font-size: 17px; }
+.funfact p { font-size: 15px; line-height: 1.6; }
+
+/* ---------- Compteurs : sans icône, bulle d'info ---------- */
+.keyfig-icon { display: none !important; }
+.keyfig { position: relative; min-height: 0; padding: 20px 18px 18px; gap: 6px; border-radius: 12px; background: #fff; border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+.keyfig::before { content: ''; position: absolute; left: 18px; top: 0; width: 28px; height: 3px; border-radius: 0 0 3px 3px; background: var(--primary); }
+.keyfig.is-date::before { background: #fbbf24; }
+.keyfig dt { margin-top: 2px; font-size: 30px !important; line-height: 1; letter-spacing: -0.035em; }
+.keyfig dd { font-size: 13.5px; line-height: 1.4; padding-right: 14px; }
+.keyfig-info { position: absolute; top: 12px; right: 12px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: italic 700 11px/1 Georgia, serif; color: var(--ink-3); border: 1px solid var(--line-2); cursor: help; outline: 0; }
+.keyfig.is-date .keyfig-info { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.3); }
+.keyfig-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: -8px; width: 230px; padding: 10px 12px; border-radius: 8px; background: #111; color: #fff; font: 500 13px/1.45 var(--font); font-style: normal; text-align: left; box-shadow: 0 10px 28px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .15s, transform .15s; }
+.keyfig-info:hover .keyfig-tip, .keyfig-info:focus .keyfig-tip { opacity: 1; transform: none; }
+
+/* ---------- Visionneuse : miniatures ---------- */
+.lightbox-thumbs { display: flex; gap: 8px; padding: 6px 18px 2px; overflow-x: auto; scrollbar-width: none; justify-content: safe center; }
+.lightbox-thumbs::-webkit-scrollbar { display: none; }
+.lightbox-thumb { flex: 0 0 auto; width: 76px; height: 56px; border-radius: 6px; overflow: hidden; opacity: .5; border: 2px solid transparent; transition: opacity .15s, border-color .15s; background: #222; }
+.lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lightbox-thumb:hover { opacity: .85; }
+.lightbox-thumb.is-active { opacity: 1; border-color: #fff; }
+.lightbox-caption { align-items: center; text-align: center; }
+
+/* ---------- Logos d'itinéraire ---------- */
+.route-logo { width: 18px; height: 18px; flex: 0 0 auto; }
+.lightbox-stage { overflow: hidden; }
+.lightbox-stage img { max-height: calc(100vh - 230px); }
+.keyfig:first-child .keyfig-tip { right: auto; left: -150px; }
+.keyfigs .keyfig:nth-child(odd) .keyfig-tip { right: auto; left: -8px; }
+@media (min-width: 900px) { .guide--modal .keyfigs .keyfig .keyfig-tip { left: auto; right: -8px; } .guide--modal .keyfigs .keyfig:first-child .keyfig-tip { right: auto; left: -8px; } }

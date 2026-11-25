@@ -54,7 +54,8 @@ function countLabel(tag, n, query) {
 // Carte de lieu : vignette, nom, commune et durée ; case « déjà visité » en haut à droite
 function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited, wanted, onToggleWanted }) {
   const soon = !place.available;
-  const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
+  // 1er clic : met le lieu en avant sur la carte ; 2e clic (ou clic sur le titre) : ouvre la fiche
+  const activate = () => (soon || !selected ? onSelect(place.id) : onOpen(place.id));
   return (
     <div
       role="button"
@@ -63,13 +64,13 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
       data-id={place.id}
       onClick={activate}
       onKeyDown={(e) => e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), activate())}
-      aria-label={soon ? `${place.shortTitle}, bientôt disponible` : `Ouvrir le guide : ${place.shortTitle}`}
+      aria-label={soon ? `${place.shortTitle}, bientôt disponible` : selected ? `Ouvrir le guide : ${place.shortTitle}` : `Voir ${place.shortTitle} sur la carte`}
     >
       <div className="pc-thumb">
         {place.thumb || place.hero ? <SafeImg src={place.thumb || place.hero.src} alt="" loading="lazy" /> : <span className="pc-thumb-empty"><Icon name={place.icon || 'pin'} size={22} /></span>}
       </div>
       <div className="pc-body">
-        <h3>{place.shortTitle}</h3>
+        <h3>{soon ? place.shortTitle : <button className="pc-title" onClick={(e) => { e.stopPropagation(); onOpen(place.id); }}>{place.shortTitle}</button>}</h3>
         <span className="pc-meta">
           <span><Icon name="pushpin" size={12} stroke={1.8} className="pc-pin" />{place.commune.split(' · ')[0].split(' & ')[0]}</span>
           {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={12} /> {place.records.length}</span>}

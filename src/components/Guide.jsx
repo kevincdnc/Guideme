@@ -34,6 +34,20 @@ const RATES = [1, 1.25, 1.5, 0.85];
 
 // Icône de chaque compteur, devinée d'après la valeur et le libellé (ou f.icon si précisé)
 const isDate = (v) => /^(\d{3,4}|[IVX]+e s\.)$/.test(v);
+// Bulle d'info d'un compteur : f.info si précisé, sinon la ligne correspondante de la carte d'identité du phare
+function factInfo(place, f) {
+  if (f.info) return f.info;
+  const lh = place.lighthouse;
+  if (!lh) return null;
+  const l = f.label.toLowerCase();
+  if (/hauteur de tour|de hauteur/.test(l)) return `Hauteur de la tour : ${lh.height}. Feu à ${lh.elevation}.`;
+  if (/portée/.test(l)) return `Feu : ${lh.light}.`;
+  if (/mise en service|allumage|inauguration/.test(l)) return `Construction : ${lh.built}.`;
+  if (/gardien/.test(l)) return lh.keepers;
+  if (/visiteur/.test(l)) return lh.visit;
+  return null;
+}
+
 function factIcon(f) {
   const v = String(f.value), l = f.label.toLowerCase();
   if (isDate(v)) return 'calendar';
@@ -170,6 +184,34 @@ function MiniMap({ place, overview }) {
 }
 
 // Carte, itinéraire, puis infos pratiques repliées
+// Logos simplifiés des applis d'itinéraire
+function RouteLogo({ id }) {
+  if (id === 'google') return (
+    <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2.5a7 7 0 00-7 7c0 5.2 7 12 7 12s7-6.8 7-12a7 7 0 00-7-7z" fill="#ea4335" />
+      <path d="M5 9.5a7 7 0 012-4.9l5 5-4.4 5.6C6.1 13.2 5 11.2 5 9.5z" fill="#fbbc04" />
+      <path d="M7 4.6A7 7 0 0112 2.5a7 7 0 016.2 3.7L12 9.6z" fill="#4285f4" />
+      <path d="M7.6 15.2L19 6.2c-.1 3.6-3.4 8-7 15.3-1.9-2.1-3.3-4.2-4.4-6.3z" fill="#34a853" />
+      <circle cx="12" cy="9.5" r="2.6" fill="#fff" />
+    </svg>
+  );
+  if (id === 'waze') return (
+    <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12.5 3.5c4.6 0 8 3.2 8 7.4 0 4-3.3 7-7.6 7H9.6c-.9 1.3-2.3 2-3.8 2 .5-.8.6-1.7.4-2.6C4.4 16 3.5 14 3.5 11.5c0-4.4 4-8 9-8z" fill="#33ccff" stroke="#0b1b2b" strokeWidth="1.3" />
+      <circle cx="10" cy="10" r="1" fill="#0b1b2b" /><circle cx="15" cy="10" r="1" fill="#0b1b2b" />
+      <path d="M9.6 12.8c1.4 1.4 3.6 1.4 5 0" fill="none" stroke="#0b1b2b" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+  return (
+    <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5" fill="#f2f2f7" stroke="#d1d1d6" />
+      <path d="M2.5 15l7-6 5 4 7-6" fill="none" stroke="#34c759" strokeWidth="2.4" />
+      <path d="M8 21.5l3-9 10-4" fill="none" stroke="#ffcc00" strokeWidth="1.8" />
+      <circle cx="15" cy="10" r="2.4" fill="#007aff" stroke="#fff" strokeWidth="1" />
+    </svg>
+  );
+}
+
 // Itinéraire : Google Maps, Waze ou Plans (Apple)
 function routeLinks(place) {
   const [lon, lat] = place.coords;
@@ -189,7 +231,7 @@ function Practical({ place, directions, overview }) {
         <div className="route-apps-row">
           {routeLinks(place).map((r) => (
             <a key={r.id} className={`route-app route-app--${r.id}`} href={r.url} target="_blank" rel="noreferrer">
-              <span className="route-app-dot" aria-hidden="true" />{r.label}
+              <RouteLogo id={r.id} />{r.label}
             </a>
           ))}
         </div>
@@ -388,9 +430,14 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f) => (
               <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''}`}>
-                <span className="keyfig-icon"><Icon name={f.icon || factIcon(f)} size={18} /></span>
                 <dt>{f.value}</dt>
                 <dd>{f.label}</dd>
+                {factInfo(place, f) && (
+                  <span className="keyfig-info" tabIndex={0} aria-label={factInfo(place, f)}>
+                    <span aria-hidden="true">i</span>
+                    <span className="keyfig-tip" role="tooltip">{factInfo(place, f)}</span>
+                  </span>
+                )}
               </div>
             ))}
           </dl>
