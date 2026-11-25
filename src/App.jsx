@@ -46,7 +46,7 @@ function countLabel(tag, n, query) {
   const many = n > 1;
   if (query?.trim()) return many ? 'spots trouvés' : 'spot trouvé';
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
-  if (tag === 'wanted') return many ? 'spots en favoris' : 'spot en favori';
+  if (tag === 'wanted') return many ? 'spots dans ta liste à faire' : 'spot dans ta liste à faire';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
   return `${many ? w[1] : w[0]} à découvrir`;
 }
@@ -81,10 +81,10 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             className={`pc-flag pc-flag--want ${wanted ? 'is-on' : ''}`}
             onClick={(e) => { e.stopPropagation(); onToggleWanted(place.id); }}
             aria-pressed={!!wanted}
-            aria-label={wanted ? `${place.shortTitle} : retirer des favoris` : `${place.shortTitle} : ajouter aux favoris`}
+            aria-label={wanted ? `${place.shortTitle} : retirer de ma liste à faire` : `${place.shortTitle} : ajouter à ma liste à faire`}
           >
             <Icon name="star" size={15} stroke={2} />
-            <span className="pc-tip" aria-hidden="true">{wanted ? 'Favori · retirer' : 'Ajouter aux favoris'}</span>
+            <span className="pc-tip" aria-hidden="true">{wanted ? 'Dans ma liste à faire · retirer' : 'Ajouter à ma liste à faire'}</span>
           </button>
           {visited && <span className="pc-done-label">Déjà visité</span>}
           <button
@@ -237,7 +237,7 @@ function ProfileMenu({ onOpen }) {
   const list = fav.map((id) => getPlace(id)).filter(Boolean);
   return (
     <div className="profile" ref={boxRef}>
-      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et mes favoris" aria-expanded={open}>
+      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et ma liste à faire" aria-expanded={open}>
         {initials ? <span className="profile-initials">{initials}</span> : <AvatarPlaceholder />}
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
@@ -247,8 +247,8 @@ function ProfileMenu({ onOpen }) {
             <span className="profile-avatar">{initials || <AvatarPlaceholder />}</span>
             <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
           </label>
-          <strong className="profile-title"><Icon name="star" size={16} /> Mes favoris</strong>
-          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'un spot pour le retrouver ici.</p>}
+          <strong className="profile-title"><Icon name="star" size={16} /> Ma liste à faire</strong>
+          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'un spot pour l'ajouter à ta liste.</p>}
           <ul>
             {list.map((p) => (
               <li key={p.id}>
@@ -256,7 +256,7 @@ function ProfileMenu({ onOpen }) {
                   {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
                   <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
                 </button>
-                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} des favoris`}><Icon name="close" size={14} stroke={2.4} /></button>
+                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} de ma liste à faire`}><Icon name="close" size={14} stroke={2.4} /></button>
               </li>
             ))}
           </ul>
@@ -304,7 +304,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         )}
         {(wantedCount > 0 || value === 'wanted') && (
           <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
-            <Icon name="star" size={14} stroke={2.2} /> {wantedCount} favori{wantedCount > 1 ? 's' : ''}
+            <Icon name="star" size={14} stroke={2.2} /> {wantedCount} à faire
           </button>
         )}
         {(wrap ? used : ordered).map((t) => (
@@ -474,7 +474,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /><ProfileMenu onOpen={open} /></header>
+          <header className="brand-bar"><Brand /><ProfileMenu onOpen={open} /><ProgressFlag visited={visited} onPick={select} /></header>
           <div className="sidebar-intro">
             <h1>Tu crois connaître le Finistère ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)} <span className="sidebar-made">made in Penn-ar-Bed</span></p>

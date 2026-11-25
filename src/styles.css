@@ -1399,3 +1399,7 @@ img { display: block; max-width: 100%; }
 .fav-btn.is-on { background: var(--flag-want); border-color: var(--flag-want); color: #fff; }
 .fav-btn.is-on svg { fill: #fff; color: #fff; }
 .gm-marker.is-wanted .gm-pop-flag--want, .gm-marker.is-wanted .gm-pop-flag--want svg { color: #fff; fill: #fff; }
+/* Profil à gauche du compteur, compteur tout à droite */
+.brand-bar .profile { margin-left: auto; }
+.brand-bar .progress { margin-left: 0; }
+.profile-menu { left: -6px; right: auto; }

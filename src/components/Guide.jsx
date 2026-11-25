@@ -380,7 +380,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
               {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
             </button>
-            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'} title={isFav ? 'Dans mes favoris' : 'Ajouter aux favoris'}>
+            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma liste à faire' : 'Ajouter à ma liste à faire'} title={isFav ? 'Dans ma liste à faire' : 'Ajouter à ma liste à faire'}>
               <Icon name="star" size={18} stroke={2} />
             </button>
           </div>
