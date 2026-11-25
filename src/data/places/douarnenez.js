@@ -5,7 +5,7 @@ export default {
   id: 'douarnenez',
   available: true,
   icon: 'port',
-  tags: ['port', 'histoire', 'legende'],
+  tags: ['port', 'histoire'],
   title: 'Douarnenez, la cité des Penn Sardin',
   shortTitle: 'Douarnenez',
   commune: 'Douarnenez',

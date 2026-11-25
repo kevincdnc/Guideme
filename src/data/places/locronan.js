@@ -5,7 +5,7 @@ export default {
   id: 'locronan',
   available: true,
   icon: 'church',
-  tags: ['histoire', 'legende'],
+  tags: ['histoire'],
   title: 'Locronan, la cité des tisserands',
   shortTitle: 'Locronan',
   commune: 'Locronan · Lokorn',

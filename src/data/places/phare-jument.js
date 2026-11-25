@@ -5,7 +5,7 @@ export default {
   id: 'phare-jument',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'histoire'],
+  tags: ['phare', 'histoire', 'legende'],
   title: 'Phare de la Jument, la star des tempêtes',
   shortTitle: 'Phare de la Jument',
   commune: 'Ouessant · Mer d\'Iroise',

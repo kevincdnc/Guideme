@@ -5,7 +5,7 @@ export default {
   id: 'menez-dregan',
   available: true,
   icon: 'fire',
-  tags: ['prehistoire', 'histoire'],
+  tags: ['prehistoire', 'histoire', 'legende'],
   title: 'Menez Dregan, l\'un des plus vieux feux du monde',
   shortTitle: 'Menez Dregan',
   commune: 'Plouhinec',

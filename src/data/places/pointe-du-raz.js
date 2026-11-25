@@ -5,7 +5,7 @@ export default {
   id: 'pointe-du-raz',
   available: true,
   icon: 'lighthouse',
-  tags: ['nature', 'phare', 'histoire'],
+  tags: ['nature', 'phare', 'histoire', 'legende'],
   title: 'Pointe du Raz & phare de la Vieille',
   shortTitle: 'Pointe du Raz',
   commune: 'Plogoff · Cap Sizun',

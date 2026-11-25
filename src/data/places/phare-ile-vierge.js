@@ -5,7 +5,7 @@ export default {
   id: 'phare-ile-vierge',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'histoire'],
+  tags: ['phare', 'histoire', 'legende'],
   title: "Phare de l'île Vierge, le géant d'Europe",
   shortTitle: "Phare de l'île Vierge",
   commune: 'Plouguerneau · Pays des Abers',

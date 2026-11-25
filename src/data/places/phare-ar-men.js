@@ -5,7 +5,7 @@ export default {
   id: 'phare-ar-men',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'histoire'],
+  tags: ['phare', 'histoire', 'legende'],
   title: "Phare d'Ar-Men, l'enfer des enfers",
   shortTitle: "Phare d'Ar-Men",
   commune: 'Île-de-Sein · Chaussée de Sein',

@@ -5,7 +5,7 @@ export default {
   id: 'phare-kereon',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'histoire'],
+  tags: ['phare', 'histoire', 'legende'],
   title: 'Phare de Kéréon, le palais du Fromveur',
   shortTitle: 'Phare de Kéréon',
   commune: 'Ouessant · Passage du Fromveur',

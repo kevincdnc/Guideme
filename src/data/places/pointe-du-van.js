@@ -5,7 +5,7 @@ export default {
   id: 'pointe-du-van',
   available: true,
   icon: 'cliff',
-  tags: ['nature', 'histoire', 'legende'],
+  tags: ['nature', 'histoire'],
   title: 'Pointe du Van & chapelle Saint-They',
   shortTitle: 'Pointe du Van',
   commune: 'Cléden-Cap-Sizun',

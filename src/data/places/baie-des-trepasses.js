@@ -5,7 +5,7 @@ export default {
   id: 'baie-des-trepasses',
   available: true,
   icon: 'beach',
-  tags: ['nature', 'plage', 'legende'],
+  tags: ['nature', 'plage'],
   title: 'Baie des Trépassés',
   shortTitle: 'Baie des Trépassés',
   commune: 'Plogoff & Cléden-Cap-Sizun',

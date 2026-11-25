@@ -6,7 +6,7 @@ export default {
   id: 'phare-eckmuhl',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'histoire'],
+  tags: ['phare', 'histoire', 'legende'],
   title: "Phare d'Eckmühl, le géant de Penmarc'h",
   shortTitle: "Phare d'Eckmühl",
   commune: "Penmarc'h · Pays bigouden",

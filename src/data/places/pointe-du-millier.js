@@ -5,7 +5,7 @@ export default {
   id: 'pointe-du-millier',
   available: true,
   icon: 'lighthouse',
-  tags: ['phare', 'nature', 'legende'],
+  tags: ['phare', 'nature'],
   title: 'Pointe du Millier, phare et moulin',
   shortTitle: 'Pointe du Millier',
   commune: 'Beuzec-Cap-Sizun',

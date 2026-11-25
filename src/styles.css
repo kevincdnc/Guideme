@@ -174,7 +174,7 @@ img { display: block; max-width: 100%; }
 .map.z-mid .gm-marker.is-soon .gm-pin-icon { left: 6px; top: 5px; width: 12px; height: 12px; }
 .map.z-far .gm-marker-label, .map.z-mid .gm-marker-label { display: none; }
 .map.z-far .gm-marker:hover .gm-marker-label, .map.z-mid .gm-marker:hover .gm-marker-label,
-.map.z-far .gm-marker.is-selected .gm-marker-label, .map.z-mid .gm-marker.is-selected .gm-marker-label { display: block; }
+.map.z-far .gm-marker.is-selected .gm-marker-label, .map.z-mid .gm-marker.is-selected .gm-marker-label { display: inline-flex; }
 .gm-poi { display: flex; align-items: center; gap: 6px; pointer-events: none; }
 .gm-poi-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(11,21,38,.4); margin-left: -6px; }
 .gm-poi-label { font-family: var(--font); font-weight: 600; font-size: 12.5px; color: var(--ink); background: rgba(255,255,255,.95); padding: 3px 7px; border-radius: 6px; box-shadow: 0 1px 4px rgba(11,21,38,.18); white-space: nowrap; }
@@ -668,7 +668,7 @@ img { display: block; max-width: 100%; }
 .gm-marker.is-visited .gm-pin, .gm-marker.is-visited .gm-marker-ground { display: none; }
 .gm-marker.is-visited .gm-dot { display: block; width: 13px; height: 13px; border-radius: 50%; background: #16a34a; border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(15,23,42,.3); }
 .gm-marker.is-visited .gm-marker-label { display: none; }
-.gm-marker.is-visited:hover .gm-marker-label, .gm-marker.is-visited.is-selected .gm-marker-label { display: block; }
+.gm-marker.is-visited:hover .gm-marker-label, .gm-marker.is-visited.is-selected .gm-marker-label { display: inline-flex; }
 .map.z-far .gm-marker.is-visited .gm-dot { width: 11px; height: 11px; box-shadow: 0 1px 3px rgba(15,23,42,.3); }
 
 /* ---------- Records : médailles sous les chiffres clés ---------- */
@@ -853,3 +853,16 @@ img { display: block; max-width: 100%; }
 .tag-plus.is-open { background: var(--ink); color: #fff; border-color: var(--ink); }
 .tag-plus.is-open svg { color: #fff; }
 .sidebar .tag-menu { width: 300px; }
+
+/* Étiquette : la coche reste sur la ligne du nom */
+.gm-marker-label { flex-direction: row; white-space: nowrap; }
+
+/* ---------- Barre du logo : plus fine, jauge plus grande (place pour le compte à venir) ---------- */
+.brand-bar { padding: 5px 6px 5px 14px; }
+.brand-bar .brand-name { font-size: 17px; }
+.brand-bar .progress-btn, .topbar .progress-btn { gap: 9px; padding: 3px 3px 3px 10px; }
+.brand-bar .progress-flag, .topbar .progress-flag { height: 21px; }
+.brand-bar .progress-dial, .topbar .progress-dial, .brand-bar .progress-ring, .topbar .progress-ring { width: 38px; height: 38px; }
+.brand-bar .progress-pct, .topbar .progress-pct { font-size: 10.5px; }
+.brand-bar .progress-pct small, .topbar .progress-pct small { font-size: 8px; }
+.topbar { padding: 5px 6px 5px 14px; }
