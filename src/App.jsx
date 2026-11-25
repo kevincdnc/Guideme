@@ -8,8 +8,9 @@ import { useVisited } from './hooks/useVisited.js';
 import { PLACES, TAGS, getPlace } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
+const BASE = import.meta.env.BASE_URL;
 function readRoute() {
-  const m = location.hash.match(/^#\/lieu\/([\w-]+)/);
+  const m = location.pathname.slice(BASE.length - 1).match(/^\/lieu\/([\w-]+)\/?$/) || location.hash.match(/^#\/lieu\/([\w-]+)/);
   return m && getPlace(m[1])?.available ? m[1] : null;
 }
 
@@ -141,13 +142,13 @@ const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ..
 
 // Puces de catégories. Barre latérale : sur deux lignes, loupe en bout de ligne.
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
-function TagBar({ value, onChange, places, wrap, query, onQuery }) {
+function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0 }) {
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
   const inputRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
   // La catégorie active passe en tête pour rester visible
-  const ordered = value ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
+  const ordered = value && value !== 'visited' ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
   const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
   const q = norm(query.trim());
   const menuTags = q ? used.filter((t) => norm(t.label).includes(q)) : used;
@@ -170,6 +171,11 @@ function TagBar({ value, onChange, places, wrap, query, onQuery }) {
     <div className={`tagbar-wrap ${wrap ? 'is-wrap' : ''}`} ref={boxRef}>
       <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
         <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
+        {(visitedCount > 0 || value === 'visited') && (
+          <button className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
+            <Icon name="check" size={14} stroke={2.8} /> {visitedCount} déjà visité{visitedCount > 1 ? 's' : ''}
+          </button>
+        )}
         {(wrap ? used : ordered).map((t) => (
           <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
             <Icon name={t.icon} size={14} /> {t.label}
@@ -218,12 +224,14 @@ export default function App() {
   const fromRail = useRef(false);
   const place = route ? getPlace(route) : null;
   const [visited, toggleVisited] = useVisited();
+  const visitedRef = useRef(visited);
+  visitedRef.current = visited;
   const [tag, setTag] = useState(null);
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
     const q = norm(query.trim());
-    return PLACES.filter((p) => (!tag || p.tags?.includes(tag)) && (!q || searchText(p).includes(q)));
-  }, [tag, query]);
+    return PLACES.filter((p) => (!tag || (tag === 'visited' ? visited.includes(p.id) : p.tags?.includes(tag))) && (!q || searchText(p).includes(q)));
+  }, [tag, query, visited]);
   // La recherche recadre la carte sur les lieux trouvés
   useEffect(() => {
     if (!query.trim() || !visible.length) return;
@@ -231,37 +239,46 @@ export default function App() {
     return () => clearTimeout(t);
   }, [query, visible]);
   const available = visible.filter((p) => p.available).length;
-  const [onlyVisited, setOnlyVisited] = useState(false);
   const allVisited = PLACES.filter((p) => visited.includes(p.id));
   const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
     setTag(t);
-    const list = PLACES.filter((p) => !t || p.tags?.includes(t));
+    const list = PLACES.filter((p) => !t || (t === 'visited' ? visitedRef.current.includes(p.id) : p.tags?.includes(t)));
     if (list.length) setTimeout(() => mapRef.current?.fitPoints(list.map((p) => p.coords)), 30);
     railRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
   }, []);
 
   useEffect(() => {
-    const on = () => setRoute(readRoute());
+    const on = () => { const r = readRoute(); setRoute(r); if (r) setSelected(r); };
+    window.addEventListener('popstate', on);
     window.addEventListener('hashchange', on);
-    return () => window.removeEventListener('hashchange', on);
+    return () => { window.removeEventListener('popstate', on); window.removeEventListener('hashchange', on); };
   }, []);
+  // Ancienne adresse #/lieu/<id> : on passe à la vraie page /lieu/<id>/
+  useEffect(() => { if (route && location.hash) history.replaceState(null, '', `${BASE}lieu/${route}/`); }, []);
+  // Titre de l'onglet
+  useEffect(() => { document.title = place ? `${place.title} · guideme.bzh` : 'guideme.bzh · Les spots emblématiques du Finistère'; }, [place]);
 
-  // Desktop : la fiche s'ouvre à droite de la liste, la carte garde une bande à droite
-  const panelW = desktop ? Math.round(Math.max(520, Math.min(window.innerWidth * 0.5, window.innerWidth - SIDEBAR_W - 220))) : 0;
+  // Desktop : la fiche se pose par-dessus la navigation, la carte reste visible à droite
+  const panelW = desktop ? Math.round(Math.max(560, Math.min(window.innerWidth * 0.44, 680))) : 0;
   // Espace laissé à la carte : carrousel en bas (mobile), liste et fiche à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: place ? SIDEBAR_W + panelW + 30 : SIDEBAR_W + 40, right: place ? 30 : 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: place ? panelW + 40 : SIDEBAR_W + 40, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
   // Retour arrière seulement si la fiche a été ouverte depuis l'app ;
   // arrivé par un lien direct, « Fermer » mène à la carte sans quitter le site.
   const openedInApp = useRef(false);
-  const open = useCallback((id) => { openedInApp.current = true; location.hash = `#/lieu/${id}`; setSelected(id); }, []);
+  const open = useCallback((id) => {
+    if (readRoute() === id) return;
+    if (readRoute()) history.replaceState(null, '', `${BASE}lieu/${id}/`);
+    else { openedInApp.current = true; history.pushState(null, '', `${BASE}lieu/${id}/`); }
+    setRoute(id); setSelected(id);
+  }, []);
   const close = useCallback(() => {
     if (openedInApp.current) { openedInApp.current = false; history.back(); }
-    else history.replaceState(null, '', location.pathname + location.search + '#/'), setRoute(null);
+    else { history.pushState(null, '', BASE); setRoute(null); }
   }, []);
 
   const selectedRef = useRef(selected);
@@ -281,11 +298,10 @@ export default function App() {
     fromRail.current = false;
   }, [open]);
 
-  // Quand on ouvre une fiche, la carte se cadre sur le lieu
+  // Quand on ouvre une fiche, la carte montre tout le Finistère, le lieu mis en avant
   useEffect(() => {
     if (!place) return;
-    const pts = [place.coords, ...(place.pois || []).map((p) => p.coords)];
-    setTimeout(() => mapRef.current?.fitPoints(pts), 60);
+    setTimeout(() => mapRef.current?.fitFinistere(), 60);
   }, [place]);
 
   // Carrousel mobile : la carte centrée devient la sélection
@@ -306,7 +322,7 @@ export default function App() {
   };
 
   return (
-    <div ref={appRef} className={`app ${place ? 'has-guide' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
+    <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
       <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} />
 
       {!desktop && !place && (
@@ -316,7 +332,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: place ? SIDEBAR_W + panelW + 16 : SIDEBAR_W + 16 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: place ? panelW + 16 : SIDEBAR_W + 16 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
       </div>
@@ -326,18 +342,12 @@ export default function App() {
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
           <div className="sidebar-intro">
             <h1>Les spots emblématiques du Finistère</h1>
-            <div className="sidebar-counts">
-              <span><b>{totalSpots}</b> spots disponibles</span>
-              <button className={`visited-filter ${onlyVisited ? 'is-on' : ''}`} onClick={() => setOnlyVisited((v) => !v)} aria-pressed={onlyVisited} disabled={!allVisited.length && !onlyVisited} title={onlyVisited ? 'Afficher tous les spots' : 'Afficher seulement les spots visités'}>
-                <span className="visited-toggle-dot"><Icon name="check" size={10} stroke={3.4} /></span>
-                <b>{allVisited.length}</b> déjà visité{allVisited.length > 1 ? 's' : ''}
-              </button>
-            </div>
+            <p className="sidebar-sub"><b>{totalSpots}</b> spots à découvrir</p>
           </div>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} wrap query={query} onQuery={setQuery} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
           <div className="sidebar-list">
-            {visible.length === 0 && <p className="sidebar-empty">Aucun spot ne correspond à « {query} ».</p>}
-            {visible.filter((p) => !onlyVisited || visited.includes(p.id)).map((p) => (
+            {visible.length === 0 && <p className="sidebar-empty">{tag === 'visited' ? 'Aucun spot coché pour l\'instant.' : `Aucun spot ne correspond à « ${query} ».`}</p>}
+            {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
             ))}
           </div>
@@ -346,7 +356,7 @@ export default function App() {
 
       {!desktop && !place && (
         <div className="rail-wrap" ref={railWrapRef}>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} query={query} onQuery={setQuery} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
             {visible.map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />

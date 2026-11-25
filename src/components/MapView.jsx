@@ -54,7 +54,7 @@ const drawTrees = (ctx) => {
 // (un peu plus haut et plus bas sur mobile, écran en hauteur)
 const MAX_BOUNDS = typeof window !== 'undefined' && window.innerWidth < 900
   ? [[-6.4, 46.6], [-1.7, 49.6]]
-  : [[-6.4, 47.0], [-1.7, 49.3]];
+  : [[-9.5, 47.0], [-1.7, 49.3]]; // à l'ouest, de la marge pour la fiche posée sur la carte
 
 // Précharge en arrière-plan les tuiles du Finistère aux petits zooms (mises en cache par
 // l'app hors ligne), pour que le zoom soit immédiat. Désactivé en mode « économie de données ».

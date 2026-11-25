@@ -511,7 +511,7 @@ img { display: block; max-width: 100%; }
   .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: 0; }
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
   .maplibregl-ctrl-bottom-left { margin-left: 480px; }
-  .has-guide .maplibregl-ctrl-bottom-left { margin-left: calc(480px + var(--panel-w, 50vw)); }
+  .has-guide .maplibregl-ctrl-bottom-left { margin-left: var(--panel-w, 600px); }
 
   /* Barre du haut commune */
   .guide-bar { padding: 14px 24px; gap: 10px; }
@@ -530,7 +530,7 @@ img { display: block; max-width: 100%; }
   /* ---- Panneau : moitié gauche de l'écran, une colonne aérée ---- */
   /* Fiche ouverte à droite de la liste, qui reste visible ; la carte garde une bande à droite */
   .guide--panel {
-    right: auto; left: 480px; width: var(--panel-w, 50vw);
+    right: auto; left: 0; width: var(--panel-w, 600px);
     border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 8px 0 40px rgba(15,23,42,.12);
     animation: guideInSide .3s cubic-bezier(.2,.8,.25,1);
   }
@@ -866,3 +866,51 @@ img { display: block; max-width: 100%; }
 .brand-bar .progress-pct, .topbar .progress-pct { font-size: 10.5px; }
 .brand-bar .progress-pct small, .topbar .progress-pct small { font-size: 8px; }
 .topbar { padding: 5px 6px 5px 14px; }
+
+/* ---------- Fiche unique, posée sur la navigation (desktop) ---------- */
+@media (min-width: 900px) {
+  .guide--panel { border-left: 0; box-shadow: 10px 0 40px rgba(15,23,42,.16); }
+  .guide--panel .hero { height: min(40vh, 360px); }
+  .guide--panel .guide-head { padding: 26px 36px 6px; }
+  .guide--panel .guide-head h1 { font-size: 34px; line-height: 1.08; }
+  .guide--panel .guide-teaser { font-size: 16.5px; line-height: 1.55; }
+  .guide--panel .section { padding: 30px 36px 6px; }
+  .guide--panel .section h2 { font-size: 26px; }
+  .guide--panel .para { font-size: 16.5px; line-height: 1.7; max-width: none; }
+  .guide--panel .gallery { margin: 0 -36px; padding: 2px 36px 8px; scroll-padding: 0 36px; }
+  .guide--panel .keyfig dt { font-size: 22px; }
+  .guide--panel .minimap { display: none; }
+  .guide--panel .section--pratique .practical-box { max-width: 460px; }
+}
+.section--pratique .practical-details { margin-top: 2px; }
+
+/* ---------- Barre du logo : plus d'air dessous ---------- */
+.brand-bar { margin-bottom: 8px; }
+.sidebar-sub { margin: 0; font-size: 13.5px; color: var(--ink-3); }
+.sidebar-sub b { color: var(--ink); }
+
+/* ---------- Tags de la navigation : une seule ligne ---------- */
+.sidebar .tagbar-wrap { margin: 0 -16px; padding: 6px 16px; top: -22px; }
+.sidebar .tag { height: 32px; padding: 0 11px; font-size: 13.5px; }
+.sidebar .tag-menu { left: auto; right: 16px; }
+.tag--visited { background: #f0faf3; border-color: #cfe9d6; color: #166534; }
+.tag--visited svg { color: #16a34a; }
+.tag--visited:hover { border-color: #16a34a; }
+.tag--visited.is-active { background: #16a34a; border-color: #16a34a; color: #fff; }
+.tag--visited.is-active svg { color: #fff; }
+
+/* ---------- Filtre « déjà visités » : gros repères verts sur la carte ---------- */
+.is-visited-filter .gm-marker.is-visited { --c: #16a34a !important; }
+.is-visited-filter .map .gm-marker.is-visited .gm-pin,
+.is-visited-filter .map .gm-marker.is-visited .gm-marker-ground { display: block !important; }
+.is-visited-filter .map .gm-marker.is-visited .gm-pin { width: 44px; height: 56px; }
+.is-visited-filter .map .gm-marker.is-visited .gm-dot { display: none !important; }
+.is-visited-filter .map .gm-marker.is-visited .gm-marker-label { display: inline-flex !important; }
+
+/* Lieu ouvert : grand repère même en vue d'ensemble */
+.map.z-far .gm-marker.is-selected .gm-pin, .map.z-mid .gm-marker.is-selected .gm-pin,
+.map.z-far .gm-marker.is-selected .gm-marker-ground, .map.z-mid .gm-marker.is-selected .gm-marker-ground { display: block; }
+.map.z-far .gm-marker.is-selected .gm-pin, .map.z-mid .gm-marker.is-selected .gm-pin { width: 44px; height: 56px; }
+.map.z-far .gm-marker.is-selected .gm-pin-icon, .map.z-mid .gm-marker.is-selected .gm-pin-icon { left: 11px; top: 10px; width: 22px; height: 22px; }
+.map.z-far .gm-marker.is-selected .gm-dot { display: none !important; }
+.map.z-far .gm-marker.is-selected .gm-marker-body { transform: none; }

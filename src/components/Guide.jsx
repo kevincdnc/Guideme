@@ -143,11 +143,10 @@ function MiniMap({ place }) {
     return () => map?.remove();
   }, [place]);
   return (
-    <a className="minimap" href={`${BASE}#/lieu/${place.id}`} aria-label={`Voir ${place.shortTitle} sur la carte`}>
+    <div className="minimap" aria-label={`Carte : ${place.shortTitle}`}>
       <div ref={ref} className="minimap-canvas" />
       <span className="minimap-label"><Icon name="pin" size={14} /> {place.commune.split(' · ')[0]}</span>
-      <span className="minimap-open"><Icon name="map" size={14} /> Ouvrir la carte</span>
-    </a>
+    </div>
   );
 }
 
@@ -248,7 +247,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
     ...(place.timeline?.length ? [{ id: 'reperes', label: 'Repères' }] : []),
     ...(place.archives?.length || place.photos?.length ? [{ id: 'archives', label: place.archives?.length ? 'Archives' : 'Photos' }] : []),
     ...(place.videos?.length ? [{ id: 'videos', label: 'Vidéos' }] : []),
-    { id: 'pratique', label: 'Pratique', mobileOnly: true },
+    { id: 'pratique', label: 'Y aller' },
   ];
 
   // Échap ferme la fiche (desktop)
@@ -299,7 +298,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <a className="pill-btn" href={`${BASE}#/lieu/${place.id}`}><Icon name="map" size={17} /> <span>Voir sur la carte</span></a>
         ) : (
           <>
-            <a className="pill-btn pill-btn--primary" href={`${BASE}lieu/${place.id}/`}><Icon name="external" size={16} /> <span>Fiche complète</span></a>
             <button className="close-btn" onClick={onClose} aria-label="Fermer la fiche">
               <Icon name="close" size={18} /> <span>Fermer</span>
             </button>
@@ -482,7 +480,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </section>
         )}
 
-        <section id="sec-pratique" data-nav="pratique" className="section mobile-only">
+        <section id="sec-pratique" data-nav="pratique" className="section section--pratique">
           <div className="section-head"><h2>Y aller</h2></div>
           <Practical place={place} directions={directions} />
         </section>
