@@ -1003,3 +1003,56 @@ img { display: block; max-width: 100%; }
   .gm-marker.is-visited .gm-pop-off { display: none; }
   .gm-marker.is-available.is-visited:hover .gm-label-check { background: #16a34a; color: #fff; }
 }
+
+/* ---------- Pop-up pleine hauteur, plus large et plus aérée ; boutons à l'extérieur ---------- */
+@media (min-width: 900px) {
+  .app { --modal-w: min(1240px, calc(100vw - 200px)); }
+  .guide--modal { inset: 0 auto 0 50%; width: var(--modal-w); border-radius: 0; }
+  .guide--modal .guide-bar .close-btn, .guide--modal .guide-bar > .icon-btn { display: none; }
+  .guide--modal .guide-bar { padding-left: 88px; padding-right: 88px; }
+  .guide--modal .guide-layout { padding: 0 88px; gap: 64px; grid-template-columns: minmax(0, 1fr) 330px; }
+  .guide--modal .guide-head { padding-top: 48px; }
+  .guide--modal .guide-teaser { margin-top: 20px; line-height: 1.6; }
+  .guide--modal .keyfigs { margin-top: 26px; }
+  .guide--modal .section { padding: 64px 0 8px; }
+  .guide--modal .section-head { margin-bottom: 18px; }
+  .guide--modal .para { line-height: 1.8; margin: 0 0 22px; }
+  .guide--modal .anecdotes { gap: 16px; }
+  .guide--modal .guide-aside { margin-top: 48px; }
+  .modal-actions { position: absolute; z-index: 21; top: 18px; left: calc(50% + var(--modal-w) / 2 + 16px); display: flex; flex-direction: column; gap: 10px; animation: fade .25s ease; }
+  .modal-action { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--ink); box-shadow: 0 6px 18px rgba(15,23,42,.25); transition: transform .12s, background .15s; }
+  .modal-action:hover { transform: scale(1.06); }
+  .modal-action:active { transform: scale(.95); }
+}
+
+/* ---------- Favoris : étoile à côté de « déjà visité » ---------- */
+.fav-btn { width: 42px; padding: 0; justify-content: center; color: var(--ink-3); }
+.fav-btn:hover { color: #d97706; border-color: #fcd34d; }
+.fav-btn.is-on { background: #fff8e6; border-color: #fcd34d; color: #d97706; }
+.fav-btn.is-on svg { fill: #f59e0b; }
+
+/* ---------- Profil : avatar dans la barre noire, menu des favoris ---------- */
+.brand-bar { justify-content: flex-start; gap: 12px; }
+.brand-bar .progress { margin-left: auto; }
+.profile { position: relative; }
+.profile-btn { position: relative; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #3b4252, #1f2430); border: 1.5px solid rgba(255,255,255,.22); }
+.profile-btn:hover, .profile-btn.is-open { border-color: #fff; }
+.profile-badge { position: absolute; right: -4px; top: -4px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: #f59e0b; color: #111; font-size: 10.5px; font-weight: 800; display: grid; place-items: center; border: 2px solid #111; }
+.profile-menu { position: absolute; z-index: 30; top: calc(100% + 12px); left: -6px; width: 300px; background: #fff; color: var(--ink); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 14px; box-shadow: 0 12px 34px rgba(15,23,42,.18); animation: fade .15s ease; }
+.profile-title { display: flex; align-items: center; gap: 7px; font-family: var(--font-title); font-size: 16px; margin-bottom: 8px; }
+.profile-title svg { color: #f59e0b; fill: #f59e0b; }
+.profile-empty { margin: 4px 0; font-size: 13.5px; color: var(--ink-3); }
+.profile-menu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; max-height: 50vh; overflow-y: auto; }
+.profile-menu li { display: flex; align-items: center; }
+.profile-item { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 6px; text-align: left; }
+.profile-item:hover { background: var(--surface-2); }
+.profile-item img { width: 38px; height: 38px; border-radius: 5px; object-fit: cover; flex: 0 0 auto; }
+.profile-item span { display: flex; flex-direction: column; font-size: 14px; font-weight: 600; min-width: 0; }
+.profile-item small { font-size: 12px; font-weight: 500; color: var(--ink-3); }
+.profile-remove { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 5px; color: var(--ink-3); }
+.profile-remove:hover { background: var(--surface-2); color: var(--ink); }
+
+/* ---------- Compteur : plus petit, juste le nombre, plus d'air autour du drapeau ---------- */
+.brand-bar .progress-btn { gap: 12px; padding: 5px 5px 5px 13px; }
+.brand-bar .progress-dial, .brand-bar .progress-ring { width: 30px; height: 30px; }
+.brand-bar .progress-pct, .topbar .progress-pct { font-size: 12px; letter-spacing: 0; }

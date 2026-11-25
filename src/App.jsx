@@ -4,7 +4,7 @@ import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
 import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
-import { useVisited } from './hooks/useVisited.js';
+import { useVisited, useFavorites } from './hooks/useVisited.js';
 import { PLACES, TAGS, getPlace } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
@@ -28,6 +28,13 @@ function useIsDesktop() {
 
 const TAG_BY_ID = Object.fromEntries(TAGS.map((t) => [t.id, t]));
 const SIDEBAR_W = 480;
+async function sharePlace(place) {
+  const url = `${location.origin}${import.meta.env.BASE_URL}lieu/${place.id}/`;
+  try {
+    if (navigator.share) await navigator.share({ title: `${place.title} · guideme.bzh`, text: place.teaser, url });
+    else { await navigator.clipboard.writeText(url); alert('Lien copié'); }
+  } catch (e) { /* partage annulé */ }
+}
 // « 30 spots à découvrir », « 18 phares à découvrir »… selon le filtre choisi
 const COUNT_WORDS = {
   nature: ['site naturel', 'sites naturels'], phare: ['phare', 'phares'], histoire: ['lieu de patrimoine', 'lieux de patrimoine'],
@@ -110,7 +117,7 @@ function ProgressFlag({ visited, onPick }) {
             <circle cx="20" cy="20" r={R} className="progress-track" />
             <circle cx="20" cy="20" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} style={{ opacity: done.length ? 1 : 0 }} />
           </svg>
-          <span className="progress-pct">{pct}<small>%</small></span>
+          <span className="progress-pct">{done.length}</span>
         </span>
       </button>
       {open && (
@@ -152,6 +159,45 @@ function ProgressFlag({ visited, onPick }) {
 // Recherche sans accents ni majuscules : nom, commune, catégorie et tags
 const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ...(p.tags || []).map((id) => TAG_BY_ID[id]?.label)].join(' '));
+
+// Profil : avatar dans la barre noire ; ouvre la liste des favoris (étoile des fiches)
+function ProfileMenu({ onOpen }) {
+  const [fav, toggleFav] = useFavorites();
+  const [open, setOpen] = useState(false);
+  const boxRef = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e) => { if (!boxRef.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+  const list = fav.map((id) => getPlace(id)).filter(Boolean);
+  return (
+    <div className="profile" ref={boxRef}>
+      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon profil et mes favoris" aria-expanded={open}>
+        <Icon name="user" size={18} stroke={2} />
+        {list.length > 0 && <span className="profile-badge">{list.length}</span>}
+      </button>
+      {open && (
+        <div className="profile-menu">
+          <strong className="profile-title"><Icon name="star" size={16} /> Mes favoris</strong>
+          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'une fiche pour l'ajouter ici.</p>}
+          <ul>
+            {list.map((p) => (
+              <li key={p.id}>
+                <button className="profile-item" onClick={() => { setOpen(false); onOpen(p.id); }}>
+                  {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
+                  <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
+                </button>
+                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} des favoris`}><Icon name="close" size={14} stroke={2.4} /></button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
 
 // Puces de catégories. Barre latérale : sur deux lignes, loupe en bout de ligne.
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
@@ -352,7 +398,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
+          <header className="brand-bar"><ProfileMenu onOpen={open} /><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
           <div className="sidebar-intro">
             <h1>Les spots emblématiques du Finistère</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}</p>
@@ -380,6 +426,12 @@ export default function App() {
 
       {place && desktop && <div className="guide-backdrop" onClick={close} aria-hidden="true" />}
       {place && <Guide key={place.id} place={place} onClose={close} variant="modal" />}
+      {place && desktop && (
+        <div className="modal-actions">
+          <button className="modal-action" onClick={close} aria-label="Fermer la fiche"><Icon name="close" size={20} stroke={2.2} /></button>
+          <button className="modal-action" onClick={() => sharePlace(place)} aria-label="Partager"><Icon name="share" size={19} /></button>
+        </div>
+      )}
     </div>
   );
 }

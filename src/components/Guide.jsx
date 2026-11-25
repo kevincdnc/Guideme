@@ -6,7 +6,7 @@ import Brand from './Brand.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
-import { useVisited } from '../hooks/useVisited.js';
+import { useVisited, useFavorites } from '../hooks/useVisited.js';
 import maplibregl from 'maplibre-gl';
 import MAP_STYLE from '../data/map-style.json';
 import { FINISTERE_BOUNDS } from '../data/places.js';
@@ -198,6 +198,8 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
   const isPage = variant === 'page';
   const [visitedIds, toggleVisited] = useVisited();
   const isVisited = visitedIds.includes(place.id);
+  const [favIds, toggleFav] = useFavorites();
+  const isFav = favIds.includes(place.id);
   // En-tête en mosaïque : photo principale + vignettes (photos actuelles, puis archives)
   const allImages = useMemo(() => [
     ...(place.hero ? [{ src: place.hero.src, caption: place.hero.alt, credit: place.hero.credit }] : []),
@@ -340,6 +342,9 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
               <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
               {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
+            </button>
+            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de mes favoris' : 'Ajouter à mes favoris'} title={isFav ? 'Dans mes favoris' : 'Ajouter à mes favoris'}>
+              <Icon name="star" size={18} stroke={2} />
             </button>
           </div>
           <p className="guide-teaser">{place.teaser}</p>

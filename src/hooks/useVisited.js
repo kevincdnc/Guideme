@@ -49,3 +49,29 @@ export function useVisited() {
 
   return [ids, toggle, started];
 }
+
+// Favoris (étoile) : liste personnelle, gardée sur l'appareil
+const FAV = 'guideme:favorites';
+const FAV_EVENT = 'guideme-favorites';
+let favMemory = null;
+function readFav() {
+  if (favMemory) return favMemory;
+  try { const v = JSON.parse(localStorage.getItem(FAV) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+}
+export function useFavorites() {
+  const [ids, setIds] = useState(readFav);
+  useEffect(() => {
+    const sync = () => setIds(readFav());
+    window.addEventListener(FAV_EVENT, sync);
+    window.addEventListener('storage', sync);
+    return () => { window.removeEventListener(FAV_EVENT, sync); window.removeEventListener('storage', sync); };
+  }, []);
+  const toggle = useCallback((id) => {
+    const cur = readFav();
+    const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
+    try { localStorage.setItem(FAV, JSON.stringify(next)); favMemory = null; } catch (e) { favMemory = next; }
+    setIds(next);
+    window.dispatchEvent(new Event(FAV_EVENT));
+  }, []);
+  return [ids, toggle];
+}
