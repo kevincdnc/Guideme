@@ -1285,3 +1285,25 @@ img { display: block; max-width: 100%; }
 .progress-menu.is-wide .progress-cats { grid-template-columns: 1fr 1fr; column-gap: 28px; }
 .progress-menu .progress-cats { display: grid; margin: 14px 0 4px; padding: 14px 0 2px; gap: 9px; }
 .progress-menu.is-wide .progress-cats { grid-template-columns: 1fr 1fr; column-gap: 28px; }
+
+/* ---------- Info-bulle : sous le repère si besoin, cases pleine largeur, lien discret à gauche ---------- */
+@media (hover: hover) {
+  .gm-marker.pop-below:hover .gm-marker-label { position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%); }
+  .gm-marker.is-available:hover .gm-pop-actions { gap: 6px; }
+  .gm-pop-flag { flex: 1; width: auto; height: 32px; gap: 6px; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font); font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.7); }
+  .gm-pop-flag em { font-style: normal; }
+  .gm-pop-flag .gm-on { display: none; }
+  .gm-marker.is-wanted .gm-pop-flag--want .gm-on, .gm-marker.is-visited .gm-pop-flag--done .gm-on { display: inline; }
+  .gm-marker.is-wanted .gm-pop-flag--want .gm-off, .gm-marker.is-visited .gm-pop-flag--done .gm-off { display: none; }
+  .gm-marker.is-visited .gm-pop-flag--done { color: #fff; }
+  .gm-marker.is-visited .gm-pop-flag--want { display: none; }
+  .gm-marker.is-available:hover .gm-pop-open { display: inline-flex; }
+  .gm-pop-open { align-self: flex-start; margin: 2px 0 0 1px; height: auto; padding: 0; background: none !important; color: rgba(255,255,255,.6); font-size: 12px; font-weight: 600; }
+  .gm-pop-open:hover { color: #fff; text-decoration: underline; }
+  .gm-pop-open svg { width: 12px; height: 12px; }
+}
+.gm-pop-open { display: none; }
+
+/* ---------- Cartes : « Déjà visité » à côté de la coche ---------- */
+.pc-done-label { position: absolute; right: 38px; bottom: 7px; font-size: 11.5px; font-weight: 600; color: #15803d; white-space: nowrap; }
+.sidebar-made { font-style: normal; }

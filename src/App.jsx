@@ -87,6 +87,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             <Icon name="star" size={15} stroke={2} />
             <span className="pc-tip" aria-hidden="true">{wanted ? 'Favori · retirer' : 'Ajouter aux favoris'}</span>
           </button>
+          {visited && <span className="pc-done-label">Déjà visité</span>}
           <button
             className={`pc-flag pc-flag--done ${visited ? 'is-on' : ''}`}
             onClick={(e) => { e.stopPropagation(); onToggleVisited(place.id); }}
@@ -476,7 +477,7 @@ export default function App() {
         <aside className="sidebar">
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /><ProfileMenu onOpen={open} /></header>
           <div className="sidebar-intro">
-            <h1>Le Finistère, t'as vraiment tout vu ?</h1>
+            <h1>Tu crois connaître le Finistère ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)} <span className="sidebar-made">made in Penn-ar-Bed</span></p>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} />

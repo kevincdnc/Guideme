@@ -100,7 +100,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       <span class="gm-pop-main">
         <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
         ${place.available && place.facts?.length ? `<span class="gm-pop-facts">${place.facts.slice(0, 2).map((f) => `<span><b>${esc(f.value)}</b>${esc(f.label.split(',')[0])}</span>`).join('')}</span>` : ''}
-        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="Favori" aria-label="Ajouter aux favoris">${STAR_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="Déjà visité" aria-label="Je l'ai déjà visité">${CHECK_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
+        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" aria-label="Ajouter aux favoris">${STAR_SVG}<em class="gm-off">Favori</em><em class="gm-on">En favori</em></span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" aria-label="Je l'ai déjà visité">${CHECK_SVG}<em class="gm-off">Visité ?</em><em class="gm-on">Visité</em></span></span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>` : ''}
       </span>
     </span>
     <span class="gm-pin">
@@ -123,6 +123,12 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
   // Info-bulle : la photo ne se charge qu'au premier survol
   const img = el.querySelector('.gm-pop-img');
   if (img) el.addEventListener('mouseenter', () => { if (!img.style.backgroundImage) img.style.backgroundImage = `url("${thumbOf(place)}")`; });
+  // Info-bulle sous le repère quand il n'y a pas la place au-dessus
+  el.addEventListener('mouseenter', () => {
+    // Bas du repère (point d'ancrage) : ne bouge pas quand l'info-bulle s'ouvre
+    const y = el.getBoundingClientRect().bottom - (el.closest('.map')?.getBoundingClientRect().top || 0);
+    el.classList.toggle('pop-below', y < 360);
+  });
   const bind = (sel, fn) => {
     const node = el.querySelector(sel);
     if (!node) return;
