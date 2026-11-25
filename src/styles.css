@@ -1183,3 +1183,11 @@ img { display: block; max-width: 100%; }
   .gm-pop-open svg { width: 13px; height: 13px; }
   .gm-pop-open:hover { background: #e5e7eb; }
 }
+
+/* Avatar par défaut : silhouette classique */
+.profile-btn { overflow: hidden; }
+.profile-btn:has(.avatar-ph) { background: #4b5563; border-color: rgba(255,255,255,.35); }
+.profile-avatar { overflow: hidden; }
+.profile-avatar:has(.avatar-ph) { background: #d1d5db; }
+.avatar-ph { width: 100%; height: 100%; color: #e5e7eb; display: block; }
+.profile-avatar .avatar-ph { color: #fff; }

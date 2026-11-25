@@ -4,6 +4,18 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/sora';
 import './styles.css';
 import App from './App.jsx';
+import { registerSW } from 'virtual:pwa-register';
+
+// Mises à jour rapides : dès qu'une nouvelle version est publiée, l'app la récupère et se recharge.
+// Vérification toutes les minutes et à chaque retour sur l'onglet.
+registerSW({
+  immediate: true,
+  onRegisteredSW(_url, reg) {
+    if (!reg) return;
+    setInterval(() => reg.update(), 60 * 1000);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update(); });
+  },
+});
 
 // Une seule app : l'adresse lieu/<id>/ (page générée au build pour le référencement)
 // ouvre la carte avec la fiche du lieu par-dessus.

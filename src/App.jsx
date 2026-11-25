@@ -186,6 +186,15 @@ function MapSettings() {
 
 // Profil : avatar dans la barre noire ; ouvre la liste des favoris (étoile des fiches)
 const INITIALS_KEY = 'guideme:initials';
+// Avatar par défaut : silhouette blanche sur fond gris
+function AvatarPlaceholder() {
+  return (
+    <svg className="avatar-ph" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="15.5" r="7" fill="currentColor" />
+      <path d="M5 40c1.5-8.5 7.6-13 15-13s13.5 4.5 15 13z" fill="currentColor" />
+    </svg>
+  );
+}
 function ProfileMenu({ onOpen }) {
   const [fav, toggleFav] = useFavorites();
   const [initials, setInitials] = useState(() => { try { return localStorage.getItem(INITIALS_KEY) || ''; } catch (e) { return ''; } });
@@ -202,13 +211,13 @@ function ProfileMenu({ onOpen }) {
   return (
     <div className="profile" ref={boxRef}>
       <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et mes envies" aria-expanded={open}>
-        {initials ? <span className="profile-initials">{initials}</span> : <Icon name="user" size={17} stroke={2} />}
+        {initials ? <span className="profile-initials">{initials}</span> : <AvatarPlaceholder />}
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
       {open && (
         <div className="profile-menu">
           <label className="profile-id">
-            <span className="profile-avatar">{initials || '?'}</span>
+            <span className="profile-avatar">{initials || <AvatarPlaceholder />}</span>
             <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
           </label>
           <strong className="profile-title"><Icon name="flag" size={16} /> Je veux y aller</strong>

@@ -21,6 +21,7 @@ export default defineConfig({
     prerender({ base: BASE, site: SITE }),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false, // enregistrement fait dans main.jsx (mise à jour immédiate)
       includeAssets: ['icons/icon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
         name: 'guideme.bzh — Guides du Finistère',
@@ -41,6 +42,9 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        skipWaiting: true,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         // Les pages de lieux sont de vraies pages : ne pas les remplacer par la carte
         navigateFallbackDenylist: [/\/lieu\//],
         // Hors ligne : tuiles de carte et images d'archives déjà vues restent disponibles
