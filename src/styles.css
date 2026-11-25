@@ -1374,3 +1374,11 @@ img { display: block; max-width: 100%; }
   .guide--modal .funfact { margin-top: 12px; }
   .guide--modal .aside-card { padding: 20px; border-radius: 12px; }
 }
+
+/* Petites cartes plus compactes : boutons favori et visité rapprochés, photo plus petite */
+.place-card { padding: 8px 10px 8px 8px; gap: 14px; }
+.pc-thumb { flex: 0 0 64px; height: 64px; }
+.pc-flags { top: 50%; bottom: auto; transform: translateY(-50%); justify-content: center; gap: 4px; }
+.pc-flag { width: 28px; height: 28px; }
+.place-card.is-visited .pc-flags { justify-content: center; }
+.pc-done-label { bottom: auto; top: 50%; transform: translateY(-50%); right: 46px; }
