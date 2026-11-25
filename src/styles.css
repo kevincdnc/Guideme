@@ -58,7 +58,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Structure ---------- */
 .app { position: fixed; inset: 0; overflow: hidden; }
-.map, .map.maplibregl-map { position: absolute; inset: 0; background: #cfe3ee; }
+.map, .map.maplibregl-map { position: absolute; inset: 0; background: #d2def6; }
 
 /* ---------- Marque ---------- */
 .brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
@@ -1061,3 +1061,20 @@ img { display: block; max-width: 100%; }
 .profile-menu { left: auto; right: -6px; }
 .brand-bar .progress-pct, .topbar .progress-pct { font-size: 8.5px; letter-spacing: -0.02em; }
 .brand-bar .progress-pct small, .topbar .progress-pct small { font-size: 6px; }
+
+/* ---------- Avatar plus discret ; drapeau un peu plus petit ---------- */
+.profile-btn { width: 32px; height: 32px; background: transparent; border: 1.5px solid rgba(255,255,255,.28); color: rgba(255,255,255,.85); }
+.profile-btn:hover, .profile-btn.is-open { color: #fff; border-color: rgba(255,255,255,.7); background: rgba(255,255,255,.06); }
+.brand-bar .progress-flag, .topbar .progress-flag { height: 17px; }
+
+/* ---------- Info-bulle des repères : petite carte, photo carrée au-dessus ---------- */
+@media (hover: hover) {
+  .gm-marker.is-available:hover .gm-marker-label { flex-direction: column; align-items: stretch; width: 148px; padding: 6px 6px 8px; gap: 7px; border-radius: 6px; white-space: normal; }
+  .gm-marker.is-available:hover .gm-pop-img { width: 136px; height: 136px; border-radius: 4px; }
+  .gm-marker.is-available:hover .gm-pop-main { gap: 5px; padding: 0 3px; }
+  .gm-marker.is-available:hover .gm-pop-name { font-size: 13.5px; line-height: 1.2; }
+  .gm-marker.is-available:hover .gm-label-check { display: none !important; }
+  .gm-marker.is-available:hover .gm-pop-visit { font-size: 12px; }
+  .gm-pop-box { border-radius: 3px; }
+}
+@media (hover: hover) { .gm-marker.is-available:hover .gm-pop-main, .gm-marker.is-available:hover .gm-pop-name { text-align: left; justify-content: flex-start; } }

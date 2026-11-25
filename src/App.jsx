@@ -175,7 +175,7 @@ function ProfileMenu({ onOpen }) {
   return (
     <div className="profile" ref={boxRef}>
       <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon profil et mes favoris" aria-expanded={open}>
-        <Icon name="user" size={18} stroke={2} />
+        <Icon name="bigouden" size={19} stroke={1.7} />
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
       {open && (

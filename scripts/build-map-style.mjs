@@ -12,9 +12,9 @@ style.name = 'guideme.bzh';
 const P = {
   // Palette « jeu » façon Zenly : terres menthe, mer bleu franc, verts vifs, bâtiments lavande
   land: '#eef6dc',
-  water: '#8cd3f3',
-  waterDeep: '#7fcbf0',
-  waterLine: '#88d1f2',
+  water: '#93b8f2',
+  waterDeep: '#86aef0',
+  waterLine: '#8db3f1',
   wood: '#9de08a',
   grass: '#c6efa4',
   park: '#a8e690',
@@ -24,7 +24,7 @@ const P = {
   roadMajorCase: '#d6e6bd',
   roadMinor: '#ffffff',
   label: '#22304a',
-  labelWater: '#0e5d8f',
+  labelWater: '#1f4fb8',
 }
 
 // Noms : français d'abord, puis nom local
@@ -123,7 +123,7 @@ const iAfterWater = style.layers.findIndex((l) => l.id === 'water') + 1;
 style.layers.splice(iAfterWater, 0,
   {
     id: 'water_shallow', type: 'line', source: 'openmaptiles', 'source-layer': 'water',
-    paint: { 'line-color': '#bdeafb', 'line-blur': ['interpolate', ['linear'], ['zoom'], 6, 1, 14, 5], 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 2, 10, 7, 14, 16], 'line-opacity': 0.9 },
+    paint: { 'line-color': '#c6d8fa', 'line-blur': ['interpolate', ['linear'], ['zoom'], 6, 1, 14, 5], 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 2, 10, 7, 14, 16], 'line-opacity': 0.9 },
   },
   {
     id: 'water_outline', type: 'line', source: 'openmaptiles', 'source-layer': 'water',
