@@ -46,7 +46,7 @@ function countLabel(tag, n, query) {
   const many = n > 1;
   if (query?.trim()) return many ? 'spots trouvés' : 'spot trouvé';
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
-  if (tag === 'wanted') return many ? 'spots dans ta liste à faire' : 'spot dans ta liste à faire';
+  if (tag === 'wanted') return many ? 'spots dans ta to-do list' : 'spot dans ta to-do list';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
   return `${many ? w[1] : w[0]} à découvrir`;
 }
@@ -82,10 +82,10 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             className={`pc-flag pc-flag--want ${wanted ? 'is-on' : ''}`}
             onClick={(e) => { e.stopPropagation(); onToggleWanted(place.id); }}
             aria-pressed={!!wanted}
-            aria-label={wanted ? `${place.shortTitle} : retirer de ma liste à faire` : `${place.shortTitle} : ajouter à ma liste à faire`}
+            aria-label={wanted ? `${place.shortTitle} : retirer de ma to-do list` : `${place.shortTitle} : ajouter à ma to-do list`}
           >
             <Icon name="star" size={15} stroke={2} />
-            <span className="pc-tip" aria-hidden="true">{wanted ? 'Dans ma liste à faire · retirer' : 'Ajouter à ma liste à faire'}</span>
+            <span className="pc-tip" aria-hidden="true">{wanted ? 'Dans ma to-do list · retirer' : 'Ajouter à ma to-do list'}</span>
           </button>
           {visited && <span className="pc-done-label">Déjà visité</span>}
           <button
@@ -238,7 +238,7 @@ function ProfileMenu({ onOpen }) {
   const list = fav.map((id) => getPlace(id)).filter(Boolean);
   return (
     <div className="profile" ref={boxRef}>
-      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et ma liste à faire" aria-expanded={open}>
+      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et ma to-do list" aria-expanded={open}>
         {initials ? <span className="profile-initials">{initials}</span> : <AvatarPlaceholder />}
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
@@ -248,8 +248,8 @@ function ProfileMenu({ onOpen }) {
             <span className="profile-avatar">{initials || <AvatarPlaceholder />}</span>
             <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
           </label>
-          <strong className="profile-title"><Icon name="star" size={16} /> Ma liste à faire</strong>
-          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'un spot pour l'ajouter à ta liste.</p>}
+          <strong className="profile-title"><Icon name="star" size={16} /> Ma to-do list</strong>
+          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'un spot pour l'ajouter à ta to-do list.</p>}
           <ul>
             {list.map((p) => (
               <li key={p.id}>
@@ -257,7 +257,7 @@ function ProfileMenu({ onOpen }) {
                   {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
                   <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
                 </button>
-                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} de ma liste à faire`}><Icon name="close" size={14} stroke={2.4} /></button>
+                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} de ma to-do list`}><Icon name="close" size={14} stroke={2.4} /></button>
               </li>
             ))}
           </ul>
@@ -305,7 +305,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         )}
         {(wantedCount > 0 || value === 'wanted') && (
           <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
-            <Icon name="star" size={14} stroke={2.2} /> {wantedCount} à faire
+            <Icon name="star" size={14} stroke={2.2} /> {wantedCount} to-do
           </button>
         )}
         {(wrap ? used : ordered).map((t) => (
@@ -425,6 +425,11 @@ export default function App() {
     if (!id) return;
     const p = getPlace(id);
     mapRef.current?.flyTo(p.coords, 11.5);
+    // Desktop : clic sur un repère → la carte correspondante défile dans la liste de gauche
+    if (fromMarker) {
+      const side = document.querySelector(`.sidebar .place-card[data-id="${id}"]`);
+      side?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     // Sur mobile, amène la carte correspondante au centre du carrousel
     if (!fromRail.current && railRef.current) {
       const card = railRef.current.querySelector(`[data-id="${id}"]`);

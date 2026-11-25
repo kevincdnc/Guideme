@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from 'react';
 import Icon from './Icon.jsx';
 import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
@@ -184,30 +184,33 @@ function MiniMap({ place, overview }) {
 }
 
 // Carte, itinéraire, puis infos pratiques repliées
-// Logos simplifiés des applis d'itinéraire
+// Logos des applis d'itinéraire (Google Maps et Plans : Wikimedia Commons ; Waze : Simple Icons),
+// tous ramenés à un carré de 22 px
 function RouteLogo({ id }) {
+  const clip = `am-${useId().replace(/:/g, '')}`;
   if (id === 'google') return (
-    <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 2.5a7 7 0 00-7 7c0 5.2 7 12 7 12s7-6.8 7-12a7 7 0 00-7-7z" fill="#ea4335" />
-      <path d="M5 9.5a7 7 0 012-4.9l5 5-4.4 5.6C6.1 13.2 5 11.2 5 9.5z" fill="#fbbc04" />
-      <path d="M7 4.6A7 7 0 0112 2.5a7 7 0 016.2 3.7L12 9.6z" fill="#4285f4" />
-      <path d="M7.6 15.2L19 6.2c-.1 3.6-3.4 8-7 15.3-1.9-2.1-3.3-4.2-4.4-6.3z" fill="#34a853" />
-      <circle cx="12" cy="9.5" r="2.6" fill="#fff" />
+    <svg className="route-logo" viewBox="-20 0 132.3 132.3" aria-hidden="true">
+      <path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z" /><path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z" /><path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3" /><path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3" /><path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63 0-7.7-1.9-14.9-5.2-21.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2" />
     </svg>
   );
   if (id === 'waze') return (
     <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12.5 3.5c4.6 0 8 3.2 8 7.4 0 4-3.3 7-7.6 7H9.6c-.9 1.3-2.3 2-3.8 2 .5-.8.6-1.7.4-2.6C4.4 16 3.5 14 3.5 11.5c0-4.4 4-8 9-8z" fill="#33ccff" stroke="#0b1b2b" strokeWidth="1.3" />
-      <circle cx="10" cy="10" r="1" fill="#0b1b2b" /><circle cx="15" cy="10" r="1" fill="#0b1b2b" />
-      <path d="M9.6 12.8c1.4 1.4 3.6 1.4 5 0" fill="none" stroke="#0b1b2b" strokeWidth="1.2" strokeLinecap="round" />
+      <rect width="24" height="24" rx="6" fill="#33ccff" />
+      <g transform="translate(2.2 2.4) scale(.82)">
+        <circle cx="13.2" cy="10.9" r="9.2" fill="#fff" />
+        <path fill="#0b1b2b" d="M13.218 0C9.915 0 6.835 1.49 4.723 4.148c-1.515 1.913-2.31 4.272-2.31 6.706v1.739c0 .894-.62 1.738-1.862 1.813c-.298.025-.547.224-.547.522c-.05.82.82 2.31 2.012 3.502c.82.844 1.788 1.515 2.832 2.036a3 3 0 0 0 2.955 3.528a2.966 2.966 0 0 0 2.931-2.385h2.509c.323 1.689 2.086 2.856 3.974 2.21c1.64-.546 2.36-2.409 1.763-3.924a13 13 0 0 0 1.838-1.465a10.73 10.73 0 0 0 3.18-7.65c0-2.882-1.118-5.589-3.155-7.625A10.9 10.9 0 0 0 13.218 0m0 1.217c2.558 0 4.967.994 6.78 2.807a9.53 9.53 0 0 1 2.807 6.78A9.53 9.53 0 0 1 20 17.585a9.650 9.650 0 0 1-6.78 2.807h-2.46a3.01 3.01 0 0 0-2.93-2.41a3.030 3.030 0 0 0-2.534 1.367v.024a9 9 0 0 1-2.41-1.788c-.844-.844-1.316-1.614-1.515-2.11a2.860 2.860 0 0 0 1.441-.846a2.960 2.960 0 0 0 .795-2.036v-1.789c0-2.11.696-4.197 2.012-5.861c1.863-2.385 4.62-3.726 7.6-3.726zm-2.41 5.986a1.19 1.19 0 0 0-1.191 1.192a1.19 1.19 0 0 0 1.192 1.193A1.19 1.19 0 0 0 12 8.395a1.19 1.19 0 0 0-1.192-1.192m7.204 0a1.19 1.19 0 0 0-1.192 1.192a1.19 1.19 0 0 0 1.192 1.193a1.19 1.19 0 0 0 1.192-1.193a1.19 1.19 0 0 0-1.192-1.192m-7.377 4.769a.596.596 0 0 0-.546.845a4.81 4.81 0 0 0 4.346 2.757a4.770 4.770 0 0 0 4.347-2.757a.596.596 0 0 0-.547-.845h-.025a.56.56 0 0 0-.521.348a3.59 3.59 0 0 1-3.254 2.061a3.590 3.590 0 0 1-3.254-2.061a.64.64 0 0 0-.546-.348" />
+      </g>
     </svg>
   );
   return (
-    <svg className="route-logo" viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="2.5" y="2.5" width="19" height="19" rx="5" fill="#f2f2f7" stroke="#d1d1d6" />
-      <path d="M2.5 15l7-6 5 4 7-6" fill="none" stroke="#34c759" strokeWidth="2.4" />
-      <path d="M8 21.5l3-9 10-4" fill="none" stroke="#ffcc00" strokeWidth="1.8" />
-      <circle cx="15" cy="10" r="2.4" fill="#007aff" stroke="#fff" strokeWidth="1" />
+    <svg className="route-logo" viewBox="0 0 512 512" aria-hidden="true">
+      <clipPath id={clip}><circle cx="256" cy="256" r="256" /></clipPath>
+      <circle cx="256" cy="256" r="256" fill="#fff" />
+      <g clipPath={`url(#${clip})`}>
+        <rect fill="#E4DDC9" x="0" y="0" width="170" height="512" /><rect fill="#76C63B" x="340" y="0" width="172" height="170" /><rect fill="#FBC6D1" x="340" y="342" width="172" height="170" />
+        <circle cx="256" cy="256" r="128" fill="#007AFF" /><polygon fill="#FFF" points="256 171.5 203.5 341 256 282 308.5 341" />
+      </g>
+      <circle cx="256" cy="256" r="250" fill="none" stroke="#d6d3cc" strokeWidth="12" />
     </svg>
   );
 }
@@ -422,7 +425,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
               {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
             </button>
-            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma liste à faire' : 'Ajouter à ma liste à faire'} title={isFav ? 'Dans ma liste à faire' : 'Ajouter à ma liste à faire'}>
+            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma to-do list' : 'Ajouter à ma to-do list'} title={isFav ? 'Dans ma to-do list' : 'Ajouter à ma to-do list'}>
               <Icon name="star" size={18} stroke={2} />
             </button>
           </div>
@@ -590,7 +593,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         <aside className="guide-aside">
           <div className="aside-card">
-            <h2 className="aside-title">Dans le Finistère</h2>
             <Practical place={place} directions={directions} overview />
           </div>
           {asideAnecdotes && place.sections.filter((s) => s.anecdotes && !s.paragraphs).map((s) => (

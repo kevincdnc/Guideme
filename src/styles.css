@@ -1442,3 +1442,17 @@ img { display: block; max-width: 100%; }
 .keyfig:first-child .keyfig-tip { right: auto; left: -150px; }
 .keyfigs .keyfig:nth-child(odd) .keyfig-tip { right: auto; left: -8px; }
 @media (min-width: 900px) { .guide--modal .keyfigs .keyfig .keyfig-tip { left: auto; right: -8px; } .guide--modal .keyfigs .keyfig:first-child .keyfig-tip { right: auto; left: -8px; } }
+
+/* Logos d'itinéraire : même taille pour tous */
+.route-logo { width: 22px; height: 22px; flex: 0 0 22px; display: block; }
+.route-app { gap: 8px; }
+
+/* Menus et pop-overs au-dessus de toute l'interface */
+@media (min-width: 900px) {
+  .brand-bar .profile-menu { position: fixed; z-index: 60; top: 84px; left: 150px; right: auto; }
+  .brand-bar .progress-menu { z-index: 60; }
+}
+.tag-menu, .profile-menu, .progress-menu { z-index: 60; }
+.route-apps-row { grid-template-columns: 1.25fr .9fr .9fr; }
+.route-app { gap: 6px; padding: 0 4px; font-size: 12.5px; }
+.route-logo { width: 20px; height: 20px; flex-basis: 20px; }
