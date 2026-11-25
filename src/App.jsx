@@ -104,7 +104,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
 }
 
 // Progression : part des lieux du Finistère déjà visités. Apparaît au premier lieu coché.
-function ProgressFlag({ visited, onPick }) {
+function ProgressFlag({ visited, onPick, onAccount }) {
   const [open, setOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const boxRef = useRef(null);
@@ -160,6 +160,7 @@ function ProgressFlag({ visited, onPick }) {
               );
             })}
           </ul>
+          <button className="progress-account" onClick={() => { setOpen(false); onAccount?.(); }}>Voir tous mes lieux visités <Icon name="chevron" size={14} /></button>
           <button className="progress-toggle" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
             {showAll ? 'Masquer les spots' : 'Afficher tous les spots'}
             <Icon name="chevron" size={15} style={{ transform: showAll ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
@@ -223,10 +224,10 @@ function AvatarPlaceholder() {
     </svg>
   );
 }
-function ProfileMenu({ onOpen }) {
+function ProfileMenu({ onOpen, onAccount }) {
   const [fav, toggleFav] = useFavorites();
-  const [initials, setInitials] = useState(() => { try { return localStorage.getItem(INITIALS_KEY) || ''; } catch (e) { return ''; } });
-  const saveInitials = (v) => { const t = v.toUpperCase().replace(/[^A-ZÀ-Ý]/g, '').slice(0, 2); setInitials(t); try { localStorage.setItem(INITIALS_KEY, t); } catch (e) { /* stockage indisponible */ } };
+  const [visitedIds, toggleVisitedId] = useVisited();
+  const initials = (() => { try { return localStorage.getItem(INITIALS_KEY) || ''; } catch (e) { return ''; } })();
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
   useEffect(() => {
@@ -236,6 +237,7 @@ function ProfileMenu({ onOpen }) {
     return () => document.removeEventListener('pointerdown', close);
   }, [open]);
   const list = fav.map((id) => getPlace(id)).filter(Boolean);
+  const visitedList = visitedIds.map((id) => getPlace(id)).filter(Boolean);
   return (
     <div className="profile" ref={boxRef}>
       <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et ma to-do list" aria-expanded={open}>
@@ -244,11 +246,25 @@ function ProfileMenu({ onOpen }) {
       </button>
       {open && (
         <div className="profile-menu">
-          <label className="profile-id">
+          <button className="profile-id" onClick={() => { setOpen(false); onAccount(); }}>
             <span className="profile-avatar">{initials || <AvatarPlaceholder />}</span>
-            <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
-          </label>
-          <strong className="profile-title"><Icon name="star" size={16} /> Ma to-do list</strong>
+            <span><strong>Mon compte</strong><small>Voir mes statistiques</small></span>
+            <Icon name="chevron" size={16} />
+          </button>
+          <strong className="profile-title profile-title--done"><Icon name="check" size={16} stroke={2.6} /> Mes spots visités <em>{visitedList.length}</em></strong>
+          {visitedList.length === 0 && <p className="profile-empty">Coche un spot pour le retrouver ici.</p>}
+          <ul className="profile-list--done">
+            {visitedList.slice(0, 4).map((p) => (
+              <li key={p.id}>
+                <button className="profile-item" onClick={() => { setOpen(false); onOpen(p.id); }}>
+                  {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
+                  <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
+                </button>
+              </li>
+            ))}
+          </ul>
+          {visitedList.length > 4 && <button className="profile-more" onClick={() => { setOpen(false); onAccount(); }}>Voir les {visitedList.length} spots visités</button>}
+          <strong className="profile-title"><Icon name="star" size={16} /> Ma to-do list <em>{list.length}</em></strong>
           {list.length === 0 && <p className="profile-empty">Touche l'étoile d'un spot pour l'ajouter à ta to-do list.</p>}
           <ul>
             {list.map((p) => (
@@ -263,6 +279,80 @@ function ProfileMenu({ onOpen }) {
           </ul>
         </div>
       )}
+    </div>
+  );
+}
+
+// Page « Mon compte » : statistiques de conquête et liste des spots visités
+function AccountPage({ visited, wanted, onClose, onOpen }) {
+  const places = PLACES.filter((p) => p.available);
+  const done = places.filter((p) => visited.includes(p.id));
+  const pct = places.length ? Math.round((done.length / places.length) * 100) : 0;
+  const todo = wanted.map((id) => getPlace(id)).filter(Boolean);
+  useEffect(() => {
+    const k = (e) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', k);
+    return () => window.removeEventListener('keydown', k);
+  }, [onClose]);
+  const bar = (n, total) => {
+    const c = total ? Math.round((n / total) * 100) : 0;
+    return <><span className="acc-bar"><span style={{ width: `${c}%` }} /></span><b>{c} %</b></>;
+  };
+  const thumb = (p) => (p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/250px-')} alt="" />;
+  return (
+    <div className="account" role="dialog" aria-modal="true" aria-label="Mon compte">
+      <div className="account-backdrop" onClick={onClose} />
+      <div className="account-page">
+        <button className="account-close" onClick={onClose} aria-label="Fermer"><Icon name="close" size={20} /></button>
+        <header className="account-head">
+          <span className="profile-avatar account-avatar"><AvatarPlaceholder /></span>
+          <div><h1>Mon compte</h1><p>Ta conquête du Finistère, spot après spot.</p></div>
+        </header>
+        <section className="acc-stats">
+          <div className="acc-stat acc-stat--main"><b>{pct} %</b><span>du Finistère conquis</span><span className="acc-bar acc-bar--lg"><span style={{ width: `${pct}%` }} /></span></div>
+          <div className="acc-stat"><b>{done.length}</b><span>spots visités sur {places.length}</span></div>
+          <div className="acc-stat"><b>{todo.length}</b><span>dans ta to-do list</span></div>
+          <div className="acc-stat"><b>{places.length - done.length}</b><span>encore à découvrir</span></div>
+        </section>
+        <div className="acc-grid">
+          <section className="acc-card">
+            <h2>Par catégorie</h2>
+            <ul className="acc-rows">
+              {TAGS.map((t) => {
+                const all = places.filter((p) => p.tags?.includes(t.id));
+                if (!all.length) return null;
+                const n = all.filter((p) => visited.includes(p.id)).length;
+                return <li key={t.id}><span><Icon name={t.icon} size={15} /> {t.label} <small>{n}/{all.length}</small></span>{bar(n, all.length)}</li>;
+              })}
+            </ul>
+          </section>
+          <section className="acc-card">
+            <h2>Par région</h2>
+            <ul className="acc-rows">
+              {REGIONS.map((r) => {
+                const n = r.ids.filter((id) => visited.includes(id)).length;
+                return <li key={r.id}><span>{r.label} <small>{n}/{r.ids.length}</small></span>{bar(n, r.ids.length)}</li>;
+              })}
+            </ul>
+          </section>
+        </div>
+        <section className="acc-section">
+          <h2><Icon name="check" size={18} stroke={2.6} /> Mes spots visités <em>{done.length}</em></h2>
+          {done.length === 0 ? <p className="acc-empty">Aucun spot coché pour l'instant. Touche la coche d'un spot pour commencer ta conquête.</p> : (
+            <ul className="acc-tiles">
+              {done.map((p) => <li key={p.id}><button onClick={() => onOpen(p.id)}><span className="acc-tile-img">{thumb(p)}</span><strong>{p.shortTitle}</strong><small>{p.commune.split(' · ')[0]}</small></button></li>)}
+            </ul>
+          )}
+        </section>
+        <section className="acc-section">
+          <h2><Icon name="star" size={18} /> Ma to-do list <em>{todo.length}</em></h2>
+          {todo.length === 0 ? <p className="acc-empty">Touche l'étoile d'un spot pour l'ajouter ici.</p> : (
+            <ul className="acc-tiles">
+              {todo.map((p) => <li key={p.id}><button onClick={() => onOpen(p.id)}><span className="acc-tile-img">{thumb(p)}</span><strong>{p.shortTitle}</strong><small>{p.commune.split(' · ')[0]}</small></button></li>)}
+            </ul>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
@@ -362,6 +452,7 @@ export default function App() {
   const wantedRef = useRef(wanted);
   wantedRef.current = wanted;
   const [tag, setTag] = useState(null);
+  const [account, setAccount] = useState(false);
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
     const q = norm(query.trim());
@@ -468,7 +559,7 @@ export default function App() {
       {!desktop && !place && (
         <header className="topbar">
           <Brand />
-          <ProgressFlag visited={visited} onPick={select} />
+          <ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} />
         </header>
       )}
 
@@ -480,7 +571,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><Brand /><ProfileMenu onOpen={open} /><ProgressFlag visited={visited} onPick={select} /></header>
+          <header className="brand-bar"><Brand /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
             <h1>Tu crois connaître le Finistère ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)} <span className="sidebar-made">made in Penn-ar-Bed</span></p>
@@ -508,6 +599,7 @@ export default function App() {
 
       {place && desktop && <div className="guide-backdrop" onClick={close} aria-hidden="true" />}
       {place && <Guide key={place.id} place={place} onClose={close} variant="modal" />}
+      {account && <AccountPage visited={visited} wanted={wanted} onClose={() => setAccount(false)} onOpen={(id) => { setAccount(false); open(id); }} />}
       {place && desktop && (
         <div className="modal-actions">
           <button className="modal-action" onClick={close} aria-label="Fermer la fiche"><Icon name="close" size={20} stroke={2.2} /></button>

@@ -1456,3 +1456,71 @@ img { display: block; max-width: 100%; }
 .route-apps-row { grid-template-columns: 1.25fr .9fr .9fr; }
 .route-app { gap: 6px; padding: 0 4px; font-size: 12.5px; }
 .route-logo { width: 20px; height: 20px; flex-basis: 20px; }
+
+/* ---------- Menu du compte : spots visités au-dessus de la to-do ---------- */
+.profile-id { width: 100%; text-align: left; cursor: pointer; border-radius: 8px; padding: 4px 6px 12px; }
+.profile-id:hover strong { text-decoration: underline; }
+.profile-id small { font-size: 12.5px; color: var(--ink-3); }
+.profile-id > svg { margin-left: auto; color: var(--ink-3); }
+.profile-title { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+.profile-title em { margin-left: auto; font-style: normal; font-family: var(--font); font-size: 12px; font-weight: 700; color: var(--ink-3); background: var(--surface-2); padding: 2px 8px; border-radius: 999px; }
+.profile-title--done svg { color: #16a34a; fill: none !important; }
+.profile-menu ul + .profile-title { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.profile-more { width: 100%; margin: 2px 0 4px; padding: 6px; border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--primary-ink); text-align: left; }
+.profile-more:hover { background: var(--surface-2); }
+.profile-menu { max-height: calc(100vh - 110px); overflow-y: auto; }
+
+/* ---------- Popup de progression : lien vers la page compte ---------- */
+.progress-account { display: inline-flex; align-items: center; gap: 4px; margin: 10px 0 0; font-size: 13.5px; font-weight: 700; color: #4ade80; }
+.progress-account:hover { text-decoration: underline; }
+
+/* ---------- Page « Mon compte » ---------- */
+.account { position: fixed; inset: 0; z-index: 70; display: flex; justify-content: center; animation: fade .2s ease; }
+.account-backdrop { position: absolute; inset: 0; background: #e7e1d4; }
+.account-page { position: relative; width: min(1040px, 100%); height: 100%; overflow-y: auto; background: var(--bg); padding: 48px 64px 80px; box-shadow: 0 24px 70px rgba(60,45,20,.18); }
+.account-close { position: fixed; top: 18px; right: calc(50% - min(520px, 50%) - 64px); width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: #fff; box-shadow: 0 6px 18px rgba(15,23,42,.2); z-index: 2; }
+.account-head { display: flex; align-items: center; gap: 18px; margin-bottom: 32px; }
+.account-avatar { width: 64px; height: 64px; }
+.account-head h1 { margin: 0; font-size: 34px; letter-spacing: -0.025em; }
+.account-head p { margin: 4px 0 0; color: var(--ink-3); font-size: 16px; }
+.acc-stats { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 12px; }
+.acc-stat { display: flex; flex-direction: column; gap: 6px; padding: 20px; border-radius: 12px; background: #fff; border: 1px solid var(--line); }
+.acc-stat b { font-family: var(--font-title); font-size: 34px; line-height: 1; letter-spacing: -0.03em; }
+.acc-stat span { font-size: 13.5px; color: var(--ink-3); }
+.acc-stat--main { background: #111; border-color: #111; color: #fff; }
+.acc-stat--main b { color: #4ade80; }
+.acc-stat--main > span { color: rgba(255,255,255,.7); }
+.acc-bar { display: block; flex: 1; height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.acc-bar > span { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #16a34a, #4ade80); }
+.acc-bar--lg { flex: none; margin-top: 6px; background: rgba(255,255,255,.14); }
+.acc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.acc-card { padding: 20px 22px; border-radius: 12px; background: #fff; border: 1px solid var(--line); }
+.acc-card h2, .acc-section h2 { margin: 0 0 14px; font-size: 20px; letter-spacing: -0.015em; display: flex; align-items: center; gap: 8px; }
+.acc-section h2 em { font-style: normal; font-family: var(--font); font-size: 13px; color: var(--ink-3); background: #fff; border: 1px solid var(--line); padding: 2px 9px; border-radius: 999px; }
+.acc-section h2 svg { color: #16a34a; }
+.acc-section:last-child h2 svg { color: var(--flag-want); fill: var(--flag-want); }
+.acc-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.acc-rows li { display: grid; grid-template-columns: 170px 1fr 44px; align-items: center; gap: 12px; font-size: 14px; }
+.acc-rows li > span:first-child { display: inline-flex; align-items: center; gap: 7px; }
+.acc-rows small { color: var(--ink-3); font-size: 12px; }
+.acc-rows b { text-align: right; font-family: var(--font-title); font-size: 13px; }
+.acc-section { margin-top: 40px; }
+.acc-empty { color: var(--ink-3); font-size: 15px; }
+.acc-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.acc-tiles button { width: 100%; display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.acc-tile-img { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: var(--surface-2); margin-bottom: 6px; }
+.acc-tile-img > * { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; transition: transform .3s; }
+.acc-tiles button:hover .acc-tile-img > * { transform: scale(1.04); }
+.acc-tiles strong { font-size: 14.5px; line-height: 1.25; }
+.acc-tiles small { font-size: 12.5px; color: var(--ink-3); }
+@media (max-width: 899px) {
+  .account-page { padding: 24px 18px 60px; }
+  .account-close { top: 12px; right: 12px; }
+  .acc-stats { grid-template-columns: 1fr 1fr; }
+  .acc-stat--main { grid-column: 1 / -1; }
+  .acc-grid { grid-template-columns: 1fr; }
+  .acc-rows li { grid-template-columns: 130px 1fr 40px; }
+  .acc-tiles { grid-template-columns: 1fr 1fr; }
+}
+.profile-id > span:nth-child(2) { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.profile-id { display: flex; align-items: center; gap: 12px; }
