@@ -31,7 +31,7 @@ const TAG_BY_ID = Object.fromEntries(TAGS.map((t) => [t.id, t]));
 function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited }) {
   const soon = !place.available;
   const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
-  const tags = (place.tags || []).map((id) => TAG_BY_ID[id]).filter(Boolean).slice(0, 3);
+  const tags = (place.tags || []).map((id) => TAG_BY_ID[id]).filter(Boolean).slice(0, 2);
   return (
     <div
       role="button"
@@ -95,13 +95,13 @@ function ProgressFlag({ visited, onPick }) {
   return (
     <div className="progress" ref={boxRef}>
       <button className={`progress-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
-        <span className="progress-count"><b>{done.length}</b>/{places.length}</span>
+        <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="" />
         <span className="progress-dial">
           <svg viewBox="0 0 40 40" className="progress-ring" aria-hidden="true">
             <circle cx="20" cy="20" r={R} className="progress-track" />
             <circle cx="20" cy="20" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} style={{ opacity: done.length ? 1 : 0 }} />
           </svg>
-          <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="" />
+          <span className="progress-pct">{pct}<small>%</small></span>
         </span>
       </button>
       {open && (

@@ -23,14 +23,14 @@ const PATHS = {
   image: (<><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="9" cy="10" r="2" /><path d="M21 16l-5-5-9 9" /></>),
   film: (<><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4" /></>),
   spark: <path d="M12 3l2.2 6.3L20.5 12l-6.3 2.2L12 20.5l-2.2-6.3L3.5 12l6.3-2.7z" />,
-  book: (<><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" /><path d="M4 19V5" /></>),
+  book: (<><path d="M3.5 9L12 4.5 20.5 9z" /><path d="M6 12v5.5M10 12v5.5M14 12v5.5M18 12v5.5" /><path d="M3.5 20.5h17" /></>),
   external: (<><path d="M14 4h6v6" /><path d="M20 4l-9 9" /><path d="M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" /></>),
   chevron: <path d="M9 6l6 6-6 6" />,
-  cliff: (<><path d="M3 20h18" /><path d="M4 20l4-11 3 4 3-8 6 15" /></>),
+  cliff: (<><path d="M3 20.5V7l3.5 2.5L9 6.5l3 3.5v10.5" /><path d="M12 14.5c1.5 0 1.5-1.8 3-1.8s1.5 1.8 3 1.8 1.5-1.8 3-1.8" /><path d="M12 19c1.5 0 1.5-1.8 3-1.8s1.5 1.8 3 1.8 1.5-1.8 3-1.8" /></>),
   beach: (<><path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18" /><path d="M12 14V5" /><path d="M5 9a7 7 0 0114 0z" /></>),
   port: (<><circle cx="12" cy="5" r="2" /><path d="M12 7v13" /><path d="M5 13a7 7 0 0014 0" /><path d="M8 10h8" /></>),
   church: (<><path d="M12 2v4M10 4h4" /><path d="M7 21V11l5-4 5 4v10" /><path d="M4 21h16" /><path d="M10 21v-4a2 2 0 014 0v4" /></>),
-  fire: <path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z" />,
+  fire: (<><path d="M12 21.5c-3.6 0-6.5-2.6-6.5-6.3 0-3.3 2-5.6 3.6-7.6.3 1.7 1.2 2.9 2.4 3.4-.2-3.3 1.2-6.2 3.5-8 .2 3 1.9 4.7 3.2 6.6 1 1.5 1.8 3.4 1.8 5.6 0 3.7-2.9 6.3-6.5 6.3z" /><path d="M12 21.5c-1.7 0-3-1.3-3-3 0-1.9 1.6-3.1 2.4-4.5.9 1.4 3.6 2.6 3.6 4.5 0 1.7-1.3 3-3 3z" /></>),
   // Hermine simplifiée (mise à l'échelle 66×100 → 24×24)
   hermine: (<g transform="translate(5.4 0) scale(0.24)" fill="currentColor" stroke="none"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>),
   // Médaille : ruban et disque étoilé
@@ -40,7 +40,7 @@ const PATHS = {
   plus: <path d="M12 5v14M5 12h14" />,
   search: (<><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4 4" /></>),
   grid: (<><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>),
-  lighthouse: (<><path d="M10 4.5h4v3.5h-4z" /><path d="M10.5 4.5Q12 2.2 13.5 4.5" /><path d="M8 9h8" /><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5" /><path d="M8.9 14.5h6.2" /><path d="M6 20.5h12" /><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7" /></>),
+  lighthouse: (<><path d="M10 6a2 2 0 014 0" /><path d="M9.5 6h5v3h-5z" /><path d="M10 9l-1.2 11.5h6.4L14 9" /><path d="M9.4 14.5h5.2" /><path d="M6.5 20.5h11" /><path d="M17 6.5l3-1.3M17 8.5l3 1.3M7 6.5L4 5.2M7 8.5L4 9.8" /></>),
 };
 
 export default function Icon({ name, size = 20, stroke = 2, className, style }) {

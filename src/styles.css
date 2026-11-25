@@ -68,7 +68,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Barre du haut (mobile) ---------- */
 .topbar {
-  position: absolute; z-index: 5; top: calc(10px + var(--safe-top)); left: 12px; right: 12px;
+  position: absolute; z-index: 7; top: calc(10px + var(--safe-top)); left: 12px; right: 12px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 12px 10px 14px;
   background: rgba(255,255,255,.97); border: 1px solid var(--line); border-radius: var(--r-md);
@@ -94,24 +94,24 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Progression (lieux visités) ---------- */
 .progress { position: relative; }
-/* Drapeau du Finistère entouré de la jauge, à droite du logo */
-.progress-btn { display: inline-flex; align-items: center; gap: 8px; padding: 2px 2px 2px 10px; border-radius: var(--r-pill); transition: background .15s; }
+/* Drapeau du Finistère + anneau de progression (pourcentage au centre), à droite du logo */
+.progress-btn { display: inline-flex; align-items: center; gap: 10px; padding: 3px 3px 3px 9px; border-radius: var(--r-pill); transition: background .15s; }
 .progress-btn:hover, .progress-btn.is-open { background: rgba(15,23,42,.05); }
-.progress-count { font-family: var(--font-title); font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
-.progress-count b { color: var(--ink); font-weight: 700; }
+.progress-flag { height: 19px; width: auto; border-radius: 2px; box-shadow: 0 0 0 1px rgba(15,23,42,.08); }
 .progress-dial { position: relative; width: 40px; height: 40px; display: grid; place-items: center; }
 .progress-ring { position: absolute; inset: 0; width: 40px; height: 40px; transform: rotate(-90deg); }
-.progress-track { fill: none; stroke: #e5e8ec; stroke-width: 3; }
+.progress-track { fill: none; stroke: #e3e7eb; stroke-width: 3; }
 .progress-value { fill: none; stroke: #16a34a; stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset .5s ease; }
-.progress-flag { position: relative; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px rgba(15,23,42,.1); }
-.progress-menu { width: min(300px, calc(100vw - 24px)); }
-.topbar .progress-menu, .brand-bar .progress-menu { top: calc(100% + 10px); right: 0; left: auto; bottom: auto; }
+.progress-pct { position: relative; font-family: var(--font-title); font-size: 12px; font-weight: 700; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.progress-pct small { font-size: 8.5px; font-weight: 700; margin-left: 0.5px; color: var(--ink-3); }
+.topbar .progress { position: static; }
+.topbar .progress-menu { top: calc(100% + 8px); left: 0; right: 0; bottom: auto; width: auto; }
 .progress-menu {
   position: absolute; z-index: 20; top: 0; right: calc(100% + 8px); width: 280px;
   background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px;
   box-shadow: 0 12px 34px rgba(15,23,42,.18); animation: fade .15s ease;
 }
-@media (min-width: 900px) { .progress-menu { right: auto; left: 0; top: calc(100% + 8px); } }
+@media (min-width: 900px) { .brand-bar .progress-menu { position: fixed; z-index: 30; top: 20px; left: 416px; right: auto; bottom: auto; width: 320px; } }
 .progress-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
 .progress-head strong { font-family: var(--font-title); font-weight: 700; font-size: 19px; line-height: 1.2; letter-spacing: -0.02em; }
 .progress-head span { font-size: 15px; color: var(--ink-2); }
@@ -238,33 +238,27 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Carte de lieu ---------- */
 .place-card {
-  position: relative; display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 8px;
+  position: relative; display: flex; align-items: center; gap: 16px; padding: 10px 12px 10px 10px;
   background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
   cursor: pointer; text-align: left; min-width: 0;
   transition: border-color .15s, background .15s;
 }
 .place-card:hover { border-color: var(--line-2); background: #fcfcfa; }
 .place-card.is-selected { border-color: var(--ink); box-shadow: inset 3px 0 0 var(--ink); }
-.pc-thumb { position: relative; flex: 0 0 72px; height: 72px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
+.pc-thumb { position: relative; flex: 0 0 88px; height: 88px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
 .pc-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .pc-thumb-empty { position: absolute; inset: 0; display: grid; place-items: center; color: #a3abb8; background: var(--surface-2); }
-.pc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .pc-body h3, .pc-meta { padding-right: 26px; }
 .pc-body h3 { font-size: 15.5px; line-height: 1.2; font-weight: 600; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pc-meta { display: flex; align-items: center; gap: 0; font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; }
 .pc-meta > span { display: inline-flex; align-items: center; gap: 3px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .pc-meta > span + span::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .5; margin: 0 7px; }
-.pc-tags { display: flex; gap: 4px; margin-top: 5px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg,#000 90%,transparent); mask-image: linear-gradient(90deg,#000 90%,transparent); }
-.pc-tag { --c: #475569; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 6px; border-radius: 3px;
-  font-size: 11px; font-weight: 600; color: var(--c); background: color-mix(in srgb, var(--c) 9%, #fff); white-space: nowrap; }
-.pc-tag--nature { --c: #15803d; }
-.pc-tag--phare { --c: #c2410c; }
-.pc-tag--histoire { --c: #6d28d9; }
-.pc-tag--legende { --c: #be185d; }
-.pc-tag--plage { --c: #a16207; }
-.pc-tag--port { --c: #1d4ed8; }
-.pc-tag--prehistoire { --c: #9a3412; }
-.pc-check { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 4px; display: grid; place-items: center;
+.pc-tags { display: flex; gap: 5px; margin-top: 8px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg,#000 90%,transparent); mask-image: linear-gradient(90deg,#000 90%,transparent); }
+.pc-tag { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 7px; border-radius: 3px;
+  font-size: 11px; font-weight: 500; color: var(--ink-3); background: var(--surface-2); white-space: nowrap; }
+.pc-tag svg { opacity: .75; }
+.pc-check { position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 4px; display: grid; place-items: center;
   border: 1.5px solid var(--line-2); background: #fff; color: transparent; transition: background .15s, border-color .15s, color .15s; }
 .pc-check:hover { border-color: #16a34a; color: #86c79b; }
 .pc-check.is-on { background: #16a34a; border-color: #16a34a; color: #fff; }
@@ -284,7 +278,7 @@ img { display: block; max-width: 100%; }
 .sidebar-count { font-size: 13.5px; color: var(--ink-3); margin-bottom: 10px; }
 .sidebar-count strong { color: var(--ink); }
 .sidebar .tagbar-wrap { position: sticky; top: -22px; z-index: 2; margin: 0 -20px; padding: 10px 20px; background: var(--bg); }
-.sidebar-list { display: flex; flex-direction: column; gap: 6px; }
+.sidebar-list { display: flex; flex-direction: column; gap: 8px; }
 .sidebar-foot { margin-top: auto; font-size: 12px; color: var(--ink-3); }
 
 /* ---------- Puces ---------- */
