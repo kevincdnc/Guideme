@@ -1121,3 +1121,65 @@ img { display: block; max-width: 100%; }
 .brand-bar { margin-top: 12px; top: 12px; }
 .brand-bar::before { top: -13px; height: 13px; }
 .sidebar .tagbar-wrap { top: 72px; }
+
+/* ---------- Drapeaux : gris = rien, orange = je veux y aller, vert = j'y suis allé ---------- */
+:root { --flag-want: #f97316; --flag-want-soft: #fff4ec; --flag-done: #16a34a; --flag-done-soft: #eefaf2; }
+.pc-check { display: none; }
+.pc-flags { position: absolute; top: 8px; right: 8px; bottom: 8px; display: flex; flex-direction: column; justify-content: space-between; }
+.pc-flag { position: relative; width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: #b6bcc6; border: 1px solid var(--line); background: #fff; transition: color .15s, background .15s, border-color .15s; }
+.pc-flag:hover { color: var(--ink-2); border-color: var(--line-2); }
+.pc-flag--want.is-on { color: #fff; background: var(--flag-want); border-color: var(--flag-want); }
+.pc-flag--done.is-on { color: #fff; background: var(--flag-done); border-color: var(--flag-done); }
+.pc-flag.is-on svg { fill: currentColor; }
+.pc-flag--want:hover:not(.is-on) { color: var(--flag-want); }
+.pc-flag--done:hover:not(.is-on) { color: var(--flag-done); }
+.pc-flag:hover .pc-tip, .pc-flag:focus-visible .pc-tip { opacity: 1; transform: translate(0, -50%); }
+.pc-body h3 { padding-right: 34px; }
+.place-card.is-visited .pc-flag--want { display: none; }
+.place-card.is-visited .pc-flags { justify-content: flex-end; }
+/* Fiche */
+.flag-btn svg { color: #b6bcc6; }
+.flag-btn--want.is-on { background: var(--flag-want-soft); border-color: var(--flag-want); color: #c2410c; }
+.flag-btn--want.is-on svg { color: var(--flag-want); fill: var(--flag-want); }
+.flag-btn--done.is-on { background: var(--flag-done-soft); border-color: var(--flag-done); color: #166534; }
+.flag-btn--done.is-on svg { color: var(--flag-done); fill: var(--flag-done); }
+.flag-btn--want:hover:not(.is-on) svg { color: var(--flag-want); }
+.flag-btn--done:hover:not(.is-on) svg { color: var(--flag-done); }
+/* Tags */
+.tag--visited svg { fill: currentColor; }
+.tag--wanted { background: var(--flag-want-soft); border-color: #fed7aa; color: #c2410c; }
+.tag--wanted svg { color: var(--flag-want); fill: var(--flag-want); }
+.tag--wanted:hover { border-color: var(--flag-want); }
+.tag--wanted.is-active { background: var(--flag-want); border-color: var(--flag-want); color: #fff; }
+.tag--wanted.is-active svg { color: #fff; fill: #fff; }
+.profile-title svg { color: var(--flag-want); fill: var(--flag-want); }
+.profile-badge { background: var(--flag-want); color: #fff; }
+/* Carte : petit drapeau orange sur les repères « je veux y aller » */
+.gm-want { position: absolute; left: -6px; top: -4px; width: 20px; height: 20px; border-radius: 50%; display: none; place-items: center; background: var(--flag-want); border: 2.5px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,.25); }
+.gm-want svg { width: 11px; height: 11px; }
+.gm-marker.is-wanted .gm-want { display: grid; }
+.gm-marker.is-wanted .gm-dot { box-shadow: 0 0 0 3px var(--flag-want), 0 2px 5px rgba(15,23,42,.35); }
+
+/* ---------- Info-bulle enrichie : plus large, 2 chiffres clés, drapeaux, accès à la fiche ---------- */
+.gm-pop-facts, .gm-pop-actions { display: none; }
+@media (hover: hover) {
+  .gm-marker.is-available:hover .gm-marker-label { width: 236px; padding: 6px 6px 8px; }
+  .gm-marker.is-available:hover .gm-pop-img { width: 224px; height: 132px; }
+  .gm-marker.is-available:hover .gm-pop-name { font-size: 14.5px; }
+  .gm-marker.is-available:hover .gm-pop-visit { display: none; }
+  .gm-marker.is-available:hover .gm-pop-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .gm-pop-facts > span { display: flex; flex-direction: column; gap: 1px; padding: 6px 8px; border-radius: 4px; background: rgba(255,255,255,.08); font-family: var(--font); font-size: 10.5px; font-weight: 500; line-height: 1.25; color: rgba(255,255,255,.65); white-space: normal; }
+  .gm-pop-facts b { font-family: var(--font-title); font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+  .gm-marker.is-available:hover .gm-pop-actions { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+  .gm-pop-flag { width: 30px; height: 30px; border-radius: 5px; display: grid; place-items: center; color: rgba(255,255,255,.45); background: rgba(255,255,255,.08); cursor: pointer; }
+  .gm-pop-flag svg { width: 15px; height: 15px; fill: none; }
+  .gm-pop-flag--want:hover { color: var(--flag-want); }
+  .gm-pop-flag--done:hover { color: #4ade80; }
+  .gm-marker.is-wanted .gm-pop-flag--want { background: var(--flag-want); color: #fff; }
+  .gm-marker.is-visited .gm-pop-flag--done { background: var(--flag-done); color: #fff; }
+  .gm-marker.is-wanted .gm-pop-flag--want svg, .gm-marker.is-visited .gm-pop-flag--done svg { fill: #fff; }
+  .gm-marker.is-visited .gm-pop-flag--want { display: none; }
+  .gm-pop-open { margin-left: auto; display: inline-flex; align-items: center; gap: 3px; height: 30px; padding: 0 10px; border-radius: 5px; background: #fff; color: #111; font-family: var(--font); font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .gm-pop-open svg { width: 13px; height: 13px; }
+  .gm-pop-open:hover { background: #e5e7eb; }
+}

@@ -46,12 +46,13 @@ function countLabel(tag, n, query) {
   const many = n > 1;
   if (query?.trim()) return many ? 'spots trouvés' : 'spot trouvé';
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
+  if (tag === 'wanted') return many ? 'spots où tu veux aller' : 'spot où tu veux aller';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
   return `${many ? w[1] : w[0]} à découvrir`;
 }
 
 // Carte de lieu : vignette, nom, commune et durée ; case « déjà visité » en haut à droite
-function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited }) {
+function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited, wanted, onToggleWanted }) {
   const soon = !place.available;
   const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
   return (
@@ -76,15 +77,26 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
         </span>
       </div>
       {soon ? <span className="pc-soon">Bientôt</span> : onToggleVisited && (
-        <button
-          className={`pc-check ${visited ? 'is-on' : ''}`}
-          onClick={(e) => { e.stopPropagation(); onToggleVisited(place.id); }}
-          aria-pressed={!!visited}
-          aria-label={visited ? `${place.shortTitle} : déjà visité (décocher)` : `Marquer ${place.shortTitle} comme déjà visité`}
-        >
-          <Icon name="check" size={12} stroke={3.2} />
-          <span className="pc-tip" aria-hidden="true">{visited ? 'Déjà visité · retirer' : 'Je l\'ai déjà visité'}</span>
-        </button>
+        <span className="pc-flags">
+          <button
+            className={`pc-flag pc-flag--want ${wanted ? 'is-on' : ''}`}
+            onClick={(e) => { e.stopPropagation(); onToggleWanted(place.id); }}
+            aria-pressed={!!wanted}
+            aria-label={wanted ? `${place.shortTitle} : retirer de mes envies` : `${place.shortTitle} : je veux y aller`}
+          >
+            <Icon name="flag" size={15} stroke={2} />
+            <span className="pc-tip" aria-hidden="true">{wanted ? 'Je veux y aller · retirer' : 'Je veux y aller'}</span>
+          </button>
+          <button
+            className={`pc-flag pc-flag--done ${visited ? 'is-on' : ''}`}
+            onClick={(e) => { e.stopPropagation(); onToggleVisited(place.id); }}
+            aria-pressed={!!visited}
+            aria-label={visited ? `${place.shortTitle} : déjà visité (retirer)` : `Marquer ${place.shortTitle} comme déjà visité`}
+          >
+            <Icon name="flag" size={15} stroke={2} />
+            <span className="pc-tip" aria-hidden="true">{visited ? "J'y suis allé · retirer" : "J'y suis allé"}</span>
+          </button>
+        </span>
       )}
     </div>
   );
@@ -189,7 +201,7 @@ function ProfileMenu({ onOpen }) {
   const list = fav.map((id) => getPlace(id)).filter(Boolean);
   return (
     <div className="profile" ref={boxRef}>
-      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon profil et mes favoris" aria-expanded={open}>
+      <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et mes envies" aria-expanded={open}>
         {initials ? <span className="profile-initials">{initials}</span> : <Icon name="user" size={17} stroke={2} />}
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
@@ -199,8 +211,8 @@ function ProfileMenu({ onOpen }) {
             <span className="profile-avatar">{initials || '?'}</span>
             <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
           </label>
-          <strong className="profile-title"><Icon name="star" size={16} /> Mes favoris</strong>
-          {list.length === 0 && <p className="profile-empty">Touche l'étoile d'une fiche pour l'ajouter ici.</p>}
+          <strong className="profile-title"><Icon name="flag" size={16} /> Je veux y aller</strong>
+          {list.length === 0 && <p className="profile-empty">Plante le drapeau orange sur un spot pour le retrouver ici.</p>}
           <ul>
             {list.map((p) => (
               <li key={p.id}>
@@ -208,7 +220,7 @@ function ProfileMenu({ onOpen }) {
                   {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
                   <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
                 </button>
-                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} des favoris`}><Icon name="close" size={14} stroke={2.4} /></button>
+                <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} de mes envies`}><Icon name="close" size={14} stroke={2.4} /></button>
               </li>
             ))}
           </ul>
@@ -220,13 +232,13 @@ function ProfileMenu({ onOpen }) {
 
 // Puces de catégories. Barre latérale : sur deux lignes, loupe en bout de ligne.
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
-function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0 }) {
+function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0, wantedCount = 0 }) {
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
   const inputRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
   // La catégorie active passe en tête pour rester visible
-  const ordered = value && value !== 'visited' ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
+  const ordered = value && value !== 'visited' && value !== 'wanted' ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
   const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
   const q = norm(query.trim());
   const menuTags = q ? used.filter((t) => norm(t.label).includes(q)) : used;
@@ -251,7 +263,12 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
         {(visitedCount > 0 || value === 'visited') && (
           <button className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
-            <Icon name="check" size={14} stroke={2.8} /> {visitedCount} déjà visité{visitedCount > 1 ? 's' : ''}
+            <Icon name="flag" size={14} stroke={2.2} /> {visitedCount} visité{visitedCount > 1 ? 's' : ''}
+          </button>
+        )}
+        {(wantedCount > 0 || value === 'wanted') && (
+          <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
+            <Icon name="flag" size={14} stroke={2.2} /> {wantedCount} à faire
           </button>
         )}
         {(wrap ? used : ordered).map((t) => (
@@ -302,14 +319,17 @@ export default function App() {
   const fromRail = useRef(false);
   const place = route ? getPlace(route) : null;
   const [visited, toggleVisited] = useVisited();
+  const [wanted, toggleWanted] = useFavorites();
   const visitedRef = useRef(visited);
   visitedRef.current = visited;
+  const wantedRef = useRef(wanted);
+  wantedRef.current = wanted;
   const [tag, setTag] = useState(null);
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
     const q = norm(query.trim());
-    return PLACES.filter((p) => (!tag || (tag === 'visited' ? visited.includes(p.id) : p.tags?.includes(tag))) && (!q || searchText(p).includes(q)));
-  }, [tag, query, visited]);
+    return PLACES.filter((p) => (!tag || (tag === 'visited' ? visited.includes(p.id) : tag === 'wanted' ? wanted.includes(p.id) : p.tags?.includes(tag))) && (!q || searchText(p).includes(q)));
+  }, [tag, query, visited, wanted]);
   // La recherche recadre la carte sur les lieux trouvés
   useEffect(() => {
     if (!query.trim() || !visible.length) return;
@@ -321,7 +341,7 @@ export default function App() {
   const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
     setTag(t);
-    const list = PLACES.filter((p) => !t || (t === 'visited' ? visitedRef.current.includes(p.id) : p.tags?.includes(t)));
+    const list = PLACES.filter((p) => !t || (t === 'visited' ? visitedRef.current.includes(p.id) : t === 'wanted' ? wantedRef.current.includes(p.id) : p.tags?.includes(t)));
     if (list.length) setTimeout(() => mapRef.current?.fitPoints(list.map((p) => p.coords)), 30);
     railRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
   }, []);
@@ -401,7 +421,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
-      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} />
+      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -423,11 +443,11 @@ export default function App() {
             <h1>Penn-ar-Bed, t'as vraiment tout vu ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}</p>
           </div>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} />
           <div className="sidebar-list">
             {visible.length === 0 && <p className="sidebar-empty">{tag === 'visited' ? 'Aucun spot coché pour l\'instant.' : `Aucun spot ne correspond à « ${query} ».`}</p>}
             {visible.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} wanted={wanted.includes(p.id)} onToggleWanted={toggleWanted} />
             ))}
           </div>
         </aside>
@@ -435,10 +455,10 @@ export default function App() {
 
       {!desktop && !place && (
         <div className="rail-wrap" ref={railWrapRef}>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} />
           <div className="rail" ref={railRef} onScroll={handleRailScroll}>
             {visible.map((p) => (
-              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
+              <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} wanted={wanted.includes(p.id)} onToggleWanted={toggleWanted} />
             ))}
           </div>
         </div>

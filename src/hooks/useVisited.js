@@ -45,6 +45,13 @@ export function useVisited() {
     setIds(next);
     setStarted(true);
     window.dispatchEvent(new Event(EVENT));
+    // Visité : le drapeau « je veux y aller » est retiré
+    if (next.includes(id)) {
+      try {
+        const fav = JSON.parse(localStorage.getItem('guideme:favorites') || '[]');
+        if (fav.includes(id)) { localStorage.setItem('guideme:favorites', JSON.stringify(fav.filter((x) => x !== id))); window.dispatchEvent(new Event('guideme-favorites')); }
+      } catch (e) { /* stockage indisponible */ }
+    }
   }, []);
 
   return [ids, toggle, started];

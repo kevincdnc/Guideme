@@ -83,7 +83,9 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 // Vignette légère (120 px) pour l'info-bulle
 const thumbOf = (p) => { const src = p.thumb || p.hero?.src; return src ? src.replace(/\/(\d+)px-/, '/120px-') : ''; };
 
-function markerEl(place, onSelect, onToggleVisited) {
+const FLAG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4" fill="none"/><path d="M6 4.5c2.6-1.4 5-.2 7 .8s4.2 1.6 6-.3v8.4c-1.8 1.9-4 1.3-6 .3s-4.4-2.2-7-.8"/></svg>';
+
+function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace) {
   const el = document.createElement('button');
   el.type = 'button';
   el.className = `gm-marker ${place.available ? 'is-available' : 'is-soon'}`;
@@ -96,7 +98,8 @@ function markerEl(place, onSelect, onToggleVisited) {
       ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
       <span class="gm-pop-main">
         <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
-        ${place.available ? `<span class="gm-pop-visit" role="checkbox" tabindex="0" aria-checked="false" aria-label="Je l'ai déjà visité"><i class="gm-pop-box">${CHECK_SVG}</i><span class="gm-pop-off">Je l'ai déjà visité</span><span class="gm-pop-on">Déjà visité</span></span>` : ''}
+        ${place.available && place.facts?.length ? `<span class="gm-pop-facts">${place.facts.slice(0, 2).map((f) => `<span><b>${esc(f.value)}</b>${esc(f.label.split(',')[0])}</span>`).join('')}</span>` : ''}
+        ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" title="Je veux y aller" aria-label="Je veux y aller">${FLAG_SVG}</span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" title="J'y suis allé" aria-label="J'y suis allé">${FLAG_SVG}</span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></span>` : ''}
       </span>
     </span>
     <span class="gm-pin">
@@ -106,6 +109,7 @@ function markerEl(place, onSelect, onToggleVisited) {
         <ellipse cx="16" cy="13" rx="6" ry="3.6" fill="#fff" opacity=".28" transform="rotate(-25 16 13)"/>
       </svg>
       <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+      <span class="gm-want" aria-hidden="true">${FLAG_SVG.replace('currentColor', '#fff').replace('currentColor', '#fff')}</span>
       <span class="gm-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
     </span>
     <span class="gm-dot" aria-hidden="true"></span>
@@ -118,16 +122,20 @@ function markerEl(place, onSelect, onToggleVisited) {
   // Info-bulle : la photo ne se charge qu'au premier survol
   const img = el.querySelector('.gm-pop-img');
   if (img) el.addEventListener('mouseenter', () => { if (!img.style.backgroundImage) img.style.backgroundImage = `url("${thumbOf(place)}")`; });
-  const visit = el.querySelector('.gm-pop-visit');
-  if (visit) {
-    const toggle = (e) => { e.stopPropagation(); e.preventDefault(); onToggleVisited?.(place.id); };
-    visit.addEventListener('click', toggle);
-    visit.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') toggle(e); });
-  }
+  const bind = (sel, fn) => {
+    const node = el.querySelector(sel);
+    if (!node) return;
+    const go = (e) => { e.stopPropagation(); e.preventDefault(); fn?.(place.id); };
+    node.addEventListener('click', go);
+    node.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') go(e); });
+  };
+  bind('.gm-pop-flag--done', onToggleVisited);
+  bind('.gm-pop-flag--want', onToggleWanted);
+  bind('.gm-pop-open', onOpenPlace);
   return el;
 }
 
-const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited }, ref) {
+const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
   const box = useRef(null);
   const map = useRef(null);
   const markers = useRef({});
@@ -135,6 +143,10 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
   onSelectRef.current = onSelect;
   const onToggleRef = useRef(onToggleVisited);
   onToggleRef.current = onToggleVisited;
+  const onWantRef = useRef(onToggleWanted);
+  onWantRef.current = onToggleWanted;
+  const onOpenRef = useRef(onOpenPlace);
+  onOpenRef.current = onOpenPlace;
 
   useImperativeHandle(ref, () => ({
     flyTo(coords, zoom = 11.5) {
@@ -234,7 +246,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     box.current.__map = m; // accès pour les tests
 
     places.forEach((p) => {
-      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true), (id) => onToggleRef.current?.(id)), anchor: 'bottom' })
+      const mk = new maplibregl.Marker({ element: markerEl(p, (id) => onSelectRef.current(id, true), (id) => onToggleRef.current?.(id), (id) => onWantRef.current?.(id), (id) => onOpenRef.current?.(id)), anchor: 'bottom' })
         .setLngLat(p.coords)
         .addTo(m);
       markers.current[p.id] = mk;
@@ -267,10 +279,14 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       const el = mk.getElement();
       const v = !!visitedIds?.includes(id);
       el.classList.toggle('is-visited', v);
-      el.querySelector('.gm-pop-visit')?.setAttribute('aria-checked', String(v));
       el.style.setProperty('--c', v ? '#16a34a' : el.dataset.color);
     });
   }, [visitedIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // « Je veux y aller » : petit drapeau orange sur le repère
+  useEffect(() => {
+    Object.entries(markers.current).forEach(([id, mk]) => mk.getElement().classList.toggle('is-wanted', !!wantedIds?.includes(id)));
+  }, [wantedIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Repères masqués par le filtre de catégorie
   useEffect(() => {
