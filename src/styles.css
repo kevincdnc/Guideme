@@ -1382,3 +1382,20 @@ img { display: block; max-width: 100%; }
 .pc-flag { width: 28px; height: 28px; }
 .place-card.is-visited .pc-flags { justify-content: center; }
 .pc-done-label { bottom: auto; top: 50%; transform: translateY(-50%); right: 46px; }
+
+/* Favori actif : étoile blanche sur fond jaune */
+.pc-flag--want.is-on { color: #fff; }
+.pc-flag--want.is-on svg { fill: #fff; }
+
+/* Fond uni derrière la fiche, façon page de livre */
+@media (min-width: 900px) {
+  .guide-backdrop { background: #e7e1d4; backdrop-filter: none; }
+  .guide--modal { box-shadow: 0 0 0 1px rgba(60,45,20,.06), 0 24px 70px rgba(60,45,20,.18); }
+}
+
+/* Mini carte sélectionnée : contour bleu 2 px, sans trait à gauche */
+.place-card.is-selected { border-color: transparent; box-shadow: 0 0 0 2px var(--primary); }
+.place-card.is-visited.is-selected { box-shadow: 0 0 0 2px var(--primary); }
+.fav-btn.is-on { background: var(--flag-want); border-color: var(--flag-want); color: #fff; }
+.fav-btn.is-on svg { fill: #fff; color: #fff; }
+.gm-marker.is-wanted .gm-pop-flag--want, .gm-marker.is-wanted .gm-pop-flag--want svg { color: #fff; fill: #fff; }
