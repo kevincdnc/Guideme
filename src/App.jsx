@@ -6,7 +6,7 @@ import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
-import { PLACES, TAGS, getPlace } from './data/places.js';
+import { PLACES, TAGS, REGIONS, getPlace } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
 const BASE = import.meta.env.BASE_URL;
@@ -134,7 +134,7 @@ function ProgressFlag({ visited, onPick }) {
         </span>
       </button>
       {open && (
-        <div className="progress-menu">
+        <div className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
           <div className="progress-head">
             <strong>Ta conquête du bout du monde</strong>
             <span><b>{done.length}</b> lieu{done.length > 1 ? 'x' : ''} visité{done.length > 1 ? 's' : ''} sur {places.length}</span>
@@ -144,24 +144,51 @@ function ProgressFlag({ visited, onPick }) {
             <b className="progress-bar-pct">{pct} %</b>
           </div>
           <p className="progress-hint">{encouragement}</p>
+          <ul className="progress-cats" aria-label="Progression par catégorie">
+            {TAGS.map((t) => {
+              const all = places.filter((p) => p.tags?.includes(t.id));
+              if (!all.length) return null;
+              const n = all.filter((p) => visited.includes(p.id)).length;
+              const c = Math.round((n / all.length) * 100);
+              return (
+                <li key={t.id}>
+                  <span className="progress-cat-label"><Icon name={t.icon} size={14} /> {t.label}</span>
+                  <span className="progress-bar progress-bar--sm"><span style={{ width: `${c}%` }} /></span>
+                  <b>{c} %</b>
+                </li>
+              );
+            })}
+          </ul>
           <button className="progress-toggle" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
             {showAll ? 'Masquer les spots' : 'Afficher tous les spots'}
             <Icon name="chevron" size={15} style={{ transform: showAll ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
           </button>
           {showAll && (
-            <ul>
-              {places.map((p) => {
-                const v = visited.includes(p.id);
+            <div className="progress-regions">
+              {REGIONS.map((r) => {
+                const list = r.ids.map((id) => places.find((p) => p.id === id)).filter(Boolean);
+                const n = list.filter((p) => visited.includes(p.id)).length;
                 return (
-                  <li key={p.id}>
-                    <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
-                      <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
-                      {p.shortTitle}
-                    </button>
-                  </li>
+                  <section key={r.id} className="progress-region">
+                    <h4>{r.label} <span>{n}/{list.length}</span></h4>
+                    <ul>
+                      {list.map((p) => {
+                        const v = visited.includes(p.id);
+                        return (
+                          <li key={p.id}>
+                            <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
+                              <span className="progress-thumb">{(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}</span>
+                              <span className="progress-name">{p.shortTitle}</span>
+                              <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </section>
                 );
               })}
-            </ul>
+            </div>
           )}
         </div>
       )}

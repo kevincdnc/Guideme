@@ -58,8 +58,20 @@ function readingMinutes(place) {
   return Math.max(1, Math.round(text.split(/\s+/).length / 150));
 }
 
+// Sous-régions du Finistère (ordre d'affichage)
+export const REGIONS = [
+  { id: 'cap-sizun', label: 'Cap Sizun', ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier'] },
+  { id: 'iles', label: "Îles d'Iroise", ids: ['ile-de-sein', 'phare-sein', 'phare-ar-men', 'phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires'] },
+  { id: 'leon', label: 'Léon & pays de Brest', ids: ['phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-petit-minou', 'phare-portzic', 'phare-four', 'phare-ile-vierge', 'phare-batz'] },
+  { id: 'cornouaille', label: 'Cornouaille', ids: ['douarnenez', 'locronan', 'phare-eckmuhl', 'concarneau', 'phare-penfret', 'pont-aven'] },
+];
+const REGION_OF = Object.fromEntries(REGIONS.flatMap((r) => r.ids.map((id) => [id, r.id])));
+
 export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, phareArMen, phareTevennec, phareVieille, phareSein, phareKereon, phareJument, phareCreach, phareStiff, phareFour, pharePierresNoires, phareIleVierge, phareSaintMathieu, pharePetitMinou, phareTrezien, phareBatz, pharePortzic, pharePenfret, phareKermorvan, ...SOON].map((p) =>
-  p.available ? { ...p, readingMinutes: readingMinutes(p) } : p,
+  p.available ? { ...p, region: REGION_OF[p.id], readingMinutes: readingMinutes(p) } : p,
 );
 
 export const getPlace = (id) => PLACES.find((p) => p.id === id);
+
+// Contrôle : chaque lieu a une sous-région
+PLACES.forEach((p) => { if (p.available && !p.region) console.warn('Lieu sans sous-région :', p.id); });
