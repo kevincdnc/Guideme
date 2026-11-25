@@ -161,9 +161,23 @@ function ProgressFlag({ visited, onPick }) {
 const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ...(p.tags || []).map((id) => TAG_BY_ID[id]?.label)].join(' '));
 
+// Réglages de la carte (TEMPORAIRE) : couleurs de la mer et de la terre
+function MapSettings() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="map-settings">
+      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="sliders" size={19} /></button>
+      <ColorTuner open={open} />
+    </div>
+  );
+}
+
 // Profil : avatar dans la barre noire ; ouvre la liste des favoris (étoile des fiches)
+const INITIALS_KEY = 'guideme:initials';
 function ProfileMenu({ onOpen }) {
   const [fav, toggleFav] = useFavorites();
+  const [initials, setInitials] = useState(() => { try { return localStorage.getItem(INITIALS_KEY) || ''; } catch (e) { return ''; } });
+  const saveInitials = (v) => { const t = v.toUpperCase().replace(/[^A-ZÀ-Ý]/g, '').slice(0, 2); setInitials(t); try { localStorage.setItem(INITIALS_KEY, t); } catch (e) { /* stockage indisponible */ } };
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
   useEffect(() => {
@@ -176,11 +190,15 @@ function ProfileMenu({ onOpen }) {
   return (
     <div className="profile" ref={boxRef}>
       <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon profil et mes favoris" aria-expanded={open}>
-        <Icon name="bigouden" size={19} stroke={1.7} />
+        {initials ? <span className="profile-initials">{initials}</span> : <Icon name="user" size={17} stroke={2} />}
         {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
       {open && (
         <div className="profile-menu">
+          <label className="profile-id">
+            <span className="profile-avatar">{initials || '?'}</span>
+            <span><strong>Mon compte</strong><input value={initials} onChange={(e) => saveInitials(e.target.value)} placeholder="Tes initiales" maxLength={2} aria-label="Tes initiales" /></span>
+          </label>
           <strong className="profile-title"><Icon name="star" size={16} /> Mes favoris</strong>
           {list.length === 0 && <p className="profile-empty">Touche l'étoile d'une fiche pour l'ajouter ici.</p>}
           <ul>
@@ -395,13 +413,14 @@ export default function App() {
       <div className="map-tools" style={desktop ? { left: SIDEBAR_W + 16 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
+        <MapSettings />
       </div>
 
       {desktop && (
         <aside className="sidebar">
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /><ProfileMenu onOpen={open} /></header>
           <div className="sidebar-intro">
-            <h1>Les spots emblématiques du Finistère</h1>
+            <h1>Penn-ar-Bed, t'as vraiment tout vu ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}</p>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} query={query} onQuery={setQuery} />
@@ -425,7 +444,6 @@ export default function App() {
         </div>
       )}
 
-      <ColorTuner />{/* TEMPORAIRE : réglage de couleur */}
       {place && desktop && <div className="guide-backdrop" onClick={close} aria-hidden="true" />}
       {place && <Guide key={place.id} place={place} onClose={close} variant="modal" />}
       {place && desktop && (

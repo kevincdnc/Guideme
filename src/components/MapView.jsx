@@ -218,7 +218,7 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       m.addSource('voile', { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: [[[-12, 44], [4, 44], [4, 52], [-12, 52], [-12, 44]]] } } });
       m.addLayer({ id: 'voile', type: 'fill', source: 'voile', paint: { 'fill-color': '#ffffff', 'fill-opacity': 0.22 } }, firstLabel);
       m.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'],
-        paint: { 'fill-color': '#e6e8ee', 'fill-opacity': 0.45 } }, firstLabel);
+        paint: { 'fill-color': '#1e293b', 'fill-opacity': 0.14 } }, firstLabel); // hors Finistère : léger voile sombre
       m.addLayer({ id: 'finistere-halo', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
         layout: { 'line-cap': 'round', 'line-join': 'round' },
         paint: { 'line-color': '#ffffff', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 4, 12, 8] } }, firstLabel);

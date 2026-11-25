@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const KEY = 'guideme:tuner';
 const TARGETS = {
-  mer: { label: 'Mer', def: '#93b8f2' },
+  mer: { label: 'Mer', def: '#7fb9f0' },
   terre: { label: 'Terre', def: '#eef6dc' },
 };
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -29,7 +29,7 @@ function apply(map, target, hex) {
   } catch (e) { /* style pas encore chargé */ }
 }
 
-export default function ColorTuner() {
+export default function ColorTuner({ open = true }) {
   const [target, setTarget] = useState('mer');
   const [colors, setColors] = useState(() => {
     try { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def }; }
@@ -60,6 +60,8 @@ export default function ColorTuner() {
     try { const r = await new window.EyeDropper().open(); set(r.sRGBHex); } catch (e) { /* annulé */ }
   };
 
+  const resetAll = () => { setColors({ mer: TARGETS.mer.def, terre: TARGETS.terre.def }); setText(TARGETS[target].def); };
+  if (!open) return null;
   return (
     <div className="tuner" role="group" aria-label="Couleur de fond de la carte (réglage temporaire)">
       <div className="tuner-tabs">
@@ -79,6 +81,7 @@ export default function ColorTuner() {
         )}
         <button className="tuner-reset" onClick={() => set(TARGETS[target].def)} title="Couleur d'origine">↺</button>
       </div>
+      <button className="tuner-default" onClick={resetAll}>Thème par défaut (mer et terre)</button>
     </div>
   );
 }
