@@ -19,12 +19,12 @@ export const FINISTERE_BOUNDS = [
 
 // Catégories (puces de navigation au-dessus des lieux)
 export const TAGS = [
-  { id: 'nature', label: 'Nature', icon: 'cliff' },
-  { id: 'phare', label: 'Phares', icon: 'lighthouse' },
+  { id: 'nature', label: 'Site naturel', icon: 'cliff' },
+  { id: 'phare', label: 'Phare', icon: 'lighthouse' },
   { id: 'histoire', label: 'Patrimoine', icon: 'book' },
-  { id: 'legende', label: 'Légendes', icon: 'spark' },
-  { id: 'plage', label: 'Plages', icon: 'beach' },
-  { id: 'port', label: 'Ports', icon: 'port' },
+  { id: 'legende', label: 'Légendaire', icon: 'spark' },
+  { id: 'plage', label: 'Plage', icon: 'beach' },
+  { id: 'port', label: 'Port', icon: 'port' },
   { id: 'prehistoire', label: 'Préhistoire', icon: 'fire' },
 ];
 

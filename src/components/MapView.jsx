@@ -35,7 +35,7 @@ function patternImage(draw, size) {
   return { width: c.width, height: c.height, data: ctx.getImageData(0, 0, c.width, c.height).data };
 }
 const drawWaves = (ctx, n) => {
-  ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
   ctx.lineWidth = 1.6;
   ctx.lineCap = 'round';
   const wave = (x, y) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 4, y - 4, x + 8, y); ctx.quadraticCurveTo(x + 12, y + 4, x + 16, y); ctx.stroke(); };

@@ -12,9 +12,9 @@ style.name = 'guideme.bzh';
 const P = {
   // Palette « jeu » façon Zenly : terres menthe, mer bleu franc, verts vifs, bâtiments lavande
   land: '#eef6dc',
-  water: '#5cc8f2',
-  waterDeep: '#41b6ec',
-  waterLine: '#4fc0ef',
+  water: '#a8ddf5',
+  waterDeep: '#9cd6f2',
+  waterLine: '#a2daf4',
   wood: '#9de08a',
   grass: '#c6efa4',
   park: '#a8e690',
@@ -123,7 +123,7 @@ const iAfterWater = style.layers.findIndex((l) => l.id === 'water') + 1;
 style.layers.splice(iAfterWater, 0,
   {
     id: 'water_shallow', type: 'line', source: 'openmaptiles', 'source-layer': 'water',
-    paint: { 'line-color': '#a4ebfc', 'line-blur': ['interpolate', ['linear'], ['zoom'], 6, 1, 14, 5], 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 2, 10, 7, 14, 16], 'line-opacity': 0.9 },
+    paint: { 'line-color': '#cdf1fc', 'line-blur': ['interpolate', ['linear'], ['zoom'], 6, 1, 14, 5], 'line-width': ['interpolate', ['linear'], ['zoom'], 6, 2, 10, 7, 14, 16], 'line-opacity': 0.9 },
   },
   {
     id: 'water_outline', type: 'line', source: 'openmaptiles', 'source-layer': 'water',

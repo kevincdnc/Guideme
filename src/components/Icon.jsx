@@ -38,6 +38,7 @@ const PATHS = {
   trophy: (<><path d="M8 4h8v5a4 4 0 01-8 0z" /><path d="M8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4" /><path d="M12 13v4M9 21h6M10 17h4v4h-4z" /></>),
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  search: (<><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4 4" /></>),
   grid: (<><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>),
   lighthouse: (<><path d="M10 4.5h4v3.5h-4z" /><path d="M10.5 4.5Q12 2.2 13.5 4.5" /><path d="M8 9h8" /><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5" /><path d="M8.9 14.5h6.2" /><path d="M6 20.5h12" /><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7" /></>),
 };
