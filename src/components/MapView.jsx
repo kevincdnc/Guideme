@@ -50,11 +50,11 @@ const drawTrees = (ctx) => {
   tree(9, 10, 5); tree(28, 22, 6); tree(12, 32, 4.5);
 };
 
-// Navigation : toute la Bretagne, le début de la Normandie et la Vendée
-const MAX_BOUNDS = [
-  [-7.2, 45.7],
-  [1.4, 50.3],
-];
+// Zoom arrière maximal : le Finistère et la Bretagne jusqu'à Saint-Malo et Redon environ
+// (un peu plus haut et plus bas sur mobile, écran en hauteur)
+const MAX_BOUNDS = typeof window !== 'undefined' && window.innerWidth < 900
+  ? [[-6.4, 46.6], [-1.7, 49.6]]
+  : [[-6.4, 47.0], [-1.7, 49.3]];
 
 // Précharge en arrière-plan les tuiles du Finistère aux petits zooms (mises en cache par
 // l'app hors ligne), pour que le zoom soit immédiat. Désactivé en mode « économie de données ».
@@ -87,7 +87,7 @@ function markerEl(place, onSelect) {
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
   const icon = place.available ? PIN_ICONS[place.icon] || PIN_ICONS.lighthouse : LOCK;
   el.innerHTML = `<span class="gm-marker-body">
-    <span class="gm-marker-label">${place.shortTitle}</span>
+    <span class="gm-marker-label"><i class="gm-label-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>${place.shortTitle}</span>
     <span class="gm-pin">
       <svg class="gm-pin-shape" viewBox="0 0 44 56" aria-hidden="true">
         <path d="${PIN_PATH}" transform="translate(0 2.5)" fill="rgba(0,0,0,.22)"/>

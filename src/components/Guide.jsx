@@ -7,6 +7,8 @@ import Brand from './Brand.jsx';
 const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
 import { useVisited } from '../hooks/useVisited.js';
+import maplibregl from 'maplibre-gl';
+import MAP_STYLE from '../data/map-style.json';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
 function buildBlocks(place) {
@@ -126,21 +128,69 @@ function FilmBlock({ film }) {
   );
 }
 
+// Petite carte du lieu (non interactive) : un clic ouvre la grande carte
+function MiniMap({ place }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref.current) return undefined;
+    let map;
+    try {
+      map = new maplibregl.Map({ container: ref.current, style: MAP_STYLE, center: place.coords, zoom: place.miniZoom || 10.4, interactive: false, attributionControl: false, fadeDuration: 0 });
+      const el = document.createElement('div');
+      el.className = 'minimap-pin';
+      new maplibregl.Marker({ element: el }).setLngLat(place.coords).addTo(map);
+    } catch (e) { /* WebGL indisponible : la carte reste vide */ }
+    return () => map?.remove();
+  }, [place]);
+  return (
+    <a className="minimap" href={`${BASE}#/lieu/${place.id}`} aria-label={`Voir ${place.shortTitle} sur la carte`}>
+      <div ref={ref} className="minimap-canvas" />
+      <span className="minimap-label"><Icon name="pin" size={14} /> {place.commune.split(' · ')[0]}</span>
+      <span className="minimap-open"><Icon name="map" size={14} /> Ouvrir la carte</span>
+    </a>
+  );
+}
+
+// Carte, itinéraire, puis infos pratiques repliées
 function Practical({ place, directions }) {
   return (
-    <>
-      <ul className="practical">
-        {place.practical.map((p) => (
-          <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
-            <span className="practical-icon"><Icon name={p.icon} size={20} /></span>
-            <div><strong>{p.title}</strong><p>{p.text}</p></div>
-          </li>
-        ))}
-      </ul>
+    <div className="practical-box">
+      <MiniMap place={place} />
       <a className="btn btn--primary btn--block" href={directions} target="_blank" rel="noreferrer">
         <Icon name="route" size={19} /> Itinéraire
       </a>
-    </>
+      {place.practical?.length > 0 && (
+        <details className="practical-details">
+          <summary><span>Infos pratiques & accès</span> <Icon name="chevron" size={16} /></summary>
+          <ul className="practical">
+            {place.practical.map((p) => (
+              <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
+                <span className="practical-icon"><Icon name={p.icon} size={18} /></span>
+                <div><strong>{p.title}</strong><p>{p.text}</p></div>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </div>
+  );
+}
+
+// Carte d'identité d'un phare : mêmes rubriques pour tous
+const LH_ROWS = [
+  ['built', 'Construction'], ['lit', 'Mise en service'], ['height', 'Hauteur de la tour'], ['elevation', 'Hauteur du feu'],
+  ['range', 'Portée'], ['light', 'Feu'], ['keepers', 'Gardiens'], ['visit', 'Visite'], ['visitors', 'Fréquentation'], ['protection', 'Protection'],
+];
+function LighthouseSheet({ lh }) {
+  return (
+    <section id="sec-identite" data-nav="identite" className="section">
+      <div className="section-head"><h2>Carte d'identité</h2></div>
+      <dl className="lh-sheet">
+        {LH_ROWS.map(([k, label]) => (
+          <div key={k}><dt>{label}</dt><dd>{lh[k] || '—'}</dd></div>
+        ))}
+      </dl>
+    </section>
   );
 }
 
@@ -189,10 +239,12 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
   }, [currentId]);
 
   const nav = [
+    ...(place.lighthouse ? [{ id: 'identite', label: 'Identité' }] : []),
     ...place.sections.flatMap((s, i) => [
       ...(i === 1 && place.film ? [{ id: 'film', label: `Film ${place.film.year}` }] : []),
       { id: s.id, label: s.nav },
     ]),
+    ...(place.records?.some((r) => r.more) ? [{ id: 'records', label: 'Records' }] : []),
     ...(place.timeline?.length ? [{ id: 'reperes', label: 'Repères' }] : []),
     ...(place.archives?.length || place.photos?.length ? [{ id: 'archives', label: place.archives?.length ? 'Archives' : 'Photos' }] : []),
     ...(place.videos?.length ? [{ id: 'videos', label: 'Vidéos' }] : []),
@@ -269,15 +321,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           )}
           <div className="hero-shade" />
           {place.hero && <span className="hero-credit">{place.hero.credit}</span>}
-          <button
-            role="checkbox"
-            aria-checked={isVisited}
-            className={`hero-visit ${isVisited ? 'is-checked' : ''}`}
-            onClick={() => toggleVisited(place.id)}
-          >
-            <span className="visit-box">{isVisited && <Icon name="check" size={14} stroke={3.4} />}</span>
-            {isVisited ? 'Visité' : 'Déjà visité ?'}
-          </button>
         </header>
 
         <div className="guide-layout">
@@ -289,6 +332,17 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
             <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
           </p>
+          <div className="guide-actions">
+            {speech.supported && (
+              <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
+                <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
+              </button>
+            )}
+            <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
+              <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
+              {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
+            </button>
+          </div>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f) => (
@@ -307,6 +361,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                     <span className="record-scope">{r.scope}</span>
                     <strong>{r.title}</strong>
                     <span className="record-text">{r.text}</span>
+                    {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
                   </div>
                 </li>
               ))}
@@ -322,15 +377,10 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </div>
             </aside>
           )}
-          <div className="guide-actions">
-            {speech.supported && (
-              <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
-                <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
-              </button>
-            )}
-          </div>
         </div>
 
+
+        {place.lighthouse && <LighthouseSheet lh={place.lighthouse} />}
 
         {place.sections.map((s, si) => (
           <Fragment key={s.id}>
@@ -361,6 +411,24 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </section>
           </Fragment>
         ))}
+
+        {place.records?.some((r) => r.more) && (
+        <section id="sec-records" data-nav="records" className="section">
+          <div className="section-head"><h2>Les records en détail</h2></div>
+          <ol className="records-detail">
+            {place.records.filter((r) => r.more).map((r) => (
+              <li key={r.title} className={`record-detail record--${r.medal}`}>
+                <span className="record-medal"><Icon name="medal" size={20} stroke={1.8} /></span>
+                <div>
+                  <span className="record-scope">{r.scope}</span>
+                  <h3>{r.title}</h3>
+                  <p>{r.more}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+        )}
 
         {place.timeline?.length > 0 && (
         <section id="sec-reperes" data-nav="reperes" className="section">
@@ -415,7 +483,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         )}
 
         <section id="sec-pratique" data-nav="pratique" className="section mobile-only">
-          <div className="section-head"><h2>Infos pratiques</h2></div>
+          <div className="section-head"><h2>Y aller</h2></div>
           <Practical place={place} directions={directions} />
         </section>
 
@@ -433,7 +501,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         <aside className="guide-aside">
           <div className="aside-card">
-            <h2 className="aside-title">Infos pratiques</h2>
+            <h2 className="aside-title">Y aller</h2>
             <Practical place={place} directions={directions} />
           </div>
         </aside>

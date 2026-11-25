@@ -1,5 +1,6 @@
 // Fiche : Phare d'Eckmühl (Penmarc'h)
 import { C } from './media.js';
+import { heroOf } from './phares-media.js';
 
 export default {
   id: 'phare-eckmuhl',
@@ -14,21 +15,33 @@ export default {
   labels: ['Monument historique', 'Ouvert à la visite'],
   teaser:
     "Plus de 60 mètres de granit, payés par la fille d'un maréchal de Napoléon pour « racheter les larmes » de la guerre : un phare-palais, avec rampe en bronze et murs d'opaline.",
-  hero: {
+  hero: heroOf('phare-eckmuhl', {
     src: `${C}/thumb/0/03/Phare_d%27eckmuhl_%288142813134%29.jpg/1280px-Phare_d%27eckmuhl_%288142813134%29.jpg`,
     alt: "Le phare d'Eckmühl, tour octogonale de granit, sur la pointe de Penmarc'h",
     credit: 'Jean-Jacques Abalain, CC BY 2.0, Wikimedia Commons',
+  }),
+  lighthouse: {
+    built: '1893 à 1897',
+    lit: '17 octobre 1897',
+    height: '60 m, en granit de Kersanton',
+    elevation: '64,80 m au-dessus de la mer',
+    range: '23,5 milles, environ 43,5 km',
+    light: '1 éclat blanc toutes les 5 secondes',
+    keepers: "Gardé jusqu'au 19 octobre 2007",
+    visit: 'Ouvert à la visite (payant) : 307 marches jusqu\'à la lanterne',
+    visitors: 'Près de 55 000 entrées en 2009',
+    protection: 'Classé monument historique (2011)',
   },
   facts: [
     { value: '1897', label: 'inauguration, le 17 octobre' },
     { value: '60 m', label: 'de hauteur, en granit de Kersanton' },
-    { value: '307', label: 'marches jusqu\'à la lanterne' },
-    { value: '300 000 F', label: 'légués par la marquise d\'Eckmühl' },
+    { value: '43,5 km', label: 'de portée (23,5 milles)' },
+    { value: '55 000', label: 'visiteurs en 2009' },
   ],
   records: [
-    { medal: 'or', scope: 'Monde', title: 'Le phare le plus puissant du monde en 1901', text: 'À égalité avec le Créac\'h, à Ouessant.' },
-    { medal: 'or', scope: 'France', title: 'Le premier phare à deux optiques', text: 'Un faisceau plus puissant pour la même électricité.' },
-    { medal: 'argent', scope: 'Pays bigouden', title: 'Première attraction payante', text: 'Et 6e du Finistère, avec près de 55 000 entrées en 2009.' },
+    { medal: 'or', scope: 'Monde', title: 'Le phare le plus puissant du monde en 1901', text: 'À égalité avec le Créac\'h, à Ouessant.', more: "Électrifié dès sa mise en service, le phare fonctionne d'abord grâce à des machines à vapeur qui brûlent 125 tonnes de charbon par an. En 1901, avec le phare du Créac'h, à Ouessant, c'est le phare le plus puissant du monde. Son feu porte aujourd'hui à 23,5 milles." },
+    { medal: 'or', scope: 'France', title: 'Le premier phare à deux optiques', text: 'Un faisceau plus puissant pour la même électricité.', more: "La lanterne de quatre mètres de diamètre abrite deux optiques jumelles, une première en France. Elles tournent sur un bain de 100 kilos de mercure et lancent un éclat toutes les cinq secondes." },
+    { medal: 'argent', scope: 'Pays bigouden', title: 'Première attraction payante', text: 'Et 6e du Finistère, avec près de 55 000 entrées en 2009.', more: "Selon les entrées payantes, le phare d'Eckmühl est la plus grande attraction touristique du pays bigouden, et la sixième du Finistère, avec près de 55 000 entrées en 2009. La visite mène, par 307 marches, jusqu'à la lanterne." },
     { medal: 'bronze', scope: 'Penmarc\'h', title: 'Le plus grand des trois phares du site', text: 'Plus de 60 mètres, à côté de la Vieille tour et du phare de 1835.' },
   ],
   funFact: { title: '307 marches en 46 secondes', text: 'Le record du « Championnat du monde de l\'ascension du phare d\'Eckmühl » est de 46 s 54, établi en 2015.' },

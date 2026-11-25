@@ -26,12 +26,12 @@ function useIsDesktop() {
 }
 
 const TAG_BY_ID = Object.fromEntries(TAGS.map((t) => [t.id, t]));
+const SIDEBAR_W = 480;
 
-// Carte de lieu : vignette, nom, commune et durée, tags ; case « déjà visité » en haut à droite
+// Carte de lieu : vignette, nom, commune et durée ; case « déjà visité » en haut à droite
 function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited }) {
   const soon = !place.available;
   const activate = () => (soon ? onSelect(place.id) : onOpen(place.id));
-  const tags = (place.tags || []).map((id) => TAG_BY_ID[id]).filter(Boolean).slice(0, 2);
   return (
     <div
       role="button"
@@ -52,11 +52,6 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
           {!soon && <span><Icon name="headphones" size={12} /> {place.readingMinutes} min</span>}
           {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={12} /> {place.records.length}</span>}
         </span>
-        {tags.length > 0 && (
-          <span className="pc-tags">
-            {tags.map((t) => <span key={t.id} className={`pc-tag pc-tag--${t.id}`}><Icon name={t.icon} size={11} stroke={2.2} />{t.label}</span>)}
-          </span>
-        )}
       </div>
       {soon ? <span className="pc-soon">Bientôt</span> : onToggleVisited && (
         <button
@@ -148,7 +143,6 @@ const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ..
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
 function TagBar({ value, onChange, places, wrap, query, onQuery }) {
   const [open, setOpen] = useState(false);
-  const [searching, setSearching] = useState(false);
   const boxRef = useRef(null);
   const inputRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
@@ -157,19 +151,19 @@ function TagBar({ value, onChange, places, wrap, query, onQuery }) {
   const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
   const q = norm(query.trim());
   const menuTags = q ? used.filter((t) => norm(t.label).includes(q)) : used;
-  const pick = (id) => { onChange(id); setOpen(false); if (!wrap) onQuery(''); };
+  const pick = (id) => { onChange(id); setOpen(false); onQuery(''); };
   useEffect(() => {
     if (!open) return;
     const close = (e) => { if (!boxRef.current?.contains(e.target)) setOpen(false); };
     document.addEventListener('pointerdown', close);
     return () => document.removeEventListener('pointerdown', close);
   }, [open]);
-  useEffect(() => { if (searching || open) inputRef.current?.focus(); }, [searching, open]);
+  useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
   const searchField = (
     <label className="tag-search">
       <Icon name="search" size={15} />
-      <input ref={inputRef} type="search" value={query} onChange={(e) => onQuery(e.target.value)} placeholder="Chercher un spot, une commune, un tag…" aria-label="Rechercher" onKeyDown={(e) => e.key === 'Escape' && (onQuery(''), setSearching(false), setOpen(false))} />
-      {(query || wrap) && <button type="button" className="tag-search-clear" onClick={() => { onQuery(''); setSearching(false); }} aria-label="Effacer la recherche"><Icon name="close" size={14} stroke={2.4} /></button>}
+      <input ref={inputRef} type="search" value={query} onChange={(e) => onQuery(e.target.value)} placeholder="Chercher une catégorie ou un spot…" aria-label="Rechercher" onKeyDown={(e) => e.key === 'Escape' && (onQuery(''), setOpen(false))} />
+      {query && <button type="button" className="tag-search-clear" onClick={() => onQuery('')} aria-label="Effacer la recherche"><Icon name="close" size={14} stroke={2.4} /></button>}
     </label>
   );
   return (
@@ -182,14 +176,13 @@ function TagBar({ value, onChange, places, wrap, query, onQuery }) {
           </button>
         ))}
         {wrap && (
-          <button className={`tag tag-search-btn ${searching || query ? 'is-open' : ''}`} onClick={() => setSearching((v) => !v)} aria-label="Rechercher" aria-expanded={searching}>
-            <Icon name="search" size={15} stroke={2.2} />
+          <button className={`tag tag-plus ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
+            <Icon name="plus" size={15} stroke={2.4} />
           </button>
         )}
       </div>
-      {wrap && (searching || query) && searchField}
-      {!wrap && <button className={`tag-more ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Rechercher et voir tous les tags" aria-expanded={open}>
-        <Icon name="search" size={16} stroke={2.3} />
+      {!wrap && <button className={`tag-more ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
+        <Icon name="plus" size={16} stroke={2.4} />
       </button>}
       {open && (
         <div className="tag-menu" role="menu">
@@ -199,7 +192,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery }) {
               <Icon name={t.icon} size={16} /> <span>{t.label}</span> <b>{count(t.id)}</b>
             </button>
           ))}
-          {q && (() => { const n = places.filter((p) => searchText(p).includes(q)).length; return <p className="tag-menu-note">{n ? `${n} spot${n > 1 ? 's' : ''} trouvé${n > 1 ? 's' : ''}, affiché${n > 1 ? 's' : ''} en bas.` : 'Aucun spot trouvé.'}</p>; })()}
+          {q && (() => { const n = places.filter((p) => searchText(p).includes(q)).length; return <p className="tag-menu-note">{n ? `${n} spot${n > 1 ? 's' : ''} trouvé${n > 1 ? 's' : ''}, affiché${n > 1 ? 's' : ''} dans la liste.` : 'Aucun spot trouvé.'}</p>; })()}
         </div>
       )}
     </div>
@@ -238,7 +231,7 @@ export default function App() {
     return () => clearTimeout(t);
   }, [query, visible]);
   const available = visible.filter((p) => p.available).length;
-  const [showVisited, setShowVisited] = useState(false);
+  const [onlyVisited, setOnlyVisited] = useState(false);
   const allVisited = PLACES.filter((p) => visited.includes(p.id));
   const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
@@ -254,11 +247,11 @@ export default function App() {
     return () => window.removeEventListener('hashchange', on);
   }, []);
 
-  // Desktop : la fiche s'ouvre à droite de la liste (400 px), la carte garde une bande à droite
-  const panelW = desktop ? Math.round(Math.max(520, Math.min(window.innerWidth * 0.5, window.innerWidth - 620))) : 0;
+  // Desktop : la fiche s'ouvre à droite de la liste, la carte garde une bande à droite
+  const panelW = desktop ? Math.round(Math.max(520, Math.min(window.innerWidth * 0.5, window.innerWidth - SIDEBAR_W - 220))) : 0;
   // Espace laissé à la carte : carrousel en bas (mobile), liste et fiche à gauche (desktop)
   const padding = useMemo(
-    () => (desktop ? { top: 60, bottom: 60, left: place ? 400 + panelW + 30 : 440, right: place ? 30 : 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
+    () => (desktop ? { top: 60, bottom: 60, left: place ? SIDEBAR_W + panelW + 30 : SIDEBAR_W + 40, right: place ? 30 : 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
   );
 
@@ -323,7 +316,7 @@ export default function App() {
         </header>
       )}
 
-      <div className="map-tools" style={desktop ? { left: place ? 400 + panelW + 16 : 416 } : undefined}>
+      <div className="map-tools" style={desktop ? { left: place ? SIDEBAR_W + panelW + 16 : SIDEBAR_W + 16 } : undefined}>
         <button className="tool-btn" onClick={() => mapRef.current?.fitFinistere()} aria-label="Voir tout le Finistère"><Icon name="map" size={19} /></button>
         <button className="tool-btn" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="locate" size={19} /></button>
       </div>
@@ -332,38 +325,21 @@ export default function App() {
         <aside className="sidebar">
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} /></header>
           <div className="sidebar-intro">
-            <h1>Tous les spots emblématiques du Finistère</h1>
+            <h1>Les spots emblématiques du Finistère</h1>
+            <div className="sidebar-counts">
+              <span><b>{totalSpots}</b> spots disponibles</span>
+              <button className={`visited-filter ${onlyVisited ? 'is-on' : ''}`} onClick={() => setOnlyVisited((v) => !v)} aria-pressed={onlyVisited} disabled={!allVisited.length && !onlyVisited} title={onlyVisited ? 'Afficher tous les spots' : 'Afficher seulement les spots visités'}>
+                <span className="visited-toggle-dot"><Icon name="check" size={10} stroke={3.4} /></span>
+                <b>{allVisited.length}</b> déjà visité{allVisited.length > 1 ? 's' : ''}
+              </button>
+            </div>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} wrap query={query} onQuery={setQuery} />
           <div className="sidebar-list">
             {visible.length === 0 && <p className="sidebar-empty">Aucun spot ne correspond à « {query} ».</p>}
-            {visible.map((p) => (
+            {visible.filter((p) => !onlyVisited || visited.includes(p.id)).map((p) => (
               <PlaceCard key={p.id} place={p} selected={selected === p.id} onOpen={open} onSelect={select} visited={visited.includes(p.id)} onToggleVisited={toggleVisited} />
             ))}
-          </div>
-          <div className="visited-dock-wrap">
-          <div className={`visited-dock ${showVisited ? 'is-open' : ''}`}>
-            {showVisited && (
-              <ul className="visited-dock-list">
-                {allVisited.length === 0 && <li className="visited-dock-empty">Coche la case d'un spot pour l'ajouter ici.</li>}
-                {allVisited.map((p) => (
-                  <li key={p.id}>
-                    <button onClick={() => open(p.id)}>
-                      {p.hero && <SafeImg src={p.thumb || p.hero.src} alt="" loading="lazy" />}
-                      <span>{p.shortTitle}</span>
-                      <small>{p.commune.split(' · ')[0].split(' & ')[0]}</small>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <button className="visited-dock-bar" onClick={() => setShowVisited((v) => !v)} aria-expanded={showVisited}>
-              <span className="visited-toggle-dot"><Icon name="check" size={11} stroke={3.4} /></span>
-              Déjà visités <b>{allVisited.length}</b>
-              <span className="visited-dock-total">{totalSpots} spots sur guideme</span>
-              <Icon name="chevron" size={15} style={{ transform: showVisited ? 'rotate(90deg)' : 'rotate(-90deg)', transition: 'transform .2s' }} />
-            </button>
-          </div>
           </div>
         </aside>
       )}

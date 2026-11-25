@@ -111,7 +111,7 @@ img { display: block; max-width: 100%; }
   background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 18px;
   box-shadow: 0 12px 34px rgba(15,23,42,.18); animation: fade .15s ease;
 }
-@media (min-width: 900px) { .brand-bar .progress-menu { position: fixed; z-index: 30; top: 20px; left: 416px; right: auto; bottom: auto; width: 320px; } }
+@media (min-width: 900px) { .brand-bar .progress-menu { position: fixed; z-index: 30; top: 20px; left: 496px; right: auto; bottom: auto; width: 320px; } }
 .progress-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
 .progress-head strong { font-family: var(--font-title); font-weight: 700; font-size: 19px; line-height: 1.2; letter-spacing: -0.02em; }
 .progress-head span { font-size: 15px; color: var(--ink-2); }
@@ -245,7 +245,7 @@ img { display: block; max-width: 100%; }
 }
 .place-card:hover { border-color: var(--line-2); background: #fcfcfa; }
 .place-card.is-selected { border-color: var(--ink); box-shadow: inset 3px 0 0 var(--ink); }
-.pc-thumb { position: relative; flex: 0 0 88px; height: 88px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
+.pc-thumb { position: relative; flex: 0 0 76px; height: 76px; border-radius: 4px; overflow: hidden; background: var(--surface-2); }
 .pc-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .pc-thumb-empty { position: absolute; inset: 0; display: grid; place-items: center; color: #a3abb8; background: var(--surface-2); }
 .pc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
@@ -268,7 +268,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Panneau latéral (desktop) ---------- */
 .sidebar {
-  position: absolute; z-index: 6; top: 0; bottom: 0; left: 0; width: 400px;
+  position: absolute; z-index: 6; top: 0; bottom: 0; left: 0; width: 480px;
   display: flex; flex-direction: column; gap: 14px; padding: 22px 16px 0;
   background: var(--bg); border-right: 1px solid var(--line); box-shadow: 4px 0 24px rgba(15,23,42,.05);
   overflow-y: auto;
@@ -510,8 +510,8 @@ img { display: block; max-width: 100%; }
   .app, .app:not(.has-guide) { --rail-h: 0px; }
   .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin-bottom: 0; }
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-scale { display: block; }
-  .maplibregl-ctrl-bottom-left { margin-left: 400px; }
-  .has-guide .maplibregl-ctrl-bottom-left { margin-left: calc(400px + var(--panel-w, 50vw)); }
+  .maplibregl-ctrl-bottom-left { margin-left: 480px; }
+  .has-guide .maplibregl-ctrl-bottom-left { margin-left: calc(480px + var(--panel-w, 50vw)); }
 
   /* Barre du haut commune */
   .guide-bar { padding: 14px 24px; gap: 10px; }
@@ -530,7 +530,7 @@ img { display: block; max-width: 100%; }
   /* ---- Panneau : moitié gauche de l'écran, une colonne aérée ---- */
   /* Fiche ouverte à droite de la liste, qui reste visible ; la carte garde une bande à droite */
   .guide--panel {
-    right: auto; left: 400px; width: var(--panel-w, 50vw);
+    right: auto; left: 480px; width: var(--panel-w, 50vw);
     border-left: 1px solid var(--line); border-right: 1px solid var(--line); box-shadow: 8px 0 40px rgba(15,23,42,.12);
     animation: guideInSide .3s cubic-bezier(.2,.8,.25,1);
   }
@@ -761,3 +761,95 @@ img { display: block; max-width: 100%; }
 .pc-pin { opacity: .55; margin-left: -1px; }
 .pc-meta svg { flex-shrink: 0; }
 .pc-meta > span + span { flex-shrink: 0; }
+
+/* ---------- Y aller : mini-carte, itinéraire, infos pratiques repliées ---------- */
+.practical-box { display: flex; flex-direction: column; gap: 10px; }
+.minimap { position: relative; display: block; height: 190px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: #cfe3ee; text-decoration: none; }
+.minimap-canvas, .minimap-canvas.maplibregl-map { position: absolute; inset: 0; }
+.minimap-pin { width: 18px; height: 18px; border-radius: 50%; background: #ff5a36; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(15,23,42,.35), 0 0 0 6px rgba(255,90,54,.18); }
+.minimap-label, .minimap-open { position: absolute; display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 5px; font-size: 12.5px; font-weight: 600; background: rgba(255,255,255,.95); color: var(--ink); box-shadow: 0 1px 4px rgba(15,23,42,.15); }
+.minimap-label { left: 8px; bottom: 8px; }
+.minimap-open { right: 8px; top: 8px; color: var(--ink-2); opacity: 0; transition: opacity .15s; }
+.minimap:hover .minimap-open { opacity: 1; }
+.practical-details { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.practical-details summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; font-size: 14.5px; font-weight: 600; cursor: pointer; color: var(--ink); }
+.practical-details summary::-webkit-details-marker { display: none; }
+.practical-details summary svg { color: var(--ink-3); transform: rotate(90deg); transition: transform .2s; }
+.practical-details[open] summary svg { transform: rotate(-90deg); }
+.practical-details .practical { margin: 0; padding: 0 8px 8px; gap: 6px; }
+.practical-details .practical li { padding: 10px; background: var(--surface-2); border: 0; border-radius: 6px; }
+.practical-details .practical-icon { flex-basis: 32px; height: 32px; }
+.practical-details .practical strong { font-size: 14px; }
+.practical-details .practical p { font-size: 13.5px; }
+
+/* ---------- Médailles : lien vers le détail ---------- */
+.record-more { align-self: flex-start; display: inline-flex; align-items: center; gap: 3px; margin-top: 4px; font-size: 12.5px; font-weight: 700; color: var(--mink); }
+.record-more:hover { text-decoration: underline; }
+.records-detail { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.record-detail { --m1: #fde68a; --m2: #f59e0b; --mink: #78350f; --mline: #fcd34d; display: flex; gap: 14px; padding: 16px; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--m2); }
+.record-detail.record--argent { --m1: #f1f5f9; --m2: #94a3b8; --mink: #334155; }
+.record-detail.record--bronze { --m1: #fed7aa; --m2: #c2703a; --mink: #7c2d12; }
+.record-detail .record-medal { flex: 0 0 38px; height: 38px; }
+.record-detail h3 { font-size: 17px; margin: 1px 0 6px; line-height: 1.25; }
+.record-detail p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+
+/* ---------- Carte d'identité des phares ---------- */
+.lh-sheet { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--surface); }
+.lh-sheet > div { padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.lh-sheet > div:nth-child(odd) { border-right: 1px solid var(--line); }
+.lh-sheet > div:nth-last-child(-n+2) { border-bottom: 0; }
+.lh-sheet dt { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.lh-sheet dd { margin: 3px 0 0; font-size: 15px; line-height: 1.35; color: var(--ink); font-weight: 500; }
+.guide-actions { margin-top: 14px; }
+.visit-btn .visit-box { width: 18px; height: 18px; border-radius: 4px; }
+
+/* ---------- Carte façon jeu : étiquettes inversées au survol, visités cochés ---------- */
+.gm-marker-label { display: inline-flex; align-items: center; gap: 5px; transition: background .15s, color .15s; }
+.gm-marker:hover .gm-marker-label { background: var(--ink); color: #fff; }
+.gm-label-check { display: none; width: 15px; height: 15px; border-radius: 50%; background: #16a34a; color: #fff; place-items: center; flex: 0 0 auto; }
+.gm-label-check svg { width: 10px; height: 10px; }
+.gm-marker.is-visited .gm-label-check { display: grid; }
+.gm-marker.is-visited .gm-marker-label { color: #15803d; }
+.gm-marker.is-visited:hover .gm-marker-label, .gm-marker.is-visited.is-selected .gm-marker-label { background: #15803d; color: #fff; }
+.gm-marker.is-visited:hover .gm-label-check, .gm-marker.is-visited.is-selected .gm-label-check { background: #fff; color: #15803d; }
+/* Point visité : petit drapeau coché */
+.gm-marker.is-visited .gm-dot { display: grid; place-items: center; width: 18px; height: 18px; background: #16a34a; border: 2.5px solid #fff; }
+.gm-marker.is-visited .gm-dot::after { content: ''; width: 7px; height: 4px; border: solid #fff; border-width: 0 0 2.4px 2.4px; transform: translateY(-1px) rotate(-45deg); }
+.map.z-far .gm-marker.is-visited .gm-dot { width: 14px; height: 14px; border-width: 2px; }
+.map.z-far .gm-marker.is-visited .gm-dot::after { width: 5px; height: 3px; border-width: 0 0 2px 2px; }
+/* Lieu sélectionné : onde qui pulse sous le repère */
+.gm-marker.is-selected .gm-marker-ground { position: relative; }
+.gm-marker.is-selected .gm-marker-ground::after { content: ''; position: absolute; left: 50%; top: 50%; width: 46px; height: 18px; margin: -9px 0 0 -23px; border-radius: 50%; border: 2.5px solid var(--c); animation: gmPulse 1.6s ease-out infinite; }
+@keyframes gmPulse { from { transform: scale(.3); opacity: .9; } to { transform: scale(1.4); opacity: 0; } }
+
+/* ---------- Barre noire : logo + jauge façon jeu ---------- */
+.brand-bar { padding: 8px 8px 8px 14px; background: #111; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.16); }
+.brand-bar .brand, .brand-bar .brand-mark, .brand-bar .brand-name { color: #fff; }
+.brand-bar .brand-name span, .topbar .brand-name span { color: #fff; opacity: .5; }
+.topbar { background: #111; border-color: #111; box-shadow: 0 4px 14px rgba(0,0,0,.2); }
+.topbar .brand, .topbar .brand-mark, .topbar .brand-name { color: #fff; }
+.brand-bar .progress-btn, .topbar .progress-btn { gap: 7px; padding: 3px 4px 3px 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+.brand-bar .progress-btn:hover, .brand-bar .progress-btn.is-open, .topbar .progress-btn.is-open { background: rgba(255,255,255,.16); }
+.brand-bar .progress-flag, .topbar .progress-flag { height: 15px; }
+.brand-bar .progress-dial, .topbar .progress-dial, .brand-bar .progress-ring, .topbar .progress-ring { width: 30px; height: 30px; }
+.brand-bar .progress-track, .topbar .progress-track { stroke: rgba(255,255,255,.16); stroke-width: 4; }
+.brand-bar .progress-value, .topbar .progress-value { stroke: #4ade80; stroke-width: 4; filter: drop-shadow(0 0 3px rgba(74,222,128,.7)); }
+.brand-bar .progress-pct, .topbar .progress-pct { color: #fff; font-size: 8.5px; }
+.brand-bar .progress-pct small, .topbar .progress-pct small { color: rgba(255,255,255,.6); font-size: 6.5px; }
+
+/* ---------- Titre, compteurs ---------- */
+.sidebar-intro h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 20px; margin: 2px 0 6px; }
+.sidebar-counts { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13.5px; color: var(--ink-3); }
+.sidebar-counts b { color: var(--ink); font-weight: 700; }
+.visited-filter { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 5px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #166534; background: #ecf7ef; border: 1px solid #cfe9d6; }
+.visited-filter b { color: #15803d; }
+.visited-filter:hover:not(:disabled) { border-color: #16a34a; }
+.visited-filter.is-on { background: #16a34a; border-color: #16a34a; color: #fff; }
+.visited-filter.is-on b { color: #fff; }
+.visited-filter.is-on .visited-toggle-dot { background: #fff; color: #16a34a; }
+.visited-filter:disabled { opacity: .55; cursor: default; }
+.visited-filter .visited-toggle-dot { width: 16px; height: 16px; border-radius: 50%; }
+.tag-plus { padding: 0; width: 30px; justify-content: center; }
+.tag-plus.is-open { background: var(--ink); color: #fff; border-color: var(--ink); }
+.tag-plus.is-open svg { color: #fff; }
+.sidebar .tag-menu { width: 300px; }
