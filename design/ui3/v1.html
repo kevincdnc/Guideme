@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>V1 · Carnet de bord</title>
+<style>
+@font-face { font-family: Sora; src: url(../../node_modules/@fontsource-variable/sora/files/sora-latin-wght-normal.woff2); font-weight: 100 900; }
+@font-face { font-family: Inter; src: url(../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2); font-weight: 100 900; }
+:root { --ink:#111827; --ink2:#374151; --ink3:#6b7280; --line:#e5e7eb; --bg:#fbfaf6; --green:#16a34a; --gold:#f5b300; --blue:#0a6cff; }
+* { box-sizing: border-box; margin: 0; }
+body { font: 14px/1.45 Inter, sans-serif; color: var(--ink); background: #ddd; }
+.screen { position: relative; width: 1440px; height: 900px; overflow: hidden; background: var(--bg); }
+h1,h2,h3,b.t { font-family: Sora, sans-serif; letter-spacing: -.02em; }
+/* ---- carte ---- */
+.map { position: absolute; inset: 0; background: url(map.png) 0 0 / 1440px 900px; }
+.pin { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.pin.done { background: var(--green); } .pin.done::after { content:'✓'; color:#fff; font: 800 11px/16px Inter; display:block; text-align:center; }
+.pin.todo { background: #ff5a36; } .pin.leg { background: #ff5a36; box-shadow: 0 0 0 3px var(--gold), 0 2px 8px rgba(0,0,0,.3); }
+.side { position: absolute; left: 0; top: 0; bottom: 0; width: 480px; background: var(--bg); border-right: 1px solid var(--line); padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
+.bar { background: #111; color: #fff; border-radius: 10px; padding: 10px 12px 10px 16px; display: flex; align-items: center; gap: 12px; }
+.logo { font: 700 18px Sora; } .logo span { opacity: .5; }
+.lvl { margin-left: auto; display: flex; flex-direction: column; gap: 4px; width: 150px; }
+.lvl small { font-size: 11px; color: rgba(255,255,255,.7); display: flex; justify-content: space-between; } .lvl small b { color: #fbbf24; }
+.xp { height: 6px; border-radius: 3px; background: rgba(255,255,255,.15); overflow: hidden; } .xp i { display: block; height: 100%; width: 62%; background: linear-gradient(90deg,#f59e0b,#fde047); }
+.ring { width: 40px; height: 40px; border-radius: 50%; background: conic-gradient(#4ade80 0 23%, rgba(255,255,255,.15) 0); display: grid; place-items: center; }
+.ring span { width: 32px; height: 32px; border-radius: 50%; background: #111; display: grid; place-items: center; font: 700 10.5px Sora; }
+.av { width: 32px; height: 32px; border-radius: 50%; background: #374151; display: grid; place-items: center; font: 700 12px Sora; }
+.side h1 { font-size: 20px; padding: 0 8px; } .sub { padding: 0 8px; color: var(--ink3); margin-top: -10px; }
+.quest { margin: 0 8px; padding: 10px 12px; border-radius: 10px; background: #fff8e1; border: 1px solid #fde68a; display: flex; gap: 10px; align-items: center; font-size: 13px; }
+.quest b { color: #92400e; } .quest em { margin-left: auto; font-style: normal; font-weight: 700; color: #b45309; font-size: 12px; }
+.tags { display: flex; gap: 6px; padding: 0 0 0 0; } .tag { padding: 6px 11px; border-radius: 999px; border: 1px solid #d1d5db; background: #fff; font-weight: 600; font-size: 13px; } .tag.on { background: #111; color: #fff; border-color: #111; }
+.card { display: flex; gap: 14px; align-items: center; padding: 8px 10px 8px 8px; background: #fff; border: 1px solid var(--line); border-radius: 8px; position: relative; }
+.card.leg { border-color: #fcd34d; box-shadow: inset 3px 0 0 var(--gold); }
+.card.done { background: #f6fbf7; border-color: #cfe9d6; }
+.th { width: 64px; height: 64px; border-radius: 5px; background: linear-gradient(160deg,#6aa9e3,#2a5d93 60%,#c9b48c 61%,#8f7a5b); flex: 0 0 auto; }
+.card h3 { font-size: 15px; } .card p { color: var(--ink3); font-size: 12.5px; }
+.rar { font: 700 10px Inter; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; }
+.rar.l { background: #fef3c7; color: #92400e; } .rar.r { background: #dbeafe; color: #1e40af; } .rar.c { background: #f3f4f6; color: #4b5563; }
+.xpb { margin-left: auto; font: 700 12px Sora; color: #b45309; }
+.stamp { margin-left: auto; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--green); display: grid; place-items: center; color: var(--green); transform: rotate(-12deg); opacity: .8; font-size: 16px; }
+/* popup progression */
+.pop { position: absolute; left: 496px; top: 20px; width: 400px; background: #111; color: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.pop h2 { font-size: 19px; } .pop .muted { color: rgba(255,255,255,.65); }
+.lvbig { display: flex; align-items: center; gap: 14px; margin: 14px 0; }
+.lvbig .badge { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg,#f59e0b,#fde047); color: #422006; display: grid; place-items: center; font: 800 22px Sora; transform: rotate(-4deg); }
+.lvbig b { font: 700 16px Sora; } .bar2 { height: 8px; border-radius: 4px; background: rgba(255,255,255,.12); overflow: hidden; margin-top: 6px; } .bar2 i { display: block; height: 100%; background: linear-gradient(90deg,#16a34a,#4ade80); }
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin: 14px 0; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); font-size: 12.5px; }
+.cats div { display: grid; grid-template-columns: 82px 1fr 34px; gap: 8px; align-items: center; } .cats b { text-align: right; font-family: Sora; }
+.badges { display: flex; gap: 10px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); }
+.bd { width: 54px; text-align: center; font-size: 10px; color: rgba(255,255,255,.7); } .bd i { display: grid; place-items: center; width: 46px; height: 50px; margin: 0 auto 4px; clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); font-style: normal; font-size: 20px; }
+.bd.on i { background: linear-gradient(135deg,#fbbf24,#f59e0b); } .bd.off i { background: #2b3038; color: #555; }
+/* ---- fiche ---- */
+.back { position: absolute; inset: 0; background: #d9e0e7; }
+.sheet { position: absolute; left: 70px; right: 70px; top: 0; bottom: 0; background: var(--bg); overflow: hidden; }
+.strip { display: flex; gap: 4px; height: 300px; background: #0f172a; } .strip div { flex: 0 0 auto; height: 100%; }
+.strip .ph { width: 200px; background: url(vieille.jpg) center/cover; } .strip .ph2 { width: 420px; background: linear-gradient(170deg,#9cc0e6,#4a7fb5 50%,#3b4f63 51%,#202b36); } .strip .ph3 { width: 300px; background: linear-gradient(170deg,#ccc,#777 55%,#444 56%,#222); filter: grayscale(1); } .strip .ph4 { width: 360px; background: linear-gradient(170deg,#e7c9a0,#b57e54 50%,#4b5d6e 51%,#2b3946); }
+.grid { display: grid; grid-template-columns: 1fr 330px; gap: 48px; padding: 36px 56px; }
+.btns { display: flex; gap: 8px; margin-bottom: 30px; } .btn { padding: 10px 14px; border-radius: 999px; border: 1.5px solid #d1d5db; background: #fff; font-weight: 600; } .btn.r { margin-left: auto; }
+.reward { display: inline-flex; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fff8e1; border: 1px solid #fde68a; font-size: 12.5px; font-weight: 600; color: #92400e; margin-bottom: 14px; }
+.fh1 { font-size: 34px; line-height: 1.1; } .meta { color: var(--ink3); margin: 6px 0 14px; } .teaser { font-size: 17px; color: var(--ink2); line-height: 1.6; }
+.kf { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 22px; }
+.k { background: #111; color: #fff; border-radius: 12px; padding: 14px; height: 110px; position: relative; overflow: hidden; }
+.k::before { content:''; position: absolute; inset: 0; background: url(vieille.jpg) center/cover; filter: grayscale(1); opacity: .28; }
+.k > * { position: relative; } .k small { color: #fbbf24; font-size: 11px; } .k b { display: block; font: 700 22px Sora; margin-top: 6px; } .k span { font-size: 12px; color: rgba(255,255,255,.75); }
+.fun { margin-top: 14px; padding: 18px 20px; border-radius: 12px; background: #fffbeb; border: 1px solid #fde68a; display: flex; gap: 14px; }
+.fun i { font-style: normal; font-size: 22px; } .fun b { font-family: Sora; }
+.aside .mp { height: 260px; border-radius: 10px; background: url(map.png) -560px -260px / 1440px 900px; position: relative; border: 1px solid var(--line); }
+.aside .mp::after { content: ''; position: absolute; left: 36px; top: 286px; }
+.go { margin-top: 10px; background: #111; color: #fff; border-radius: 10px; padding: 12px; text-align: center; font-weight: 700; }
+.rec { margin-top: 18px; display: flex; flex-direction: column; } .rec div { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.med { width: 32px; height: 32px; border-radius: 50%; flex: 0 0 auto; background: radial-gradient(circle at 35% 30%,#fff,#fde68a 35%,#f59e0b); }
+.med.ag { background: radial-gradient(circle at 35% 30%,#fff,#e2e8f0 35%,#94a3b8); }
+.rec b { font-family: Sora; font-size: 14px; display: block; } .rec small { color: var(--ink3); }
+.lab { margin-top: 14px; color: var(--ink3); font-size: 12px; }
+</style></head><body>
+<section id="map" class="screen">
+  <div class="map"></div>
+  <span class="pin done" style="left:600px;top:552px"></span><span class="pin leg" style="left:543px;top:553px"></span><span class="pin todo" style="left:705px;top:322px"></span>
+  <span class="pin done" style="left:445px;top:280px"></span><span class="pin todo" style="left:948px;top:660px"></span><span class="pin todo" style="left:820px;top:520px"></span>
+  <span class="pin leg" style="left:770px;top:152px"></span><span class="pin todo" style="left:760px;top:700px"></span><span class="pin done" style="left:700px;top:590px"></span>
+  <aside class="side">
+    <div class="bar"><span class="logo">⬥ GuideMe<span>.bzh</span></span>
+      <div class="lvl"><small><span>Niv. 4 · <b>Gardien de phare</b></span><span>620/1000</span></small><div class="xp"><i></i></div></div>
+      <span class="av">KC</span><span class="ring"><span>23%</span></span></div>
+    <h1>Tu crois connaître le Finistère ?</h1><p class="sub"><b>30</b> spots à découvrir made in Penn-ar-Bed</p>
+    <div class="quest">🎯 <span><b>Quête de la semaine :</b> 2 phares en mer</span><em>+150 XP</em></div>
+    <div class="tags"><span class="tag on">Tous</span><span class="tag">✓ 7 visités</span><span class="tag">★ 3 to-do</span><span class="tag">Phare</span><span class="tag">Légendaire</span></div>
+    <div class="card done"><span class="th"></span><div><span class="rar r">Rare</span><h3>Pointe du Raz</h3><p>Plogoff</p></div><span class="stamp">⚜</span></div>
+    <div class="card leg"><span class="th" style="filter:hue-rotate(20deg)"></span><div><span class="rar l">Légendaire</span><h3>Phare d'Ar-Men</h3><p>Île-de-Sein · l'enfer des enfers</p></div><span class="xpb">+80 XP</span></div>
+    <div class="card"><span class="th" style="filter:saturate(.6)"></span><div><span class="rar c">Commun</span><h3>Baie des Trépassés</h3><p>Plogoff</p></div><span class="xpb">+20 XP</span></div>
+    <div class="card"><span class="th" style="filter:hue-rotate(-30deg)"></span><div><span class="rar r">Rare</span><h3>Pointe du Van</h3><p>Cléden-Cap-Sizun</p></div><span class="xpb">+40 XP</span></div>
+  </aside>
+  <div class="pop">
+    <h2>Ta conquête du bout du monde</h2><p class="muted">7 spots sur 30 · 23 % du Finistère</p>
+    <div class="lvbig"><span class="badge">4</span><div style="flex:1"><b>Gardien de phare</b><div class="muted" style="font-size:12px">Encore 380 XP pour « Capitaine de l'Iroise »</div><div class="bar2"><i style="width:62%;background:linear-gradient(90deg,#f59e0b,#fde047)"></i></div></div></div>
+    <div class="cats">
+      <div><span>Site naturel</span><span class="bar2" style="margin:0"><i style="width:40%"></i></span><b>40%</b></div>
+      <div><span>Phare</span><span class="bar2" style="margin:0"><i style="width:19%"></i></span><b>19%</b></div>
+      <div><span>Patrimoine</span><span class="bar2" style="margin:0"><i style="width:26%"></i></span><b>26%</b></div>
+      <div><span>Légendaire</span><span class="bar2" style="margin:0"><i style="width:33%"></i></span><b>33%</b></div>
+      <div><span>Port</span><span class="bar2" style="margin:0"><i style="width:33%"></i></span><b>33%</b></div>
+      <div><span>Préhistoire</span><span class="bar2" style="margin:0"><i style="width:0"></i></span><b>0%</b></div>
+    </div>
+    <div class="badges"><div class="bd on"><i>⚓</i>Cap Sizun</div><div class="bd on"><i>🗼</i>1er phare</div><div class="bd off"><i>🌊</i>Phares en mer</div><div class="bd off"><i>🏝</i>Les îles</div><div class="bd off"><i>⚜</i>Penn-ar-Bed</div></div>
+  </div>
+</section>
+
+<section id="fiche" class="screen">
+  <div class="back"></div>
+  <div class="sheet">
+    <div class="strip"><div class="ph"></div><div class="ph2"></div><div class="ph3"></div><div class="ph4"></div></div>
+    <div class="grid"><div>
+      <div class="btns"><span class="btn">☐ Je l'ai déjà visité</span><span class="btn">★</span><span class="btn r">🎧 Écouter</span></div>
+      <span class="reward">🏅 Récompense : +80 XP · fait progresser le badge « Phares en mer »</span>
+      <h1 class="fh1">Phare de la Vieille, le donjon du raz de Sein</h1>
+      <p class="meta">📍 Plogoff · 🎧 4 min · <span class="rar l">Légendaire</span></p>
+      <p class="teaser">Un donjon de granit planté au milieu du courant, qu'on ne pouvait aborder qu'une trentaine de fois par an. Deux gardiens mutilés de guerre y ont hissé le pavillon noir. Monte à bord.</p>
+      <div class="kf"><div class="k"><small>📅 CONSTRUIT</small><b>1887</b><span>mise en service</span></div><div class="k"><small>↕ HAUTEUR</small><b>26,9 m</b><span>de tour</span></div><div class="k"><small>✦ PORTÉE</small><b>28 km</b><span>15 milles</span></div><div class="k"><small>📅 GARDIENS</small><b>1995</b><span>derniers gardiens</span></div></div>
+      <div class="fun"><i>💡</i><div><b>Le saviez-vous ?</b><p>Sa silhouette de donjon n'est pas qu'esthétique : il ne fallait pas la confondre avec son voisin le Tévennec.</p></div></div>
+    </div>
+    <div class="aside"><div class="mp"></div><div class="go">↗ Y aller</div>
+      <div class="rec"><div><span class="med"></span><span><b>Le sauvetage le plus médiatisé</b><small>Hiver 1926, jusqu'au Parlement</small></span></div><div><span class="med ag"></span><span><b>Avant-dernier phare automatisé</b><small>En 1995, juste avant Kéréon</small></span></div></div>
+      <p class="lab">⬥ Monument historique · inscrit 2015</p></div></div>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>V2 · Breizh Quest</title>
+<style>
+@font-face { font-family: Sora; src: url(../../node_modules/@fontsource-variable/sora/files/sora-latin-wght-normal.woff2); font-weight: 100 900; }
+@font-face { font-family: Inter; src: url(../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2); font-weight: 100 900; }
+/* Palette : bleu marine, crème parchemin, rouge breton, ocre, vert lande */
+:root { --navy:#14213d; --cream:#f6ecd5; --paper:#fbf4e3; --red:#c8102e; --ocre:#e8a33d; --lande:#5b8c3a; --sea:#2f6f9f; }
+* { box-sizing: border-box; margin: 0; }
+body { font: 14px/1.45 Inter, sans-serif; color: var(--navy); background: #ccc; }
+.screen { position: relative; width: 1440px; height: 900px; overflow: hidden; background: var(--cream); }
+.t { font-family: Sora, sans-serif; font-weight: 800; letter-spacing: -.02em; }
+.ink { border: 3px solid var(--navy); box-shadow: 5px 5px 0 var(--navy); }
+/* carte façon parchemin */
+.map { position: absolute; inset: 0; background: url(map.png) 0 0 / 1440px 900px; filter: sepia(.55) saturate(1.25) hue-rotate(-8deg) contrast(1.05) brightness(1.02); }
+.paper { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(80,50,10,.28)), repeating-linear-gradient(0deg, rgba(120,80,20,.025) 0 2px, transparent 2px 4px); pointer-events: none; }
+.path { position: absolute; inset: 0; }
+.tok { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; display: grid; place-items: center; font: 800 14px Sora; color: #fff; border: 3px solid var(--navy); box-shadow: 3px 3px 0 var(--navy); }
+.tok.done { background: var(--lande); } .tok.todo { background: var(--red); } .tok.leg { background: var(--ocre); color: var(--navy); }
+.tok.lock { background: #c9bfa6; color: #7a6f57; }
+.compass { position: absolute; right: 40px; bottom: 40px; width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--navy); background: var(--paper); display: grid; place-items: center; font: 800 13px Sora; box-shadow: 5px 5px 0 var(--navy); }
+.compass::before { content: ''; position: absolute; width: 14px; height: 80px; background: linear-gradient(var(--red) 50%, var(--navy) 50%); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.compass span { position: absolute; top: 4px; }
+.side { position: absolute; left: 20px; top: 20px; bottom: 20px; width: 440px; background: var(--paper); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.hdr { display: flex; align-items: center; gap: 12px; }
+.logo { font: 900 22px Sora; color: var(--navy); } .logo em { font-style: normal; color: var(--red); }
+.flagpill { margin-left: auto; display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border-radius: 999px; background: var(--navy); color: var(--cream); font: 800 13px Sora; }
+.flagpill i { width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(var(--ocre) 0 23%, rgba(255,255,255,.2) 0); display: grid; place-items: center; font-style: normal; }
+.flagpill i::after { content: ''; width: 18px; height: 18px; border-radius: 50%; background: var(--navy); }
+.hero { background: var(--navy); color: var(--cream); border-radius: 14px; padding: 16px; position: relative; overflow: hidden; }
+.hero h1 { font: 900 22px/1.1 Sora; } .hero p { opacity: .8; margin-top: 6px; }
+.hero::after { content: '⚜'; position: absolute; right: 12px; bottom: -14px; font-size: 76px; opacity: .12; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; } .chip { padding: 6px 12px; border-radius: 999px; border: 2.5px solid var(--navy); font: 700 13px Sora; background: #fff; } .chip.on { background: var(--red); color: #fff; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cc { background: #fff; border-radius: 14px; overflow: hidden; position: relative; }
+.cc .img { height: 92px; background: linear-gradient(160deg,#7fb5e0,#2f6f9f 60%,#cfb27e 61%,#8b6a3e); border-bottom: 3px solid var(--navy); }
+.cc .b { padding: 8px 10px 10px; } .cc h3 { font: 800 14px Sora; } .cc p { font-size: 11.5px; opacity: .7; }
+.cc .seal { position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; border: 2.5px solid var(--navy); font-size: 15px; transform: rotate(-10deg); }
+.cc .stars { position: absolute; top: 8px; left: 8px; background: var(--navy); color: var(--ocre); font: 800 11px Sora; padding: 2px 7px; border-radius: 999px; }
+/* carnet d'explorateur */
+.book { position: absolute; left: 490px; top: 26px; width: 470px; background: var(--paper); border-radius: 18px; padding: 22px; }
+.book h2 { font: 900 22px Sora; } .book .sub { opacity: .7; margin-top: 2px; }
+.lv { display: flex; gap: 14px; align-items: center; margin: 16px 0; }
+.lv .medal { width: 68px; height: 68px; border-radius: 50%; background: var(--ocre); border: 3px solid var(--navy); display: grid; place-items: center; font: 900 26px Sora; box-shadow: 3px 3px 0 var(--navy); }
+.prog { height: 16px; border-radius: 999px; border: 2.5px solid var(--navy); background: #fff; overflow: hidden; margin-top: 6px; } .prog i { display: block; height: 100%; background: repeating-linear-gradient(-45deg, var(--lande) 0 8px, #6fa34a 8px 16px); }
+.cat { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 6px 0 16px; }
+.cat div { text-align: center; padding: 10px 6px; border-radius: 12px; background: #fff; border: 2.5px solid var(--navy); }
+.cat b { display: block; font: 900 20px Sora; } .cat small { font-size: 11.5px; opacity: .75; }
+.quests h3 { font: 800 15px Sora; margin-bottom: 8px; }
+.q { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #fff; border: 2px dashed var(--navy); margin-bottom: 6px; font-weight: 600; }
+.q.ok { border-style: solid; background: #eaf3e1; } .q em { margin-left: auto; font-style: normal; font: 800 12px Sora; color: var(--red); }
+/* fiche = carte de collection */
+.desk { position: absolute; inset: 0; background: var(--navy) radial-gradient(circle at 30% 20%, #1e3155, #0c1426); }
+.tcg { position: absolute; left: 120px; top: 40px; width: 430px; height: 700px; border-radius: 26px; background: linear-gradient(160deg,#f3c46b,#e8a33d 40%,#c97f1e); padding: 14px; transform: rotate(-2deg); box-shadow: 10px 12px 0 rgba(0,0,0,.35); }
+.tcg .in { height: 100%; border-radius: 16px; background: var(--paper); border: 3px solid var(--navy); overflow: hidden; display: flex; flex-direction: column; }
+.tcg .top { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--navy); color: var(--cream); font: 800 15px Sora; }
+.tcg .top span { color: var(--ocre); }
+.tcg .pic { height: 380px; background: url(vieille.jpg) center 30%/cover; border-bottom: 3px solid var(--navy); position: relative; }
+.tcg .rar { position: absolute; left: 12px; bottom: 12px; background: var(--ocre); border: 2.5px solid var(--navy); padding: 3px 10px; border-radius: 999px; font: 800 12px Sora; }
+.tcg .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; }
+.st { background: #fff; border: 2.5px solid var(--navy); border-radius: 10px; padding: 8px 10px; } .st small { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .6; } .st b { display: block; font: 900 20px Sora; }
+.danger { display: flex; gap: 3px; margin-top: 2px; } .danger i { width: 14px; height: 8px; border-radius: 2px; background: var(--red); } .danger i.o { background: #e5dcc4; }
+.tcg .lore { padding: 0 14px; font-size: 13px; font-style: italic; opacity: .85; }
+.right { position: absolute; left: 610px; top: 40px; right: 60px; bottom: 40px; display: flex; flex-direction: column; gap: 16px; color: var(--cream); }
+.right h1 { font: 900 40px/1.05 Sora; } .right .loc { opacity: .75; }
+.acts { display: flex; gap: 10px; }
+.act { padding: 12px 18px; border-radius: 12px; font: 800 15px Sora; background: var(--cream); color: var(--navy); border: 3px solid var(--navy); box-shadow: 4px 4px 0 #000; }
+.act.red { background: var(--red); color: #fff; } .act.r { margin-left: auto; background: var(--ocre); }
+.right p.teaser { font-size: 17px; line-height: 1.6; opacity: .92; max-width: 640px; }
+.box { background: var(--paper); color: var(--navy); border-radius: 16px; padding: 16px 18px; border: 3px solid #000; box-shadow: 6px 6px 0 #000; }
+.box h3 { font: 900 16px Sora; margin-bottom: 8px; }
+.lores { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.lc { background: #fff; border: 2.5px solid var(--navy); border-radius: 12px; padding: 12px; } .lc b { font: 800 14px Sora; display: block; margin: 4px 0; } .lc small { color: var(--red); font: 800 11px Sora; } .lc p { font-size: 12.5px; opacity: .8; }
+.lc.lock { background: repeating-linear-gradient(-45deg,#efe5cc 0 10px,#e6dabd 10px 20px); display: grid; place-items: center; font: 800 13px Sora; opacity: .8; }
+.trophies { display: flex; gap: 12px; } .tro { color: var(--navy); flex: 1; display: flex; gap: 10px; align-items: center; background: #fff; border: 2.5px solid var(--navy); border-radius: 12px; padding: 10px; }
+.tro i { width: 40px; height: 40px; border-radius: 50%; background: var(--ocre); border: 2.5px solid var(--navy); display: grid; place-items: center; font-style: normal; font-size: 18px; flex: 0 0 auto; }
+</style></head><body>
+<section id="map" class="screen">
+  <div class="map"></div><div class="paper"></div>
+  <svg class="path" viewBox="0 0 1440 900"><path d="M445 280 C 520 330, 560 450, 600 552 S 680 600, 700 590 S 760 520, 820 520" fill="none" stroke="#c8102e" stroke-width="3.5" stroke-dasharray="2 10" stroke-linecap="round"/></svg>
+  <span class="tok done" style="left:600px;top:552px">✓</span><span class="tok leg" style="left:543px;top:553px">★</span><span class="tok todo" style="left:705px;top:322px">!</span>
+  <span class="tok done" style="left:445px;top:280px">✓</span><span class="tok lock" style="left:948px;top:660px">?</span><span class="tok todo" style="left:820px;top:520px">!</span>
+  <span class="tok leg" style="left:770px;top:152px">★</span><span class="tok lock" style="left:760px;top:700px">?</span><span class="tok done" style="left:700px;top:590px">✓</span><span class="tok lock" style="left:1010px;top:672px">?</span>
+  <div class="compass"><span>N</span></div>
+  <aside class="side ink">
+    <div class="hdr"><span class="logo">Breizh<em>Quest</em></span><span class="flagpill"><i></i>23 %</span></div>
+    <div class="hero"><h1>Tu crois connaître le Finistère ?</h1><p>30 trésors à débusquer en Penn-ar-Bed</p></div>
+    <div class="chips"><span class="chip on">Tous</span><span class="chip">✓ 7</span><span class="chip">★ 3</span><span class="chip">Phares</span><span class="chip">Légendes</span></div>
+    <div class="cards">
+      <div class="cc ink"><div class="img"></div><span class="seal">⚜</span><span class="stars">★★</span><div class="b"><h3>Pointe du Raz</h3><p>Plogoff · visité</p></div></div>
+      <div class="cc ink"><div class="img" style="filter:hue-rotate(15deg) saturate(1.2)"></div><span class="stars">★★★</span><div class="b"><h3>Phare d'Ar-Men</h3><p>L'enfer des enfers</p></div></div>
+      <div class="cc ink"><div class="img" style="filter:saturate(.7)"></div><span class="stars">★</span><div class="b"><h3>Baie des Trépassés</h3><p>Plogoff</p></div></div>
+      <div class="cc ink"><div class="img" style="filter:hue-rotate(-30deg)"></div><span class="stars">★★</span><div class="b"><h3>Pointe du Van</h3><p>Cléden-Cap-Sizun</p></div></div>
+    </div>
+  </aside>
+  <div class="book ink">
+    <h2>Carnet d'explorateur</h2><p class="sub">7 trésors sur 30 · Cap Sizun presque bouclé !</p>
+    <div class="lv"><span class="medal">4</span><div style="flex:1"><b class="t" style="font-size:17px">Gardien·ne de phare</b><div class="prog"><i style="width:62%"></i></div><small style="opacity:.7">620 / 1000 XP</small></div></div>
+    <div class="cat"><div><b>2/5</b><small>Sites naturels</small></div><div><b>4/21</b><small>Phares</small></div><div><b>3/9</b><small>Légendaires</small></div></div>
+    <div class="quests"><h3>Quêtes en cours</h3>
+      <div class="q ok">✓ Tour du Cap Sizun (3/3)<em>+100 XP</em></div>
+      <div class="q">⚓ Deux phares en mer (1/2)<em>+150 XP</em></div>
+      <div class="q">🏝 Poser le pied sur 3 îles (1/3)<em>Badge</em></div></div>
+  </div>
+</section>
+
+<section id="fiche" class="screen">
+  <div class="desk"></div>
+  <div class="tcg"><div class="in">
+    <div class="top">Phare de la Vieille <span>★★★</span></div>
+    <div class="pic"><span class="rar">LÉGENDAIRE · Phare en mer</span></div>
+    <div class="stats"><div class="st"><small>Allumé en</small><b>1887</b></div><div class="st"><small>Hauteur</small><b>26,9 m</b></div><div class="st"><small>Portée</small><b>28 km</b></div><div class="st"><small>Danger</small><div class="danger"><i></i><i></i><i></i><i></i><i class="o"></i></div></div></div>
+    <p class="lore">« On ne pouvait l'aborder qu'une trentaine de fois par an. »</p>
+  </div></div>
+  <div class="right">
+    <p class="loc">📍 Plogoff · Raz de Sein · Cap Sizun</p>
+    <h1>Le donjon du raz de Sein</h1>
+    <div class="acts"><span class="act red">⚜ Tamponner « visité »</span><span class="act">★ À faire</span><span class="act r">🎧 Écouter</span></div>
+    <p class="teaser">Un donjon de granit planté au milieu du courant. Deux gardiens mutilés de guerre y ont hissé le pavillon noir, d'autres ont refusé d'en partir. Monte à bord.</p>
+    <div class="box"><h3>💡 Le saviez-vous ?</h3><p>Sa silhouette de donjon n'est pas qu'esthétique : il ne fallait pas la confondre avec son voisin le Tévennec.</p></div>
+    <div class="box"><h3>📜 Récits à débloquer · 2/6</h3><div class="lores">
+      <div class="lc"><small>RÉCIT 01</small><b>La goélette perdue</b><p>Le 19 février 1926, en pleine détresse des gardiens…</p></div>
+      <div class="lc"><small>RÉCIT 02</small><b>1 000 francs par sauveteur</b><p>Les six sauveteurs reçoivent chacun…</p></div>
+      <div class="lc lock">🔒 Visite le lieu pour débloquer</div></div></div>
+    <div class="trophies"><div class="tro"><i>🏅</i><span><b class="t">Le sauvetage le plus médiatisé</b><br><small>Hiver 1926</small></span></div><div class="tro"><i style="background:#cbd5e1">🥈</i><span><b class="t">Avant-dernier phare automatisé</b><br><small>1995</small></span></div></div>
+  </div>
+</section>
+</body></html>

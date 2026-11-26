@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>V3 · Penn-ar-Bed RPG</title>
+<style>
+@font-face { font-family: Sora; src: url(../../node_modules/@fontsource-variable/sora/files/sora-latin-wght-normal.woff2); font-weight: 100 900; }
+@font-face { font-family: Inter; src: url(../../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2); font-weight: 100 900; }
+/* Nuit sur l'Iroise : noir bleuté, cyan « phare », or légendaire, rareté RPG */
+:root { --bg:#070b14; --panel:rgba(10,16,30,.88); --edge:#22d3ee; --gold:#fbbf24; --epic:#a855f7; --rare:#3b82f6; --leg:#f97316; --hp:#ef4444; --txt:#e2e8f0; --mute:#7c8aa5; }
+* { box-sizing: border-box; margin: 0; }
+body { font: 14px/1.45 Inter, sans-serif; color: var(--txt); background: #000; }
+.screen { position: relative; width: 1440px; height: 900px; overflow: hidden; background: var(--bg); }
+.mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.t { font-family: Sora, sans-serif; font-weight: 800; letter-spacing: -.01em; }
+/* carte de nuit + brouillard de guerre */
+.map { position: absolute; inset: 0; background: url(map.png) 0 0 / 1440px 900px; filter: invert(1) hue-rotate(180deg) brightness(.75) saturate(1.4) contrast(1.15); }
+.fog { position: absolute; inset: 0; background:
+  radial-gradient(circle at 600px 552px, transparent 0 70px, transparent 70px),
+  radial-gradient(circle 120px at 600px 560px, transparent 60%, rgba(4,7,14,.0) 100%);
+  -webkit-mask: radial-gradient(circle 110px at 600px 560px, transparent 55%, #000 100%), radial-gradient(circle 80px at 445px 280px, transparent 50%, #000 100%), radial-gradient(circle 90px at 700px 590px, transparent 50%, #000 100%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; background-color: rgba(4,7,14,.62); }
+.scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); pointer-events: none; }
+.grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(34,211,238,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,.06) 1px, transparent 1px); background-size: 60px 60px; }
+.mk { position: absolute; transform: translate(-50%,-100%); text-align: center; }
+.mk i { display: grid; place-items: center; width: 30px; height: 30px; margin: 0 auto; transform: rotate(45deg); border: 2px solid; font-style: normal; }
+.mk i span { transform: rotate(-45deg); font: 900 14px Sora; }
+.mk.done i { border-color: #4ade80; background: rgba(74,222,128,.18); color: #4ade80; box-shadow: 0 0 14px #4ade80; }
+.mk.q i { border-color: var(--gold); background: rgba(251,191,36,.18); color: var(--gold); box-shadow: 0 0 16px var(--gold); animation: bob 1.6s ease-in-out infinite; }
+.mk.leg i { border-color: var(--leg); background: rgba(249,115,22,.2); color: var(--leg); box-shadow: 0 0 18px var(--leg); }
+.mk small { display: block; margin-top: 6px; font: 700 10px ui-monospace, monospace; letter-spacing: .08em; color: var(--txt); text-shadow: 0 0 6px #000; }
+@keyframes bob { 50% { transform: rotate(45deg) translate(-3px,-3px); } }
+.hud { position: absolute; border: 1px solid rgba(34,211,238,.35); background: var(--panel); backdrop-filter: blur(6px); clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+.hud::before { content: ''; position: absolute; left: 0; top: 0; width: 22px; height: 2px; background: var(--edge); box-shadow: 0 0 10px var(--edge); }
+/* barre joueur */
+.player { left: 20px; top: 20px; width: 460px; padding: 14px 16px; display: flex; gap: 14px; align-items: center; }
+.ava { width: 58px; height: 58px; border: 2px solid var(--gold); display: grid; place-items: center; font: 900 20px Sora; color: var(--gold); clip-path: polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); background: rgba(251,191,36,.12); }
+.pinfo { flex: 1; } .pinfo b { font: 800 16px Sora; } .pinfo .lvl { color: var(--gold); font-size: 11px; }
+.meter { height: 9px; background: rgba(255,255,255,.08); margin-top: 6px; position: relative; } .meter i { display: block; height: 100%; }
+.meter.xp i { background: linear-gradient(90deg,#f59e0b,#fde047); box-shadow: 0 0 10px #fbbf24; } .meter.conq i { background: linear-gradient(90deg,#0ea5e9,#22d3ee); box-shadow: 0 0 10px #22d3ee; }
+.meter + small { font-size: 10.5px; color: var(--mute); }
+.list { left: 20px; top: 128px; bottom: 20px; width: 460px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.list h1 { font: 800 20px Sora; } .list .sub { color: var(--mute); margin-top: -6px; }
+.filters { display: flex; gap: 6px; } .f { padding: 5px 10px; border: 1px solid rgba(255,255,255,.18); font-size: 11px; } .f.on { border-color: var(--edge); color: var(--edge); box-shadow: inset 0 0 12px rgba(34,211,238,.25); }
+.slot { display: flex; gap: 12px; align-items: center; padding: 8px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); position: relative; }
+.slot .th { width: 58px; height: 58px; background: linear-gradient(160deg,#16314f,#0b1b30 60%,#3b2f20 61%,#1a140c); border: 2px solid; flex: 0 0 auto; }
+.slot.c .th { border-color: #64748b; } .slot.r .th { border-color: var(--rare); box-shadow: 0 0 10px rgba(59,130,246,.5); } .slot.e .th { border-color: var(--epic); box-shadow: 0 0 10px rgba(168,85,247,.5); } .slot.l .th { border-color: var(--leg); box-shadow: 0 0 12px rgba(249,115,22,.6); }
+.slot h3 { font: 700 15px Sora; } .slot small { font-size: 10.5px; } .slot.r small { color: #93c5fd; } .slot.e small { color: #d8b4fe; } .slot.l small { color: #fdba74; } .slot.c small { color: var(--mute); }
+.slot .xp { margin-left: auto; color: var(--gold); font-size: 11px; } .slot.done { opacity: .6; } .slot.done .xp { color: #4ade80; }
+/* fenêtre de progression */
+.prog { left: 500px; top: 20px; width: 470px; padding: 20px; }
+.prog h2 { font: 800 18px Sora; color: var(--edge); text-shadow: 0 0 12px rgba(34,211,238,.6); }
+.big { display: flex; align-items: baseline; gap: 10px; margin: 10px 0 2px; } .big b { font: 900 44px Sora; color: #fff; } .big span { color: var(--mute); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); }
+.stats div small { font-size: 10.5px; color: var(--mute); display: flex; justify-content: space-between; } .stats .meter { height: 7px; margin-top: 4px; }
+.ach { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.1); display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.ach div { aspect-ratio: 1; display: grid; place-items: center; font-size: 22px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); }
+.ach .on { border-color: var(--gold); background: rgba(251,191,36,.12); box-shadow: inset 0 0 14px rgba(251,191,36,.3); } .ach .off { filter: grayscale(1); opacity: .35; }
+.toast { right: 24px; bottom: 24px; width: 320px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; border-color: rgba(251,191,36,.6); }
+.toast i { font-style: normal; font-size: 28px; filter: drop-shadow(0 0 8px #fbbf24); } .toast small { color: var(--gold); font-size: 10.5px; }
+.minimap { right: 24px; top: 20px; width: 200px; height: 200px; padding: 6px; } .minimap div { width: 100%; height: 100%; background: url(map.png) -560px -100px / 900px 560px; filter: invert(1) hue-rotate(180deg) brightness(.7) saturate(1.4); border-radius: 50%; }
+/* fiche : écran codex */
+.bgimg { position: absolute; inset: 0; background: url(vieille.jpg) center 35%/cover; filter: brightness(.6) saturate(1.2); background-position: 70% 30%; }
+.bgimg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,11,20,.96) 0 44%, rgba(7,11,20,.25) 62%, rgba(7,11,20,.35) 78%, rgba(7,11,20,.92)); }
+.codex { position: absolute; left: 60px; top: 50px; width: 620px; display: flex; flex-direction: column; gap: 16px; }
+.codex .kick { color: var(--leg); font-size: 12px; } .codex h1 { font: 900 46px/1.02 Sora; text-shadow: 0 0 24px rgba(249,115,22,.35); }
+.codex .loc { color: var(--mute); }
+.cta { display: flex; gap: 10px; }
+.cbtn { padding: 12px 18px; border: 1px solid rgba(255,255,255,.25); font-size: 12.5px; background: rgba(255,255,255,.04); }
+.cbtn.main { border-color: var(--gold); color: #111; background: linear-gradient(90deg,#f59e0b,#fde047); font-weight: 900; box-shadow: 0 0 20px rgba(251,191,36,.45); }
+.cbtn.r { margin-left: auto; border-color: var(--edge); color: var(--edge); }
+.codex p.teaser { font-size: 16.5px; line-height: 1.65; color: #cbd5e1; }
+.attrs { padding: 16px 18px; display: grid; gap: 10px; }
+.attr { display: grid; grid-template-columns: 120px 1fr 70px; align-items: center; gap: 12px; font-size: 11px; }
+.attr .meter { height: 10px; margin: 0; } .attr b { text-align: right; font: 800 14px Sora; color: #fff; }
+.hint { padding: 14px 16px; display: flex; gap: 12px; } .hint i { font-style: normal; font-size: 22px; } .hint small { color: var(--gold); font-size: 10.5px; }
+.lore { position: absolute; right: 50px; top: 380px; width: 560px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.lore h3 { font: 800 16px Sora; color: var(--edge); }
+.entry { padding: 12px 14px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); }
+.entry small { color: var(--gold); font-size: 10.5px; } .entry b { display: block; font: 700 15px Sora; margin: 3px 0; } .entry p { font-size: 13px; color: #a8b3c7; }
+.entry.lock { display: flex; align-items: center; gap: 10px; color: var(--mute); border-style: dashed; }
+.loot { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.trophy { display: flex; gap: 10px; align-items: center; padding: 10px; border: 1px solid rgba(249,115,22,.5); background: rgba(249,115,22,.08); }
+.trophy i { font-style: normal; font-size: 24px; filter: drop-shadow(0 0 8px #f97316); } .trophy b { font: 700 12.5px Sora; display: block; } .trophy small { color: #fdba74; font-size: 10px; }
+.reward { padding: 10px 14px; display: flex; justify-content: space-between; color: var(--gold); font-size: 12px; border-color: rgba(251,191,36,.5); position: relative; }
+</style></head><body>
+<section id="map" class="screen">
+  <div class="map"></div><div class="grid"></div><div class="fog"></div><div class="scan"></div>
+  <div class="mk done" style="left:600px;top:552px"><i><span>✓</span></i><small>Pointe du Raz</small></div>
+  <div class="mk leg" style="left:543px;top:553px"><i><span>★</span></i><small style="margin-left:-60px">Ar-Men</small></div>
+  <div class="mk q" style="left:705px;top:322px"><i><span>!</span></i><small>Portzic</small></div>
+  <div class="mk done" style="left:445px;top:280px"><i><span>✓</span></i><small>Créac'h</small></div>
+  <div class="mk q" style="left:820px;top:520px"><i><span>!</span></i><small>Locronan</small></div>
+  <div class="mk leg" style="left:770px;top:152px"><i><span>★</span></i><small>Île Vierge</small></div>
+  <div class="mk q" style="left:948px;top:660px"><i><span>!</span></i><small>Concarneau</small></div>
+  <div class="mk done" style="left:700px;top:590px"><i><span>✓</span></i><small>Audierne</small></div>
+  <div class="hud player"><span class="ava">KC</span><div class="pinfo"><b>Explorateur·rice</b> <span class="lvl mono">· Niv. 4 Gardien de phare</span>
+    <div class="meter xp"><i style="width:62%"></i></div><small class="mono">XP 620 / 1000</small>
+    <div class="meter conq" style="margin-top:6px"><i style="width:23%"></i></div><small class="mono">Penn-ar-Bed conquis 23 %</small></div></div>
+  <div class="hud list">
+    <h1>Tu crois connaître le Finistère ?</h1><p class="sub">30 quêtes · 7 accomplies</p>
+    <div class="filters mono"><span class="f on">Toutes</span><span class="f">Phares</span><span class="f">Légendaires</span><span class="f">À faire</span></div>
+    <div class="slot l"><span class="th"></span><div><small class="mono">Légendaire</small><h3>Phare d'Ar-Men</h3></div><span class="xp mono">+80 XP</span></div>
+    <div class="slot e"><span class="th"></span><div><small class="mono">Épique</small><h3>Phare du Tévennec</h3></div><span class="xp mono">+60 XP</span></div>
+    <div class="slot r"><span class="th"></span><div><small class="mono">Rare</small><h3>Pointe du Van</h3></div><span class="xp mono">+40 XP</span></div>
+    <div class="slot r done"><span class="th"></span><div><small class="mono">Rare · accomplie</small><h3>Pointe du Raz</h3></div><span class="xp mono">✓ 40 XP</span></div>
+    <div class="slot c"><span class="th"></span><div><small class="mono">Commun</small><h3>Baie des Trépassés</h3></div><span class="xp mono">+20 XP</span></div>
+  </div>
+  <div class="hud prog">
+    <h2 class="mono">◆ Conquête de Penn-ar-Bed</h2>
+    <div class="big"><b>23 %</b><span>7 / 30 quêtes</span></div>
+    <div class="meter conq"><i style="width:23%"></i></div>
+    <div class="stats mono">
+      <div><small><span>Sites naturels</span><span>40%</span></small><div class="meter conq"><i style="width:40%"></i></div></div>
+      <div><small><span>Phares</span><span>19%</span></small><div class="meter conq"><i style="width:19%"></i></div></div>
+      <div><small><span>Patrimoine</span><span>26%</span></small><div class="meter conq"><i style="width:26%"></i></div></div>
+      <div><small><span>Légendaires</span><span>33%</span></small><div class="meter xp"><i style="width:33%"></i></div></div>
+    </div>
+    <div class="ach"><div class="on">⚓</div><div class="on">🗼</div><div class="off">🌊</div><div class="off">🏝</div><div class="off">⚜</div></div>
+  </div>
+  <div class="hud minimap"><div></div></div>
+  <div class="hud toast"><i>🏆</i><div><small class="mono">Succès débloqué</small><br><b class="t">Tour du Cap Sizun</b></div></div>
+</section>
+
+<section id="fiche" class="screen">
+  <div class="bgimg"></div><div class="scan"></div>
+  <div class="codex">
+    <span class="kick mono">◆ Quête légendaire · Phare en mer</span>
+    <h1>Phare de la Vieille</h1><p class="loc">📍 Plogoff · Raz de Sein</p>
+    <div class="cta mono"><span class="cbtn main">⚔ Valider la quête</span><span class="cbtn">★ Suivre</span><span class="cbtn r">🎧 Écouter</span></div>
+    <p class="teaser">Un donjon de granit planté au milieu du courant, qu'on ne pouvait aborder qu'une trentaine de fois par an. Deux gardiens mutilés de guerre y ont hissé le pavillon noir. Monte à bord.</p>
+    <div class="hud attrs mono" style="position:relative">
+      <div class="attr"><span>Allumé en</span><div class="meter xp"><i style="width:55%"></i></div><b>1887</b></div>
+      <div class="attr"><span>Hauteur</span><div class="meter conq"><i style="width:35%"></i></div><b>26,9 m</b></div>
+      <div class="attr"><span>Portée</span><div class="meter conq"><i style="width:50%"></i></div><b>28 km</b></div>
+      <div class="attr"><span>Danger</span><div class="meter"><i style="width:85%;background:linear-gradient(90deg,#f97316,#ef4444);box-shadow:0 0 10px #ef4444"></i></div><b>★★★★</b></div>
+    </div>
+    <div class="hud hint" style="position:relative"><i>💡</i><div><small class="mono">Le saviez-vous ?</small><p>Sa silhouette de donjon n'est pas qu'esthétique : il ne fallait pas la confondre avec son voisin le Tévennec.</p></div></div>
+  </div>
+  <div class="hud lore">
+    <h3 class="mono">◆ Codex · récits 2/6</h3>
+    <div class="entry"><small class="mono">Récit 01 · 1926</small><b>La goélette perdue</b><p>Le 19 février 1926, la Surprise se perd sur les brisants de Plogoff avec ses dix hommes…</p></div>
+    <div class="entry"><small class="mono">Récit 02</small><b>1 000 francs par sauveteur</b><p>Les six sauveteurs reçoivent chacun 1 000 francs du gouvernement Briand.</p></div>
+    <div class="entry lock mono">🔒 Valide la quête pour débloquer 4 récits</div>
+    <div class="loot"><div class="trophy"><i>🏆</i><div><small class="mono">Record · Or</small><b>Le sauvetage le plus médiatisé</b></div></div><div class="trophy" style="border-color:rgba(148,163,184,.5);background:rgba(148,163,184,.08)"><i style="filter:none">🥈</i><div><small class="mono" style="color:#cbd5e1">Record · Argent</small><b>Avant-dernier phare automatisé</b></div></div></div>
+    <div class="hud reward mono"><span>Récompense</span><span>+80 XP · Badge « Phares en mer » 2/7</span></div>
+  </div>
+</section>
+</body></html>
