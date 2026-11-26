@@ -524,10 +524,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             )}
           </div>
           <h1>{place.title}</h1>
-          <p className="guide-meta">
-            <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
-            <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
-          </p>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.slice(0, 3).map((f, i) => (
@@ -683,14 +679,14 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         </div>
 
         <aside className="guide-aside">
+          <div className="aside-card aside-map">
+            <Practical place={place} directions={directions} overview />
+          </div>
           {place.records?.length > 0 && (
             <div className="aside-card aside-records">
               <Records place={place} goTo={goTo} compact />
             </div>
           )}
-          <div className="aside-card aside-map">
-            <Practical place={place} directions={directions} overview />
-          </div>
         </aside>
         </div>
         <div className="guide-end" />

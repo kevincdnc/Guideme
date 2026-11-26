@@ -1757,3 +1757,25 @@ img { display: block; max-width: 100%; }
   .guide--modal { top: 14px; border-radius: 18px 18px 0 0; }
   .modal-actions { top: 30px; }
 }
+
+/* ---------- Colonne droite : carte d'abord (collante seulement si seule), records dessous ---------- */
+@media (min-width: 900px) {
+  .guide--modal .guide-aside > .aside-map { position: static; }
+  .guide--modal .guide-aside > .aside-records { position: sticky; top: 112px; }
+}
+
+/* ---------- Compteurs : bulles d'info visibles hors du cadre ---------- */
+.keyfig { overflow: visible; }
+.keyfig-bg, .keyfig.is-date::after { border-radius: inherit; }
+.keyfig:hover, .keyfig:focus-within { z-index: 6; }
+.keyfig-tip { z-index: 20; }
+@media (min-width: 900px) { .guide--modal .guide-aside:not(:has(.aside-records)) > .aside-map { position: sticky; top: 112px; } }
+.keyfig-tip { top: auto !important; bottom: calc(100% + 10px); transform: translateY(4px); }
+.keyfig-tip::after { content: ''; position: absolute; top: 100%; right: 12px; border: 6px solid transparent; border-top-color: #111; }
+.keyfigs .keyfig:first-child .keyfig-tip::after { right: auto; left: 12px; }
+@media (max-width: 899px) {
+  .keyfigs { gap: 8px; }
+  .keyfig { padding: 14px 10px 12px !important; }
+  .keyfig dt, .keyfig.is-long dt { font-size: 22px !important; white-space: nowrap; }
+  .keyfig dd { font-size: 12px; line-height: 1.3; }
+}
