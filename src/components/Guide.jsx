@@ -5,7 +5,8 @@ import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
 import Brand from './Brand.jsx';
 import Hermine from './Hermine.jsx';
-import { ProtectionBadges } from './Protections.jsx';
+import { ProtectionChips } from './Protections.jsx';
+import { ADDRESSES } from '../data/addresses.js';
 
 const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
@@ -243,6 +244,31 @@ function routeLinks(place) {
   ];
 }
 
+function Address({ place }) {
+  const a = ADDRESSES[place.id];
+  if (!a) return null;
+  return (
+    <address className="place-address">
+      <Icon name={a.sea ? 'wave' : 'pin'} size={16} />
+      <span><b>{a.line}</b>{a.commune && <>{a.cp} {a.commune}, Finistère</>}{!a.commune && <>Finistère</>}</span>
+    </address>
+  );
+}
+
+function FunFact({ fact, className = '' }) {
+  if (!fact) return null;
+  return (
+    <aside className={`funfact ${className}`}>
+      <span className="funfact-icon"><Icon name="spark" size={20} /></span>
+      <div>
+        <span className="funfact-kicker">Le saviez-vous ?</span>
+        <strong>{fact.title}</strong>
+        <p>{fact.text}</p>
+      </div>
+    </aside>
+  );
+}
+
 function Practical({ place, overview }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -255,7 +281,7 @@ function Practical({ place, overview }) {
     <div className="practical-box">
       <MiniMap place={place} overview={overview} />
       <button className="go-btn" onClick={() => setOpen(true)}><Icon name="route" size={18} /> Itinéraire</button>
-      <ProtectionBadges place={place} />
+      <Address place={place} />
       {open && createPortal(
         <div className="go-modal" role="dialog" aria-modal="true" aria-label="Itinéraire">
           <div className="go-modal-bg" onClick={() => setOpen(false)} />
@@ -287,19 +313,80 @@ function Practical({ place, overview }) {
 
 // Carte d'identité d'un phare : mêmes rubriques pour tous
 const LH_ROWS = [
-  ['built', 'Construction'], ['lit', 'Mise en service'], ['height', 'Hauteur de la tour'], ['elevation', 'Hauteur du feu'],
-  ['range', 'Portée'], ['light', 'Feu'], ['keepers', 'Gardiens'], ['visit', 'Visite'], ['visitors', 'Fréquentation'], ['protection', 'Protection'],
+  ['built', 'Construction', 'hourglass'], ['lit', 'Mise en service', 'calendar'], ['height', 'Hauteur de la tour', 'ruler'], ['elevation', 'Hauteur du feu', 'wave'],
+  ['range', 'Portée', 'beam'], ['light', 'Feu', 'lighthouse'], ['keepers', 'Gardiens', 'users'], ['visit', 'Visite', 'hike'], ['visitors', 'Fréquentation', 'users'], ['protection', 'Protection', 'medal'],
 ];
-function LighthouseSheet({ lh }) {
+const LIGHT_COLORS = { blanc: '#ffffff', blancs: '#ffffff', rouge: '#ef4444', rouges: '#ef4444', vert: '#22c55e', verts: '#22c55e' };
+function lightDots(t) {
+  const seen = [];
+  (String(t).toLowerCase().match(/blancs?|rouges?|verts?/g) || []).forEach((c) => { const v = LIGHT_COLORS[c]; if (!seen.includes(v)) seen.push(v); });
+  return seen;
+}
+function LighthouseSheet({ place }) {
+  const lh = place.lighthouse;
+  const rows = LH_ROWS.filter(([k]) => lh[k] && lh[k] !== 'Non renseignée');
+  const big = [['height', 'Tour'], ['elevation', 'Feu'], ['range', 'Portée']]
+    .map(([k, l]) => [l, String(lh[k] || '').match(/^[\d\s,]+(?:milles|m)\b/)?.[0]]).filter(([, v]) => v);
+  const dots = lightDots(lh.light);
   return (
     <section id="sec-identite" data-nav="identite" className="section">
       <div className="section-head"><h2>Carte d'identité</h2></div>
-      <dl className="lh-sheet">
-        {LH_ROWS.map(([k, label]) => (
-          <div key={k}><dt>{label}</dt><dd>{lh[k] || '—'}</dd></div>
-        ))}
-      </dl>
+      <div className="lh-card">
+        <div className="lh-card-head">
+          {place.hero?.src && <img className="lh-card-photo" src={place.hero.src} alt="" loading="lazy" />}
+          <div className="lh-card-id">
+            <span className="lh-card-kicker"><Icon name="lighthouse" size={14} /> Phare · Finistère</span>
+            <strong>{place.shortTitle}</strong>
+            {dots.length > 0 && (
+              <span className="lh-card-light">
+                {dots.map((c) => <i key={c} style={{ background: c }} />)}
+                {lh.light}
+              </span>
+            )}
+          </div>
+          {big.length > 0 && (
+            <dl className="lh-card-big">
+              {big.map(([l, v]) => <div key={l}><dt>{l}</dt><dd>{v}</dd></div>)}
+            </dl>
+          )}
+        </div>
+        <dl className="lh-card-rows">
+          {rows.filter(([k]) => k !== 'light').map(([k, label, icon]) => (
+            <div key={k}><span className="lh-row-ico"><Icon name={icon} size={16} /></span><dt>{label}</dt><dd>{lh[k]}</dd></div>
+          ))}
+        </dl>
+      </div>
     </section>
+  );
+}
+
+// Une image par partie du récit : section.image (index dans photos + archives) sinon la photo la plus proche du texte
+function sectionImages(place) {
+  const pool = [...(place.photos || []), ...(place.archives || [])];
+  const used = new Set();
+  const out = {};
+  const parts = place.sections.filter((x) => x.paragraphs);
+  parts.forEach((x) => { if (Number.isInteger(x.image) && pool[x.image]) { out[x.id] = pool[x.image]; used.add(x.image); } });
+  parts.forEach((x) => {
+    if (out[x.id] || x.image === false) return;
+    const w = words(x.title + ' ' + x.paragraphs.join(' '));
+    let best = -1, score = -1;
+    pool.forEach((img, i) => {
+      if (used.has(i)) return;
+      let n = 0; words(img.caption || '').forEach((t) => { if (w.has(t)) n += 1; });
+      if (n > score) { score = n; best = i; }
+    });
+    if (best >= 0) { out[x.id] = pool[best]; used.add(best); }
+  });
+  return out;
+}
+
+function SectionFigure({ img, onOpen }) {
+  return (
+    <figure className="sec-figure">
+      <button onClick={onOpen} aria-label={`Agrandir : ${img.caption}`}><img src={img.src} alt={img.caption} loading="lazy" /></button>
+      <figcaption>{img.caption} <small>{img.credit}</small></figcaption>
+    </figure>
   );
 }
 
@@ -382,6 +469,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
     ...(place.archives || []),
   ], [place]);
   const mosaic = allImages.slice(0, 3);
+  const secImages = useMemo(() => sectionImages(place), [place]);
   const factImages = useMemo(() => {
     const old = (place.archives || []).map((x) => x.src);
     const now = [...(place.photos || []).map((x) => x.src), place.hero?.src].filter(Boolean);
@@ -510,12 +598,13 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <div className="guide-actions guide-actions--split">
             <div className="guide-actions-left">
               <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
-                <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
+                <span className="visit-box">{isVisited && <svg className="draw-check" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1" /></svg>}</span>
                 {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
               </button>
               <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma to-do list' : 'Ajouter à ma to-do list'} title={isFav ? 'Dans ma to-do list' : 'Ajouter à ma to-do list'}>
                 <Icon name="star" size={18} stroke={2} />
               </button>
+              <ProtectionChips place={place} />
             </div>
             {speech.supported && (
               <button className="action-btn listen-main" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
@@ -541,25 +630,15 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </div>
             ))}
           </dl>
-          {place.funFact && (
-            <aside className="funfact">
-              <span className="funfact-icon"><Icon name="spark" size={20} /></span>
-              <div>
-                <span className="funfact-kicker">Le saviez-vous ?</span>
-                <strong>{place.funFact.title}</strong>
-                <p>{place.funFact.text}</p>
-              </div>
-            </aside>
-          )}
+          {place.records?.length > 0 && <div className="records-main"><Records place={place} goTo={goTo} /></div>}
+          <FunFact fact={place.funFact} className="funfact--main" />
         </div>
 
         {anecdoteSections.map((s) => (
           <AnecdoteSlider key={s.id} section={s} place={place} currentId={currentId} onListen={speech.supported ? () => readFrom(`${s.id}-0`) : null} />
         ))}
 
-        {place.records?.length > 0 && <div className="records-main"><Records place={place} goTo={goTo} /></div>}
-
-        {place.lighthouse && <LighthouseSheet lh={place.lighthouse} />}
+        {place.lighthouse && <LighthouseSheet place={place} />}
 
         {place.sections.filter((s) => !(s.anecdotes && !s.paragraphs)).map((s, si) => (
           <Fragment key={s.id}>
@@ -573,6 +652,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                 </button>
               )}
             </div>
+            {secImages[s.id] && <SectionFigure img={secImages[s.id]} onOpen={() => setLightbox({ items: [secImages[s.id]], start: 0 })} />}
             {s.paragraphs?.map((p, i) => (
               <p key={i} data-block={`${s.id}-${i}`} className={`para ${currentId === `${s.id}-${i}` ? 'is-reading' : ''}`}>{p}</p>
             ))}
@@ -682,11 +762,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <div className="aside-card aside-map">
             <Practical place={place} directions={directions} overview />
           </div>
-          {place.records?.length > 0 && (
-            <div className="aside-card aside-records">
-              <Records place={place} goTo={goTo} compact />
-            </div>
-          )}
+          <FunFact fact={place.funFact} className="funfact--aside" />
         </aside>
         </div>
         <div className="guide-end" />

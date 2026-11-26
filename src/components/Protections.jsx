@@ -65,3 +65,27 @@ export function ProtectionBadges({ place }) {
     </ul>
   );
 }
+
+// Texte de la bulle : « Monument historique classé depuis 2011 »
+function tipOf(x) {
+  const t = TYPES[x.type];
+  const parts = String(x.detail || '').split(' · ');
+  const year = (parts.find((p) => /\d{4}/.test(p)) || '').match(/\d{4}/)?.[0];
+  const what = parts.filter((p) => p && !/\d{4}/.test(p)).join(', ');
+  let txt = [t.label, t.sub].filter(Boolean).join(' ');
+  if (year) txt += ` depuis ${year}`;
+  if (what) txt += ` (${what})`;
+  return txt;
+}
+
+// Pastilles à côté des boutons de la fiche (logo seul, bulle noire au survol)
+export function ProtectionChips({ place }) {
+  const list = protectionsOf(place).filter((x) => TYPES[x.type]);
+  if (!list.length) return null;
+  return list.map((x) => (
+    <span key={x.type + (x.detail || '')} className={`prot-chip prot--${x.type}`} tabIndex={0} aria-label={tipOf(x)}>
+      <Logo type={x.type} />
+      <span className="prot-tip" role="tooltip">{tipOf(x)}</span>
+    </span>
+  ));
+}

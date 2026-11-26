@@ -1779,3 +1779,71 @@ img { display: block; max-width: 100%; }
   .keyfig dt, .keyfig.is-long dt { font-size: 22px !important; white-space: nowrap; }
   .keyfig dd { font-size: 12px; line-height: 1.3; }
 }
+
+/* ---------- Coche qui se dessine ---------- */
+.draw-check path { fill: none; stroke: currentColor; stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: drawCheck .32s cubic-bezier(.65,0,.35,1) .06s forwards; }
+.visit-btn.is-checked .visit-box svg { animation: none; }
+.visit-btn.is-checked .visit-box { animation: boxFill .22s ease-out; }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+@keyframes boxFill { 0% { transform: scale(.85); } 60% { transform: scale(1.08); } 100% { transform: none; } }
+
+/* ---------- Pastilles de protection à côté de l'étoile ---------- */
+.prot-chip { position: relative; width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--line-2); background: #fff; display: grid; place-items: center; cursor: help; outline: 0; }
+.prot-chip > svg { width: 22px; height: 22px; }
+.prot-chip:hover, .prot-chip:focus-visible { border-color: var(--ink-3); }
+.prot-tip { position: absolute; z-index: 30; bottom: calc(100% + 10px); left: 50%; transform: translate(-50%, 4px); width: max-content; max-width: 260px; padding: 9px 12px; border-radius: 8px; background: #111; color: #fff; font: 600 13px/1.4 var(--font); text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; }
+.prot-tip::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px; border: 6px solid transparent; border-top-color: #111; }
+.prot-chip:hover .prot-tip, .prot-chip:focus .prot-tip { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Adresse dans le bloc carte ---------- */
+.place-address { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-style: normal; font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.place-address > svg { flex: none; margin-top: 2px; color: var(--ink-3); }
+.place-address b { display: block; color: var(--ink); font-weight: 700; }
+
+/* ---------- Le saviez-vous : sous la carte sur desktop ---------- */
+.funfact--aside { display: none; }
+@media (min-width: 900px) {
+  .guide--modal .funfact--main { display: none; }
+  .guide--modal .funfact--aside { display: flex; margin: 0; padding: 20px; gap: 14px; }
+  .guide--modal .funfact--aside p { font-size: 14px; line-height: 1.55; }
+}
+
+/* ---------- Records sous les compteurs ---------- */
+.records-main { display: block !important; margin-top: 14px; padding: 0 !important; }
+.records-main .records { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
+@media (min-width: 900px) {
+  .guide--modal .guide-aside > .aside-map { position: static !important; }
+  .guide--modal .guide-aside > .funfact--aside { position: sticky; top: 112px; }
+}
+
+/* ---------- Une image par partie ---------- */
+.sec-figure { margin: 4px 0 18px; }
+.sec-figure button { display: block; width: 100%; padding: 0; border: 0; background: #e2e8f0; border-radius: 12px; overflow: hidden; cursor: zoom-in; }
+.sec-figure img { display: block; width: 100%; aspect-ratio: 16 / 9; max-height: 380px; object-fit: cover; transition: transform .4s ease; }
+.sec-figure button:hover img { transform: scale(1.02); }
+.sec-figure figcaption { margin-top: 8px; font-size: 13px; color: var(--ink-3); line-height: 1.4; }
+.sec-figure small { margin-left: 6px; font-size: 11.5px; opacity: .8; }
+
+/* ---------- Carte d'identité des phares ---------- */
+.lh-card { border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(15,23,42,.04); }
+.lh-card-head { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 18px; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; }
+.lh-card-photo { width: 76px; height: 96px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255,255,255,.15); }
+.lh-card-id { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lh-card-kicker { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fbbf24; }
+.lh-card-id strong { font-family: var(--font-title); font-size: 22px; line-height: 1.15; letter-spacing: -0.01em; }
+.lh-card-light { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 5px; font-size: 13px; color: rgba(255,255,255,.75); }
+.lh-card-light i { width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.15), 0 0 10px currentColor; }
+.lh-card-light i:last-of-type { margin-right: 4px; }
+.lh-card-big { grid-column: 1 / -1; margin: 4px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.lh-card-big > div { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.08); }
+.lh-card-big dt { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.lh-card-big dd { margin: 2px 0 0; font-family: var(--font-title); font-size: 22px; font-weight: 800; white-space: nowrap; }
+.lh-card-rows { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lh-card-rows > div { display: grid; grid-template-columns: 32px 1fr; column-gap: 10px; padding: 13px 18px; border-top: 1px solid var(--line); }
+.lh-card-rows > div:nth-child(odd) { border-right: 1px solid var(--line); }
+.lh-card-rows > div:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }
+.lh-row-ico { grid-row: span 2; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary-ink); }
+.lh-card-rows dt { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.lh-card-rows dd { margin: 2px 0 0; font-size: 14.5px; line-height: 1.4; color: var(--ink); font-weight: 500; }
+@media (min-width: 900px) { .lh-card-head { grid-template-columns: auto 1fr auto; } .lh-card-big { grid-column: auto; margin: 0; grid-template-columns: repeat(3, auto); } .lh-card-big > div { min-width: 92px; } }
+@media (max-width: 600px) { .lh-card-rows { grid-template-columns: 1fr; } .lh-card-rows > div:nth-child(odd) { border-right: 0; } .lh-card-big dd { font-size: 18px; } }
