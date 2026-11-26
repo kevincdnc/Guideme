@@ -1722,3 +1722,38 @@ img { display: block; max-width: 100%; }
   .aside-records .record-medal { flex-basis: 32px; height: 32px; }
 }
 .hero-strip-item { min-width: 220px; display: flex; justify-content: center; }
+
+/* ---------- Compteurs : 3, chiffres plus gros ---------- */
+.keyfigs { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.keyfig dt, .keyfig.is-long dt { font-size: 34px !important; }
+@media (min-width: 900px) { .guide--modal .keyfig dt, .guide--modal .keyfig.is-long dt { font-size: 34px !important; } .guide--modal .keyfig { min-height: 132px; padding: 18px; } .guide--modal .keyfig dd { font-size: 13px; } }
+
+/* ---------- Le saviez-vous : étoile bleue, label aéré ---------- */
+.funfact-icon { background: var(--primary); color: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(10,108,255,.3); }
+.funfact-kicker { margin-bottom: 8px; }
+
+/* ---------- Boutons Écouter uniformes (bleu clair) ---------- */
+.listen-main { background: var(--primary-soft); border-color: transparent; color: var(--primary-ink); }
+.listen-main:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ---------- Colonne droite : records en haut (blanc), carte collante, bouton Itinéraire ---------- */
+@media (min-width: 900px) {
+  .guide--modal .aside-records { position: static; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 4px 16px; box-shadow: none; }
+  .guide--modal .guide-aside:has(.aside-records) > .aside-card:first-child { position: static; }
+  .guide--modal .guide-aside > .aside-map { position: sticky; top: 112px; }
+}
+.go-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; animation: fade .15s ease; }
+.go-modal-bg { position: absolute; inset: 0; background: rgba(15,23,42,.45); }
+.go-modal-box { position: relative; width: min(400px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow-y: auto; background: #fff; border-radius: 16px; padding: 22px; box-shadow: 0 24px 60px rgba(15,23,42,.3); }
+.go-modal-box h3 { font-size: 19px; margin: 0; padding-right: 30px; }
+.go-modal-sub { margin: 2px 0 14px; color: var(--ink-3); }
+.go-modal-x { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-2); }
+.go-apps { display: flex; flex-direction: column; gap: 6px; }
+.go-apps .go-app { border: 1px solid var(--line); }
+.go-modal-box .practical--compact { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+/* ---------- Effet fiche : coins arrondis en haut, petit décalage ---------- */
+@media (min-width: 900px) {
+  .guide--modal { top: 14px; border-radius: 18px 18px 0 0; }
+  .modal-actions { top: 30px; }
+}

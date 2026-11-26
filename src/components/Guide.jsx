@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Icon from './Icon.jsx';
 import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
@@ -242,43 +243,44 @@ function routeLinks(place) {
   ];
 }
 
-function Practical({ place, directions, overview }) {
+function Practical({ place, overview }) {
   const [open, setOpen] = useState(false);
-  const box = useRef(null);
   useEffect(() => {
     if (!open) return undefined;
-    const close = (e) => { if (!box.current?.contains(e.target)) setOpen(false); };
-    document.addEventListener('pointerdown', close);
-    return () => document.removeEventListener('pointerdown', close);
+    const k = (e) => { if (e.key === 'Escape') { e.stopPropagation(); setOpen(false); } };
+    window.addEventListener('keydown', k, true);
+    return () => window.removeEventListener('keydown', k, true);
   }, [open]);
   return (
     <div className="practical-box">
       <MiniMap place={place} overview={overview} />
-      <div className="go-wrap" ref={box}>
-        <button className="go-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-          <Icon name="route" size={18} /> Y aller <Icon name="chevron" size={15} style={{ transform: open ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
-        </button>
-        {open && (
-          <div className="go-menu" role="menu">
-            {routeLinks(place).map((r) => (
-              <a key={r.id} role="menuitem" className="go-app" href={r.url} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
-                <RouteLogo id={r.id} /><span>Ouvrir dans {r.label}</span><Icon name="external" size={13} />
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-      {place.practical?.length > 0 && (
-        <ul className="practical practical--compact">
-          {place.practical.map((p) => (
-            <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
-              <Icon name={p.icon} size={15} />
-              <span><b>{p.title}.</b> {p.text}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <button className="go-btn" onClick={() => setOpen(true)}><Icon name="route" size={18} /> Itinéraire</button>
       <ProtectionBadges place={place} />
+      {open && createPortal(
+        <div className="go-modal" role="dialog" aria-modal="true" aria-label="Itinéraire">
+          <div className="go-modal-bg" onClick={() => setOpen(false)} />
+          <div className="go-modal-box">
+            <button className="go-modal-x" onClick={() => setOpen(false)} aria-label="Fermer"><Icon name="close" size={18} /></button>
+            <h3>Aller à {place.shortTitle}</h3>
+            <p className="go-modal-sub">Avec quelle application ?</p>
+            <div className="go-apps">
+              {routeLinks(place).map((r) => (
+                <a key={r.id} className="go-app" href={r.url} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
+                  <RouteLogo id={r.id} /><span>{r.label}</span><Icon name="external" size={13} />
+                </a>
+              ))}
+            </div>
+            {place.practical?.length > 0 && (
+              <ul className="practical practical--compact">
+                {place.practical.map((p) => (
+                  <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}><Icon name={p.icon} size={15} /><span><b>{p.title}.</b> {p.text}</span></li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }
@@ -528,7 +530,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </p>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
-            {place.facts.map((f, i) => (
+            {place.facts.slice(0, 3).map((f, i) => (
               <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''} ${String(f.value).length > 5 ? 'is-long' : ''}`}>
                 {factImages[i] && <span className="keyfig-bg" style={{ backgroundImage: `url("${factImages[i]}")` }} aria-hidden="true" />}
                 <span className="keyfig-ico"><Icon name={f.icon || factIcon(f)} size={15} /></span>
@@ -545,7 +547,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </dl>
           {place.funFact && (
             <aside className="funfact">
-              <span className="funfact-icon"><Icon name="bulb" size={22} stroke={1.9} /></span>
+              <span className="funfact-icon"><Icon name="spark" size={20} /></span>
               <div>
                 <span className="funfact-kicker">Le saviez-vous ?</span>
                 <strong>{place.funFact.title}</strong>
@@ -681,14 +683,14 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         </div>
 
         <aside className="guide-aside">
-          <div className="aside-card">
-            <Practical place={place} directions={directions} overview />
-          </div>
           {place.records?.length > 0 && (
             <div className="aside-card aside-records">
               <Records place={place} goTo={goTo} compact />
             </div>
           )}
+          <div className="aside-card aside-map">
+            <Practical place={place} directions={directions} overview />
+          </div>
         </aside>
         </div>
         <div className="guide-end" />
