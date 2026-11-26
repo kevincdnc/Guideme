@@ -38,6 +38,8 @@ const PATHS = {
   trophy: (<><path d="M8 4h8v5a4 4 0 01-8 0z" /><path d="M8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4" /><path d="M12 13v4M9 21h6M10 17h4v4h-4z" /></>),
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  // Ampoule : idée, « Le saviez-vous ? »
+  bulb: (<><path d="M9 17.5h6M10 20.5h4" /><path d="M12 3a6 6 0 00-3.6 10.8c.7.6 1.1 1.4 1.1 2.2v1.5h5V16c0-.8.4-1.6 1.1-2.2A6 6 0 0012 3z" /><path d="M12 7.5v3.2M10.4 9.2h3.2" opacity=".6" /></>),
   // Punaise : tête plate, corps évasé, pointe
   pushpin: (<><path d="M9 3.5h6" /><path d="M10 3.5l-.5 5.2-2.7 2.8v1.2h10.4v-1.2l-2.7-2.8-.5-5.2" /><path d="M12 12.7v7.8" /></>),
   calendar: (<><rect x="3.5" y="5" width="17" height="15.5" rx="2" /><path d="M3.5 10h17M8 3v4M16 3v4" /></>),

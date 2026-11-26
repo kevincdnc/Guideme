@@ -1696,3 +1696,29 @@ img { display: block; max-width: 100%; }
 /* Carte collante : fond opaque, les records défilent dessous */
 .guide--modal .guide-aside > .aside-card:first-child { background: #fff; box-shadow: 0 6px 20px rgba(15,23,42,.08); }
 .guide--modal .guide-aside { gap: 16px; }
+
+/* ---------- Cover : photos à la suite, même hauteur, sans rognage ---------- */
+.hero-strip { position: relative; background: #0f172a; }
+.hero-strip-track { display: flex; gap: 4px; height: min(44vh, 420px); overflow-x: auto; scrollbar-width: thin; scroll-snap-type: x proximity; }
+.hero-strip-item { flex: 0 0 auto; height: 100%; scroll-snap-align: start; background: #1e293b; }
+.hero-strip-item img { height: 100%; width: auto; max-width: none; display: block; object-fit: contain; transition: opacity .2s; }
+.hero-strip-item:hover img { opacity: .9; }
+@media (max-width: 899px) { .hero-strip-track { height: 300px; } }
+
+/* ---------- Boutons : plus d'air au-dessus et beaucoup dessous ---------- */
+@media (min-width: 900px) { .guide--modal .guide-head { padding-top: 48px; } }
+.guide-head > .guide-actions--split { margin: 0 0 48px; }
+
+/* ---------- Le saviez-vous : ampoule ---------- */
+.funfact-icon { background: #fef3c7; color: #b45309; box-shadow: none; border-radius: 50%; }
+
+/* ---------- Records : la carte défile, les records restent collés, sans bloc dans un bloc ---------- */
+@media (min-width: 900px) {
+  .guide--modal .guide-aside:has(.aside-records) > .aside-card:first-child { position: static; }
+  .guide--modal .aside-records { position: sticky; top: 112px; background: none; border: 0; box-shadow: none; padding: 0; }
+  .aside-records .records--compact { gap: 0; }
+  .aside-records .record { background: none !important; border: 0 !important; border-radius: 0; border-bottom: 1px solid var(--line) !important; padding: 14px 2px; }
+  .aside-records .record:last-child { border-bottom: 0 !important; }
+  .aside-records .record-medal { flex-basis: 32px; height: 32px; }
+}
+.hero-strip-item { min-width: 220px; display: flex; justify-content: center; }

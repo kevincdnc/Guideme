@@ -488,19 +488,18 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
       </div>
 
       <div className="guide-scroll" ref={scroller}>
-        <header className={`hero hero--n${mosaic.length} hero--cover`} ref={heroRef}>
-          {mosaic.length ? mosaic.map((m, i) => (
-            <button key={m.src} className={`hero-tile hero-tile--${i}`} onClick={() => setLightbox({ items: allImages, start: i })} aria-label={`Agrandir : ${m.caption}`}>
-              <SafeImg src={m.src} alt={m.caption} fetchpriority={i === 0 ? 'high' : undefined} />
-              {i === mosaic.length - 1 && allImages.length > mosaic.length && (
-                <span className="hero-more"><Icon name="image" size={15} /> Voir les {allImages.length} photos</span>
-              )}
-            </button>
-          )) : (
+        <header className="hero-strip" ref={heroRef}>
+          {allImages.length ? (
+            <div className="hero-strip-track">
+              {allImages.map((m, i) => (
+                <button key={m.src} className="hero-strip-item" onClick={() => setLightbox({ items: allImages, start: i })} aria-label={`Agrandir : ${m.caption}`}>
+                  <SafeImg src={m.src} alt={m.caption} fetchpriority={i === 0 ? 'high' : undefined} loading={i > 3 ? 'lazy' : undefined} />
+                </button>
+              ))}
+            </div>
+          ) : (
             <div className="hero-empty"><Icon name={place.icon || 'pin'} size={56} stroke={1.6} /></div>
           )}
-          <div className="hero-shade" />
-          {place.hero && <span className="hero-credit">{place.hero.credit}</span>}
         </header>
 
         <div className="guide-layout">
@@ -546,7 +545,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </dl>
           {place.funFact && (
             <aside className="funfact">
-              <span className="funfact-icon"><Icon name="spark" size={20} /></span>
+              <span className="funfact-icon"><Icon name="bulb" size={22} stroke={1.9} /></span>
               <div>
                 <span className="funfact-kicker">Le saviez-vous ?</span>
                 <strong>{place.funFact.title}</strong>
@@ -687,7 +686,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           </div>
           {place.records?.length > 0 && (
             <div className="aside-card aside-records">
-              <h2 className="aside-title"><Icon name="trophy" size={16} /> Records</h2>
               <Records place={place} goTo={goTo} compact />
             </div>
           )}
