@@ -454,12 +454,18 @@ const MEDIA = {
   },
   "phare-vieille": {
     "hero": {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Pointe_du_Raz_storm_05.jpg/1280px-Pointe_du_Raz_storm_05.jpg",
-      "alt": "Le phare de la Vieille par gros temps",
-      "credit": "Rémih, CC BY-SA 4.0, Wikimedia Commons",
-      "page": "https://commons.wikimedia.org/wiki/File:Pointe_du_Raz_storm_05.jpg"
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/PhareDeLaVieille_DSC08079_PtrQs.jpg/1280px-PhareDeLaVieille_DSC08079_PtrQs.jpg",
+      "alt": "Le phare de la Vieille sur son rocher, dans la lumière du soir",
+      "credit": "PtrQs, CC BY-SA 4.0, Wikimedia Commons",
+      "page": "https://commons.wikimedia.org/wiki/File:PhareDeLaVieille_DSC08079_PtrQs.jpg"
     },
     "photos": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Pointe_du_Raz_storm_05.jpg/1280px-Pointe_du_Raz_storm_05.jpg",
+        "caption": "La Vieille dans la tempête, vue de la pointe du Raz.",
+        "credit": "Rémih, CC BY-SA 4.0",
+        "page": "https://commons.wikimedia.org/wiki/File:Pointe_du_Raz_storm_05.jpg"
+      },
       {
         "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/20120926_Bretagne_CapSizun_PhareDeLaVieille_DSC08545_PtrQs.jpg/1280px-20120926_Bretagne_CapSizun_PhareDeLaVieille_DSC08545_PtrQs.jpg",
         "caption": "La Vieille vue du Cap Sizun.",

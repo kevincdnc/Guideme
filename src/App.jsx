@@ -53,16 +53,12 @@ function countLabel(tag, n, query) {
 
 // Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
 function BreizhStamp({ animate }) {
-  const id = useId().replace(/:/g, '');
   return (
     <span className={`pc-stamp ${animate ? 'is-new' : ''}`} aria-label="Déjà visité" role="img">
       <svg viewBox="0 0 60 60" aria-hidden="true">
-        <defs><path id={`arc-${id}`} d="M12 30a18 18 0 0 1 36 0" /></defs>
-        <circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" strokeWidth="2.4" />
-        <circle cx="30" cy="30" r="22.5" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2.2" />
-        <text fontSize="8.6" fontWeight="800" letterSpacing="1.6" fill="currentColor"><textPath href={`#arc-${id}`} startOffset="50%" textAnchor="middle">BREIZH</textPath></text>
-        <g transform="translate(26.6 30) scale(.105)" fill="currentColor"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>
-        <text x="30" y="49" textAnchor="middle" fontSize="7.4" fontWeight="800" letterSpacing="1.1" fill="currentColor">VALIDÉ</text>
+        <circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" strokeWidth="2.6" />
+        <circle cx="30" cy="30" r="21.5" fill="none" stroke="currentColor" strokeWidth="1.1" strokeDasharray="2.2 2.2" />
+        <g transform="translate(19.6 14.3) scale(.315)" fill="currentColor"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>
       </svg>
     </span>
   );
@@ -199,7 +195,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
                         return (
                           <li key={p.id}>
                             <button className={v ? 'is-done' : ''} onClick={() => { setOpen(false); onPick(p.id); }}>
-                              <span className="progress-thumb">{(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}</span>
+                              <span className="progress-thumb"><span className="profile-thumb">{(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}</span></span>
                               <span className="progress-name">{p.shortTitle}</span>
                               <span className="progress-check">{v && <Icon name="check" size={12} stroke={3.4} />}</span>
                             </button>
@@ -277,7 +273,7 @@ function ProfileMenu({ onOpen, onAccount }) {
             {visitedList.slice(0, 4).map((p) => (
               <li key={p.id}>
                 <button className="profile-item" onClick={() => { setOpen(false); onOpen(p.id); }}>
-                  {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
+                  <span className="profile-thumb">{(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}</span>
                   <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
                 </button>
               </li>
@@ -290,7 +286,7 @@ function ProfileMenu({ onOpen, onAccount }) {
             {list.map((p) => (
               <li key={p.id}>
                 <button className="profile-item" onClick={() => { setOpen(false); onOpen(p.id); }}>
-                  {(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}
+                  <span className="profile-thumb">{(p.thumb || p.hero) && <SafeImg src={(p.thumb || p.hero.src).replace(/\/(\d+)px-/, '/120px-')} alt="" />}</span>
                   <span>{p.shortTitle}<small>{p.commune.split(' · ')[0]}</small></span>
                 </button>
                 <button className="profile-remove" onClick={() => toggleFav(p.id)} aria-label={`Retirer ${p.shortTitle} de ma to-do list`}><Icon name="close" size={14} stroke={2.4} /></button>

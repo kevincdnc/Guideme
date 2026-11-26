@@ -1576,3 +1576,20 @@ img { display: block; max-width: 100%; }
 .record-scope { display: inline-block; align-self: flex-start; font-size: 10px; letter-spacing: .07em; padding: 2px 7px; border-radius: 4px; background: color-mix(in srgb, var(--m2) 14%, #fff); margin-bottom: 3px; }
 .record-fill { display: grid; place-items: center; border-radius: 10px; border: 1px dashed var(--line-2); color: #cbd5e1; min-height: 90px; background: repeating-linear-gradient(-45deg, transparent 0 10px, rgba(15,23,42,.025) 10px 20px); }
 .guide--modal .records.records--one { grid-template-columns: 1fr; }
+
+/* ---------- Menu du compte sur fond noir ---------- */
+.profile-menu { background: #111; color: #fff; border-color: #111; box-shadow: 0 18px 50px rgba(0,0,0,.4); }
+.profile-menu .profile-id { border-bottom-color: rgba(255,255,255,.12); }
+.profile-menu .profile-id small, .profile-menu .profile-id > svg, .profile-menu .profile-item small, .profile-menu .profile-empty { color: rgba(255,255,255,.55); }
+.profile-menu .profile-avatar { background: #2b3038; }
+.profile-menu .profile-avatar .avatar-ph { color: #6b7280; }
+.profile-menu .profile-item { color: #fff; }
+.profile-menu .profile-item:hover, .profile-menu .profile-remove:hover, .profile-menu .profile-more:hover { background: rgba(255,255,255,.1); }
+.profile-menu .profile-remove { color: rgba(255,255,255,.5); }
+.profile-menu .profile-title em { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
+.profile-menu ul + .profile-title { border-top-color: rgba(255,255,255,.12); }
+.profile-menu .profile-more { color: #4ade80; }
+.profile-menu .profile-title--done svg { color: #4ade80; }
+.profile-thumb { position: relative; flex: 0 0 38px; width: 38px; height: 38px; border-radius: 5px; overflow: hidden; background: #2b3038; }
+.profile-thumb > * { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; }
+.profile-menu .profile-thumb .safe-img-fallback, .profile-thumb [class*="empty"] { display: none; }
