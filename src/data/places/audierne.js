@@ -12,6 +12,7 @@ export default {
   coords: [-4.540556, 48.025],
   category: 'Port · Ville',
   labels: ['Port de pêche', 'Départ pour l\'île de Sein'],
+  protections: [{ type: 'mh-inscrit', detail: "mât Fénoux · 2022" }],
   teaser:
     "Un port à l'entrée redoutée, berceau du sauvetage en mer, ancienne capitale de la sardine, et un petit train que tout le monde surnommait « la ligne des mangeurs de bouillie ».",
   hero: {

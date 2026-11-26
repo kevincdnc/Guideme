@@ -82,6 +82,8 @@ export default {
         { title: 'La goélette perdue', text: "Le 19 février 1926, en pleine détresse des deux gardiens, la goélette paimpolaise La Surprise se perd sur les brisants de Plogoff, avec ses dix hommes. Des témoins affirment que le feu de la Vieille n'était pas allumé cette nuit-là. Les gardiens ne seront pas tenus pour responsables." },
         { title: '1 000 francs par sauveteur', text: "Les six sauveteurs de 1926 reçoivent chacun 1 000 francs du gouvernement d'Aristide Briand, et trois d'entre eux la médaille de la Société centrale de sauvetage des naufragés." },
         { title: 'Le mât arraché', text: "Le 10 mars 2008, une violente tempête arrache le mât de charge qui servait à hisser hommes et vivres. Il n'a jamais été remplacé." },
+        { title: 'Monter au phare… en « ballon »', text: "La relève se faisait au cartahu : un filin tendu entre le phare et la vedette, sur lequel on accrochait le « ballon », un siège rudimentaire. Le gardien montant, gilet de sauvetage sur le dos et assis à califourchon, était hissé au treuil pendant que la vedette frôlait les rochers. Aujourd'hui, on n'accède plus à la Vieille que par hélitreuillage." },
+        { title: 'Quatre gardiens pour la dernière nuit', text: "Le 14 novembre 1995, pour protester contre l'automatisation, Jean Donnart et un collègue refusent la relève : pour la dernière nuit, quatre gardiens au lieu de deux dorment dans le phare, Noël Fouquet, Jean Donnart, Michel Rozenn et Guy Lasbleiz." },
         { title: 'Une lanterne en hélicoptère', text: "À l'été 2019, la lanterne posée en 1886, qui prenait l'eau, a été enlevée par hélicoptère pour être restaurée à Brest." },
       ],
     },

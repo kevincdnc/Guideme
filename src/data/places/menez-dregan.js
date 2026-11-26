@@ -12,6 +12,7 @@ export default {
   coords: [-4.475298, 47.986317],
   category: 'Site préhistorique',
   labels: ['Paléolithique inférieur', 'Dolmens classés'],
+  protections: [{ type: 'mh-classe', detail: "nécropole du Souc'h · 1979" }],
   teaser:
     "Dans une grotte marine effondrée, des hommes ont entretenu un feu il y a près d'un demi-million d'années. Une des plus anciennes traces de feu maîtrisé connues au monde.",
   hero: {

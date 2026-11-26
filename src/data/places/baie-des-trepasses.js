@@ -12,6 +12,7 @@ export default {
   coords: [-4.714851, 48.048136],
   category: 'Plage · Légendes',
   labels: ['Grand Site de France', 'Spot de surf'],
+  protections: [{ type: 'grand-site', detail: "Pointe du Raz en Cap Sizun" }],
   teaser:
     "Une longue plage blottie entre la pointe du Raz et la pointe du Van, au nom chargé de légendes : naufragés, âmes en peine… ou simple erreur de traduction ?",
   hero: {

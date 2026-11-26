@@ -12,6 +12,7 @@ export default {
   coords: [-4.7149822, 48.064501],
   category: 'Site naturel · Chapelle',
   labels: ['Grand Site de France', 'Chapelle monument historique'],
+  protections: [{ type: 'grand-site' }, { type: 'mh-classe', detail: "chapelle Saint-They · 1914" }],
   teaser:
     "La sœur sauvage de la pointe du Raz : une pointe sans vraie pointe, et une petite chapelle au bord de la falaise dont la cloche, dit-on, sonne toute seule.",
   hero: {

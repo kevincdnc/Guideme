@@ -1,17 +1,17 @@
-// Fiche : Pointe du Raz & phare de la Vieille
+// Fiche : Pointe du Raz (le phare de la Vieille a sa propre fiche)
 import { C, T } from './media.js';
 
 export default {
   id: 'pointe-du-raz',
   available: true,
-  icon: 'lighthouse',
-  tags: ['nature', 'phare', 'histoire', 'legende'],
-  title: 'Pointe du Raz & phare de la Vieille',
+  icon: 'cliff',
+  tags: ['nature', 'histoire', 'legende'],
+  title: 'Pointe du Raz, la proue du Finistère',
   shortTitle: 'Pointe du Raz',
   commune: 'Plogoff · Cap Sizun',
   coords: [-4.741111, 48.040278],
-  category: 'Site naturel · Phare',
-  labels: ['Grand Site de France', 'Phare monument historique'],
+  category: 'Site naturel',
+  labels: ['Grand Site de France', 'Site classé'],
   readingMinutes: 7,
   // Points cités dans la fiche, affichés sur la carte quand elle est ouverte
   pois: [
@@ -19,25 +19,25 @@ export default {
     { name: 'Phare de Tévennec', coords: [-4.79333, 48.06972] },
     { name: 'Notre-Dame des Naufragés', coords: [-4.73305556, 48.03888889] },
   ],
+  protections: [{ type: 'grand-site', detail: "depuis 2004" }, { type: 'site-classe', detail: "1987" }],
   teaser:
-    "Une proue de granit de 72 m face au raz de Sein, et un phare-donjon bâti sur une roche où l'on ne pouvait accoster qu'une trentaine de fois par an.",
+    "Une proue de granit de 72 mètres face au raz de Sein, l'un des courants les plus redoutés d'Europe. Rasée de ses boutiques dans les années 1990, la lande a retrouvé sa bruyère.",
   hero: {
-    src: `${C}/thumb/3/35/Aerial_image_of_Phare_de_la_Vieille_%28view_from_the_southeast%29.jpg/1280px-Aerial_image_of_Phare_de_la_Vieille_%28view_from_the_southeast%29.jpg`,
-    alt: 'Le phare de la Vieille vu du ciel, sur son rocher au milieu du raz de Sein',
-    credit: 'Carsten Steger, CC BY-SA 4.0, Wikimedia Commons',
+    src: `${C}/thumb/7/76/Pointe_du_Raz%2C_vue_de_la_baie_des_Tr%C3%A9pass%C3%A9s.jpg/1280px-Pointe_du_Raz%2C_vue_de_la_baie_des_Tr%C3%A9pass%C3%A9s.jpg`,
+    alt: 'La pointe du Raz vue de la baie des Trépassés',
+    credit: 'Wikimedia Commons',
   },
   facts: [
-    { value: '1887', label: 'allumage du phare de la Vieille' },
     { value: '72 m', label: 'hauteur de la proue de granit' },
-    { value: '7 nœuds', label: 'courant du raz en grande marée' },
+    { value: '7 nœuds', label: 'courant du raz en grande marée', info: 'Au flot ; environ 6 nœuds au jusant. Les marins attendent l\'étale pour passer.' },
+    { value: '2004', label: 'label Grand Site de France', info: 'Le site est classé depuis 1987.' },
     { value: '1 million', label: 'de visiteurs par an' },
   ],
   records: [
-    { medal: 'or', scope: 'France', title: 'Le plus médiatisé des drames de phares en mer', text: 'L\'hiver 1926 à la Vieille, jusqu\'au Parlement.' },
-    { medal: 'argent', scope: 'France', title: 'Avant-dernier phare en mer automatisé', text: 'En 1995, juste avant Kéréon.' },
-    { medal: 'bronze', scope: 'France', title: 'La route la plus courte entre l\'Atlantique et la Manche', text: 'Le raz de Sein, et aussi l\'une des plus dangereuses.' },
+    { medal: 'or', scope: 'Navigation', title: 'La route la plus courte entre l\'Atlantique et la Manche', text: 'Le raz de Sein, et aussi l\'une des plus dangereuses.' },
+    { medal: 'argent', scope: 'Randonnée', title: 'Départ du sentier européen E5', text: 'Jusqu\'à Venise, 3 050 km plus loin.' },
   ],
-  funFact: { title: 'Quatre gardiens pour la dernière nuit', text: 'En 1995, deux gardiens refusent la relève pour protester contre l\'automatisation : la dernière nuit, ils sont quatre au lieu de deux dans le phare.' },
+  funFact: { title: 'Un parking en forme de piste d\'aviation', text: 'En 1962, quatorze boutiques et un parking de deux hectares en bitume rouge s\'installent contre le sémaphore. Tout est rasé en 1996-1997 : le parking est déplacé à 800 mètres, et la bruyère a repoussé.' },
   sections: [
     {
       id: 'essentiel',
@@ -46,18 +46,7 @@ export default {
       paragraphs: [
         "La pointe du Raz, Beg ar Raz en breton, est l'extrémité ouest du cap Sizun. Ce promontoire de granit, haut de soixante-douze mètres, domine le raz de Sein : un passage d'environ huit kilomètres qui la sépare de l'île de Sein. Le site est classé depuis 1987 et porte le label Grand Site de France depuis 2004.",
         "Le mot « raz » désigne un courant rapide. Il vient du vieux norrois rás, « la course », passé par le normand ; c'est le même mot qui a donné « raz-de-marée ». Ici, lors des grandes marées, le courant file jusqu'à sept nœuds au flot et six au jusant. Les marins attendent l'étale, ce court moment où il s'annule, pour franchir le passage.",
-        "À moins d'un mille à l'ouest, posé sur le rocher de Gorlebella, « la roche la plus éloignée », le phare de la Vieille balise le raz avec la tourelle de la Plate, juste devant lui, et le phare de Tévennec, plus au nord. Sur le plateau, la statue de Notre-Dame des Naufragés, œuvre du sculpteur Cyprian Godebski, regarde la mer, à côté du sémaphore.",
-      ],
-    },
-    {
-      id: 'vieille',
-      nav: 'Le phare',
-      title: 'La Vieille, un phare-donjon',
-      paragraphs: [
-        "Dès 1860, on décide d'éclairer la Vieille. Mais le chantier est sans cesse repoussé : les ingénieurs sont accaparés par Ar-Men, le phare réputé impossible de la chaussée de Sein. Le projet n'est relancé qu'en 1879, avec une idée simple : faire travailler les ouvriers sur la Vieille les jours où la roche d'Ar-Men est inabordable.",
-        "Accoster Gorlebella relève de l'exploit. Seule la face nord est abordable, par mer calme, trois jours avant et trois jours après le quartier de lune, en morte-eau, et seulement pendant le flot. L'ingénieur Victor Fénoux compte sur une trentaine d'accostages par an. Chaque campagne commence le premier mai : un petit vapeur part de l'île de Sein, base du chantier, en remorquant une chaloupe chargée de pierres de taille.",
-        "La maçonnerie commence le 5 août 1882. La tour, carrée et crénelée, prend volontairement l'allure d'un donjon médiéval : on voulait qu'aucun marin ne puisse la confondre, par mauvais temps, avec sa voisine Tévennec. Elle est bâtie en granit gris de l'île de Sein, avec des angles en granit de Kersanton. Le feu s'allume le 15 septembre 1887, date gravée sur la tour.",
-        "Son signal actuel, trois occultations toutes les douze secondes en secteurs blanc, rouge et vert, visible à dix-huit milles, date de 1939. Le feu est éteint sous l'Occupation, du 21 janvier 1944 au 1er juin 1945. Il fonctionne à la vapeur de pétrole jusqu'en 1995, année de son automatisation. Le phare est inscrit monument historique depuis 2015.",
+        "Face à la pointe, à moins d'un mille, le phare de la Vieille et la tourelle de la Plate balisent le raz ; plus au nord, le phare du Tévennec veille sur son rocher. Chacun a sa propre fiche. Sur le plateau, la statue de Notre-Dame des Naufragés, œuvre du sculpteur Cyprian Godebski, regarde la mer, à côté du sémaphore.",
       ],
     },
     {
@@ -65,22 +54,6 @@ export default {
       nav: 'Insolite',
       title: 'Anecdotes insolites',
       anecdotes: [
-        {
-          title: "L'hiver maudit de 1926",
-          text: "Fin 1925, la Vieille est gardée par deux mutilés de la Grande Guerre, Mandolini et Ferracci : l'un n'a plus l'usage d'un bras, l'autre a toujours une balle dans le corps. Le métier de gardien de phare figurait alors parmi les « emplois réservés » aux anciens combattants. Les tempêtes les isolent pendant des semaines ; ils hissent le pavillon noir de détresse, puis le mettent en berne. Le 28 février 1926, le patron-pêcheur Clet Henri Coquet, son fils et le gardien-chef d'Ar-Men Nicolas Kerninon parviennent enfin à les ramener à terre : Kerninon et le jeune Coquet ont dû nager, encordés, jusqu'à l'escalier du phare. L'affaire remonte jusqu'au Parlement, et dès 1927 le métier de gardien de phare en mer est retiré de la liste des emplois réservés.",
-        },
-        {
-          title: 'Les gardiens qui ont refusé de partir',
-          text: "Le 14 novembre 1995, la Vieille est automatisée. C'est l'avant-dernier phare en mer français à perdre ses gardiens, juste avant Kéréon. Pour protester, Jean Donnart et un collègue refusent la relève : pour la dernière nuit, quatre gardiens au lieu de deux dorment dans le phare, Noël Fouquet, Jean Donnart, Michel Rozenn et Guy Lasbleiz. Depuis, le feu est télécommandé depuis l'île de Sein.",
-        },
-        {
-          title: 'Monter au phare… en « ballon »',
-          text: "La relève se faisait au cartahu : un filin tendu entre le phare et la vedette, sur lequel on accrochait le « ballon », un siège rudimentaire, à l'origine en liège. Le gardien montant, gilet de sauvetage sur le dos et assis à califourchon, était hissé au treuil pendant que la vedette frôlait les rochers. Aujourd'hui, on n'accède plus à la Vieille que par hélitreuillage.",
-        },
-        {
-          title: 'Tévennec, le phare maudit',
-          text: "Au nord du raz, la maison-phare de Tévennec, allumée en 1875, traîne une réputation de lieu hanté. Son premier gardien, Henri Porsmoguer, démissionne au bout de quelques mois en racontant une nuit d'horreur passée avec « l'esprit de Tévennec ». Henri Guézennec puis Alain Menou y perdent la raison. On raconte même qu'une épouse de gardien dut conserver le corps de son mari au saloir jusqu'à la relève. Le phare fonctionne sans gardien depuis 1910.",
-        },
         {
           title: "L'Enfer de Plogoff",
           text: "Sous la pointe, la mer a creusé le Trou de l'Enfer, un gouffre où elle s'engouffre de trois côtés. Un tunnel d'une soixantaine de mètres traverse même la pointe d'est en ouest. La tradition voulait que le flot y dépose les noyés. Surtout, n'y descendez jamais : l'accès est extrêmement dangereux.",
@@ -90,34 +63,24 @@ export default {
           text: "Juste au nord, la baie des Trépassés devrait son nom aux corps de naufragés que les courants rejetaient sur la plage, ou aux druides morts qui y embarquaient pour l'île de Sein. L'explication la plus sérieuse, appuyée par le cadastre ancien, serait une erreur de traduction : Bae an Avon, « la baie de la source », serait devenue Bae an Anaon, « la baie des âmes ».",
         },
         {
-          title: 'Une piste d\'aviation sur la lande',
-          text: "En 1962, une cité commerciale de quatorze boutiques s'installe contre le sémaphore, autour d'un parking de deux hectares en bitume rouge, en forme de piste d'aviation. Le piétinement de centaines de milliers de visiteurs ruine la lande. Les hôtels sont rasés en 1996, la cité commerciale en 1997 : le parking est déplacé à 800 mètres, dans la vallée de Bestrée, et la bruyère a repoussé.",
-        },
-        {
           title: 'La centrale qui n\'a jamais vu le jour',
           text: "Dans une crique de la face sud, à un kilomètre de la pointe, une source, Feunteun aod, « la fontaine de la côte », servait autrefois à ravitailler en eau les navires, car la mer y est très profonde près du rivage. C'est justement cette profondeur qui fit choisir Plogoff par EDF pour une centrale nucléaire : un petit port devait y accueillir l'énorme chaudière. De 1978 à 1981, la mobilisation des habitants est massive, et le projet est finalement abandonné.",
         },
         {
           title: 'De la pointe du Raz à Venise',
-          text: "Le sentier européen de grande randonnée E5 part d'ici et rejoint Venise, 3 050 kilomètres plus loin. Moins ambitieux, le GR34, le sentier des douaniers, passe lui aussi par la pointe. Et côté littérature, Anatole Le Braz situait déjà en 1900 son roman Le Gardien du feu sur le rocher de la Vieille, dont l'acteur Jean Rochefort fut le parrain.",
+          text: "Le sentier européen de grande randonnée E5 part d'ici et rejoint Venise, 3 050 kilomètres plus loin. Moins ambitieux, le GR34, le sentier des douaniers, passe lui aussi par la pointe.",
         },
       ],
     },
   ],
   timeline: [
     { year: '1839', text: 'Allumage du phare du Bec du Raz, sur la pointe (aujourd\'hui le sémaphore).' },
-    { year: '1875', text: 'Allumage de la maison-phare de Tévennec.' },
-    { year: '1882', text: 'Début de la maçonnerie de la Vieille, le 5 août.' },
-    { year: '1887', text: 'Le feu de la Vieille s\'allume le 15 septembre ; les feux de la pointe s\'éteignent.' },
-    { year: '1926', text: 'Sauvetage des deux gardiens mutilés de guerre, le 28 février.' },
-    { year: '1939', text: 'Mise en place du signal actuel (2+1 occultations, 12 s).' },
+    { year: '1887', text: 'Les feux de la pointe s\'éteignent à l\'allumage du phare de la Vieille.' },
     { year: '1962', text: 'Construction de la cité commerciale contre le sémaphore.' },
+    { year: '1978', text: 'Début de la mobilisation contre le projet de centrale nucléaire de Plogoff.' },
     { year: '1987', text: 'La pointe du Raz devient site classé.' },
-    { year: '1995', text: 'Automatisation du phare, le 14 novembre.' },
     { year: '1997', text: 'Fin des démolitions : la lande reprend ses droits.' },
     { year: '2004', text: 'Label Grand Site de France.' },
-    { year: '2015', text: 'Le phare de la Vieille est inscrit monument historique.' },
-    { year: '2019', text: 'La lanterne de 1886 est déposée par hélicoptère pour restauration.' },
   ],
   archives: [
     {
@@ -251,10 +214,8 @@ export default {
     },
   ],
   sources: [
-    { label: 'Wikipédia : Phare de la Vieille', url: 'https://fr.wikipedia.org/wiki/Phare_de_la_Vieille' },
     { label: 'Wikipédia : Pointe du Raz', url: 'https://fr.wikipedia.org/wiki/Pointe_du_Raz' },
     { label: 'Wikipédia : Raz de Sein', url: 'https://fr.wikipedia.org/wiki/Raz_de_Sein' },
-    { label: 'Wikipédia : Phare de Tévennec', url: 'https://fr.wikipedia.org/wiki/Phare_de_T%C3%A9vennec' },
     { label: 'Wikipédia : Baie des Trépassés', url: 'https://fr.wikipedia.org/wiki/Baie_des_Tr%C3%A9pass%C3%A9s' },
     { label: 'Wikipédia : Projet de centrale nucléaire de Plogoff', url: 'https://fr.wikipedia.org/wiki/Projet_de_centrale_nucl%C3%A9aire_de_Plogoff' },
   ],

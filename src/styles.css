@@ -1535,3 +1535,44 @@ img { display: block; max-width: 100%; }
 .pc-flag--done.is-on svg { animation: checkPop .45s cubic-bezier(.3,1.8,.5,1); }
 @keyframes checkPop { 0% { transform: scale(.2) rotate(-40deg); } 60% { transform: scale(1.3) rotate(6deg); } 100% { transform: none; } }
 .pc-body h3 { padding-right: 84px; }
+
+/* ---------- Labels et protections, sous le titre ---------- */
+.prot-badges { list-style: none; margin: 10px 0 2px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.prot { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px; border-radius: 999px; background: #fff; border: 1px solid var(--line); }
+.prot svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.prot span { display: flex; flex-direction: column; line-height: 1.15; }
+.prot b { font-size: 12.5px; font-weight: 700; }
+.prot small { font-size: 11px; color: var(--ink-3); }
+
+/* ---------- Cover : grande photo + accès à toutes les photos ---------- */
+@media (min-width: 900px) {
+  .guide--modal .hero--cover { height: min(46vh, 440px); }
+  .guide--modal .hero-more { top: auto; bottom: 14px; right: 14px; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,.92); color: var(--ink); font-size: 13px; box-shadow: 0 4px 14px rgba(0,0,0,.2); }
+}
+
+/* ---------- Fond bleu-gris, pop-up plus large, marges réduites ---------- */
+@media (min-width: 900px) {
+  .guide-backdrop { background: #d9e0e7; }
+  .app { --modal-w: min(1320px, calc(100vw - 140px)); }
+  .guide--modal .guide-layout { padding: 0 56px; gap: 48px; grid-template-columns: minmax(0, 1fr) 340px; }
+  .guide--modal .guide-bar { padding-left: 56px; }
+}
+
+/* ---------- Compteurs : plus d'air, icône discrète, valeur réduite si longue ---------- */
+.keyfig { padding: 18px 18px 18px; gap: 8px; }
+.keyfig-ico { color: var(--ink-3); display: flex; margin-bottom: 4px; }
+.keyfig.is-date .keyfig-ico { color: #fbbf24; }
+.keyfig::before { display: none; }
+.keyfig.is-long dt { font-size: 23px !important; }
+.guide--modal .keyfigs { gap: 12px; margin-top: 28px; }
+
+/* ---------- Records : plus sobres ---------- */
+.guide--modal .funfact { margin-top: 14px; }
+.records { margin-top: 12px; }
+.record { background: #fff !important; border: 1px solid var(--line) !important; border-left: 3px solid var(--m2) !important; border-radius: 10px; padding: 14px 16px; gap: 14px; align-items: flex-start; }
+.record-medal { flex: 0 0 34px; height: 34px; }
+.record-medal svg { width: 18px; height: 18px; }
+.record-body strong { font-size: 15.5px; }
+.record-scope { display: inline-block; align-self: flex-start; font-size: 10px; letter-spacing: .07em; padding: 2px 7px; border-radius: 4px; background: color-mix(in srgb, var(--m2) 14%, #fff); margin-bottom: 3px; }
+.record-fill { display: grid; place-items: center; border-radius: 10px; border: 1px dashed var(--line-2); color: #cbd5e1; min-height: 90px; background: repeating-linear-gradient(-45deg, transparent 0 10px, rgba(15,23,42,.025) 10px 20px); }
+.guide--modal .records.records--one { grid-template-columns: 1fr; }

@@ -12,6 +12,7 @@ export default {
   coords: [-4.85, 48.03333333],
   category: 'Île · Histoire',
   labels: ['Île sans voiture', 'Croix de la Libération'],
+  protections: [{ type: 'mh-classe', detail: "menhirs les Causeurs" }, { type: 'liberation' }],
   teaser:
     "Deux kilomètres de terre à 1,5 mètre au-dessus de la mer, des marins qui ont rallié de Gaulle dès juin 1940, et un film de 1958 tourné au péril de la vie de ses auteurs.",
   hero: {

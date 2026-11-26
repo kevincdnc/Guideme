@@ -3,6 +3,8 @@ import Icon from './Icon.jsx';
 import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
 import Brand from './Brand.jsx';
+import Hermine from './Hermine.jsx';
+import { ProtectionBadges } from './Protections.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
@@ -22,7 +24,7 @@ function buildBlocks(place) {
       });
     }
     if (s.anecdotes) {
-      s.anecdotes.forEach((a, i) => {
+      s.anecdotes.filter((a) => !dupOfFun(place, a)).forEach((a, i) => {
         blocks.push({ id: `${s.id}-${i}`, section: s.id, label: a.title, text: `${i === 0 ? s.title + '. ' : ''}${a.title}. ${a.text}` });
       });
     }
@@ -274,6 +276,16 @@ function LighthouseSheet({ lh }) {
   );
 }
 
+// Anecdote qui reprend le « Le saviez-vous ? » : on ne la répète pas
+const words = (t) => new Set(String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').match(/[a-z0-9]{4,}/g) || []);
+function dupOfFun(place, a) {
+  if (!place.funFact) return false;
+  if (a.title === place.funFact.title) return true;
+  const f = words(place.funFact.title + ' ' + place.funFact.text), w = words(a.title + ' ' + a.text);
+  let n = 0; f.forEach((x) => { if (w.has(x)) n += 1; });
+  return f.size && n / f.size > 0.45;
+}
+
 const isWide = () => typeof window !== 'undefined' && window.matchMedia('(min-width: 900px)').matches;
 
 export default function Guide({ place, onClose, variant = 'panel' }) {
@@ -392,12 +404,12 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
       </div>
 
       <div className="guide-scroll" ref={scroller}>
-        <header className={`hero hero--n${mosaic.length}`} ref={heroRef}>
+        <header className={`hero hero--n${mosaic.length} hero--cover`} ref={heroRef}>
           {mosaic.length ? mosaic.map((m, i) => (
             <button key={m.src} className={`hero-tile hero-tile--${i}`} onClick={() => setLightbox({ items: allImages, start: i })} aria-label={`Agrandir : ${m.caption}`}>
               <SafeImg src={m.src} alt={m.caption} fetchpriority={i === 0 ? 'high' : undefined} />
               {i === mosaic.length - 1 && allImages.length > mosaic.length && (
-                <span className="hero-more"><Icon name="image" size={15} /> +{allImages.length - mosaic.length}</span>
+                <span className="hero-more"><Icon name="image" size={15} /> Voir les {allImages.length} photos</span>
               )}
             </button>
           )) : (
@@ -411,6 +423,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         <div className="guide-main">
         <div className="guide-head">
           <h1>{place.title}</h1>
+          <ProtectionBadges place={place} />
           <p className="guide-meta">
             <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
             <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
@@ -432,7 +445,8 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f) => (
-              <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''}`}>
+              <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''} ${String(f.value).length > 5 ? 'is-long' : ''}`}>
+                <span className="keyfig-ico"><Icon name={f.icon || factIcon(f)} size={16} /></span>
                 <dt>{f.value}</dt>
                 <dd>{f.label}</dd>
                 {factInfo(place, f) && (
@@ -444,21 +458,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </div>
             ))}
           </dl>
-          {place.records?.length > 0 && (
-            <ul className="records" aria-label="Records">
-              {place.records.map((r) => (
-                <li key={r.title} className={`record record--${r.medal}`}>
-                  <span className="record-medal"><Icon name="medal" size={22} stroke={1.8} /></span>
-                  <div className="record-body">
-                    <span className="record-scope">{r.scope}</span>
-                    <strong>{r.title}</strong>
-                    <span className="record-text">{r.text}</span>
-                    {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
           {place.funFact && (
             <aside className="funfact">
               <span className="funfact-icon"><Icon name="spark" size={20} /></span>
@@ -468,6 +467,22 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                 <p>{place.funFact.text}</p>
               </div>
             </aside>
+          )}
+          {place.records?.length > 0 && (
+            <ul className={`records ${place.records.length === 1 ? 'records--one' : ''}`} aria-label="Records">
+              {place.records.map((r) => (
+                <li key={r.title} className={`record record--${r.medal}`}>
+                  <span className="record-medal"><Icon name="medal" size={22} stroke={1.8} /></span>
+                  <div className="record-body">
+                    {r.scope && r.scope !== 'France' && <span className="record-scope">{r.scope}</span>}
+                    <strong>{r.title}</strong>
+                    <span className="record-text">{r.text}</span>
+                    {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
+                  </div>
+                </li>
+              ))}
+              {place.records.length % 2 === 1 && place.records.length > 1 && <li className="record-fill" aria-hidden="true"><Hermine height={34} /></li>}
+            </ul>
           )}
         </div>
 
@@ -491,7 +506,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
             ))}
             {s.anecdotes && (
               <ol className="anecdotes">
-                {s.anecdotes.map((a, i) => (
+                {s.anecdotes.filter((a) => !dupOfFun(place, a)).map((a, i) => (
                   <li key={a.title} data-block={`${s.id}-${i}`} className={`anecdote ${currentId === `${s.id}-${i}` ? 'is-reading' : ''}`}>
                     <span className="anecdote-num">{String(i + 1).padStart(2, '0')}</span>
                     <h3>{a.title}</h3>
@@ -602,7 +617,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
                 {speech.supported && <button className="listen-btn" onClick={() => readFrom(`${s.id}-0`)}><Icon name="headphones" size={14} /></button>}
               </div>
               <ol className="anecdotes anecdotes--aside">
-                {s.anecdotes.map((a, i) => (
+                {s.anecdotes.filter((a) => !dupOfFun(place, a)).map((a, i) => (
                   <li key={a.title} data-block={`${s.id}-${i}`} className={`anecdote ${currentId === `${s.id}-${i}` ? 'is-reading' : ''}`}>
                     <span className="anecdote-num">{String(i + 1).padStart(2, '0')}</span>
                     <h3>{a.title}</h3>

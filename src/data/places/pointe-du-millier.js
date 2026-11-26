@@ -12,6 +12,7 @@ export default {
   coords: [-4.465833, 48.098889],
   category: 'Phare · Falaises',
   labels: ['GR34', 'Conservatoire du littoral'],
+  protections: [{ type: 'conservatoire' }, { type: 'pci', detail: "légende" }],
   teaser:
     "Un phare-maison de poche à l'entrée de la baie de Douarnenez, un moulin à eau qui moud encore, et un bateau de pierre de vingt tonnes échoué sur la lande.",
   hero: {
