@@ -19,11 +19,11 @@ pin_colors=dict(re.findall(r"(\w+): '(#[0-9a-f]{6})'",seg))
 herm=re.findall(r"'(M[^']+)'",open('src/components/Hermine.jsx').read())
 SECTIONS=[
  ('Catégories (tags)',[('cliff','Site naturel'),('lighthouse','Phare'),('book','Patrimoine'),('trophy','Légendaire'),('beach','Plage'),('port','Port'),('fire','Préhistoire'),('check','Coche')]),
- ('Drapeaux',[('flag','Pas encore (gris)','#b6bcc6',False),('flag','À visiter','#eab308',True),('flag',"J'y suis allé",'#16a34a',True)]),
+ ('Statuts',[('check','Déjà visité'),('star','To-do list'),('pushpin','Commune')]),
  ('Lieux (repères)',[('church','Église / patrimoine'),('lighthouse','Phare'),('beach','Plage'),('cliff','Falaise'),('port','Port'),('fire','Préhistoire')]),
  ('Compteurs',[('calendar','Date'),('ruler','Hauteur'),('beam','Portée'),('users','Personnes'),('stairs','Marches'),('area','Surface'),('hourglass','Âge'),('wave','Courant')]),
  ('Marque',[('hermine','Hermine'),('bigouden','Bigouden'),('medal','Médaille'),('star','Étoile'),('spark','Le saviez-vous'),('trophy','Records')]),
- ('Interface',[(n,n) for n in ['back','close','chevron','plus','check','share','external','map','locate','sliders','layers','list','pin','route','search','user','headphones','play','pause','next','prev','clock','image','film','lock','car','bus','hike','warn']]),
+ ('Interface',[(n,n) for n in ['back','close','chevron','plus','check','share','external','map','locate','sliders','flag','layers','list','pin','route','search','user','headphones','play','pause','next','prev','clock','image','film','lock','car','bus','hike','warn']]),
 ]
 COLS=8; CW=130; CH=130; S=2.5
 out=[]; y=40
@@ -52,6 +52,19 @@ for title,items in SECTIONS:
             body=f'<g transform="translate({tx:.1f} {ty:.1f}) scale({S})" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{icons[n]}</g>'
         out.append(box(x,yy,label,body,f'{sid}-{n}-{i}'))
     out.append('</g>'); y+=((len(items)-1)//COLS+1)*CH+40
+# Tampon « Breizh validé »
+out.append(f'<text x="40" y="{y}" font-family="Inter, Arial" font-size="18" font-weight="700" fill="#111111">Tampon</text>'); y+=16
+herm_g=''.join(f'<path d="{d}"/>' for d in herm)
+out.append(f'''<g id="tampon-breizh-valide"><rect x="40" y="{y}" width="{CW-10}" height="{CH-10}" rx="10" fill="#f5f4ef"/>
+<g transform="translate({40+(CW-10)/2-30} {y+14}) rotate(-12 30 30)" color="#15803d">
+<defs><path id="arc" d="M12 30a18 18 0 0 1 36 0"/></defs>
+<circle cx="30" cy="30" r="27" fill="none" stroke="#15803d" stroke-width="2.4"/>
+<circle cx="30" cy="30" r="22.5" fill="none" stroke="#15803d" stroke-width="1" stroke-dasharray="2 2.2"/>
+<text font-family="Inter, Arial" font-size="8.6" font-weight="800" letter-spacing="1.6" fill="#15803d"><textPath href="#arc" startOffset="50%" text-anchor="middle">BREIZH</textPath></text>
+<g transform="translate(26.6 30) scale(.105)" fill="#15803d">{herm_g}</g>
+<text x="30" y="49" text-anchor="middle" font-family="Inter, Arial" font-size="7.4" font-weight="800" letter-spacing="1.1" fill="#15803d">VALIDÉ</text></g>
+<text x="{40+(CW-10)/2}" y="{y+CH-22}" text-anchor="middle" font-family="Inter, Arial" font-size="12" fill="#374151">Breizh validé</text></g>''')
+y+=CH+30
 W=80+COLS*CW
 open('design/guideme-icones.svg','w').write(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{y}" viewBox="0 0 {W} {y}"><rect width="{W}" height="{y}" fill="#ffffff"/>'+'\n'.join(out)+'</svg>\n')
 print('ok', len(icons), 'icônes')

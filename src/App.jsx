@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import MapView from './components/MapView.jsx';
 import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
@@ -51,9 +51,29 @@ function countLabel(tag, n, query) {
   return `${many ? w[1] : w[0]} à découvrir`;
 }
 
+// Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
+function BreizhStamp({ animate }) {
+  const id = useId().replace(/:/g, '');
+  return (
+    <span className={`pc-stamp ${animate ? 'is-new' : ''}`} aria-label="Déjà visité" role="img">
+      <svg viewBox="0 0 60 60" aria-hidden="true">
+        <defs><path id={`arc-${id}`} d="M12 30a18 18 0 0 1 36 0" /></defs>
+        <circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" strokeWidth="2.4" />
+        <circle cx="30" cy="30" r="22.5" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2.2" />
+        <text fontSize="8.6" fontWeight="800" letterSpacing="1.6" fill="currentColor"><textPath href={`#arc-${id}`} startOffset="50%" textAnchor="middle">BREIZH</textPath></text>
+        <g transform="translate(26.6 30) scale(.105)" fill="currentColor"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>
+        <text x="30" y="49" textAnchor="middle" fontSize="7.4" fontWeight="800" letterSpacing="1.1" fill="currentColor">VALIDÉ</text>
+      </svg>
+    </span>
+  );
+}
+
 // Carte de lieu : vignette, nom, commune et durée ; case « déjà visité » en haut à droite
 function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited, wanted, onToggleWanted }) {
   const soon = !place.available;
+  // Animation du tampon seulement au moment où l'on coche (pas au chargement)
+  const [justDone, setJustDone] = useState(false);
+  useEffect(() => { if (!justDone) return undefined; const t = setTimeout(() => setJustDone(false), 900); return () => clearTimeout(t); }, [justDone]);
   // 1er clic : met le lieu en avant sur la carte ; 2e clic (ou clic sur le titre) : ouvre la fiche
   const activate = () => (soon || !selected ? onSelect(place.id) : onOpen(place.id));
   return (
@@ -87,10 +107,10 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             <Icon name="star" size={15} stroke={2} />
             <span className="pc-tip" aria-hidden="true">{wanted ? 'Dans ma to-do list · retirer' : 'Ajouter à ma to-do list'}</span>
           </button>
-          {visited && <span className="pc-done-label">Déjà visité</span>}
+          {visited && <BreizhStamp animate={justDone} />}
           <button
             className={`pc-flag pc-flag--done ${visited ? 'is-on' : ''}`}
-            onClick={(e) => { e.stopPropagation(); onToggleVisited(place.id); }}
+            onClick={(e) => { e.stopPropagation(); if (!visited) setJustDone(true); onToggleVisited(place.id); }}
             aria-pressed={!!visited}
             aria-label={visited ? `${place.shortTitle} : déjà visité (retirer)` : `Marquer ${place.shortTitle} comme déjà visité`}
           >
