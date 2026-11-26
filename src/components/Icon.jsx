@@ -59,7 +59,7 @@ const PATHS = {
   bigouden: (<><path d="M9.6 2.2h4.8l-1.5 5.6h-1.8z" /><circle cx="12" cy="9.6" r="1.9" /><path d="M13.6 8.6l3.6 1.4M13.4 9.6l2.2 1.6" /><path d="M6.4 13.6c1.9-1.3 3.7-1.9 5.6-1.9s3.7.6 5.6 1.9c-1.3.6-2.4.7-3.4.3M6.4 13.6c1.3.6 2.4.7 3.4.3" /><path d="M10.6 12.4L7.2 21.6c3.2-.9 6.4-.9 9.6 0l-3.4-9.2" /></>),
   search: (<><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4 4" /></>),
   grid: (<><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></>),
-  lighthouse: (<><path d="M10 4.5h4v3.5h-4z" /><path d="M10.5 4.5Q12 2.2 13.5 4.5" /><path d="M8 9h8" /><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5" /><path d="M8.9 14.5h6.2" /><path d="M6 20.5h12" /><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7" /></>),
+  lighthouse: (<><path d="M9.6 10h4.8l1.3 10H8.3z" fill="currentColor" /><path d="M8.3 9.2h7.4" /><rect x="10.1" y="4.6" width="3.8" height="3.4" rx=".5" fill="currentColor" /><path d="M3.8 5.2l3.4 1.1M20.2 5.2l-3.4 1.1" /></>),
 };
 
 export default function Icon({ name, size = 20, stroke = 2, className, style }) {

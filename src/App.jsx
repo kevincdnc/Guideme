@@ -147,7 +147,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
             <circle cx="20" cy="20" r={R} className="progress-track" />
             <circle cx="20" cy="20" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} style={{ opacity: done.length ? 1 : 0 }} />
           </svg>
-          <span className="progress-pct">{pct}<small>%</small></span>
+          <span className="progress-pct" aria-label={`${pct} %`}>{pct}</span>
         </span>
       </button>
       {open && (
