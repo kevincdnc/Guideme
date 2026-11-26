@@ -12,8 +12,8 @@ MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" 
 
 // Pictogrammes des repères, selon le type de lieu
 const PIN_ICONS = {
-  // Phare : silhouette pleine (tour, galerie, lanterne) et deux faisceaux, lisible en petit
-  lighthouse: '<path d="M9.6 10h4.8l1.3 10H8.3z" fill="#fff"/><path d="M8.3 9.2h7.4"/><rect x="10.1" y="4.6" width="3.8" height="3.4" rx=".5" fill="#fff"/><path d="M3.8 5.2l3.4 1.1M20.2 5.2l-3.4 1.1"/>',
+  // Phare : lanterne et dôme, galerie, tour effilée à bande, faisceaux
+  lighthouse: '<path d="M10 4.5h4v3.5h-4z"/><path d="M10.5 4.5Q12 2.2 13.5 4.5"/><path d="M8 9h8"/><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5"/><path d="M8.9 14.5h6.2"/><path d="M6 20.5h12"/><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7"/>',
   beach: '<path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18"/><path d="M12 14V5"/><path d="M5 9a7 7 0 0114 0z"/>',
   cliff: '<path d="M3 20h18"/><path d="M4 20l4-11 3 4 3-8 6 15"/>',
   port: '<circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M5 13a7 7 0 0014 0"/><path d="M8 10h8"/>',
