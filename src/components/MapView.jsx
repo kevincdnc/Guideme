@@ -142,6 +142,25 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
   return el;
 }
 
+// Les styles d'info-bulle sont écrits pour :hover ; on les recopie pour la classe .is-pop (ouverte par programme)
+let popCssDone = false;
+function clonePopCss() {
+  if (popCssDone || typeof document === 'undefined') return;
+  popCssDone = true;
+  const has = /\.gm-marker[\w.-]*:hover/;
+  const rep = /(\.gm-marker[\w.-]*):hover/g;
+  const walk = (list) => {
+    for (let i = list.cssRules.length - 1; i >= 0; i -= 1) {
+      const r = list.cssRules[i];
+      if (r.cssRules && !r.selectorText) { walk(r); continue; }
+      if (!r.selectorText || !has.test(r.selectorText)) continue;
+      const sel = r.selectorText.split(',').filter((x) => has.test(x)).map((x) => x.replace(rep, '$1.is-pop')).join(',');
+      try { list.insertRule(`${sel}{${r.style.cssText}}`, i + 1); } catch { /* sélecteur non pris en charge */ }
+    }
+  };
+  for (const sh of document.styleSheets) { try { walk(sh); } catch { /* feuille externe */ } }
+}
+
 const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
   const box = useRef(null);
   const map = useRef(null);
@@ -187,6 +206,8 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       );
     },
   }));
+
+  useEffect(() => { clonePopCss(); }, []);
 
   useEffect(() => {
     const m = new maplibregl.Map({
@@ -305,8 +326,31 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
   useEffect(() => {
     Object.entries(markers.current).forEach(([id, mk]) => {
       mk.getElement().classList.toggle('is-selected', id === selectedId);
+      mk.getElement().classList.remove('is-pop');
     });
+    // Sélection (clic sur une mini-carte ou un repère) : l'info-bulle s'ouvre, une fois la carte arrivée
+    const el = selectedId && markers.current[selectedId]?.getElement();
+    if (!el || !el.classList.contains('is-available')) return undefined;
+    const t = setTimeout(() => {
+      el.dispatchEvent(new Event('mouseenter')); // charge la photo et choisit dessus / dessous
+      el.classList.add('is-pop');
+    }, 650);
+    return () => clearTimeout(t);
   }, [selectedId]);
+
+  // Une autre info-bulle survolée, ou un clic sur le fond de carte : on referme celle de la sélection
+  useEffect(() => {
+    const node = box.current;
+    if (!node) return undefined;
+    const close = (e) => {
+      const m = e.target.closest?.('.gm-marker');
+      if (e.type === 'mouseover' && (!m || m.classList.contains('is-pop'))) return;
+      node.querySelectorAll('.gm-marker.is-pop').forEach((x) => x.classList.remove('is-pop'));
+    };
+    node.addEventListener('mouseover', close);
+    node.addEventListener('pointerdown', close);
+    return () => { node.removeEventListener('mouseover', close); node.removeEventListener('pointerdown', close); };
+  }, []);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;
 });
