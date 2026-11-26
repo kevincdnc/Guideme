@@ -31,6 +31,12 @@ export default {
     visit: 'Ouvert à la visite (payant) : 307 marches jusqu\'à la lanterne',
     visitors: 'Près de 55 000 entrées en 2009',
     protection: 'Classé monument historique (2011)',
+    plan: {
+      src: 'plans/phare-eckmuhl.jpg', // copie locale du fichier Commons (CC0)
+      caption: 'Élévation et coupe verticale',
+      credit: 'Archives nationales (F/14), CC0',
+      page: "https://commons.wikimedia.org/wiki/File:Phare_d%27Eckm%C3%BChl_-_plans.jpg",
+    },
   },
   facts: [
     { value: '1897', label: 'inauguration, le 17 octobre' },
@@ -180,6 +186,7 @@ export default {
   ],
   sources: [
     { label: "Wikipédia : Phare d'Eckmühl", url: "https://fr.wikipedia.org/wiki/Phare_d%27Eckm%C3%BChl" },
+    { label: "Archives nationales (F/14) : plans du phare d'Eckmühl, via Wikimedia Commons", url: "https://commons.wikimedia.org/wiki/File:Phare_d%27Eckm%C3%BChl_-_plans.jpg" },
   ],
   pois: [],
 };

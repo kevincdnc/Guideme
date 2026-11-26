@@ -324,37 +324,42 @@ function lightDots(t) {
 }
 function LighthouseSheet({ place }) {
   const lh = place.lighthouse;
-  const rows = LH_ROWS.filter(([k]) => lh[k] && lh[k] !== 'Non renseignée');
-  const big = [['height', 'Tour'], ['elevation', 'Feu'], ['range', 'Portée']]
-    .map(([k, l]) => [l, String(lh[k] || '').match(/^[\d\s,]+(?:milles|m)\b/)?.[0]]).filter(([, v]) => v);
+  const rows = LH_ROWS.filter(([k]) => lh[k] && lh[k] !== 'Non renseignée' && !['height', 'elevation', 'range'].includes(k));
+  const num = (k, re) => String(lh[k] || '').match(re)?.[0];
+  const big = [
+    ['Hauteur de la tour', num('height', /^[\d,]+/), 'm'],
+    ['Feu au-dessus de la mer', num('elevation', /^[\d,]+/), 'm'],
+    ['Portée', num('range', /^[\d,]+/), 'milles'],
+  ].filter(([, v]) => v);
   const dots = lightDots(lh.light);
+  const art = lh.plan || (place.hero?.src ? { src: place.hero.src, credit: place.hero.credit, photo: true } : null);
   return (
     <section id="sec-identite" data-nav="identite" className="section">
       <div className="section-head"><h2>Carte d'identité</h2></div>
-      <div className="lh-card">
-        <div className="lh-card-head">
-          {place.hero?.src && <img className="lh-card-photo" src={place.hero.src} alt="" loading="lazy" />}
-          <div className="lh-card-id">
-            <span className="lh-card-kicker"><Icon name="lighthouse" size={14} /> Phare · Finistère</span>
-            <strong>{place.shortTitle}</strong>
-            {dots.length > 0 && (
-              <span className="lh-card-light">
-                {dots.map((c) => <i key={c} style={{ background: c }} />)}
-                {lh.light}
-              </span>
-            )}
-          </div>
+      <div className={`lh-id ${art?.photo ? 'lh-id--photo' : ''}`}>
+        {art && (
+          <figure className="lh-id-art">
+            <img src={/^https?:/.test(art.src) ? art.src : BASE + art.src} alt={art.caption || `Phare ${place.shortTitle}`} loading="lazy" />
+            <figcaption>{art.caption ? `${art.caption} · ` : ''}{art.credit}</figcaption>
+          </figure>
+        )}
+        <div className="lh-id-body">
+          <span className="lh-id-kicker">Phare · Finistère</span>
+          <strong className="lh-id-name">{place.shortTitle}</strong>
+          {dots.length > 0 && (
+            <span className="lh-id-light">{dots.map((c) => <i key={c} style={{ background: c }} />)}{lh.light}</span>
+          )}
           {big.length > 0 && (
-            <dl className="lh-card-big">
-              {big.map(([l, v]) => <div key={l}><dt>{l}</dt><dd>{v}</dd></div>)}
+            <dl className="lh-id-big">
+              {big.map(([l, v, u]) => <div key={l}><dd>{v}<small>{u}</small></dd><dt>{l}</dt></div>)}
             </dl>
           )}
+          <dl className="lh-id-rows">
+            {rows.filter(([k]) => k !== 'light').map(([k, label]) => (
+              <div key={k}><dt>{label}</dt><dd>{lh[k]}</dd></div>
+            ))}
+          </dl>
         </div>
-        <dl className="lh-card-rows">
-          {rows.filter(([k]) => k !== 'light').map(([k, label, icon]) => (
-            <div key={k}><span className="lh-row-ico"><Icon name={icon} size={16} /></span><dt>{label}</dt><dd>{lh[k]}</dd></div>
-          ))}
-        </dl>
       </div>
     </section>
   );
@@ -445,8 +450,8 @@ function Records({ place, goTo, compact }) {
             {r.scope && r.scope !== 'France' && <span className="record-scope">{r.scope}</span>}
             <strong>{r.title}</strong>
             <span className="record-text">{r.text}</span>
-            {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
           </div>
+          {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} /></button>}
         </li>
       ))}
     </ul>
