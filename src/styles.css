@@ -1670,3 +1670,29 @@ img { display: block; max-width: 100%; }
 .practical-box .prot span { flex-direction: row; align-items: baseline; gap: 5px; flex-wrap: wrap; }
 .practical-box .practical--compact li { padding: 0 !important; margin: 0; }
 .practical-box .practical--compact { gap: 10px; }
+
+/* ---------- Carte de la fiche : zoomable, collante au défilement ---------- */
+.minimap-canvas .maplibregl-ctrl-group { border-radius: 8px; box-shadow: 0 2px 8px rgba(15,23,42,.15); }
+.minimap { cursor: grab; }
+@media (min-width: 900px) {
+  .guide--modal .guide-aside { align-self: stretch; }
+  .guide--modal .guide-aside > .aside-card:first-child { position: sticky; top: 112px; z-index: 3; }
+  .guide--modal .minimap--overview { height: 340px; }
+}
+
+/* ---------- Compteurs : tous foncés, mêmes tailles, photo d'ambiance ---------- */
+.keyfig, .keyfig.is-date { background: #111; border-color: #111; color: #fff; min-height: 128px; }
+.keyfig dt, .keyfig.is-date dt { color: #fff; }
+.keyfig dd, .keyfig.is-date dd { color: rgba(255,255,255,.72); }
+.keyfig .keyfig-bg, .keyfig.is-date .keyfig-bg { opacity: .38; filter: grayscale(1) contrast(1.05); }
+.keyfig::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(17,17,17,.35), rgba(17,17,17,.88)); }
+.keyfig-ico, .keyfig.is-date .keyfig-ico { color: #fbbf24; }
+.keyfig-info { color: rgba(255,255,255,.75); border-color: rgba(255,255,255,.35); }
+.keyfig dt, .keyfig.is-long dt { font-size: 26px !important; }
+@media (min-width: 900px) { .guide--modal .keyfig dt, .guide--modal .keyfig.is-long dt { font-size: 21px !important; } .guide--modal .keyfig { min-height: 112px; } }
+/* Boutons au-dessus du titre, bien espacés */
+.guide-head > .guide-actions--split { margin: 0 0 26px; }
+@media (min-width: 900px) { .guide--modal .guide-head { padding-top: 32px; } }
+/* Carte collante : fond opaque, les records défilent dessous */
+.guide--modal .guide-aside > .aside-card:first-child { background: #fff; box-shadow: 0 6px 20px rgba(15,23,42,.08); }
+.guide--modal .guide-aside { gap: 16px; }

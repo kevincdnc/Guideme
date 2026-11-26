@@ -12,6 +12,7 @@ import { useVisited, useFavorites } from '../hooks/useVisited.js';
 import maplibregl from 'maplibre-gl';
 import MAP_STYLE from '../data/map-style.json';
 import { FINISTERE_BOUNDS } from '../data/places.js';
+import FINISTERE_MASK from '../data/finistere.json';
 
 // Texte lu à voix haute : titre, puis chaque paragraphe et chaque anecdote.
 function buildBlocks(place) {
@@ -170,7 +171,21 @@ function MiniMap({ place, overview }) {
     if (!ref.current) return undefined;
     let map;
     try {
-      map = new maplibregl.Map({ container: ref.current, style: MAP_STYLE, ...(overview ? { bounds: FINISTERE_BOUNDS, fitBoundsOptions: { padding: 14 } } : { center: place.coords, zoom: place.miniZoom || 10.4 }), interactive: false, attributionControl: false, fadeDuration: 0 });
+      map = new maplibregl.Map({
+        container: ref.current, style: MAP_STYLE,
+        ...(overview ? { bounds: FINISTERE_BOUNDS, fitBoundsOptions: { padding: 14 } } : { center: place.coords, zoom: place.miniZoom || 10.4 }),
+        interactive: true, dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: false,
+        minZoom: 6.5, maxZoom: 15, attributionControl: false, fadeDuration: 0,
+      });
+      map.touchZoomRotate.disableRotation();
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      // Le reste de la Bretagne grisé, la limite du Finistère dessinée (comme sur la grande carte)
+      map.on('load', () => {
+        const first = map.getStyle().layers.find((l) => l.type === 'symbol')?.id;
+        map.addSource('finistere', { type: 'geojson', data: FINISTERE_MASK, tolerance: 0.6 });
+        map.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'], paint: { 'fill-color': '#1e293b', 'fill-opacity': 0.16 } }, first);
+        map.addLayer({ id: 'finistere-limite', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#7c3aed', 'line-width': 1.6, 'line-dasharray': [2, 2] } }, first);
+      });
       const el = document.createElement('div');
       el.className = 'minimap-pin';
       new maplibregl.Marker({ element: el }).setLngLat(place.coords).addTo(map);
@@ -300,7 +315,13 @@ function dupOfFun(place, a) {
 function AnecdoteSlider({ section, place, currentId, onListen }) {
   const track = useRef(null);
   const list = section.anecdotes.filter((a) => !dupOfFun(place, a));
-  const go = (d) => { const t = track.current; if (t) t.scrollBy({ left: d * (t.clientWidth * 0.8), behavior: 'smooth' }); };
+  const go = (d) => {
+    const t = track.current;
+    const card = t?.querySelector('.anec-card');
+    if (!t || !card) return;
+    const step = card.getBoundingClientRect().width + parseFloat(getComputedStyle(t).columnGap || 12);
+    t.scrollBy({ left: d * step, behavior: 'smooth' });
+  };
   return (
     <section id={`sec-${section.id}`} data-nav={section.id} className="section anec-slider">
       <div className="section-head">
@@ -485,11 +506,6 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         <div className="guide-layout">
         <div className="guide-main">
         <div className="guide-head">
-          <h1>{place.title}</h1>
-          <p className="guide-meta">
-            <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
-            <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
-          </p>
           <div className="guide-actions guide-actions--split">
             <div className="guide-actions-left">
               <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
@@ -506,6 +522,11 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </button>
             )}
           </div>
+          <h1>{place.title}</h1>
+          <p className="guide-meta">
+            <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
+            <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
+          </p>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
             {place.facts.map((f, i) => (
