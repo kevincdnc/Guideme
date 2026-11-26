@@ -338,7 +338,7 @@ function LighthouseSheet({ place }) {
       <div className="section-head"><h2>Carte d'identité</h2></div>
       <div className={`lh-id ${art?.photo ? 'lh-id--photo' : ''}`}>
         {art && (
-          <figure className="lh-id-art">
+          <figure className="lh-id-art" style={{ '--art': `url("${/^https?:/.test(art.src) ? art.src : BASE + art.src}")` }}>
             <img src={/^https?:/.test(art.src) ? art.src : BASE + art.src} alt={art.caption || `Phare ${place.shortTitle}`} loading="lazy" />
             <figcaption>{art.caption ? `${art.caption} · ` : ''}{art.credit}</figcaption>
           </figure>
