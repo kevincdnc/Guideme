@@ -14,7 +14,7 @@ export default {
   labels: ['Port de pêche', 'Départ pour l\'île de Sein'],
   protections: [{ type: 'mh-inscrit', detail: "mât Fénoux · 2022" }],
   teaser:
-    "Un port à l'entrée redoutée, berceau du sauvetage en mer, ancienne capitale de la sardine, et un petit train que tout le monde surnommait « la ligne des mangeurs de bouillie ».",
+    "Un port qu'on aborde avec respect, berceau du sauvetage en mer, ancienne capitale de la sardine… et un petit train surnommé « la ligne des mangeurs de bouillie ». Embarque pour l'histoire d'Audierne.",
   hero: {
     src: `${C}/thumb/f/fb/Audierne_-_Le_port.jpg/1280px-Audierne_-_Le_port.jpg`,
     alt: 'Le port d\'Audierne et ses bateaux, au bord du Goyen',

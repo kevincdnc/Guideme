@@ -13,7 +13,7 @@ export default {
   miniZoom: 8.6,
   category: 'Phare en mer',
   teaser:
-    "Une tour noire et blanche posée sur un rocher à peine plus large qu'elle, au bout de la chaussée de Sein. Quatorze ans de chantier, des gardiens bloqués des mois par la houle : les gardiens l'appelaient « l'enfer des enfers ».",
+    "Une tour posée sur un rocher à peine plus large qu'elle, au bout de la chaussée de Sein. Quatorze ans de chantier, des gardiens bloqués des mois par la houle : bienvenue dans « l'enfer des enfers ».",
   hero: heroOf('phare-ar-men'),
   lighthouse: {
     built: '1867 à 1881 (renforcé de 1897 à 1902)',

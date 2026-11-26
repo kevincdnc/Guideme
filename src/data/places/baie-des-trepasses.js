@@ -14,7 +14,7 @@ export default {
   labels: ['Grand Site de France', 'Spot de surf'],
   protections: [{ type: 'grand-site', detail: "Pointe du Raz en Cap Sizun" }],
   teaser:
-    "Une longue plage blottie entre la pointe du Raz et la pointe du Van, au nom chargé de légendes : naufragés, âmes en peine… ou simple erreur de traduction ?",
+    "Une plage de sable fin coincée entre deux pointes sauvages… avec un nom qui fait froid dans le dos. Naufragés, âmes des druides ou simple faute de traduction ? Le mystère se lève plus bas.",
   hero: {
     src: `${C}/thumb/3/36/Aerial_image_of_Baie_des_Tr%C3%A9pass%C3%A9s_%28view_from_the_southeast%29.jpg/1280px-Aerial_image_of_Baie_des_Tr%C3%A9pass%C3%A9s_%28view_from_the_southeast%29.jpg`,
     alt: 'La baie des Trépassés vue du ciel, entre la pointe du Raz et la pointe du Van',

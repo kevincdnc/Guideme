@@ -13,7 +13,7 @@ export default {
   miniZoom: 9.6,
   category: 'Phare en mer',
   teaser:
-    "Une petite maison-phare posée sur un rocher noir du raz de Sein, là où, selon la légende, l'Ankou embarque les âmes des noyés. 23 gardiens et gardiennes s'y sont succédé en 35 ans, avant que l'on renonce à y vivre.",
+    "Une petite maison toute seule sur un rocher noir, là où l'Ankou viendrait chercher les noyés. En 35 ans, 23 gardiens s'y sont succédé : certains ont fui, d'autres y ont perdu la raison. Ose pousser la porte.",
   hero: heroOf('phare-tevennec'),
   lighthouse: {
     built: '1869 à 1874',

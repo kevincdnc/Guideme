@@ -14,7 +14,7 @@ export default {
   labels: ['Paléolithique inférieur', 'Dolmens classés'],
   protections: [{ type: 'mh-classe', detail: "nécropole du Souc'h · 1979" }],
   teaser:
-    "Dans une grotte marine effondrée, des hommes ont entretenu un feu il y a près d'un demi-million d'années. Une des plus anciennes traces de feu maîtrisé connues au monde.",
+    "Assieds-toi au bord de cette grotte effondrée : il y a près d'un demi-million d'années, des humains y entretenaient déjà un feu. L'une des plus anciennes traces de feu maîtrisé au monde t'attend ici.",
   hero: {
     src: `${C}/thumb/0/04/463_Menez_Dregan.jpg/1280px-463_Menez_Dregan.jpg`,
     alt: 'Fouilles en cours dans la grotte effondrée de Menez Dregan, en 2015',

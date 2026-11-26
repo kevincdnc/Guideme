@@ -14,7 +14,7 @@ export default {
   labels: ['GR34', 'Conservatoire du littoral'],
   protections: [{ type: 'conservatoire' }, { type: 'pci', detail: "légende" }],
   teaser:
-    "Un phare-maison de poche à l'entrée de la baie de Douarnenez, un moulin à eau qui moud encore, et un bateau de pierre de vingt tonnes échoué sur la lande.",
+    "Un phare-maison de poche, un moulin à eau qui tourne encore et un bateau de pierre de vingt tonnes échoué sur la lande. Petite pointe, grandes histoires : suis le sentier.",
   hero: {
     src: `${C}/thumb/6/61/262_Pointe_du_Millier.jpg/1280px-262_Pointe_du_Millier.jpg`,
     alt: 'La pointe du Millier et sa maison-phare au-dessus de la baie de Douarnenez',

@@ -21,7 +21,7 @@ export default {
   ],
   protections: [{ type: 'grand-site', detail: "depuis 2004" }, { type: 'site-classe', detail: "1987" }],
   teaser:
-    "Une proue de granit de 72 mètres face au raz de Sein, l'un des courants les plus redoutés d'Europe. Rasée de ses boutiques dans les années 1990, la lande a retrouvé sa bruyère.",
+    "Tu es au bout du bout : 72 mètres de granit face au raz de Sein, là où le courant file à sept nœuds. Ici, on a rasé des boutiques pour rendre la lande à la bruyère. Découvre pourquoi les marins y passent en retenant leur souffle.",
   hero: {
     src: `${C}/thumb/7/76/Pointe_du_Raz%2C_vue_de_la_baie_des_Tr%C3%A9pass%C3%A9s.jpg/1280px-Pointe_du_Raz%2C_vue_de_la_baie_des_Tr%C3%A9pass%C3%A9s.jpg`,
     alt: 'La pointe du Raz vue de la baie des Trépassés',

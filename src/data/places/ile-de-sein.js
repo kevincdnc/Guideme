@@ -14,7 +14,7 @@ export default {
   labels: ['Île sans voiture', 'Croix de la Libération'],
   protections: [{ type: 'mh-classe', detail: "menhirs les Causeurs" }, { type: 'liberation' }],
   teaser:
-    "Deux kilomètres de terre à 1,5 mètre au-dessus de la mer, des marins qui ont rallié de Gaulle dès juin 1940, et un film de 1958 tourné au péril de la vie de ses auteurs.",
+    "Deux kilomètres de terre posés à 1,5 mètre au-dessus des vagues, sans une seule voiture. En juin 1940, ses hommes ont rejoint de Gaulle parmi les premiers. Prends le bateau, on te raconte tout.",
   hero: {
     src: `${C}/thumb/9/9d/Aerial_image_of_%C3%8Ele-de-Sein_%28view_from_the_southeast%29.jpg/1280px-Aerial_image_of_%C3%8Ele-de-Sein_%28view_from_the_southeast%29.jpg`,
     alt: 'L\'île de Sein vue du ciel, étroite et plate au milieu des récifs',

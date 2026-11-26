@@ -228,32 +228,42 @@ function routeLinks(place) {
 }
 
 function Practical({ place, directions, overview }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef(null);
+  useEffect(() => {
+    if (!open) return undefined;
+    const close = (e) => { if (!box.current?.contains(e.target)) setOpen(false); };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
   return (
     <div className="practical-box">
       <MiniMap place={place} overview={overview} />
-      <div className="route-apps" aria-label="Itinéraire">
-        <span className="route-apps-label"><Icon name="route" size={15} /> Itinéraire avec</span>
-        <div className="route-apps-row">
-          {routeLinks(place).map((r) => (
-            <a key={r.id} className={`route-app route-app--${r.id}`} href={r.url} target="_blank" rel="noreferrer">
-              <RouteLogo id={r.id} />{r.label}
-            </a>
-          ))}
-        </div>
+      <div className="go-wrap" ref={box}>
+        <button className="go-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+          <Icon name="route" size={18} /> Y aller <Icon name="chevron" size={15} style={{ transform: open ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform .2s' }} />
+        </button>
+        {open && (
+          <div className="go-menu" role="menu">
+            {routeLinks(place).map((r) => (
+              <a key={r.id} role="menuitem" className="go-app" href={r.url} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
+                <RouteLogo id={r.id} /><span>Ouvrir dans {r.label}</span><Icon name="external" size={13} />
+              </a>
+            ))}
+          </div>
+        )}
       </div>
       {place.practical?.length > 0 && (
-        <details className="practical-details">
-          <summary><span>Infos pratiques & accès</span> <Icon name="chevron" size={16} /></summary>
-          <ul className="practical">
-            {place.practical.map((p) => (
-              <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
-                <span className="practical-icon"><Icon name={p.icon} size={18} /></span>
-                <div><strong>{p.title}</strong><p>{p.text}</p></div>
-              </li>
-            ))}
-          </ul>
-        </details>
+        <ul className="practical practical--compact">
+          {place.practical.map((p) => (
+            <li key={p.title} className={p.icon === 'warn' ? 'is-warn' : ''}>
+              <Icon name={p.icon} size={15} />
+              <span><b>{p.title}.</b> {p.text}</span>
+            </li>
+          ))}
+        </ul>
       )}
+      <ProtectionBadges place={place} />
     </div>
   );
 }
@@ -286,10 +296,57 @@ function dupOfFun(place, a) {
   return f.size && n / f.size > 0.45;
 }
 
+// Anecdotes en cartes qui défilent (mobile d'abord : balayage, flèches sur desktop)
+function AnecdoteSlider({ section, place, currentId, onListen }) {
+  const track = useRef(null);
+  const list = section.anecdotes.filter((a) => !dupOfFun(place, a));
+  const go = (d) => { const t = track.current; if (t) t.scrollBy({ left: d * (t.clientWidth * 0.8), behavior: 'smooth' }); };
+  return (
+    <section id={`sec-${section.id}`} data-nav={section.id} className="section anec-slider">
+      <div className="section-head">
+        <h2>{section.title}</h2>
+        <div className="anec-ctrls">
+          {onListen && <button className="listen-btn" onClick={onListen}><Icon name="headphones" size={15} /> Écouter</button>}
+          <button className="anec-nav" onClick={() => go(-1)} aria-label="Anecdote précédente"><Icon name="back" size={18} /></button>
+          <button className="anec-nav" onClick={() => go(1)} aria-label="Anecdote suivante"><Icon name="chevron" size={18} /></button>
+        </div>
+      </div>
+      <ol className="anec-track" ref={track}>
+        {list.map((a, i) => (
+          <li key={a.title} data-block={`${section.id}-${i}`} className={`anec-card ${currentId === `${section.id}-${i}` ? 'is-reading' : ''}`}>
+            <span className="anec-num">{String(i + 1).padStart(2, '0')}<small> / {String(list.length).padStart(2, '0')}</small></span>
+            <h3>{a.title}</h3>
+            <p>{a.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+// Records : médailles compactes (colonne de droite sur desktop)
+function Records({ place, goTo, compact }) {
+  return (
+    <ul className={`records ${compact ? 'records--compact' : ''} ${place.records.length === 1 ? 'records--one' : ''}`} aria-label="Records">
+      {place.records.map((r) => (
+        <li key={r.title} className={`record record--${r.medal}`}>
+          <span className="record-medal"><Icon name="medal" size={compact ? 16 : 20} stroke={1.8} /></span>
+          <div className="record-body">
+            {r.scope && r.scope !== 'France' && <span className="record-scope">{r.scope}</span>}
+            <strong>{r.title}</strong>
+            <span className="record-text">{r.text}</span>
+            {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 const isWide = () => typeof window !== 'undefined' && window.matchMedia('(min-width: 900px)').matches;
 
 export default function Guide({ place, onClose, variant = 'panel' }) {
-  const asideAnecdotes = variant === 'modal' && isWide();
+  const anecdoteSections = place.sections.filter((s) => s.anecdotes && !s.paragraphs);
   const isPage = variant === 'page';
   const [visitedIds, toggleVisited] = useVisited();
   const isVisited = visitedIds.includes(place.id);
@@ -302,6 +359,12 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
     ...(place.archives || []),
   ], [place]);
   const mosaic = allImages.slice(0, 3);
+  const factImages = useMemo(() => {
+    const old = (place.archives || []).map((x) => x.src);
+    const now = [...(place.photos || []).map((x) => x.src), place.hero?.src].filter(Boolean);
+    let o = 0, n = 1;
+    return place.facts.map((f) => (isDate(f.value) && old[o] ? old[o++] : now[n++ % Math.max(now.length, 1)] || null));
+  }, [place]);
   const blocks = useMemo(() => buildBlocks(place), [place]);
   const speech = useSpeech(blocks);
   const scroller = useRef(null);
@@ -423,30 +486,32 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
         <div className="guide-main">
         <div className="guide-head">
           <h1>{place.title}</h1>
-          <ProtectionBadges place={place} />
           <p className="guide-meta">
             <span><Icon name="pin" size={15} /> {place.commune.split(' · ')[0]}</span>
             <span><Icon name="headphones" size={15} /> {place.readingMinutes} min</span>
           </p>
-          <div className="guide-actions">
+          <div className="guide-actions guide-actions--split">
+            <div className="guide-actions-left">
+              <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
+                <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
+                {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
+              </button>
+              <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma to-do list' : 'Ajouter à ma to-do list'} title={isFav ? 'Dans ma to-do list' : 'Ajouter à ma to-do list'}>
+                <Icon name="star" size={18} stroke={2} />
+              </button>
+            </div>
             {speech.supported && (
-              <button className="action-btn action-btn--primary" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
-                <Icon name={speech.state === 'playing' ? 'pause' : 'play'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
+              <button className="action-btn listen-main" onClick={() => (speech.state === 'playing' ? speech.pause() : speech.play())}>
+                <Icon name={speech.state === 'playing' ? 'pause' : 'headphones'} size={16} /> {speech.state === 'playing' ? 'Pause' : 'Écouter'}
               </button>
             )}
-            <button role="checkbox" aria-checked={isVisited} className={`action-btn visit-btn ${isVisited ? 'is-checked' : ''}`} onClick={() => toggleVisited(place.id)}>
-              <span className="visit-box">{isVisited && <Icon name="check" size={13} stroke={3.4} />}</span>
-              {isVisited ? 'Déjà visité' : "Je l'ai déjà visité"}
-            </button>
-            <button className={`action-btn fav-btn ${isFav ? 'is-on' : ''}`} onClick={() => toggleFav(place.id)} aria-pressed={isFav} aria-label={isFav ? 'Retirer de ma to-do list' : 'Ajouter à ma to-do list'} title={isFav ? 'Dans ma to-do list' : 'Ajouter à ma to-do list'}>
-              <Icon name="star" size={18} stroke={2} />
-            </button>
           </div>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
-            {place.facts.map((f) => (
+            {place.facts.map((f, i) => (
               <div key={f.label} className={`keyfig keyfig--${f.icon || factIcon(f)} ${isDate(f.value) ? 'is-date' : ''} ${String(f.value).length > 5 ? 'is-long' : ''}`}>
-                <span className="keyfig-ico"><Icon name={f.icon || factIcon(f)} size={16} /></span>
+                {factImages[i] && <span className="keyfig-bg" style={{ backgroundImage: `url("${factImages[i]}")` }} aria-hidden="true" />}
+                <span className="keyfig-ico"><Icon name={f.icon || factIcon(f)} size={15} /></span>
                 <dt>{f.value}</dt>
                 <dd>{f.label}</dd>
                 {factInfo(place, f) && (
@@ -468,28 +533,17 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </div>
             </aside>
           )}
-          {place.records?.length > 0 && (
-            <ul className={`records ${place.records.length === 1 ? 'records--one' : ''}`} aria-label="Records">
-              {place.records.map((r) => (
-                <li key={r.title} className={`record record--${r.medal}`}>
-                  <span className="record-medal"><Icon name="medal" size={22} stroke={1.8} /></span>
-                  <div className="record-body">
-                    {r.scope && r.scope !== 'France' && <span className="record-scope">{r.scope}</span>}
-                    <strong>{r.title}</strong>
-                    <span className="record-text">{r.text}</span>
-                    {r.more && <button className="record-more" onClick={() => goTo('records')}>En savoir plus <Icon name="chevron" size={13} style={{ transform: 'rotate(90deg)' }} /></button>}
-                  </div>
-                </li>
-              ))}
-              {place.records.length % 2 === 1 && place.records.length > 1 && <li className="record-fill" aria-hidden="true"><Hermine height={34} /></li>}
-            </ul>
-          )}
         </div>
 
+        {anecdoteSections.map((s) => (
+          <AnecdoteSlider key={s.id} section={s} place={place} currentId={currentId} onListen={speech.supported ? () => readFrom(`${s.id}-0`) : null} />
+        ))}
+
+        {place.records?.length > 0 && <div className="records-main"><Records place={place} goTo={goTo} /></div>}
 
         {place.lighthouse && <LighthouseSheet lh={place.lighthouse} />}
 
-        {place.sections.filter((s) => !(asideAnecdotes && s.anecdotes && !s.paragraphs)).map((s, si) => (
+        {place.sections.filter((s) => !(s.anecdotes && !s.paragraphs)).map((s, si) => (
           <Fragment key={s.id}>
           {si === 1 && place.film && <FilmBlock film={place.film} />}
           <section id={`sec-${s.id}`} data-nav={s.id} className="section">
@@ -610,23 +664,12 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
           <div className="aside-card">
             <Practical place={place} directions={directions} overview />
           </div>
-          {asideAnecdotes && place.sections.filter((s) => s.anecdotes && !s.paragraphs).map((s) => (
-            <section key={s.id} id={`sec-${s.id}`} data-nav={s.id} className="aside-card aside-anecdotes">
-              <div className="aside-anec-head">
-                <h2 className="aside-title"><Icon name="spark" size={17} /> {s.title}</h2>
-                {speech.supported && <button className="listen-btn" onClick={() => readFrom(`${s.id}-0`)}><Icon name="headphones" size={14} /></button>}
-              </div>
-              <ol className="anecdotes anecdotes--aside">
-                {s.anecdotes.filter((a) => !dupOfFun(place, a)).map((a, i) => (
-                  <li key={a.title} data-block={`${s.id}-${i}`} className={`anecdote ${currentId === `${s.id}-${i}` ? 'is-reading' : ''}`}>
-                    <span className="anecdote-num">{String(i + 1).padStart(2, '0')}</span>
-                    <h3>{a.title}</h3>
-                    <p>{a.text}</p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ))}
+          {place.records?.length > 0 && (
+            <div className="aside-card aside-records">
+              <h2 className="aside-title"><Icon name="trophy" size={16} /> Records</h2>
+              <Records place={place} goTo={goTo} compact />
+            </div>
+          )}
         </aside>
         </div>
         <div className="guide-end" />

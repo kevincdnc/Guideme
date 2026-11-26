@@ -13,7 +13,7 @@ export default {
   miniZoom: 10.6,
   category: 'Phare en mer',
   teaser:
-    "Une tour carrée et crénelée comme un donjon, dressée sur le rocher de Gorlebella, à moins d'un mille de la pointe du Raz. Elle a vu le sauvetage le plus médiatisé de l'histoire des phares, et ses derniers gardiens ont refusé de partir.",
+    "Un donjon de granit planté au milieu du courant, qu'on ne pouvait aborder qu'une trentaine de fois par an. Deux gardiens mutilés de guerre y ont hissé le pavillon noir, d'autres ont refusé d'en partir. Monte à bord.",
   hero: heroOf('phare-vieille'),
   lighthouse: {
     built: '1882 à 1887',

@@ -14,7 +14,7 @@ export default {
   labels: ['Grand Site de France', 'Chapelle monument historique'],
   protections: [{ type: 'grand-site' }, { type: 'mh-classe', detail: "chapelle Saint-They · 1914" }],
   teaser:
-    "La sœur sauvage de la pointe du Raz : une pointe sans vraie pointe, et une petite chapelle au bord de la falaise dont la cloche, dit-on, sonne toute seule.",
+    "La pointe du Raz sans la foule : des falaises à pic, la lande à perte de vue et une petite chapelle dont la cloche, dit-on, sonne toute seule pour prévenir les marins. Tu tends l'oreille ?",
   hero: {
     src: `${C}/thumb/1/1a/Aerial_image_of_Pointe_du_Van_%28view_from_the_east%29.jpg/1280px-Aerial_image_of_Pointe_du_Van_%28view_from_the_east%29.jpg`,
     alt: 'La pointe du Van vue du ciel, ses avancées rocheuses et la lande',
