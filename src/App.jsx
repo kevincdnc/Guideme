@@ -48,7 +48,7 @@ function countLabel(tag, n, query) {
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
   if (tag === 'wanted') return many ? 'spots dans ta to-do list' : 'spot dans ta to-do list';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
-  return `${many ? w[1] : w[0]} à découvrir`;
+  return tag ? `${many ? w[1] : w[0]} à découvrir` : (many ? w[1] : w[0]);
 }
 
 // Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
@@ -406,7 +406,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
         {(visitedCount > 0 || value === 'visited') && (
           <button className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
-            <Icon name="check" size={14} stroke={2.8} /> {visitedCount} déjà visité{visitedCount > 1 ? 's' : ''}
+            <Icon name="check" size={14} stroke={2.8} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
           </button>
         )}
         {(wantedCount > 0 || value === 'wanted') && (
@@ -590,7 +590,7 @@ export default function App() {
           <header className="brand-bar"><Brand /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
             <h1>Tu crois connaître le Finistère ?</h1>
-            <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)} <span className="sidebar-made">made in Penn-ar-Bed</span></p>
+            <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} />
           <div className="sidebar-list">

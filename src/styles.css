@@ -1942,3 +1942,12 @@ img { display: block; max-width: 100%; }
 .is-visited-filter .map.z-far .gm-marker.is-visited.is-selected .gm-marker-label,
 .is-visited-filter .map.z-mid .gm-marker.is-visited.is-selected .gm-marker-label { display: inline-flex !important; }
 .map.z-far .gm-marker.is-visited .gm-dot::after { border-style: solid; border-color: #fff; }
+
+/* Jauge : chiffre entre-deux */
+.brand-bar .progress-pct, .topbar .progress-pct { font-size: 10.5px !important; }
+
+/* Tags plus hauts et plus aérés (même taille de texte) */
+.sidebar .tag, .tag { height: 38px; padding: 0 15px; }
+.sidebar .tag-more, .tag-more { flex-basis: 38px; width: 38px; height: 38px; }
+.sidebar .tagbar-wrap.is-wrap .tag { height: 36px; padding: 0 12px; }
+.sidebar .tagbar-wrap.is-wrap .tag-search-btn { width: 36px; }
