@@ -449,9 +449,27 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
     return () => side?.removeEventListener('scroll', place);
   }, [open]);
   const boxRef = useRef(null);
+  const barRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
-  // La catégorie active passe en tête pour rester visible
-  const ordered = value && value !== 'visited' && value !== 'wanted' ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
+  // Toutes les puces, dans l'ordre fixe ; la puce choisie passe en tête (en noir, alignée à gauche)
+  const all = [
+    { id: null, el: <button key="all" className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button> },
+    ...(((!statusInMenu && visitedCount > 0) || value === 'visited') ? [{ id: 'visited', el: (
+      <button key="visited" className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
+        <Icon name="check" size={14} stroke={2.8} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
+      </button>) }] : []),
+    ...(((!statusInMenu && wantedCount > 0) || value === 'wanted') ? [{ id: 'wanted', el: (
+      <button key="wanted" className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
+        <Icon name="star" size={14} stroke={2.2} /> {wantedCount} to-do
+      </button>) }] : []),
+    ...used.map((t) => ({ id: t.id, el: (
+      <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
+        <Icon name={t.icon} size={14} /> {t.label}
+      </button>) })),
+  ];
+  const items = value && !wrap ? [...all.filter((it) => it.id === value), ...all.filter((it) => it.id !== value)] : all;
+  // À chaque changement de filtre, la barre revient au début : la puce choisie est visible à gauche
+  useEffect(() => { barRef.current?.scrollTo({ left: 0, behavior: 'smooth' }); }, [value]);
   const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
   const q = norm(query.trim());
   const menuTags = q ? used.filter((t) => norm(t.label).includes(q)) : used;
@@ -464,23 +482,8 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
   }, [open]);
   return (
     <div className={`tagbar-wrap ${wrap ? 'is-wrap' : ''}`} ref={boxRef}>
-      <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
-        <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
-        {((!statusInMenu && visitedCount > 0) || value === 'visited') && (
-          <button className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
-            <Icon name="check" size={14} stroke={2.8} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
-          </button>
-        )}
-        {((!statusInMenu && wantedCount > 0) || value === 'wanted') && (
-          <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
-            <Icon name="star" size={14} stroke={2.2} /> {wantedCount} to-do
-          </button>
-        )}
-        {(wrap ? used : ordered).map((t) => (
-          <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
-            <Icon name={t.icon} size={14} /> {t.label}
-          </button>
-        ))}
+      <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie" ref={barRef}>
+        {items.map((it) => it.el)}
         {wrap && (
           <button className={`tag tag-plus ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
             <Icon name="plus" size={15} stroke={2.4} />
@@ -753,7 +756,7 @@ export default function App() {
             <h1>Connais-tu vraiment le Finistère ?</h1>
             <div className="sidebar-subrow">
               <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
-              {(visibleVisited > 0 || visibleWanted > 0) && (
+              {(
                 <span className="sidebar-status">
                   {visibleWanted > 0 && (
                     <button className={`sidebar-visited sidebar-wanted ${tag === 'wanted' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'wanted' ? null : 'wanted')} aria-pressed={tag === 'wanted'}

@@ -2770,3 +2770,8 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .progress-head { grid-template-columns: 1fr auto !important; }
 .progress-head strong, .progress-head > span { grid-column: 1; text-align: left; }
 .progress-head-flag { grid-column: 2; grid-row: 1 / span 2; justify-self: end; }
+
+/* Colonne : la ligne des compteurs garde toujours la même hauteur (visités / to-do présents ou non, quel que soit le filtre) */
+.sidebar-intro .sidebar-subrow { min-height: 28px; box-sizing: content-box; }
+.sidebar-status { min-height: 28px; align-items: center; }
+.sidebar-status .sidebar-visited { height: 28px; box-sizing: border-box; display: inline-flex; align-items: center; }
