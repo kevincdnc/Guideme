@@ -2824,3 +2824,8 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Popup de progression : compteur de la même taille que sa ligne ; « Afficher tous les spots » mieux centré dans le bas */
 .progress-head span b { font-size: inherit !important; font-weight: 700 !important; }
 .progress-menu .progress-toggle { padding-top: 18px !important; }
+
+/* Popup : trait vert de 1 px autour de Léon et Cornouaille ; un peu d'air sous les types de spots et sous « Voir tous mes lieux visités » */
+.progress-menu .terr-grid--big .terr-arc { stroke-width: 1px; }
+.progress-menu .progress-cats { margin-bottom: 6px !important; }
+.progress-menu .progress-account { margin-bottom: 4px; }
