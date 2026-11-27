@@ -14,7 +14,10 @@ export default defineConfig({
   base: BASE,
   build: {
     chunkSizeWarningLimit: 900,
-    rollupOptions: { output: { manualChunks: { maplibre: ['maplibre-gl'] } } },
+    rollupOptions: {
+      input: { main: 'index.html', admin: 'admin/index.html' }, // site + studio (/admin)
+      output: { manualChunks: { maplibre: ['maplibre-gl'] } },
+    },
   },
   plugins: [
     react(),
@@ -46,7 +49,7 @@ export default defineConfig({
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         // Les pages de lieux sont de vraies pages : ne pas les remplacer par la carte
-        navigateFallbackDenylist: [/\/lieu\//],
+        navigateFallbackDenylist: [/\/lieu\//, /\/admin\//],
         // Hors ligne : tuiles de carte et images d'archives déjà vues restent disponibles
         // (utile à la Pointe du Raz, où le réseau est faible).
         runtimeCaching: [

@@ -67,7 +67,15 @@ export const REGIONS = [
 ];
 const REGION_OF = Object.fromEntries(REGIONS.flatMap((r) => r.ids.map((id) => [id, r.id])));
 
-export const PLACES = [pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, phareArMen, phareTevennec, phareVieille, phareSein, phareKereon, phareJument, phareCreach, phareStiff, phareFour, pharePierresNoires, phareIleVierge, phareSaintMathieu, pharePetitMinou, phareTrezien, phareBatz, pharePortzic, pharePenfret, phareKermorvan, ...SOON].map((p) =>
+// Studio (/admin) : en mode aperçu (?preview=1), les brouillons du navigateur remplacent les champs des fiches
+function withDrafts(list) {
+  if (typeof window === 'undefined' || !/[?&]preview=1/.test(window.location.search)) return list;
+  let drafts = {};
+  try { drafts = JSON.parse(window.localStorage.getItem('guideme:studio:drafts') || '{}'); } catch { /* ignore */ }
+  return list.map((p) => (drafts[p.id] ? { ...p, ...drafts[p.id] } : p));
+}
+
+export const PLACES = withDrafts([pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, phareArMen, phareTevennec, phareVieille, phareSein, phareKereon, phareJument, phareCreach, phareStiff, phareFour, pharePierresNoires, phareIleVierge, phareSaintMathieu, pharePetitMinou, phareTrezien, phareBatz, pharePortzic, pharePenfret, phareKermorvan, ...SOON]).map((p) =>
   p.available ? { ...p, region: REGION_OF[p.id], readingMinutes: readingMinutes(p) } : p,
 );
 

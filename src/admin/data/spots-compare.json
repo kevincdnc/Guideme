@@ -1,0 +1,2365 @@
+{
+ "claude": [
+  {
+   "n": 1,
+   "name": "Pointe du Raz",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Plogoff",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Grand Site de France face au raz de Sein",
+   "match": "GM-001"
+  },
+  {
+   "n": 2,
+   "name": "Phare de la Vieille",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Plogoff",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le donjon de granit du raz de Sein",
+   "match": "GM-004"
+  },
+  {
+   "n": 3,
+   "name": "Phare du Tévennec",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Au large de Cléden",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "L'îlot réputé hanté que les gardiens fuyaient",
+   "match": "GM-005"
+  },
+  {
+   "n": 4,
+   "name": "Pointe du Van",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Cléden-Cap-Sizun",
+   "tags": [
+    "Site naturel",
+    "Patrimoine"
+   ],
+   "pitch": "Falaises sauvages et chapelle Saint-They",
+   "match": "GM-002"
+  },
+  {
+   "n": 5,
+   "name": "Baie des Trépassés",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Plogoff / Cléden",
+   "tags": [
+    "Plage",
+    "Légendaire"
+   ],
+   "pitch": "La plage de la légende de la ville d'Ys",
+   "match": "GM-003"
+  },
+  {
+   "n": 6,
+   "name": "Audierne",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Audierne",
+   "tags": [
+    "Port",
+    "Villes & villages"
+   ],
+   "pitch": "Le port du Cap Sizun, à l'embouchure du Goyen"
+  },
+  {
+   "n": 7,
+   "name": "Pointe du Millier",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Beuzec-Cap-Sizun",
+   "tags": [
+    "Phare",
+    "Site naturel"
+   ],
+   "pitch": "Petit phare au-dessus de la baie de Douarnenez"
+  },
+  {
+   "n": 8,
+   "name": "Menez Dregan",
+   "live": true,
+   "region": "Cap Sizun",
+   "commune": "Plouhinec",
+   "tags": [
+    "Préhistoire",
+    "Légendaire"
+   ],
+   "pitch": "L'un des plus anciens foyers maîtrisés d'Europe",
+   "match": "GM-009"
+  },
+  {
+   "n": 9,
+   "name": "Réserve naturelle du Cap Sizun",
+   "live": false,
+   "region": "Cap Sizun",
+   "commune": "Goulien",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Falaises à oiseaux marins, l'une des plus anciennes réserves de Bretagne",
+   "match": "GM-008"
+  },
+  {
+   "n": 10,
+   "name": "Pointe de Brézellec",
+   "live": false,
+   "region": "Cap Sizun",
+   "commune": "Cléden-Cap-Sizun",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Balcon sur les falaises de la côte nord"
+  },
+  {
+   "n": 11,
+   "name": "Plage de Pors Peron",
+   "live": false,
+   "region": "Cap Sizun",
+   "commune": "Beuzec-Cap-Sizun",
+   "tags": [
+    "Plage"
+   ],
+   "pitch": "Crique abritée de la baie de Douarnenez"
+  },
+  {
+   "n": 12,
+   "name": "Notre-Dame-de-Roscudon",
+   "live": false,
+   "region": "Cap Sizun",
+   "commune": "Pont-Croix",
+   "tags": [
+    "Patrimoine",
+    "Villes & villages"
+   ],
+   "pitch": "Collégiale gothique dont la flèche a inspiré Quimper",
+   "match": "GM-010"
+  },
+  {
+   "n": 13,
+   "name": "Île de Sein",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Île-de-Sein",
+   "tags": [
+    "Villes & villages",
+    "Légendaire"
+   ],
+   "pitch": "L'île au ras de l'eau, compagnon de la Libération",
+   "match": "GM-058"
+  },
+  {
+   "n": 14,
+   "name": "Phare de Sein",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Île-de-Sein",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le grand phare de l'île",
+   "match": "GM-057"
+  },
+  {
+   "n": 15,
+   "name": "Phare d'Ar-Men",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Chaussée de Sein",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "« L'enfer des enfers » des gardiens",
+   "match": "GM-056"
+  },
+  {
+   "n": 16,
+   "name": "Ouessant",
+   "live": false,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Villes & villages",
+    "Site naturel"
+   ],
+   "pitch": "L'île du bout du monde et ses moutons noirs"
+  },
+  {
+   "n": 17,
+   "name": "Phare du Créac'h",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "L'un des phares les plus puissants du monde",
+   "match": "GM-059"
+  },
+  {
+   "n": 18,
+   "name": "Phare du Stiff",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le doyen des phares d'Ouessant, œuvre de Vauban",
+   "match": "GM-062"
+  },
+  {
+   "n": 19,
+   "name": "Phare de la Jument",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "La photo de la vague mythique",
+   "match": "GM-060"
+  },
+  {
+   "n": 20,
+   "name": "Phare de Kéréon",
+   "live": true,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le « palace » des phares en mer",
+   "match": "GM-061"
+  },
+  {
+   "n": 21,
+   "name": "Phare de Nividic",
+   "live": false,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "Le phare relié à la côte par des pylônes"
+  },
+  {
+   "n": 22,
+   "name": "Musée des Phares et Balises",
+   "live": false,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Au pied du Créac'h, l'histoire de la signalisation maritime"
+  },
+  {
+   "n": 23,
+   "name": "Écomusée de Niou Uhella",
+   "live": false,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Ouessant",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Deux maisons ouessantines traditionnelles"
+  },
+  {
+   "n": 24,
+   "name": "Île de Molène",
+   "live": false,
+   "region": "Îles et mer d'Iroise",
+   "commune": "Molène",
+   "tags": [
+    "Villes & villages",
+    "Site naturel"
+   ],
+   "pitch": "Le petit archipel entre Ouessant et le continent"
+  },
+  {
+   "n": 25,
+   "name": "Pointe Saint-Mathieu",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Plougonvelin",
+   "tags": [
+    "Phare",
+    "Patrimoine"
+   ],
+   "pitch": "Un phare dans les ruines d'une abbaye",
+   "match": "GM-071"
+  },
+  {
+   "n": 26,
+   "name": "Phare de Kermorvan",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Le Conquet",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Au bout de la presqu'île de Kermorvan",
+   "match": "GM-074"
+  },
+  {
+   "n": 27,
+   "name": "Phare des Pierres Noires",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Large de Saint-Mathieu",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le phare rouge et blanc du large"
+  },
+  {
+   "n": 28,
+   "name": "Phare de Trézien",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Plouarzel",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le phare des terres, au milieu des champs"
+  },
+  {
+   "n": 29,
+   "name": "Phare du Four",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Porspoder",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "Battu par les plus grosses tempêtes"
+  },
+  {
+   "n": 30,
+   "name": "Phare du Petit Minou",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Plouzané",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le phare au bout de sa passerelle, à l'entrée du goulet",
+   "match": "GM-073"
+  },
+  {
+   "n": 31,
+   "name": "Phare du Portzic",
+   "live": true,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Brest",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "La sentinelle du goulet de Brest"
+  },
+  {
+   "n": 32,
+   "name": "Pointe de Corsen",
+   "live": false,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Plouarzel",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Le point le plus à l'ouest de la France continentale"
+  },
+  {
+   "n": 33,
+   "name": "Le Conquet",
+   "live": false,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Le Conquet",
+   "tags": [
+    "Port",
+    "Villes & villages"
+   ],
+   "pitch": "Port de pêche et embarquement vers les îles"
+  },
+  {
+   "n": 34,
+   "name": "Château de Brest",
+   "live": false,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Brest",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Forteresse millénaire, musée national de la Marine",
+   "match": "GM-066"
+  },
+  {
+   "n": 35,
+   "name": "Pont de Recouvrance",
+   "live": false,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Brest",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "pitch": "Longtemps le plus grand pont levant d'Europe"
+  },
+  {
+   "n": 36,
+   "name": "Téléphérique de Brest",
+   "live": false,
+   "region": "Pays d'Iroise et Brest",
+   "commune": "Brest",
+   "tags": [
+    "Légendaire"
+   ],
+   "pitch": "Une cabine au-dessus de la Penfeld"
+  },
+  {
+   "n": 37,
+   "name": "Phare de l'île Vierge",
+   "live": true,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Plouguerneau",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "Le plus haut phare d'Europe, 82,5 m",
+   "match": "GM-079"
+  },
+  {
+   "n": 38,
+   "name": "L'Aber Wrac'h",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Landéda",
+   "tags": [
+    "Port",
+    "Site naturel"
+   ],
+   "pitch": "Le grand aber et son port de plaisance"
+  },
+  {
+   "n": 39,
+   "name": "Abbaye des Anges",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Landéda",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Couvent franciscain face à l'Aber Wrac'h",
+   "match": "GM-083"
+  },
+  {
+   "n": 40,
+   "name": "Aber Benoît",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Saint-Pabu / Landéda",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Le plus sauvage des abers"
+  },
+  {
+   "n": 41,
+   "name": "Meneham",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Kerlouan",
+   "tags": [
+    "Patrimoine",
+    "Villes & villages",
+    "Légendaire"
+   ],
+   "pitch": "Le corps de garde coincé entre les rochers",
+   "match": "GM-080"
+  },
+  {
+   "n": 42,
+   "name": "Menhir de Men Marz",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Plounéour-Brignogan-Plages",
+   "tags": [
+    "Préhistoire"
+   ],
+   "pitch": "Menhir géant surmonté d'une croix",
+   "match": "GM-084"
+  },
+  {
+   "n": 43,
+   "name": "Phare de Pontusval",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Plounéour-Brignogan-Plages",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Petit phare au milieu des chaos de granit",
+   "match": "GM-081"
+  },
+  {
+   "n": 44,
+   "name": "Dunes de Keremma",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Tréflez",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "pitch": "Un cordon de dunes sauvage sur des kilomètres"
+  },
+  {
+   "n": 45,
+   "name": "Château de Kerjean",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Saint-Vougay",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Joyau de la Renaissance en Léon",
+   "match": "GM-088"
+  },
+  {
+   "n": 46,
+   "name": "Saint-Pol-de-Léon et le Kreisker",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Saint-Pol-de-Léon",
+   "tags": [
+    "Patrimoine",
+    "Villes & villages"
+   ],
+   "pitch": "Cathédrale et clocher-phare du Léon",
+   "match": "GM-089"
+  },
+  {
+   "n": 47,
+   "name": "Roscoff",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Roscoff",
+   "tags": [
+    "Port",
+    "Villes & villages"
+   ],
+   "pitch": "Vieille ville de corsaires et port vers l'Angleterre",
+   "match": "GM-086"
+  },
+  {
+   "n": 48,
+   "name": "Phare de l'île de Batz",
+   "live": true,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Île-de-Batz",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le phare de l'île en face de Roscoff"
+  },
+  {
+   "n": 49,
+   "name": "Jardin Georges Delaselle",
+   "live": false,
+   "region": "Abers et Côte des Légendes",
+   "commune": "Île-de-Batz",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Jardin exotique au climat doux de l'île",
+   "match": "GM-087"
+  },
+  {
+   "n": 50,
+   "name": "Cairn de Barnenez",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Plouezoc'h",
+   "tags": [
+    "Préhistoire",
+    "Légendaire"
+   ],
+   "pitch": "L'un des plus anciens monuments d'Europe",
+   "match": "GM-092"
+  },
+  {
+   "n": 51,
+   "name": "Château du Taureau",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Plouezoc'h (baie)",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "pitch": "Le fort-prison planté au milieu de la baie",
+   "match": "GM-091"
+  },
+  {
+   "n": 52,
+   "name": "Viaduc de Morlaix",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Morlaix",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Le géant de pierre au-dessus de la ville",
+   "match": "GM-093"
+  },
+  {
+   "n": 53,
+   "name": "Morlaix, maisons à pondalez",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Morlaix",
+   "tags": [
+    "Villes & villages",
+    "Patrimoine"
+   ],
+   "pitch": "Maisons à colombages et escaliers intérieurs"
+  },
+  {
+   "n": 54,
+   "name": "Île Callot",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Carantec",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "L'île qu'on rejoint à pied à marée basse"
+  },
+  {
+   "n": 55,
+   "name": "Pointe de Primel",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Plougasnou",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Chaos de granit rose au bord de la Manche",
+   "match": "GM-094"
+  },
+  {
+   "n": 56,
+   "name": "Saint-Jean-du-Doigt",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Saint-Jean-du-Doigt",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "pitch": "L'enclos qui garde une relique de saint Jean"
+  },
+  {
+   "n": 57,
+   "name": "Locquirec",
+   "live": false,
+   "region": "Baie de Morlaix",
+   "commune": "Locquirec",
+   "tags": [
+    "Villes & villages",
+    "Plage"
+   ],
+   "pitch": "Port et plages au bout du Finistère nord",
+   "match": "GM-095"
+  },
+  {
+   "n": 58,
+   "name": "Roc'h Trévezel",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Plounéour-Ménez",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Crête de schiste, l'un des toits de la Bretagne",
+   "match": "GM-098"
+  },
+  {
+   "n": 59,
+   "name": "Mont Saint-Michel de Brasparts",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Saint-Rivoal",
+   "tags": [
+    "Patrimoine",
+    "Site naturel"
+   ],
+   "pitch": "Chapelle au sommet des landes",
+   "match": "GM-096"
+  },
+  {
+   "n": 60,
+   "name": "Yeun Elez",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Brennilis",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Le marais réputé être la porte de l'Enfer"
+  },
+  {
+   "n": 61,
+   "name": "Forêt et chaos de Huelgoat",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Huelgoat",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Roche Tremblante, gouffre et blocs géants",
+   "match": "GM-097"
+  },
+  {
+   "n": 62,
+   "name": "Enclos de Saint-Thégonnec",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Saint-Thégonnec",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "L'un des plus riches enclos paroissiaux"
+  },
+  {
+   "n": 63,
+   "name": "Enclos de Guimiliau",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Guimiliau",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Calvaire aux plus de 200 personnages",
+   "match": "GM-099"
+  },
+  {
+   "n": 64,
+   "name": "Enclos de Lampaul-Guimiliau",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Lampaul-Guimiliau",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Église au décor intérieur foisonnant"
+  },
+  {
+   "n": 65,
+   "name": "Écomusée des Monts d'Arrée",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Commana",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Les moulins de Kerouat, un village meunier"
+  },
+  {
+   "n": 66,
+   "name": "Château de Trévarez",
+   "live": false,
+   "region": "Monts d'Arrée et enclos paroissiaux",
+   "commune": "Saint-Goazec",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Le « château rose » et ses jardins",
+   "match": "GM-100"
+  },
+  {
+   "n": 67,
+   "name": "Pointe de Pen-Hir et Tas de Pois",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Falaises vertigineuses et rochers alignés",
+   "match": "GM-044"
+  },
+  {
+   "n": 68,
+   "name": "Pointe des Espagnols",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Roscanvel",
+   "tags": [
+    "Site naturel",
+    "Patrimoine"
+   ],
+   "pitch": "Fortifications face à la rade de Brest",
+   "match": "GM-049"
+  },
+  {
+   "n": 69,
+   "name": "Cap de la Chèvre",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Crozon",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Le bout sauvage de la presqu'île",
+   "match": "GM-046"
+  },
+  {
+   "n": 70,
+   "name": "Tour Vauban",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Patrimoine",
+    "Port"
+   ],
+   "pitch": "Inscrite au patrimoine mondial de l'Unesco",
+   "match": "GM-050"
+  },
+  {
+   "n": 71,
+   "name": "Alignements de Lagatjar",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Préhistoire"
+   ],
+   "pitch": "Menhirs alignés face à l'océan",
+   "match": "GM-051"
+  },
+  {
+   "n": 72,
+   "name": "Grottes marines de Morgat",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Crozon",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Grottes colorées à visiter en bateau"
+  },
+  {
+   "n": 73,
+   "name": "Plage de la Palue",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Crozon",
+   "tags": [
+    "Plage"
+   ],
+   "pitch": "Spot de surf sauvage, baignade dangereuse"
+  },
+  {
+   "n": 74,
+   "name": "Abbaye de Landévennec",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Landévennec",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "pitch": "Fondée par saint Guénolé au Ve siècle"
+  },
+  {
+   "n": 75,
+   "name": "Cimetière de navires",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Landévennec",
+   "tags": [
+    "Légendaire"
+   ],
+   "pitch": "Navires retirés du service qui attendent dans l'Aulne"
+  },
+  {
+   "n": 76,
+   "name": "Ménez-Hom",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Dineault / Plomodiern",
+   "tags": [
+    "Site naturel"
+   ],
+   "pitch": "Le sommet qui domine la baie de Douarnenez",
+   "match": "GM-054"
+  },
+  {
+   "n": 77,
+   "name": "Locronan",
+   "live": true,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Locronan",
+   "tags": [
+    "Villes & villages",
+    "Patrimoine"
+   ],
+   "pitch": "Village de granit classé parmi les plus beaux de France",
+   "match": "GM-023"
+  },
+  {
+   "n": 78,
+   "name": "Sainte-Anne-la-Palud",
+   "live": false,
+   "region": "Presqu'île de Crozon et Porzay",
+   "commune": "Plonévez-Porzay",
+   "tags": [
+    "Patrimoine",
+    "Plage"
+   ],
+   "pitch": "Chapelle du grand pardon au bord de la plage",
+   "match": "GM-028"
+  },
+  {
+   "n": 79,
+   "name": "Phare d'Eckmühl",
+   "live": true,
+   "region": "Pays Bigouden",
+   "commune": "Penmarc'h",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "pitch": "307 marches et murs d'opaline",
+   "match": "GM-014"
+  },
+  {
+   "n": 80,
+   "name": "Pointe de la Torche",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Plomeur",
+   "tags": [
+    "Plage",
+    "Préhistoire"
+   ],
+   "pitch": "Spot de surf et dolmen au sommet",
+   "match": "GM-013"
+  },
+  {
+   "n": 81,
+   "name": "Rochers de Saint-Guénolé",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Penmarc'h",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "Rochers battus par des vagues redoutables",
+   "match": "GM-016"
+  },
+  {
+   "n": 82,
+   "name": "Calvaire de Tronoën",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Saint-Jean-Trolimon",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "pitch": "Réputé être le plus ancien calvaire de Bretagne",
+   "match": "GM-015"
+  },
+  {
+   "n": 83,
+   "name": "Chapelle Notre-Dame-de-la-Joie",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Penmarc'h",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Chapelle posée au bord des vagues"
+  },
+  {
+   "n": 84,
+   "name": "Musée de la Préhistoire finistérienne",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Penmarc'h",
+   "tags": [
+    "Préhistoire"
+   ],
+   "pitch": "Menhirs et stèles du Finistère"
+  },
+  {
+   "n": 85,
+   "name": "Le Guilvinec et Haliotika",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Le Guilvinec",
+   "tags": [
+    "Port"
+   ],
+   "pitch": "Grand port de pêche et retour des chalutiers",
+   "match": "GM-017"
+  },
+  {
+   "n": 86,
+   "name": "Loctudy",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Loctudy",
+   "tags": [
+    "Port",
+    "Villes & villages"
+   ],
+   "pitch": "Port de pêche face à l'Île-Tudy"
+  },
+  {
+   "n": 87,
+   "name": "Île-Tudy",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Île-Tudy",
+   "tags": [
+    "Villes & villages",
+    "Plage"
+   ],
+   "pitch": "Village de pêcheurs sur sa presqu'île",
+   "match": "GM-018"
+  },
+  {
+   "n": 88,
+   "name": "Château de Pont-l'Abbé",
+   "live": false,
+   "region": "Pays Bigouden",
+   "commune": "Pont-l'Abbé",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Musée bigouden et coiffes",
+   "match": "GM-019"
+  },
+  {
+   "n": 89,
+   "name": "Douarnenez",
+   "live": true,
+   "region": "Cornouaille",
+   "commune": "Douarnenez",
+   "tags": [
+    "Port",
+    "Villes & villages"
+   ],
+   "pitch": "Port sardinier et Port-Musée",
+   "match": "GM-027"
+  },
+  {
+   "n": 90,
+   "name": "Île Tristan",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Douarnenez",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "pitch": "L'île des légendes de Tristan et du brigand Fontenelle",
+   "match": "GM-026"
+  },
+  {
+   "n": 91,
+   "name": "Quimper et la cathédrale Saint-Corentin",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Quimper",
+   "tags": [
+    "Patrimoine",
+    "Villes & villages"
+   ],
+   "pitch": "Capitale de la Cornouaille",
+   "match": "GM-024"
+  },
+  {
+   "n": 92,
+   "name": "Concarneau",
+   "live": true,
+   "region": "Cornouaille",
+   "commune": "Concarneau",
+   "tags": [
+    "Port",
+    "Patrimoine"
+   ],
+   "pitch": "La Ville close au milieu du port",
+   "match": "GM-036"
+  },
+  {
+   "n": 93,
+   "name": "Château de Kériolet",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Concarneau",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Château néogothique extravagant",
+   "match": "GM-037"
+  },
+  {
+   "n": 94,
+   "name": "Pont-Aven",
+   "live": true,
+   "region": "Cornouaille",
+   "commune": "Pont-Aven",
+   "tags": [
+    "Villes & villages",
+    "Patrimoine"
+   ],
+   "pitch": "La cité des peintres et des moulins",
+   "match": "GM-038"
+  },
+  {
+   "n": 95,
+   "name": "Pointe de Trévignon",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Trégunc",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "pitch": "Rochers et plages face aux Glénan"
+  },
+  {
+   "n": 96,
+   "name": "Archipel des Glénan",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Fouesnant",
+   "tags": [
+    "Site naturel",
+    "Plage",
+    "Légendaire"
+   ],
+   "pitch": "Lagon turquoise au large de la Cornouaille",
+   "match": "GM-031"
+  },
+  {
+   "n": 97,
+   "name": "Phare de Penfret",
+   "live": true,
+   "region": "Cornouaille",
+   "commune": "Fouesnant (Glénan)",
+   "tags": [
+    "Phare"
+   ],
+   "pitch": "Le phare de l'archipel des Glénan",
+   "match": "GM-035"
+  },
+  {
+   "n": 98,
+   "name": "Fort Cigogne",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Fouesnant (Glénan)",
+   "tags": [
+    "Patrimoine"
+   ],
+   "pitch": "Fort du XVIIIe siècle au cœur de l'archipel"
+  },
+  {
+   "n": 99,
+   "name": "Bénodet et l'Odet",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Bénodet",
+   "tags": [
+    "Port",
+    "Plage"
+   ],
+   "pitch": "Station balnéaire à l'embouchure de l'Odet"
+  },
+  {
+   "n": 100,
+   "name": "Quimperlé",
+   "live": false,
+   "region": "Cornouaille",
+   "commune": "Quimperlé",
+   "tags": [
+    "Villes & villages",
+    "Patrimoine"
+   ],
+   "pitch": "Ville haute, ville basse et abbatiale Sainte-Croix"
+  }
+ ],
+ "gpt": [
+  {
+   "id": "GM-001",
+   "rank": 1,
+   "region": "Cap Sizun",
+   "name": "Pointe du Raz",
+   "commune": "Plogoff",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-002",
+   "rank": 34,
+   "region": "Cap Sizun",
+   "name": "Pointe du Van",
+   "commune": "Cléden-Cap-Sizun",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-003",
+   "rank": 36,
+   "region": "Cap Sizun",
+   "name": "Baie des Trépassés",
+   "commune": "Cléden / Plogoff",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-004",
+   "rank": 7,
+   "region": "Cap Sizun",
+   "name": "Phare de la Vieille",
+   "commune": "Raz de Sein",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-005",
+   "rank": 15,
+   "region": "Cap Sizun",
+   "name": "Phare de Tévennec",
+   "commune": "Mer d’Iroise",
+   "tags": [
+    "Phare",
+    "Légendes",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-006",
+   "rank": 80,
+   "region": "Cap Sizun",
+   "name": "Pointe de Kastel Koz",
+   "commune": "Beuzec-Cap-Sizun",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": "À confirmer"
+  },
+  {
+   "id": "GM-007",
+   "rank": 100,
+   "region": "Cap Sizun",
+   "name": "Castel-Coz (site historique)",
+   "commune": "Beuzec-Cap-Sizun",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": "À confirmer"
+  },
+  {
+   "id": "GM-008",
+   "rank": 77,
+   "region": "Cap Sizun",
+   "name": "Réserve naturelle du Cap Sizun",
+   "commune": "Goulien",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-009",
+   "rank": 25,
+   "region": "Cap Sizun",
+   "name": "Menez Dregan",
+   "commune": "Plouhinec",
+   "tags": [
+    "Préhistoire",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-010",
+   "rank": 64,
+   "region": "Cap Sizun",
+   "name": "Cité historique de Pont-Croix",
+   "commune": "Pont-Croix",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-011",
+   "rank": 69,
+   "region": "Cap Sizun",
+   "name": "Chapelle Saint-They",
+   "commune": "Cléden-Cap-Sizun",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-012",
+   "rank": 81,
+   "region": "Cap Sizun",
+   "name": "Port de Pors Loubous",
+   "commune": "Plogoff",
+   "tags": [
+    "Patrimoine",
+    "Port"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-013",
+   "rank": 20,
+   "region": "Pays Bigouden",
+   "name": "Pointe de la Torche",
+   "commune": "Plomeur",
+   "tags": [
+    "Site naturel",
+    "Plage",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-014",
+   "rank": 16,
+   "region": "Pays Bigouden",
+   "name": "Phare d’Eckmühl",
+   "commune": "Penmarc’h",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-015",
+   "rank": 44,
+   "region": "Pays Bigouden",
+   "name": "Chapelle et calvaire de Tronoën",
+   "commune": "Saint-Jean-Trolimon",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-016",
+   "rank": 54,
+   "region": "Pays Bigouden",
+   "name": "Rochers de Saint-Guénolé",
+   "commune": "Penmarc’h",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-017",
+   "rank": 70,
+   "region": "Pays Bigouden",
+   "name": "Port du Guilvinec",
+   "commune": "Le Guilvinec",
+   "tags": [
+    "Ville & village",
+    "Port"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-018",
+   "rank": 78,
+   "region": "Pays Bigouden",
+   "name": "Île-Tudy",
+   "commune": "Île-Tudy",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-019",
+   "rank": 91,
+   "region": "Pays Bigouden",
+   "name": "Château des Barons du Pont",
+   "commune": "Pont-l’Abbé",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-020",
+   "rank": 90,
+   "region": "Pays Bigouden",
+   "name": "Menhirs de Lestriguiou",
+   "commune": "Plomeur",
+   "tags": [
+    "Préhistoire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-021",
+   "rank": 92,
+   "region": "Pays Bigouden",
+   "name": "Étang de Trunvel",
+   "commune": "Tréguennec",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-022",
+   "rank": 29,
+   "region": "Pays Bigouden",
+   "name": "Vestiges de l’usine de concassage",
+   "commune": "Tréguennec",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-023",
+   "rank": 10,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Locronan",
+   "commune": "Locronan",
+   "tags": [
+    "Ville & village",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-024",
+   "rank": 24,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Cathédrale Saint-Corentin",
+   "commune": "Quimper",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-025",
+   "rank": 71,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Quartier historique de Quimper",
+   "commune": "Quimper",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-026",
+   "rank": 50,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Île Tristan",
+   "commune": "Douarnenez",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-027",
+   "rank": 98,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Port-musée du Rosmeur et Port-Rhu",
+   "commune": "Douarnenez",
+   "tags": [
+    "Patrimoine",
+    "Port"
+   ],
+   "note": "À confirmer"
+  },
+  {
+   "id": "GM-028",
+   "rank": 93,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Plage de Sainte-Anne-la-Palud",
+   "commune": "Plonévez-Porzay",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-029",
+   "rank": 94,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Montagne de Locronan",
+   "commune": "Locronan",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-030",
+   "rank": 95,
+   "region": "Cornouaille – Quimper, Douarnenez & Porzay",
+   "name": "Jardin du prieuré de Locmaria",
+   "commune": "Quimper",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-031",
+   "rank": 4,
+   "region": "Pays Fouesnantais & Glénan",
+   "name": "Archipel des Glénan – île Saint-Nicolas",
+   "commune": "Fouesnant",
+   "tags": [
+    "Site naturel",
+    "Plage",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-032",
+   "rank": 72,
+   "region": "Pays Fouesnantais & Glénan",
+   "name": "Criques de Beg-Meil",
+   "commune": "Fouesnant",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-033",
+   "rank": 96,
+   "region": "Pays Fouesnantais & Glénan",
+   "name": "Pointe de Mousterlin",
+   "commune": "Fouesnant",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-034",
+   "rank": 97,
+   "region": "Pays Fouesnantais & Glénan",
+   "name": "Port de Sainte-Marine",
+   "commune": "Combrit",
+   "tags": [
+    "Ville & village",
+    "Port"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-035",
+   "rank": 58,
+   "region": "Pays Fouesnantais & Glénan",
+   "name": "Phare de Penfret",
+   "commune": "Glénan",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-036",
+   "rank": 19,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Ville Close de Concarneau",
+   "commune": "Concarneau",
+   "tags": [
+    "Ville & village",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-037",
+   "rank": 42,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Château de Kériolet",
+   "commune": "Concarneau",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-038",
+   "rank": 38,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Pont-Aven",
+   "commune": "Pont-Aven",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-039",
+   "rank": 51,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Chaumières de Kerascoët",
+   "commune": "Névez",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-040",
+   "rank": 73,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Plage de Tahiti – Raguénez",
+   "commune": "Névez",
+   "tags": [
+    "Site naturel",
+    "Plage"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-041",
+   "rank": 52,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Port de Doëlan",
+   "commune": "Clohars-Carnoët",
+   "tags": [
+    "Ville & village",
+    "Port"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-042",
+   "rank": 68,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Site abbatial de Saint-Maurice",
+   "commune": "Clohars-Carnoët",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-043",
+   "rank": 47,
+   "region": "Concarneau, Aven & Quimperlé",
+   "name": "Roches du Diable",
+   "commune": "Locunolé / Guilligomarc’h",
+   "tags": [
+    "Site naturel",
+    "Légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-044",
+   "rank": 3,
+   "region": "Crozon & Aulne maritime",
+   "name": "Pointe de Pen-Hir – Tas de Pois",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-045",
+   "rank": 12,
+   "region": "Crozon & Aulne maritime",
+   "name": "Crique de l’île Vierge",
+   "commune": "Crozon",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-046",
+   "rank": 35,
+   "region": "Crozon & Aulne maritime",
+   "name": "Cap de la Chèvre",
+   "commune": "Crozon",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-047",
+   "rank": 37,
+   "region": "Crozon & Aulne maritime",
+   "name": "Pointe de Dinan",
+   "commune": "Crozon",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-048",
+   "rank": 55,
+   "region": "Crozon & Aulne maritime",
+   "name": "Pointe du Toulinguet",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-049",
+   "rank": 89,
+   "region": "Crozon & Aulne maritime",
+   "name": "Pointe des Espagnols",
+   "commune": "Roscanvel",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-050",
+   "rank": 22,
+   "region": "Crozon & Aulne maritime",
+   "name": "Tour Vauban",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-051",
+   "rank": 39,
+   "region": "Crozon & Aulne maritime",
+   "name": "Alignements de Lagatjar",
+   "commune": "Camaret-sur-Mer",
+   "tags": [
+    "Préhistoire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-052",
+   "rank": 56,
+   "region": "Crozon & Aulne maritime",
+   "name": "Cimetière de bateaux de Rostellec",
+   "commune": "Crozon",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-053",
+   "rank": 27,
+   "region": "Crozon & Aulne maritime",
+   "name": "Fort des Capucins",
+   "commune": "Roscanvel",
+   "tags": [
+    "Histoire & légendes"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-054",
+   "rank": 49,
+   "region": "Crozon & Aulne maritime",
+   "name": "Ménez-Hom",
+   "commune": "Dinéault",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-055",
+   "rank": 57,
+   "region": "Crozon & Aulne maritime",
+   "name": "Pont de Térénez",
+   "commune": "Rosnoën / Argol",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-056",
+   "rank": 5,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Phare d’Ar-Men",
+   "commune": "Chaussée de Sein",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-057",
+   "rank": 59,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Grand phare de l’île de Sein",
+   "commune": "Île de Sein",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-058",
+   "rank": 30,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Village de l’île de Sein",
+   "commune": "Île de Sein",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-059",
+   "rank": 11,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Phare du Créac’h",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-060",
+   "rank": 6,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Phare de la Jument",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-061",
+   "rank": 18,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Phare de Kéréon",
+   "commune": "Mer d’Iroise",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-062",
+   "rank": 53,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Phare du Stiff",
+   "commune": "Ouessant",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-063",
+   "rank": 26,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Pointe de Pern",
+   "commune": "Ouessant",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-064",
+   "rank": 87,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Pointe de Porz Doun",
+   "commune": "Ouessant",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-065",
+   "rank": 60,
+   "region": "Îles de la mer d’Iroise",
+   "name": "Îlot de Ledenez Vraz",
+   "commune": "Molène",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-066",
+   "rank": 61,
+   "region": "Brest & rade",
+   "name": "Château de Brest",
+   "commune": "Brest",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-067",
+   "rank": 88,
+   "region": "Brest & rade",
+   "name": "Ateliers des Capucins",
+   "commune": "Brest",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-068",
+   "rank": 62,
+   "region": "Brest & rade",
+   "name": "Abbaye de Daoulas",
+   "commune": "Daoulas",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-069",
+   "rank": 76,
+   "region": "Brest & rade",
+   "name": "Calvaire monumental de Plougastel",
+   "commune": "Plougastel-Daoulas",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-070",
+   "rank": 79,
+   "region": "Brest & rade",
+   "name": "Le Faou",
+   "commune": "Le Faou",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-071",
+   "rank": 21,
+   "region": "Pays d’Iroise",
+   "name": "Phare de Saint-Mathieu",
+   "commune": "Plougonvelin",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-072",
+   "rank": 40,
+   "region": "Pays d’Iroise",
+   "name": "Abbaye Saint-Mathieu de Fine-Terre",
+   "commune": "Plougonvelin",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-073",
+   "rank": 28,
+   "region": "Pays d’Iroise",
+   "name": "Phare du Petit Minou",
+   "commune": "Plouzané",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-074",
+   "rank": 46,
+   "region": "Pays d’Iroise",
+   "name": "Phare de Kermorvan",
+   "commune": "Le Conquet",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-075",
+   "rank": 74,
+   "region": "Pays d’Iroise",
+   "name": "Fort de Bertheaume",
+   "commune": "Plougonvelin",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-076",
+   "rank": 66,
+   "region": "Pays d’Iroise",
+   "name": "Route touristique de Landunvez",
+   "commune": "Landunvez",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-077",
+   "rank": 31,
+   "region": "Pays d’Iroise",
+   "name": "Menhir de Kerloas",
+   "commune": "Plouarzel",
+   "tags": [
+    "Préhistoire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-078",
+   "rank": 85,
+   "region": "Pays d’Iroise",
+   "name": "Presqu’île Saint-Laurent",
+   "commune": "Porspoder",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-079",
+   "rank": 2,
+   "region": "Abers & Côte des Légendes",
+   "name": "Grand phare de l’île Vierge",
+   "commune": "Plouguerneau",
+   "tags": [
+    "Phare",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-080",
+   "rank": 17,
+   "region": "Abers & Côte des Légendes",
+   "name": "Village de Meneham",
+   "commune": "Kerlouan",
+   "tags": [
+    "Ville & village",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-081",
+   "rank": 41,
+   "region": "Abers & Côte des Légendes",
+   "name": "Phare de Pontusval",
+   "commune": "Plounéour-Brignogan-Plages",
+   "tags": [
+    "Phare"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-082",
+   "rank": 82,
+   "region": "Abers & Côte des Légendes",
+   "name": "Dunes de Sainte-Marguerite",
+   "commune": "Landéda",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-083",
+   "rank": 83,
+   "region": "Abers & Côte des Légendes",
+   "name": "Abbaye des Anges",
+   "commune": "Landéda",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-084",
+   "rank": 75,
+   "region": "Abers & Côte des Légendes",
+   "name": "Menhir de Men Marz",
+   "commune": "Plounéour-Brignogan-Plages",
+   "tags": [
+    "Préhistoire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-085",
+   "rank": 84,
+   "region": "Abers & Côte des Légendes",
+   "name": "Presqu’île de Sainte-Marguerite et île Guénioc",
+   "commune": "Landéda",
+   "tags": [
+    "Préhistoire",
+    "Site naturel"
+   ],
+   "note": "À confirmer"
+  },
+  {
+   "id": "GM-086",
+   "rank": 45,
+   "region": "Pays du Léon",
+   "name": "Centre historique de Roscoff",
+   "commune": "Roscoff",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-087",
+   "rank": 67,
+   "region": "Pays du Léon",
+   "name": "Jardin Georges Delaselle",
+   "commune": "Île de Batz",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-088",
+   "rank": 32,
+   "region": "Pays du Léon",
+   "name": "Château de Kerjean",
+   "commune": "Saint-Vougay",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-089",
+   "rank": 63,
+   "region": "Pays du Léon",
+   "name": "Chapelle du Kreisker",
+   "commune": "Saint-Pol-de-Léon",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-090",
+   "rank": 99,
+   "region": "Pays du Léon",
+   "name": "Corps de garde de Lavillo",
+   "commune": "Cléder",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": "À confirmer"
+  },
+  {
+   "id": "GM-091",
+   "rank": 13,
+   "region": "Baie de Morlaix & Trégor",
+   "name": "Château du Taureau",
+   "commune": "Baie de Morlaix",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-092",
+   "rank": 9,
+   "region": "Baie de Morlaix & Trégor",
+   "name": "Cairn de Barnenez",
+   "commune": "Plouezoc’h",
+   "tags": [
+    "Préhistoire",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-093",
+   "rank": 43,
+   "region": "Baie de Morlaix & Trégor",
+   "name": "Viaduc et vieille ville de Morlaix",
+   "commune": "Morlaix",
+   "tags": [
+    "Ville & village"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-094",
+   "rank": 65,
+   "region": "Baie de Morlaix & Trégor",
+   "name": "Pointe de Primel",
+   "commune": "Plougasnou",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-095",
+   "rank": 86,
+   "region": "Baie de Morlaix & Trégor",
+   "name": "Pointe du Château de Locquirec",
+   "commune": "Locquirec",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-096",
+   "rank": 8,
+   "region": "Monts d’Arrée & Centre-Finistère",
+   "name": "Mont Saint-Michel de Brasparts",
+   "commune": "Saint-Rivoal",
+   "tags": [
+    "Site naturel",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-097",
+   "rank": 14,
+   "region": "Monts d’Arrée & Centre-Finistère",
+   "name": "Chaos de la forêt de Huelgoat",
+   "commune": "Huelgoat",
+   "tags": [
+    "Site naturel",
+    "Légendes",
+    "Légendaire"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-098",
+   "rank": 48,
+   "region": "Monts d’Arrée & Centre-Finistère",
+   "name": "Roc’h Trévezel",
+   "commune": "Plounéour-Ménez",
+   "tags": [
+    "Site naturel"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-099",
+   "rank": 33,
+   "region": "Monts d’Arrée & Centre-Finistère",
+   "name": "Enclos paroissial de Guimiliau",
+   "commune": "Guimiliau",
+   "tags": [
+    "Patrimoine"
+   ],
+   "note": null
+  },
+  {
+   "id": "GM-100",
+   "rank": 23,
+   "region": "Monts d’Arrée & Centre-Finistère",
+   "name": "Domaine de Trévarez",
+   "commune": "Saint-Goazec",
+   "tags": [
+    "Patrimoine",
+    "Légendaire"
+   ],
+   "note": null
+  }
+ ]
+}
