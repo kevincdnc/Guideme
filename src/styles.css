@@ -2573,3 +2573,13 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
   52%  { transform: rotate(-8deg) scale(.965); opacity: .7;  animation-timing-function: cubic-bezier(.45,0,.35,1); }
   100% { transform: rotate(-8deg) scale(1);    opacity: .62; }
 }
+
+/* Tampon : retour exact à la version précédente (mêmes temps), avec un fondu d'entrée de 0,5 s */
+@keyframes stampV3 {
+  0%   { transform: rotate(-8deg) scale(1.3);  opacity: .78; animation-timing-function: cubic-bezier(.5,0,.9,.5); }
+  35%  { transform: rotate(-8deg) scale(1);    opacity: .78; animation-timing-function: cubic-bezier(.25,.6,.35,1); }
+  52%  { transform: rotate(-8deg) scale(.965); opacity: .7;  animation-timing-function: cubic-bezier(.45,0,.35,1); }
+  100% { transform: rotate(-8deg) scale(1);    opacity: .62; }
+}
+.pc-stamp.is-new svg { animation: stampFadeIn .5s ease-out .45s both; }
+@keyframes stampFadeIn { from { opacity: 0; } to { opacity: 1; } }
