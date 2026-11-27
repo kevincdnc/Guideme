@@ -2628,3 +2628,8 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 /* Coupe des records : jaune GuideMe, flat, sans contour */
 .pc-records svg { fill: #FFB900 !important; stroke: #FFB900 !important; }
 .pc-records { color: #9a6c00 !important; }
+
+/* Titres (Rubik) en 700 partout, y compris dans les cartes */
+h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name, .keyfig dt, .lh-id-big dd { font-weight: 700 !important; }
+/* % de la barre noire : épaississement plus léger */
+.brand-bar .progress-pct, .topbar .progress-pct { -webkit-text-stroke-width: .35px; }

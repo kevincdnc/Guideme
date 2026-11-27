@@ -27,12 +27,22 @@ FLARE = (f'<g class="gmb-flare"><circle cx="{CX}" cy="{CY}" r="22" fill="url(#gm
 
 # --- images clés : 1 tour, 2,6 s, montée/descente douces (a = 0,22) ---
 T, N, A = 2.0, 80, 0.22
-def prof(u):
-    vmax = 1 / (1 - A)
-    if u < A: return vmax * u * u / (2 * A)
-    if u > 1 - A: w = 1 - u; return 1 - vmax * w * w / (2 * A)
-    return vmax * (A / 2 + (u - A))
-def spd(u): return u / A if u < A else (1 - u) / A if u > 1 - A else 1.0
+# Vitesse : montée douce, croisière, puis légère accélération progressive après le passage à gauche,
+# et freinage final plus court. Position = intégrale de la vitesse (normalisée).
+A_IN, A_OUT, BOOST_FROM, BOOST = 0.22, 0.13, 0.45, 0.18
+def vel(u):
+    v = min(1.0, u / A_IN)
+    if u > BOOST_FROM: v *= 1 + BOOST * min(1.0, (u - BOOST_FROM) / (1 - A_OUT - BOOST_FROM))
+    if u > 1 - A_OUT: v *= (1 - u) / A_OUT
+    return v
+_STEPS = 4000
+_cum = [0.0]
+for _k in range(_STEPS):
+    _cum.append(_cum[-1] + vel((_k + .5) / _STEPS) / _STEPS)
+_TOT = _cum[-1]
+_VMAX = max(vel(k / _STEPS) for k in range(_STEPS + 1))
+def prof(u): return _cum[min(_STEPS, round(u * _STEPS))] / _TOT
+def spd(u): return vel(u) / _VMAX
 GRAY, GOLD = (0x5c, 0x5c, 0x5c), (0xFF, 0xB9, 0x00)
 def mix(t):
     t = max(0, min(1, t)); return '#%02x%02x%02x' % tuple(round(x + (y - x) * t) for x, y in zip(GRAY, GOLD))
