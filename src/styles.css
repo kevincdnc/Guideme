@@ -2341,3 +2341,40 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .map.z-labels .gm-marker .gm-marker-label { display: inline-flex !important; }
 /* Mobile : cartes du bandeau trop étroites pour le tampon, la case verte suffit */
 @media (max-width: 899px) { .rail .pc-stamp, .rail-wrap .pc-stamp { display: none !important; } }
+
+/* =====================================================================
+   Info-bulle de survol v3 : photo 4:3, titre + commune, actions 8 px, CTA principal
+   ===================================================================== */
+@media (hover: hover) {
+  .map .gm-marker.is-available:hover .gm-marker-label { width: 248px !important; padding: 6px !important; gap: 0 !important; border-radius: 12px !important; background: #111 !important; flex-direction: column !important; align-items: stretch !important; }
+  .map .gm-marker.is-available:hover .gm-pop-img { display: block !important; width: 236px !important; height: 177px !important; border-radius: 8px !important; background-size: cover !important; background-position: center !important; }
+  .map .gm-marker.is-available:hover .gm-pop-main { display: flex !important; flex-direction: column !important; gap: 0 !important; padding: 12px 6px 4px !important; }
+  .map .gm-marker.is-available:hover .gm-pop-name { margin: 0 !important; font: 600 16px/1.25 var(--font-title) !important; color: #fff !important; white-space: normal; }
+  .map .gm-marker.is-available:hover .gm-pop-commune { display: block !important; margin-top: 3px; font: 400 13px/1.3 var(--font); color: #a3a3a3; }
+  .map .gm-marker.is-available:hover .gm-pop-facts { display: none !important; }
+  .map .gm-marker.is-available:hover .gm-pop-actions { display: grid !important; grid-template-columns: 1fr 1fr; gap: 6px !important; margin: 14px 0 0 !important; }
+  .map .gm-marker.is-available:hover .gm-pop-flag { height: 34px; border-radius: 8px !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: 600 13px var(--font); background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.85) !important; border: 1px solid rgba(255,255,255,.1) !important; }
+  .map .gm-marker.is-available:hover .gm-pop-flag:hover { background: rgba(255,255,255,.14) !important; color: #fff !important; }
+  .map .gm-marker.is-available:hover .gm-pop-open { display: flex !important; align-items: center; justify-content: center; gap: 4px; height: 40px; margin: 6px 0 0 !important; border-radius: 8px !important; background: #FFB900 !important; color: #111 !important; font: 700 14px var(--font) !important; }
+  .map .gm-marker.is-available:hover .gm-pop-open:hover { background: #ffc933 !important; }
+  .map .gm-marker.is-available:hover .gm-pop-open svg { width: 15px; height: 15px; }
+}
+.gm-pop-commune { display: none; }
+
+/* =====================================================================
+   Colonne de gauche : une seule ligne d'alignement à 16 px
+   (barre, titre, compteurs, tags et cartes partent du même bord)
+   ===================================================================== */
+@media (min-width: 900px) {
+  .sidebar { padding-left: 16px !important; padding-right: 16px !important; }
+  .sidebar-intro { padding-left: 0 !important; padding-right: 0 !important; }
+  .sidebar-subrow { margin-right: 0 !important; }
+  .sidebar .tagbar-wrap { margin: -18px -16px 0 !important; padding-left: 16px !important; padding-right: 16px !important; }
+}
+/* Mini-carte sélectionnée : noir GuideMe */
+.place-card.is-selected { box-shadow: 0 0 0 2px #111 !important; }
+@media (hover: hover) {
+  .map .gm-marker.is-available:hover .gm-pop-open { width: 100% !important; box-sizing: border-box; }
+  .map .gm-marker.is-available.is-visited:hover .gm-pop-flag--done { background: #16a34a !important; border-color: #16a34a !important; color: #fff !important; }
+  .map .gm-marker.is-available.is-wanted:hover .gm-pop-flag--want { background: #FFB900 !important; border-color: #FFB900 !important; color: #111 !important; }
+}
