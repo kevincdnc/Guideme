@@ -2392,3 +2392,20 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
   .brand-bar { margin-left: -4px !important; margin-right: -4px !important; }   /* barre à 12 px des bords, contenu à 16 */
   .sidebar-intro { padding-left: 7px !important; padding-right: 8px !important; } /* = bord gauche des photos des cartes */
 }
+
+/* ---------- Case « déjà visité » des cartes : même taille cochée ou non, animation plus vive ---------- */
+.place-card .pc-flag--done.is-on { border-color: transparent !important; background-clip: padding-box; }
+.place-card .pc-flag.is-on svg { animation: checkSnap .22s cubic-bezier(.2,.9,.3,1.25) both !important; transform-origin: 50% 50%; }
+@keyframes checkSnap { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.place-card .pc-flag--done.is-on { animation: boxSnap .22s ease-out; }
+@keyframes boxSnap { 0% { transform: scale(.88); } 100% { transform: none; } }
+/* Coup de tampon : plus court, sans flou (le flou ralentissait l'animation) */
+.pc-stamp.is-new { animation: stampPressFast .34s cubic-bezier(.3,.7,.4,1) both !important; }
+@keyframes stampPressFast {
+  0%   { transform: rotate(-8deg) scale(1.2); opacity: 0; }
+  55%  { transform: rotate(-8deg) scale(.95); opacity: .8; }
+  100% { transform: rotate(-8deg) scale(1); opacity: .62; }
+}
+.place-card:has(.pc-stamp.is-new) { animation: cardPressFast .34s ease both !important; }
+@keyframes cardPressFast { 0%, 45% { transform: none; } 60% { transform: scale(.99) translateY(1px); } 100% { transform: none; } }
+.pc-stamp, .pc-flag { will-change: transform; }
