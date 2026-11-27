@@ -1982,3 +1982,16 @@ h1, h2, h3, h4 { font-weight: 400 !important; letter-spacing: -0.01em; }
 .topbar .progress-pct { font-size: 15px !important; color: #fff !important; }
 .topbar .progress-pct small { font-size: 10px !important; color: rgba(255,255,255,.6) !important; }
 .guide-head h1, .guide h1 { line-height: 1.18 !important; letter-spacing: -0.015em !important; }
+
+/* ---------- Bloc de progression : la jauge fait le tour du bloc ---------- */
+.brand-bar .progress-btn, .topbar .progress-btn { overflow: visible !important; border: 0 !important; background: #1c1c1c !important; }
+.progress-outline { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.progress-outline-track { fill: none; stroke: #333; }
+.progress-outline-value { fill: none; stroke: #22c55e; stroke-linecap: round; transition: stroke-dasharray .7s cubic-bezier(.3,1.2,.5,1); filter: drop-shadow(0 0 3px rgba(34,197,94,.45)); }
+.brand-bar .progress-btn:hover .progress-outline-track, .brand-bar .progress-btn.is-open .progress-outline-track { stroke: #4a4a4a; }
+.brand-bar .progress-flag { height: 18px !important; }
+.brand-bar .progress-pct { font-size: 15px !important; }
+.brand-bar .progress-pct small { font-size: 9px !important; }
+.topbar .progress-flag { height: 16px !important; }
+.topbar .progress-pct { font-size: 13px !important; }
+.topbar .progress-pct small { font-size: 8.5px !important; }

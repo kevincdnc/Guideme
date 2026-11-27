@@ -119,6 +119,31 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
   );
 }
 
+// Contour du bloc de progression : la jauge fait le tour du bloc (comme l'ancien anneau, en rectangle)
+function ProgressOutline({ pct }) {
+  const ref = useRef(null);
+  const [size, setSize] = useState(null);
+  useEffect(() => {
+    const el = ref.current?.parentElement;
+    if (!el) return undefined;
+    const ro = new ResizeObserver(() => setSize({ w: el.offsetWidth, h: el.offsetHeight }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const sw = 2.5, r = 8;
+  return (
+    <svg ref={ref} className="progress-outline" width={size?.w || 0} height={size?.h || 0} aria-hidden="true">
+      {size && (
+        <>
+          <rect className="progress-outline-track" x={sw / 2} y={sw / 2} width={size.w - sw} height={size.h - sw} rx={r} ry={r} strokeWidth={sw} />
+          <rect className="progress-outline-value" x={sw / 2} y={sw / 2} width={size.w - sw} height={size.h - sw} rx={r} ry={r} strokeWidth={sw}
+            pathLength="100" strokeDasharray={`${pct} 100`} style={{ opacity: pct ? 1 : 0 }} />
+        </>
+      )}
+    </svg>
+  );
+}
+
 // Progression : part des lieux du Finistère déjà visités. Apparaît au premier lieu coché.
 function ProgressFlag({ visited, onPick, onAccount }) {
   const [open, setOpen] = useState(false);
@@ -141,7 +166,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
     <div className="progress" ref={boxRef}>
       <button className={`progress-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
         <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="" />
-        <span className="progress-fill" style={{ width: `${pct}%` }} aria-hidden="true" />
+        <ProgressOutline pct={pct} />
         <span className="progress-pct">{pct}<small>%</small></span>
       </button>
       {open && (
