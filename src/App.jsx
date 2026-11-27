@@ -192,14 +192,14 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
   return (
     <div className="progress" ref={boxRef}>
       <button className={`progress-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
-        <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere-flat.svg`} alt="" />
+        <img className="progress-flag" src={`${import.meta.env.BASE_URL}territoires/finistere.svg`} alt="" />
         <ProgressOutline pct={pct} />
         <span className="progress-pct">{pct}<small>%</small></span>
       </button>
       {open && (
         <div ref={menuRef} className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
           <div className="progress-head">
-            <img className="progress-head-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere-flat.svg`} alt="Drapeau du Finistère" />
+            <img className="progress-head-flag" src={`${import.meta.env.BASE_URL}territoires/finistere.svg`} alt="Drapeau du Finistère" />
             <strong>Ta conquête du bout du monde</strong>
             <span><b>{done.length}</b> lieu{done.length > 1 ? 'x' : ''} visité{done.length > 1 ? 's' : ''} sur {places.length}</span>
           </div>
@@ -208,22 +208,6 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
             <b className="progress-bar-pct">{pct} %</b>
           </div>
           <p className="progress-hint">{encouragement}</p>
-          <h5 className="progress-sub">Tes types de spots</h5>
-          <ul className="progress-cats" aria-label="Progression par catégorie">
-            {TAGS.map((t) => {
-              const all = places.filter((p) => p.tags?.includes(t.id));
-              if (!all.length) return null;
-              const n = all.filter((p) => visited.includes(p.id)).length;
-              const c = Math.round((n / all.length) * 100);
-              return (
-                <li key={t.id}>
-                  <span className="progress-cat-label"><Icon name={t.icon} size={14} /> {t.label}</span>
-                  <span className="progress-bar progress-bar--sm"><span style={{ width: `${c}%` }} /></span>
-                  <b>{c} %</b>
-                </li>
-              );
-            })}
-          </ul>
           <h5 className="progress-sub">Tes territoires</h5>
           {(() => {
             const stat = (r) => ({ total: r.ids.filter((id) => places.some((p) => p.id === id)).length, n: r.ids.filter((id) => visited.includes(id)).length });
@@ -255,6 +239,22 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
               </>
             );
           })()}
+          <h5 className="progress-sub">Tes types de spots</h5>
+          <ul className="progress-cats" aria-label="Progression par catégorie">
+            {TAGS.map((t) => {
+              const all = places.filter((p) => p.tags?.includes(t.id));
+              if (!all.length) return null;
+              const n = all.filter((p) => visited.includes(p.id)).length;
+              const c = Math.round((n / all.length) * 100);
+              return (
+                <li key={t.id}>
+                  <span className="progress-cat-label"><Icon name={t.icon} size={14} /> {t.label}</span>
+                  <span className="progress-bar progress-bar--sm"><span style={{ width: `${c}%` }} /></span>
+                  <b>{c} %</b>
+                </li>
+              );
+            })}
+          </ul>
           <button className="progress-account" onClick={() => { setOpen(false); onAccount?.(); }}>Voir tous mes lieux visités <Icon name="chevron" size={14} /></button>
           <button className="progress-toggle" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
             {showAll ? 'Masquer les spots' : 'Afficher tous les spots'}

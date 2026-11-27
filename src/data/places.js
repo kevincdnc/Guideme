@@ -64,12 +64,12 @@ function readingMinutes(place) {
 // public/territoires/<id>.svg (false = pas encore dessiné : on affiche celui du grand pays).
 // color : couleur principale du drapeau, pour la zone sur la carte (src/data/territoires.json).
 export const GRANDS_PAYS = [
-  { id: 'leon', label: 'Léon', color: '#FFD50F', flag: true, pays: [
+  { id: 'leon', label: 'Léon', color: '#FFE003', flag: true, pays: [
     { id: 'brest', label: 'Brest & Iroise', color: '#2a2fd6', flag: true, ids: ['phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires', 'phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-four', 'phare-petit-minou', 'phare-portzic'] },
     { id: 'abers', label: 'Abers', color: '#e0b400', flag: false, ids: ['phare-ile-vierge'] },
     { id: 'haut-leon', label: 'Haut-Léon', color: '#e0b400', flag: false, ids: ['phare-batz'] },
   ] },
-  { id: 'cornouaille', label: 'Cornouaille', color: '#006AB3', flag: true, pays: [
+  { id: 'cornouaille', label: 'Cornouaille', color: '#2D5FF2', flag: true, pays: [
     { id: 'cap-sizun', label: 'Cap Sizun', color: '#0173BC', flag: true, ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier', 'ile-de-sein', 'phare-sein', 'phare-ar-men'] },
     { id: 'pays-bigouden', label: 'Pays Bigouden', color: '#E20612', flag: true, ids: ['phare-eckmuhl'] },
     { id: 'douarnenez-porzay', label: 'Douarnenez & Porzay', color: '#006AB3', flag: false, ids: ['douarnenez', 'locronan'] },
