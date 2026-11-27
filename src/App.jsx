@@ -242,7 +242,7 @@ function MapSettings() {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
-      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={20} /></button>
+      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={21} /></button>
       <ColorTuner open={open} />
     </div>
   );
@@ -611,7 +611,7 @@ export default function App() {
               <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
               {allVisited.length > 0 && (
                 <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}>
-                  <Icon name="check" size={13} stroke={2.8} /> {allVisited.length} visité{allVisited.length > 1 ? 's' : ''}
+                  {allVisited.length} visité{allVisited.length > 1 ? 's' : ''} <Icon name="check" size={13} stroke={2.8} />
                 </button>
               )}
             </div>

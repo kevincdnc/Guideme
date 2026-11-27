@@ -2117,3 +2117,17 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
 .tuner-opacity { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 12.5px; color: rgba(255,255,255,.85); }
 .tuner-opacity span { display: flex; justify-content: space-between; } .tuner-opacity b { color: #fff; }
 .tuner-opacity input { width: 100%; accent-color: #ffb900; }
+
+/* ---------- v10 ---------- */
+/* Titres plus épais */
+h1, h2, h3, h4 { font-weight: 800; }
+.pc-body h3 { font-weight: 700; }
+/* « 6 visités ✓ » calé sur le bord droit (aligné avec le bouton + des tags) */
+.sidebar-visited { padding: 3px 0 3px 9px; margin-right: 0; }
+.sidebar-visited.is-active { padding-right: 9px; }
+/* Localisation : point vert dans le coin haut droit de sa case */
+@media (min-width: 900px) { .tool-group .tool-dot { top: 5px !important; right: 5px !important; width: 6px; height: 6px; } }
+/* Bouton « i » des crédits : taille d'origine, propre */
+.maplibregl-ctrl-attrib.maplibregl-compact { min-height: 24px; opacity: .7; }
+.maplibregl-ctrl-attrib-button { width: 24px !important; height: 24px !important; background-size: 24px 24px !important; background-repeat: no-repeat !important; background-position: center !important; }
+.sidebar-subrow { margin-right: -8px; }
