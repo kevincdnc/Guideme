@@ -127,7 +127,6 @@ function ProgressFlag({ visited, onPick, onAccount }) {
   const places = PLACES.filter((p) => p.available);
   const done = places.filter((p) => visited.includes(p.id));
   const pct = places.length ? Math.round((done.length / places.length) * 100) : 0;
-  const R = 17, L = 2 * Math.PI * R;
   const left = places.length - done.length;
   const encouragement = done.length === 0 ? 'Coche ton premier lieu pour commencer !'
     : left === 0 ? 'Bravo, tu as tout exploré !'
@@ -142,13 +141,8 @@ function ProgressFlag({ visited, onPick, onAccount }) {
     <div className="progress" ref={boxRef}>
       <button className={`progress-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
         <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="" />
-        <span className="progress-dial">
-          <svg viewBox="0 0 40 40" className="progress-ring" aria-hidden="true">
-            <circle cx="20" cy="20" r={R} className="progress-track" />
-            <circle cx="20" cy="20" r={R} className="progress-value" strokeDasharray={L} strokeDashoffset={L * (1 - pct / 100)} style={{ opacity: done.length ? 1 : 0 }} />
-          </svg>
-          <span className="progress-pct" aria-label={`${pct} %`}>{pct}</span>
-        </span>
+        <span className="progress-fill" style={{ width: `${pct}%` }} aria-hidden="true" />
+        <span className="progress-pct">{pct}<small>%</small></span>
       </button>
       {open && (
         <div className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
@@ -234,9 +228,9 @@ const INITIALS_KEY = 'guideme:initials';
 // Avatar par défaut : silhouette blanche sur fond gris
 function AvatarPlaceholder() {
   return (
-    <svg className="avatar-ph" viewBox="0 0 40 40" aria-hidden="true">
-      <circle cx="20" cy="15.5" r="7" fill="currentColor" />
-      <path d="M5 40c1.5-8.5 7.6-13 15-13s13.5 4.5 15 13z" fill="currentColor" />
+    <svg className="avatar-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+      <circle cx="12" cy="9" r="3.6" />
+      <path d="M5.5 19.5c1.2-3.3 3.6-5 6.5-5s5.3 1.7 6.5 5" />
     </svg>
   );
 }
@@ -587,7 +581,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><Brand /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /></header>
+          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
             <h1>Tu crois connaître le Finistère ?</h1>
             <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
