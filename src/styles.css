@@ -2378,3 +2378,6 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
   .map .gm-marker.is-available.is-visited:hover .gm-pop-flag--done { background: #16a34a !important; border-color: #16a34a !important; color: #fff !important; }
   .map .gm-marker.is-available.is-wanted:hover .gm-pop-flag--want { background: #FFB900 !important; border-color: #FFB900 !important; color: #111 !important; }
 }
+/* Plus de chevauchement entre la ligne des compteurs et la bande des tags (le fond vert de « visités » était rogné) */
+@media (min-width: 900px) { .sidebar .tagbar-wrap { margin-top: 0 !important; padding-top: 12px !important; } }
+@media (min-width: 900px) { .sidebar .tagbar-wrap { margin-top: -12px !important; } }
