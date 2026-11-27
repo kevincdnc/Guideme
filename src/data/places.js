@@ -1,4 +1,5 @@
 // Lieux de guideme.bzh : une fiche par fichier dans ./places/.
+import { HERO_OVERRIDES } from './heroOverrides.js';
 import pointeDuRaz from './places/pointe-du-raz.js';
 import baieDesTrepasses from './places/baie-des-trepasses.js';
 import pointeDuVan from './places/pointe-du-van.js';
@@ -75,7 +76,21 @@ function withDrafts(list) {
   return list.map((p) => (drafts[p.id] ? { ...p, ...drafts[p.id] } : p));
 }
 
-export const PLACES = withDrafts([pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, phareArMen, phareTevennec, phareVieille, phareSein, phareKereon, phareJument, phareCreach, phareStiff, phareFour, pharePierresNoires, phareIleVierge, phareSaintMathieu, pharePetitMinou, phareTrezien, phareBatz, pharePortzic, pharePenfret, phareKermorvan, ...SOON]).map((p) =>
+// Nouvelle photo principale ; l'ancienne passe en tête des autres photos
+function withHero(p) {
+  const h = HERO_OVERRIDES[p.id];
+  if (!h || !p.hero) return p;
+  const old = { src: p.hero.src, caption: p.hero.alt, credit: p.hero.credit };
+  return { ...p, hero: h, photos: [old, ...(p.photos || []).filter((x) => x.src !== old.src)] };
+}
+
+// Ordre « exceptionnel → moins exceptionnel » (classement éditorial de la liste des 100, à affiner)
+export const RANK = ['pointe-du-raz', 'phare-ile-vierge', 'phare-ar-men', 'phare-jument', 'phare-vieille', 'locronan', 'phare-creach',
+  'phare-tevennec', 'phare-eckmuhl', 'phare-kereon', 'concarneau', 'phare-saint-mathieu', 'menez-dregan', 'phare-petit-minou', 'ile-de-sein',
+  'pointe-du-van', 'baie-des-trepasses', 'pont-aven', 'phare-kermorvan', 'phare-stiff', 'phare-penfret', 'phare-sein', 'douarnenez',
+  'audierne', 'phare-four', 'phare-pierres-noires', 'phare-batz', 'phare-trezien', 'phare-portzic', 'pointe-du-millier'];
+
+export const PLACES = withDrafts([pointeDuRaz, baieDesTrepasses, pointeDuVan, ileDeSein, audierne, menezDregan, pointeDuMillier, douarnenez, locronan, phareEckmuhl, concarneau, pontAven, phareArMen, phareTevennec, phareVieille, phareSein, phareKereon, phareJument, phareCreach, phareStiff, phareFour, pharePierresNoires, phareIleVierge, phareSaintMathieu, pharePetitMinou, phareTrezien, phareBatz, pharePortzic, pharePenfret, phareKermorvan, ...SOON].map(withHero)).map((p) =>
   p.available ? { ...p, region: REGION_OF[p.id], readingMinutes: readingMinutes(p) } : p,
 );
 

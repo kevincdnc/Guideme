@@ -6,7 +6,7 @@ import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
-import { PLACES, TAGS, REGIONS, getPlace } from './data/places.js';
+import { PLACES, TAGS, REGIONS, getPlace, RANK } from './data/places.js';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
 const BASE = import.meta.env.BASE_URL;
@@ -554,7 +554,10 @@ export default function App() {
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
     const q = norm(query.trim());
-    return PLACES.filter((p) => (!tag || (tag === 'visited' ? visited.includes(p.id) : tag === 'wanted' ? wanted.includes(p.id) : p.tags?.includes(tag))) && (!q || searchText(p).includes(q)));
+    const list = PLACES.filter((p) => (!tag || (tag === 'visited' ? visited.includes(p.id) : tag === 'wanted' ? wanted.includes(p.id) : p.tags?.includes(tag))) && (!q || searchText(p).includes(q)));
+    // « Tous » : du plus exceptionnel au moins exceptionnel
+    if (!tag && !q) { const r = (id) => { const i = RANK.indexOf(id); return i < 0 ? 999 : i; }; list.sort((a, b) => r(a.id) - r(b.id)); }
+    return list;
   }, [tag, query, visited, wanted]);
   // La recherche recadre la carte sur les lieux trouvés
   useEffect(() => {

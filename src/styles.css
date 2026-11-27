@@ -2646,3 +2646,11 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Mini-cartes : 600 pour les lieux à découvrir, 700 une fois visités */
 .sidebar .pc-body h3, .pc-body h3 { font-weight: 600 !important; }
 .place-card.is-visited .pc-body h3 { font-weight: 700 !important; }
+
+/* Coupe des records : retour à la version précédente (jaune + contour foncé, chiffre jaune foncé) */
+.pc-records svg { fill: #ffb900 !important; stroke: #996f00 !important; }
+.pc-records { color: #996f00 !important; }
+
+/* Échelle de la carte : plus discrète, arrondie */
+.maplibregl-ctrl-scale { border-radius: 4px; border: 1px solid rgba(17,17,17,.25) !important; border-top: 0 !important; background: rgba(255,255,255,.7) !important;
+  color: #404040 !important; font: 500 10.5px var(--font) !important; padding: 1px 6px !important; box-shadow: none; }
