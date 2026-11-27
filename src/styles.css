@@ -2541,3 +2541,23 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .map.m-medium .gm-dot-check svg { width: 13px; height: 13px; }
 .map.m-medium .gm-marker:hover .gm-dot, .map.m-medium .gm-marker.is-selected .gm-dot { transform: scale(1.12); }
 .tuner-block { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,.1); }
+
+/* ---------- HUD de zoom : une ligne (zoom + Points/Repères), visible au zoom ou au survol de la zone ---------- */
+.zoom-hud { flex-direction: row !important; align-items: center !important; pointer-events: auto !important; }
+.zoom-sizes i.zs-large { width: 9px; height: 12px; }
+
+/* ---------- Mode Repères : repères à tous les niveaux ; en vue d'ensemble, petits et sans pictogramme ---------- */
+.map.m-large.z-dots .gm-marker .gm-dot { display: none !important; }
+.map.m-large.z-dots .gm-marker .gm-pin, .map.m-large.z-dots .gm-marker .gm-marker-ground { display: block !important; }
+.map.m-large.z-dots .gm-marker .gm-pin { width: 22px !important; height: 28px !important; }
+.map.m-large.z-dots .gm-marker .gm-pin-icon, .map.m-large.z-dots .gm-marker.is-visited .gm-check, .map.m-large.z-dots .gm-marker .gm-want { display: none !important; }
+.map.m-large.z-dots .gm-marker.is-selected .gm-pin { width: 38px !important; height: 48px !important; }
+.map.m-large.z-dots .gm-marker.is-selected .gm-pin-icon { display: block !important; }
+.map.m-large.z-dots .gm-marker.is-selected.is-visited .gm-pin-icon { display: none !important; }
+.map.m-large.z-dots .gm-marker.is-selected.is-visited .gm-check { display: grid !important; }
+
+/* ---------- Mode Points : en vue d'ensemble petits points, y compris pour le lieu sélectionné ---------- */
+.map.m-medium.z-dots .gm-marker.is-selected .gm-dot { width: 30px !important; height: 30px !important; }
+.map.m-medium.z-dots .gm-marker.is-selected .gm-dot-icon { display: block; width: 14px; height: 14px; }
+.map.m-medium.z-dots .gm-marker.is-selected.is-visited .gm-dot-icon { display: none !important; }
+.map.m-medium.z-dots .gm-marker.is-selected.is-visited .gm-dot-check { display: grid; place-items: center; color: #fff; }

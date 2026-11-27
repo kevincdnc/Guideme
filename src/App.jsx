@@ -252,12 +252,12 @@ const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCa
 const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ...(p.tags || []).map((id) => TAG_BY_ID[id]?.label)].join(' '));
 
 // Réglages de la carte (TEMPORAIRE) : couleurs de la mer et de la terre
-function MapSettings({ markerSize, onMarkerSize }) {
+function MapSettings() {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
       <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={21} /></button>
-      <ColorTuner open={open} markerSize={markerSize} onMarkerSize={onMarkerSize} />
+      <ColorTuner open={open} />
     </div>
   );
 }
@@ -475,7 +475,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
 
 // Indicateur de zoom (en haut à gauche de la carte) : apparaît en fondu pendant le zoom,
 // s'efface ~2,5 s après. 100 % = vue par défaut du Finistère. En dessous : taille des lieux.
-const MARKER_SIZES = [['small', 'Petit'], ['medium', 'Moyen'], ['large', 'Gros']];
+const MARKER_MODES = [['medium', 'Points'], ['large', 'Repères']]; // points ronds partout, ou repères partout
 function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
   const [shown, setShown] = useState(false);
   const hover = useRef(false);
@@ -491,7 +491,7 @@ function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
   const pct = zoom ? Math.round(2 ** (zoom.z - zoom.z0) * 100) : 100;
   return (
     <div className={`zoom-hud ${shown ? 'is-shown' : ''}`} style={{ left }}
-      onMouseEnter={() => { hover.current = true; clearTimeout(timer.current); }}
+      onMouseEnter={() => { hover.current = true; clearTimeout(timer.current); setShown(true); }}
       onMouseLeave={() => { hover.current = false; hideLater(); }}>
       <div className="zoom-chip" aria-label={`Zoom ${pct} %`}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
@@ -499,8 +499,8 @@ function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
         </svg>
         <span>{pct} %</span>
       </div>
-      <div className="zoom-sizes" role="group" aria-label="Taille des lieux sur la carte">
-        {MARKER_SIZES.map(([id, label]) => (
+      <div className="zoom-sizes" role="group" aria-label="Affichage des lieux sur la carte">
+        {MARKER_MODES.map(([id, label]) => (
           <button key={id} className={markerSize === id ? 'is-on' : ''} onClick={() => onMarkerSize(id)} aria-pressed={markerSize === id}>
             <i className={`zs-${id}`} aria-hidden="true" />{label}
           </button>
@@ -512,8 +512,9 @@ function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
 
 export default function App() {
   const [zoomInfo, setZoomInfo] = useState(null);
-  const [markerSize, setMarkerSizeState] = useState(() => { try { return localStorage.getItem('guideme:markers') || 'large'; } catch { return 'large'; } });
-  const setMarkerSize = (v) => { setMarkerSizeState(v); try { localStorage.setItem('guideme:markers', v); } catch { /* ignore */ } };
+  // Lieux sur la carte : « medium » = points (par défaut), « large » = repères
+  const [markerSize, setMarkerSizeState] = useState(() => { try { return localStorage.getItem('guideme:markers-mode') === 'large' ? 'large' : 'medium'; } catch { return 'medium'; } });
+  const setMarkerSize = (v) => { setMarkerSizeState(v); try { localStorage.setItem('guideme:markers-mode', v); } catch { /* ignore */ } };
   const desktop = useIsDesktop();
   const mapRef = useRef(null);
   const railRef = useRef(null);
@@ -653,7 +654,7 @@ export default function App() {
       {desktop && <ZoomChip zoom={zoomInfo} left={SIDEBAR_W + 12} markerSize={markerSize} onMarkerSize={setMarkerSize} />}
       <div className="map-tools">
         <div className="tool-group">
-          <MapSettings markerSize={markerSize} onMarkerSize={setMarkerSize} />
+          <MapSettings />
           <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={16} /><i className="tool-dot" aria-hidden="true" /></button>
         </div>
         <button className="compass" onClick={(e) => {
