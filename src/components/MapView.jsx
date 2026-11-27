@@ -302,6 +302,12 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       c.toggle('z-labels', z >= 11.4 + off);
       // Niveau de zoom pour l'indicateur (une mise à jour par image au plus)
       if (m.__home) box.current.__z0 = m.__home.zoom; // 100 % = vue par défaut
+      // Au-delà de 120 % de la vue par défaut, les points (et petits repères) grossissent progressivement (jusqu'à ×1,6 vers 300 %)
+      if (m.__home) {
+        const pct = 2 ** (z - m.__home.zoom);
+        const k = Math.max(0, Math.min(1, (pct - 1.2) / (3 - 1.2)));
+        box.current.style.setProperty('--mk', (1 + 0.6 * k * k * (3 - 2 * k)).toFixed(3));
+      }
       if (!box.current.__raf) box.current.__raf = requestAnimationFrame(() => { box.current.__raf = 0; const zz = m.getZoom(); onZoomRef.current?.({ z: zz, z0: box.current.__z0 ?? zz }); });
       // Anciennes classes (styles existants)
       c.toggle('z-far', z < 9.6 + off);
