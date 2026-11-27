@@ -59,8 +59,8 @@ function BreizhStamp({ animate }) {
       <svg viewBox="0 0 104 56" aria-hidden="true">
         <rect x="2" y="2" width="100" height="52" rx="9" fill="none" stroke="currentColor" strokeWidth="3" />
         <rect x="8" y="8" width="88" height="40" rx="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 2.5" />
-        <text x="52" y="29.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="16" fill="currentColor" letterSpacing="1">VISITÉ</text>
-        <text x="52" y="40.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7.6" fill="currentColor" letterSpacing="1.4">PENN-AR-BED</text>
+        <text x="52" y="29.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="16" fill="currentColor" textLength="74" lengthAdjust="spacingAndGlyphs">VISITÉ</text>
+        <text x="52" y="40.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7.6" fill="currentColor" textLength="74" lengthAdjust="spacing">PENN-AR-BED</text>
       </svg>
     </span>
   );

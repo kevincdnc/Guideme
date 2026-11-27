@@ -2276,3 +2276,29 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 @keyframes stampIn { 0% { transform: rotate(-22deg) scale(2); opacity: 0; } 55% { transform: rotate(-6deg) scale(.92); opacity: .8; } 75% { transform: rotate(-9deg) scale(1.04); } 100% { transform: rotate(-8deg) scale(1); opacity: .72; } }
 /* Photos des cartes en 80 × 80 */
 .place-card .pc-thumb, .place-card .pc-thumb img { width: 80px !important; height: 80px !important; flex-basis: 80px !important; }
+
+/* ---------- Cartes de lieux v3 ---------- */
+/* Photo 78 px ; les deux cases occupent toute la hauteur utile */
+.place-card .pc-thumb, .place-card .pc-thumb img { width: 78px !important; height: 78px !important; flex-basis: 78px !important; border-radius: 4px !important; }
+.place-card .pc-flags { display: flex !important; flex-direction: column; gap: 6px; align-self: stretch; justify-content: center; }
+.place-card .pc-flag { width: 36px !important; height: 36px !important; }
+/* Même rayon que la barre noire (8 px) ; photo à 4 px pour rester concentrique */
+.sidebar .place-card, .place-card { border-radius: 8px !important; }
+/* Sélection : jaune GuideMe (étoile du « .bzh ») */
+.place-card.is-selected { border-color: transparent !important; box-shadow: 0 0 0 2px #FFB900 !important; }
+
+/* Tampon : plus grand, plus discret */
+.pc-stamp { width: 80px !important; height: 43px !important; margin-top: -21.5px !important; right: 54px !important; opacity: .62 !important; }
+/* Coup de tampon : il se pose juste au-dessus, presse la carte, l'encre apparaît */
+.pc-stamp.is-new { animation: stampPress .5s cubic-bezier(.3,.7,.4,1) both !important; }
+@keyframes stampPress {
+  0%   { transform: rotate(-8deg) scale(1.22); opacity: 0; filter: blur(1.5px); }
+  35%  { transform: rotate(-8deg) scale(1.16); opacity: .25; filter: blur(1px); }
+  55%  { transform: rotate(-8deg) scale(.94); opacity: .85; filter: none; }
+  72%  { transform: rotate(-8deg) scale(1.02); opacity: .7; }
+  100% { transform: rotate(-8deg) scale(1); opacity: .62; }
+}
+.place-card:has(.pc-stamp.is-new) { animation: cardPress .5s ease both !important; }
+@keyframes cardPress { 0%, 40% { transform: none; } 55% { transform: scale(.985) translateY(1px); } 75% { transform: scale(1.003); } 100% { transform: none; } }
+.place-card .pc-flags { position: absolute; top: 7px !important; bottom: 7px !important; right: 8px; transform: none !important; justify-content: space-between !important; gap: 0 !important; }
+.place-card.is-visited .pc-flags { justify-content: center !important; }
