@@ -2695,3 +2695,13 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .sidebar-status { gap: 2px; }
 .sidebar-visited { border-radius: 6px !important; }
 .sidebar-visited.is-active, .sidebar-visited:hover { padding: 3px 7px 3px 9px !important; }
+
+/* =====================================================================
+   Mode Repères : pictogramme toujours visible (vert si visité, sans coche),
+   repères pleine taille dessinés à 74 % en vue d'ensemble puis grossissant dès 120 %
+   ===================================================================== */
+.map.m-large.z-dots .gm-marker .gm-pin { width: 38px !important; height: 48px !important; }
+.map.m-large.z-dots .gm-marker:not(.is-selected) .gm-pin { transform: scale(calc(.74 * (1 + (var(--mk, 1) - 1) * .6))) !important; transform-origin: 50% 100%; }
+.map.m-large .gm-marker.is-available .gm-pin-icon, .map.m-large.z-dots .gm-marker.is-available .gm-pin-icon,
+.map.m-large .gm-marker.is-available.is-visited .gm-pin-icon, .map.m-large.z-dots .gm-marker.is-available.is-visited .gm-pin-icon { display: block !important; }
+.map.m-large .gm-marker.is-visited .gm-check, .map.m-large.z-dots .gm-marker.is-visited .gm-check { display: none !important; }
