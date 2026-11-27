@@ -2185,3 +2185,10 @@ h1, h2, h3, h4 { font-weight: 800; }
 .sidebar-subrow { margin: 0 !important; padding: 2px 0 16px; }
 .sidebar-subrow .sidebar-sub { font-size: 14px; }
 .sidebar-intro { padding: 14px 0 4px !important; margin: 0 !important; }
+
+/* ---------- Popovers compte / progression : par-dessus les contrôles de la carte, qui s'effacent ---------- */
+@media (min-width: 900px) {
+  .brand-bar .progress-menu, .brand-bar .profile-menu { left: 496px !important; }
+  .map-tools { transition: opacity .15s ease; }
+  body:has(.brand-bar .progress-menu) .map-tools, body:has(.brand-bar .profile-menu) .map-tools { opacity: 0; pointer-events: none; }
+}
