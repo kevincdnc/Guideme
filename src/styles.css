@@ -2237,3 +2237,27 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 /* Boussole : plusieurs tours, ralentissement en fin de course */
 .compass.is-spinning .compass-needle { animation: compassSpinLong 2.2s cubic-bezier(.12,.75,.18,1) !important; }
 @keyframes compassSpinLong { from { transform: rotate(-1800deg); } 92% { transform: rotate(6deg); } to { transform: rotate(0); } }
+
+/* ---------- Contrôles de carte : retour au blanc, boussole blanche ---------- */
+.tool-group { background: #fff !important; box-shadow: 0 1px 4px rgba(17,17,17,.14), 0 0 0 1px rgba(17,17,17,.04) !important; }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { color: #737373 !important; }
+.tool-group .tool-btn:hover { background: #f5f4ef !important; color: #404040 !important; }
+.tool-group .map-settings > .tool-btn.is-open { background: #111 !important; color: #fff !important; }
+.tool-group > * + * { border-top: 1px solid #e5e5e5 !important; }
+.compass { box-shadow: 0 1px 4px rgba(17,17,17,.14), 0 0 0 1px rgba(17,17,17,.04); }
+
+/* Boussole : 2 tours fluides (vitesse lisible à l'œil), freinage doux puis petit balancement */
+.compass.is-spinning .compass-needle { animation: compassSpinSoft 1.8s linear !important; }
+@keyframes compassSpinSoft {
+  0%   { transform: rotate(-720deg); animation-timing-function: cubic-bezier(.33,.0,.2,1); }
+  72%  { transform: rotate(14deg);   animation-timing-function: ease-in-out; }
+  84%  { transform: rotate(-7deg);   animation-timing-function: ease-in-out; }
+  93%  { transform: rotate(3deg);    animation-timing-function: ease-in-out; }
+  100% { transform: rotate(0); }
+}
+.compass.is-spinning { animation: compassPop 1.8s ease; }
+@keyframes compassPop { 0% { transform: scale(1); } 12% { transform: scale(1.1); } 70% { transform: scale(1.04); } 100% { transform: scale(1); } }
+.compass-needle { will-change: transform; }
+
+/* Un peu plus d'air entre les tags et la première carte */
+.sidebar-list { padding-top: 6px; }
