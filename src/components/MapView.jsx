@@ -162,8 +162,10 @@ function clonePopCss() {
   for (const sh of document.styleSheets) { try { walk(sh); } catch { /* feuille externe */ } }
 }
 
-const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
+const MapView = forwardRef(function MapView({ onZoomTier, places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
   const box = useRef(null);
+  const onZoomTierRef = useRef(onZoomTier);
+  onZoomTierRef.current = onZoomTier;
   const map = useRef(null);
   const markers = useRef({});
   const onSelectRef = useRef(onSelect);
@@ -280,6 +282,8 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       c.toggle('z-dots', z < 9.6 + off);
       c.toggle('z-pins', z >= 9.6 + off && z < 11.4 + off);
       c.toggle('z-labels', z >= 11.4 + off);
+      const tier = z < 9.6 + off ? 'dots' : z < 11.4 + off ? 'pins' : 'labels';
+      if (tier !== box.current.__tier) { box.current.__tier = tier; onZoomTierRef.current?.(tier); }
       // Anciennes classes (styles existants)
       c.toggle('z-far', z < 9.6 + off);
       c.toggle('z-mid', z >= 9.6 + off && z < 11.4 + off);

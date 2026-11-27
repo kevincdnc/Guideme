@@ -2424,3 +2424,53 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 }
 /* Drapeau du Finistère (version flat) avec une légère ombre noire */
 .progress-flag { width: auto; border-radius: 2px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.55)); }
+
+/* =====================================================================
+   « Déjà visité » : la case devient un rond de to-do qui se coche, puis le tampon tombe
+   Chronologie (clic = 0) : rond 0–0,2 s · coche tracée 0,1–0,34 s · tampon 0,14–0,58 s (impact à 0,32 s)
+   ===================================================================== */
+.place-card .pc-flag--done { transition: border-radius .22s cubic-bezier(.3,.7,.3,1), background-color .18s ease, border-color .18s ease; }
+.place-card .pc-flag--done.is-on { border-radius: 50% !important; animation: none !important; }
+.place-card .pc-flag--done .pc-check-draw { animation: none !important; transform: none !important; }
+.place-card .pc-flag--done.is-on .pc-check-draw { width: 17px; height: 17px; }
+.place-card:has(.pc-stamp.is-new) .pc-flag--done.is-on { animation: todoRound .24s cubic-bezier(.3,.7,.3,1.2) both !important; }
+.place-card:has(.pc-stamp.is-new) .pc-flag--done.is-on .pc-check-draw path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: todoDraw .24s cubic-bezier(.4,0,.2,1) .1s forwards; }
+@keyframes todoRound { 0% { transform: scale(1); } 45% { transform: scale(.86); } 100% { transform: scale(1); } }
+@keyframes todoDraw { to { stroke-dashoffset: 0; } }
+
+/* Tampon : chute qui accélère, impact net, léger tassement */
+.pc-stamp.is-new { animation: stampDrop .44s linear .14s both !important; }
+@keyframes stampDrop {
+  0%   { transform: rotate(-8deg) scale(1.28); opacity: 0;   animation-timing-function: cubic-bezier(.55,0,1,.45); }
+  40%  { transform: rotate(-8deg) scale(.94);  opacity: .78; animation-timing-function: cubic-bezier(.2,.8,.3,1); }
+  62%  { transform: rotate(-8deg) scale(1.015); opacity: .66; animation-timing-function: ease-out; }
+  100% { transform: rotate(-8deg) scale(1);    opacity: .62; }
+}
+/* La carte encaisse l'impact au même instant (40 % de la même durée, même délai) */
+.place-card:has(.pc-stamp.is-new) { animation: cardHit .44s linear .14s both !important; }
+@keyframes cardHit {
+  0%, 38% { transform: none; animation-timing-function: cubic-bezier(.3,0,.7,1); }
+  46%     { transform: scale(.988) translateY(1.5px); animation-timing-function: cubic-bezier(.2,.7,.3,1); }
+  100%    { transform: none; }
+}
+
+/* ---------- Indicateur de zoom ---------- */
+.zoom-chip { position: absolute; z-index: 5; top: 12px; display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px 0 10px; border-radius: 8px;
+  background: rgba(255,255,255,.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: #404040; font: 600 12.5px var(--font);
+  box-shadow: 0 1px 4px rgba(17,17,17,.12); pointer-events: none; }
+.zoom-chip svg { color: #737373; }
+.zoom-chip-dots { display: inline-flex; gap: 3px; margin-left: 2px; }
+.zoom-chip-dots b { width: 5px; height: 5px; border-radius: 50%; background: rgba(17,17,17,.15); transition: background .2s; }
+.zoom-chip-dots b.on { background: #FFB900; }
+
+/* ---------- Rond « visité » devant le nom des lieux (zoom rapproché) : plus grand, même coche ---------- */
+.gm-label-check { width: 18px !important; height: 18px !important; }
+.gm-label-check svg { width: 11px !important; height: 11px !important; stroke-width: 3.2; }
+
+/* ---------- Popover progression : plus large, drapeau, compteurs en typo de marque ---------- */
+@media (min-width: 900px) { .brand-bar .progress-menu:not(.is-wide) { width: 400px !important; } }
+.progress-head { display: grid !important; grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; }
+.progress-head-flag { grid-row: span 2; height: 30px; width: auto; border-radius: 3px; filter: drop-shadow(0 1px 3px rgba(0,0,0,.5)); }
+.progress-head b, .progress-bar-pct, .progress-cats b { font-family: var(--font-brand) !important; font-weight: 400 !important; letter-spacing: 0 !important; }
+.progress-cats b { white-space: nowrap; min-width: 46px; text-align: right; }
+.map .gm-marker.is-visited .gm-check svg { width: 15px !important; height: 15px !important; }

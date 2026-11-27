@@ -53,14 +53,24 @@ function countLabel(tag, n, query) {
 
 // Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
 function BreizhStamp({ animate }) {
-  // Tampon passeport « VISITÉ · PENN-AR-BED » (typo du logo)
+  // Tampon passeport « VISITÉ · PENN-AR-BED » (typo du logo), encre irrégulière (dégradé) pour un rendu réel
+  const gid = useId().replace(/:/g, '');
+  const ink = `url(#ink${gid})`;
   return (
     <span className={`pc-stamp ${animate ? 'is-new' : ''}`} aria-label="Déjà visité" role="img">
       <svg viewBox="0 0 104 56" aria-hidden="true">
-        <rect x="2" y="2" width="100" height="52" rx="9" fill="none" stroke="currentColor" strokeWidth="3" />
-        <rect x="8" y="8" width="88" height="40" rx="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 2.5" />
-        <text x="52" y="29.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="16" fill="currentColor" textLength="74" lengthAdjust="spacingAndGlyphs">VISITÉ</text>
-        <text x="52" y="40.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7.6" fill="currentColor" textLength="74" lengthAdjust="spacing">PENN-AR-BED</text>
+        <defs>
+          <linearGradient id={`ink${gid}`} x1="0" y1="0" x2="1" y2="0.6">
+            <stop offset="0" stopColor="currentColor" stopOpacity="1" />
+            <stop offset="0.45" stopColor="currentColor" stopOpacity="0.62" />
+            <stop offset="0.7" stopColor="currentColor" stopOpacity="0.95" />
+            <stop offset="1" stopColor="currentColor" stopOpacity="0.5" />
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="100" height="52" rx="9" fill="none" stroke={ink} strokeWidth="3" />
+        <rect x="8" y="8" width="88" height="40" rx="5" fill="none" stroke={ink} strokeWidth="1.2" strokeDasharray="3 2.5" />
+        <text x="52" y="29.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="16" fill={ink} textLength="74" lengthAdjust="spacingAndGlyphs">VISITÉ</text>
+        <text x="52" y="40.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7.6" fill={ink} textLength="74" lengthAdjust="spacing">PENN-AR-BED</text>
       </svg>
     </span>
   );
@@ -112,7 +122,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
             aria-pressed={!!visited}
             aria-label={visited ? `${place.shortTitle} : déjà visité (retirer)` : `Marquer ${place.shortTitle} comme déjà visité`}
           >
-            <Icon name="check" size={15} stroke={2.8} />
+            <svg className="pc-check-draw" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1" /></svg>
             <span className="pc-tip" aria-hidden="true">{visited ? 'Déjà visité · retirer' : "Je l'ai déjà visité"}</span>
           </button>
         </span>
@@ -175,6 +185,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
       {open && (
         <div className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
           <div className="progress-head">
+            <img className="progress-head-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere-flat.svg`} alt="Drapeau du Finistère" />
             <strong>Ta conquête du bout du monde</strong>
             <span><b>{done.length}</b> lieu{done.length > 1 ? 'x' : ''} visité{done.length > 1 ? 's' : ''} sur {places.length}</span>
           </div>
@@ -257,7 +268,7 @@ const INITIALS_KEY = 'guideme:initials';
 function AvatarPlaceholder() {
   return (
     <svg className="avatar-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-      <circle cx="12" cy="9" r="3.6" />
+      <circle cx="12" cy="7.6" r="3.4" />
       <path d="M5.5 19.5c1.2-3.3 3.6-5 6.5-5s5.3 1.7 6.5 5" />
     </svg>
   );
@@ -462,7 +473,28 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
   );
 }
 
+// Indicateur discret du niveau de zoom (en haut à gauche de la carte)
+const ZOOM_TIERS = [
+  { id: 'dots', label: 'Tout le Finistère' },
+  { id: 'pins', label: 'Vue du pays' },
+  { id: 'labels', label: 'Vue rapprochée' },
+];
+function ZoomChip({ tier, left }) {
+  const i = Math.max(0, ZOOM_TIERS.findIndex((t) => t.id === tier));
+  return (
+    <div className="zoom-chip" style={{ left }} aria-live="polite">
+      {/* Jumelles */}
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="6.5" cy="15" r="3.6" /><circle cx="17.5" cy="15" r="3.6" /><path d="M10.1 15h3.8" /><path d="M3.2 13.4L5.6 6.5a1.7 1.7 0 013.2.1l.8 3" /><path d="M20.8 13.4l-2.4-6.9a1.7 1.7 0 00-3.2.1l-.8 3" />
+      </svg>
+      <span>{ZOOM_TIERS[i].label}</span>
+      <i className="zoom-chip-dots" aria-hidden="true">{ZOOM_TIERS.map((t, j) => <b key={t.id} className={j <= i ? 'on' : ''} />)}</i>
+    </div>
+  );
+}
+
 export default function App() {
+  const [zoomTier, setZoomTier] = useState('dots');
   const desktop = useIsDesktop();
   const mapRef = useRef(null);
   const railRef = useRef(null);
@@ -590,7 +622,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
-      <MapView ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
+      <MapView onZoomTier={setZoomTier} ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -599,6 +631,7 @@ export default function App() {
         </header>
       )}
 
+      {desktop && <ZoomChip tier={zoomTier} left={SIDEBAR_W + 12} />}
       <div className="map-tools">
         <div className="tool-group">
           <MapSettings />
