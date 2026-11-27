@@ -204,23 +204,6 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
             <b className="progress-bar-pct">{pct} %</b>
           </div>
           <p className="progress-hint">{encouragement}</p>
-          <h5 className="progress-sub">Tes territoires</h5>
-          <ul className="terr-grid" aria-label="Progression par territoire">
-            {REGIONS.map((r) => {
-              const total = r.ids.filter((id) => places.some((p) => p.id === id)).length;
-              const n = r.ids.filter((id) => visited.includes(id)).length;
-              return (
-                <li key={r.id}>
-                  <button className={terr === r.id ? 'is-on' : ''} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
-                    title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte` : `${r.label} : bientôt. Voir sur la carte`}>
-                    <TerritoryTile region={r} n={n} total={total} w={62} />
-                    <strong>{r.label}</strong>
-                    <span className="terr-count">{total ? <><b>{Math.round((n / total) * 100)} %</b> · {n}/{total}</> : 'Bientôt'}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
           <h5 className="progress-sub">Tes types de spots</h5>
           <ul className="progress-cats" aria-label="Progression par catégorie">
             {TAGS.map((t) => {
@@ -233,6 +216,23 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
                   <span className="progress-cat-label"><Icon name={t.icon} size={14} /> {t.label}</span>
                   <span className="progress-bar progress-bar--sm"><span style={{ width: `${c}%` }} /></span>
                   <b>{c} %</b>
+                </li>
+              );
+            })}
+          </ul>
+          <h5 className="progress-sub">Tes territoires</h5>
+          <ul className="terr-grid" aria-label="Progression par territoire">
+            {REGIONS.map((r) => {
+              const total = r.ids.filter((id) => places.some((p) => p.id === id)).length;
+              const n = r.ids.filter((id) => visited.includes(id)).length;
+              return (
+                <li key={r.id}>
+                  <button className={terr === r.id ? 'is-on' : ''} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
+                    title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte` : `${r.label} : bientôt. Voir sur la carte`}>
+                    <TerritoryTile region={r} n={n} total={total} w={52} />
+                    <strong>{r.label}</strong>
+                    <span className="terr-count">{total ? <><b>{Math.round((n / total) * 100)} %</b> · {n}/{total}</> : 'Bientôt'}</span>
+                  </button>
                 </li>
               );
             })}

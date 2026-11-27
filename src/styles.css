@@ -2761,3 +2761,7 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .terr-badge--head .terr-badge-text b { font-size: 14px; }
 /* Le badge du haut ne sert que quand la colonne de droite est masquée */
 @media (min-width: 900px) { .guide--page .terr-badge--head, .guide--modal .terr-badge--head { display: none; } }
+
+/* Menu des tags : compteurs aux coins nets, comme les compteurs visités / favoris */
+.tag-menu-item b { border-radius: 6px !important; padding: 2px 7px; min-width: 24px; text-align: center; font-variant-numeric: tabular-nums; }
+.progress-menu .terr-grid { margin-bottom: 10px; }
