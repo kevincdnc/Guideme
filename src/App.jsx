@@ -229,7 +229,7 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
                 <li key={r.id}>
                   <button className={terr === r.id ? 'is-on' : ''} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
                     title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte` : `${r.label} : bientôt. Voir sur la carte`}>
-                    <TerritoryTile region={r} n={n} total={total} w={52} />
+                    <TerritoryTile region={r} n={n} total={total} w={44} />
                     <strong>{r.label}</strong>
                     <span className="terr-count">{total ? <><b>{Math.round((n / total) * 100)} %</b> · {n}/{total}</> : 'Bientôt'}</span>
                   </button>
