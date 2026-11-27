@@ -185,7 +185,7 @@ function MiniMap({ place, overview }) {
       map.on('load', () => {
         const first = map.getStyle().layers.find((l) => l.type === 'symbol')?.id;
         map.addSource('finistere', { type: 'geojson', data: FINISTERE_MASK, tolerance: 0.6 });
-        map.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'], paint: { 'fill-color': '#1e293b', 'fill-opacity': 0.16 } }, first);
+        map.addLayer({ id: 'hors-finistere', type: 'fill', source: 'finistere', filter: ['==', ['get', 'role'], 'voisins'], paint: { 'fill-color': '#111111', 'fill-opacity': 0.16 } }, first);
         map.addLayer({ id: 'finistere-limite', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'], layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#7c3aed', 'line-width': 1.6, 'line-dasharray': [2, 2] } }, first);
       });
       const el = document.createElement('div');
