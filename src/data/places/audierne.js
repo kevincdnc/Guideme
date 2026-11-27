@@ -54,6 +54,24 @@ export default {
       ],
     },
     {
+      id: "conserveries",
+      nav: "Sardines",
+      title: "Le temps des conserveries",
+      paragraphs: [
+        "La conserve de sardines à l'huile marque le paysage d'Audierne. La première « friture » ouvre en 1872 au-dessus de la grève des Capucins, montée par les frères Pellier, venus du Mans. Huit autres suivent entre 1878 et 1880. En 1903, douze conserveries bordent la rive droite du Goyen, tenues par de grands noms comme Chancerelle ou Saupiquet. Chacune emploie de 55 à 150 ouvriers, en grande majorité des femmes.",
+        "En 1879, l'usine du Stum s'installe en amont du pont : elle tire de l'iode, de la soude et des engrais des cendres d'algues brûlées par les goémoniers, jusqu'en 1954. Les conserveries ferment une à une ; la dernière, la COOP, perchée sur la « montagne », tient jusqu'en 1980.",
+      ],
+    },
+    {
+      id: "viviers",
+      nav: "Viviers",
+      title: "Langoustes et grands viviers",
+      paragraphs: [
+        "Longtemps simple appoint, la pêche aux crustacés prend le relais. En 1934, année exceptionnelle, les pêcheurs du Cap Sizun débarquent à Audierne 83 tonnes de homards, 260 tonnes de langoustes et 563 tonnes de crabes. Il faut de quoi les stocker vivants.",
+        "En 1947, le Belge De Stoop bâtit les « grands viviers d'Audierne » près du môle du Raoulic : un bâtiment de béton de 75 mètres abritant 12 bassins, sous une voûte percée d'une vingtaine d'aérations, assez près de la mer pour que l'eau se renouvelle. Rachetés en 1965 par le mareyeur Le Gall-Dagorn, ils font de l'entreprise le premier exportateur de crustacés de Bretagne : 300 tonnes de homards et de langoustes expédiées chaque année dans le monde entier. Les viviers fonctionnent toujours.",
+      ],
+    },
+    {
       id: 'insolite',
       nav: 'Insolite',
       title: 'Anecdotes insolites',
@@ -86,17 +104,37 @@ export default {
           title: "Port dans la ville",
           text: "Audierne se découvre à pied, des venelles du centre aux églises perchées, jusqu'à la passerelle des Capucins et au môle du Raoulic. L'office de tourisme propose une visite guidée de la ville le mardi et le jeudi en saison, ainsi qu'une visite de la criée de Poulgoazec.",
         },
+        {
+          title: "Le code du mât Fénoux",
+          text: "Quand le mauvais temps empêchait les pilotes de rejoindre les navires, on les guidait depuis la terre : une aile triangulaire orientable, un drapeau rouge et une boule noire, au sommet d'un mât de 12 mètres, formaient un code connu des capitaines. Inventé en 1832 par l'Audiernais Julien Fénoux, ce mât a été installé en 1841, puis déplacé en 1882 sur la plateforme du Raoulic, car de nouvelles maisons le cachaient de la mer.",
+        },
+        {
+          title: "Une passerelle pour laisser passer les vagues",
+          text: "Les vents du sud rendaient la sortie à la voile presque impossible : on halait donc les bateaux le long d'un chemin construit à partir de 1859. Mais la digue renforçait le ressac jusque dans le port. Pour laisser les vagues se briser sur la grève des Capucins, on a fini le chemin par une passerelle sur pieux métalliques, inaugurée en 1894 et restaurée à l'identique en 2001-2002.",
+        },
+        {
+          title: "Des bateaux sculptés sur l'église",
+          text: "Sur les murs de l'église Saint-Raymond, des bas-reliefs représentent des bateaux de pêche. Selon l'historien Daniel Bernard, les marins les ont sculptés eux-mêmes « pour bien marquer la part qui leur revenait » dans ces édifices payés de leurs deniers.",
+        },
+        {
+          title: "412 mètres contre la houle",
+          text: "Dans les années 1930, le port compte 450 bateaux et 3 800 inscrits maritimes, mais sa barre reste redoutable. On construit donc à Sainte-Evette un môle de 412 mètres, commencé en 1940 et achevé en 1952 après une pause pendant la guerre, avec une station de sauvetage. La cale d'embarquement pour l'île de Sein suit en 1966.",
+        },
       ],
     },
   ],
   timeline: [
     { year: '1321', text: '« Odierna » apparaît sur l\'atlas de Pietro Vesconte.' },
     { year: '1766', text: 'Construction du Vieux môle.' },
-    { year: '1843', text: 'Construction du mât Fénoux à l\'entrée du port.' },
+    { year: '1843', text: 'Mise en service du mât Fénoux, installé en 1841.' },
     { year: '1847', text: 'Môle du Raoulic, long de 214 mètres.' },
     { year: '1865', text: 'Création du poste de sauvetage, l\'un des deux premiers de France.' },
+    { year: "1872", text: "Première conserverie de sardines, des frères Pellier." },
     { year: '1894', text: 'Mise en service du train « youtar » Douarnenez–Audierne.' },
     { year: '1902', text: 'Apogée de la sardine : 16 conserveries, 656 bateaux.' },
+    { year: "1947", text: "Construction des « grands viviers d'Audierne »." },
+    { year: "1952", text: "Achèvement du môle de Sainte-Evette." },
+    { year: "1980", text: "Fermeture de la COOP, dernière conserverie." },
     { year: '1987', text: 'Ouverture du port de plaisance.' },
     { year: '2016', text: 'Fusion d\'Audierne et d\'Esquibien.' },
     { year: '2022', text: 'Le mât Fénoux est inscrit monument historique.' },
@@ -189,6 +227,12 @@ export default {
   sources: [
     { label: 'Wikipédia : Audierne', url: 'https://fr.wikipedia.org/wiki/Audierne' },
     { label: "Cap Sizun Tourisme : Audierne, port et balnéaire", url: "https://www.capsizuntourisme.fr/cap-sizun-pointe-du-raz/incontournables/audierne-port-et-balneaire" },
+    { label: "Ministère de la Culture, POP (inventaire de Bretagne) : le patrimoine industriel d'Audierne", url: "https://pop.culture.gouv.fr/notice/merimee/IA00006005" },
+    { label: "Ministère de la Culture, POP (inventaire de Bretagne) : les grands viviers d'Audierne", url: "https://pop.culture.gouv.fr/notice/merimee/IA29133592" },
+    { label: "Ministère de la Culture, POP : mât-pilote Fénoux (inventaire et protection)", url: "https://pop.culture.gouv.fr/notice/merimee/IA00006082" },
+    { label: "Ministère de la Culture, POP : passerelle des Capucins", url: "https://pop.culture.gouv.fr/notice/merimee/IA00006078" },
+    { label: "Ministère de la Culture, POP : port et môle de Sainte-Evette", url: "https://pop.culture.gouv.fr/notice/merimee/IA29133571" },
+    { label: "Ministère de la Culture, POP : présentation de la commune d'Audierne", url: "https://pop.culture.gouv.fr/notice/merimee/IA29002503" },
   ],
   pois: [],
 };
