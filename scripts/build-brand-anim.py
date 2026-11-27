@@ -26,32 +26,23 @@ FLARE = (f'<g class="gmb-flare"><circle cx="{CX}" cy="{CY}" r="22" fill="url(#gm
          f'<ellipse cx="{CX}" cy="{CY}" rx="40" ry="1.3" fill="url(#gmb-streak)"/><ellipse cx="{CX}" cy="{CY}" rx="1" ry="14" fill="url(#gmb-streak)" opacity=".6"/></g>')
 
 # --- images clés : 1 tour, 2,6 s, montée/descente douces (a = 0,22) ---
-N = 80
-# Vitesse définie en secondes : même début qu'avant (montée 0,44 s, croisière) jusqu'au passage à gauche (~0,9 s),
-# puis accélération progressive, freinage final très court. La durée totale découle du chemin (1 tour).
-def _old_total():  # chemin d'un tour avec l'ancien réglage (2 s, montée/descente 22 %)
-    A = 0.22; n = 4000; tot = 0
-    for k in range(n):
-        u = (k + .5) / n; tot += (u / A if u < A else (1 - u) / A if u > 1 - A else 1.0) / n
-    return tot * 2.0  # en « vitesse × seconde »
-D_TURN = _old_total()
-RAMP, BOOST_AT, BOOST_LEN, BOOST, BRAKE = 0.44, 0.9, 0.55, 1.1, 0.12
-def _v(t):
-    v = min(1.0, t / RAMP)
-    if t > BOOST_AT: x = min(1.0, (t - BOOST_AT) / BOOST_LEN); v *= 1 + BOOST * x * x
+T, N, A = 2.0, 80, 0.22
+# Vitesse : montée douce, croisière, puis légère accélération progressive après le passage à gauche,
+# et freinage final plus court. Position = intégrale de la vitesse (normalisée).
+A_IN, A_OUT, BOOST_FROM, BOOST = 0.22, 0.13, 0.45, 0.18
+def vel(u):
+    v = min(1.0, u / A_IN)
+    if u > BOOST_FROM: v *= 1 + BOOST * min(1.0, (u - BOOST_FROM) / (1 - A_OUT - BOOST_FROM))
+    if u > 1 - A_OUT: v *= (1 - u) / A_OUT
     return v
-_dt = 0.0005; _t = 0.0; _d = 0.0
-while _d + _v(_t) * BRAKE / 2 < D_TURN: _d += _v(_t) * _dt; _t += _dt
-_T1, _V1 = _t, _v(_t)
-T = round(_T1 + BRAKE, 3)
-_STEPS = 4000; _cum = [0.0]; _vs = []
-for _k in range(_STEPS + 1):
-    tt = _k / _STEPS * T
-    _vs.append(_v(tt) if tt <= _T1 else _V1 * max(0.0, 1 - (tt - _T1) / BRAKE))
-for _k in range(_STEPS): _cum.append(_cum[-1] + (_vs[_k] + _vs[_k + 1]) / 2 * T / _STEPS)
-_TOT = _cum[-1]; _VMAX = max(_vs)
+_STEPS = 4000
+_cum = [0.0]
+for _k in range(_STEPS):
+    _cum.append(_cum[-1] + vel((_k + .5) / _STEPS) / _STEPS)
+_TOT = _cum[-1]
+_VMAX = max(vel(k / _STEPS) for k in range(_STEPS + 1))
 def prof(u): return _cum[min(_STEPS, round(u * _STEPS))] / _TOT
-def spd(u): return min(1.0, _vs[min(_STEPS, round(u * _STEPS))] / 1.0) * (1 if _vs[min(_STEPS, round(u * _STEPS))] <= 1 else 1)
+def spd(u): return vel(u) / _VMAX
 GRAY, GOLD = (0x5c, 0x5c, 0x5c), (0xFF, 0xB9, 0x00)
 def mix(t):
     t = max(0, min(1, t)); return '#%02x%02x%02x' % tuple(round(x + (y - x) * t) for x, y in zip(GRAY, GOLD))
@@ -59,7 +50,6 @@ def kf(name, fn):
     rows = []
     for k in range(N + 1):
         u = k / N; th = -2 * math.pi * prof(u); s = spd(u)  # sens inverse : droite → devant → gauche → derrière
-        globals()['_U'] = u
         rows.append(f'{100*u:.2f}%{{{fn(th, s)}}}')
     return f'@keyframes {name}{{' + ''.join(rows) + '}'
 side = lambda th, g: max(0.0, g * math.cos(th))
@@ -68,10 +58,8 @@ BLUR, HALO, WIDEN, FP, FS = 1.5, 0.3, 0.35, 3.5, 1.15
 def beam(g):
     def f(th, s):
         L = side(th, g); w = 1 + WIDEN * (1 - abs(math.cos(th))) * s
-        u = globals().get('_U', 0); f0 = 1 - 0.16 / T; fade = 1 - 0.5 * math.sin(math.pi * (u - f0) / (1 - f0)) if u > f0 else 1
-        return f'transform:scale({L:.3f},{w:.3f});opacity:{min(1, L * 1.8) * fade:.3f};filter:blur({BLUR * s:.2f}px)'
+        return f'transform:scale({L:.3f},{w:.3f});opacity:{min(1, L * 1.8):.3f};filter:blur({BLUR * s:.2f}px)'
     return f
-print('durée', T)
 css = f'''/* Généré par scripts/build-brand-anim.py : survol du logo, un tour du feu du phare ({T} s). */
 .brand-svg .gmb-back, .brand-svg .gmb-glass, .brand-svg .gmb-flare, .brand-svg .gmb-starglow {{ opacity: 0; }}
 .brand-svg .gmb-beam-l {{ opacity: 0; transform: scaleX(0); }}

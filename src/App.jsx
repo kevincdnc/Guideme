@@ -291,7 +291,6 @@ function ProfileMenu({ onOpen, onAccount }) {
     <div className="profile" ref={boxRef}>
       <button className={`profile-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Mon compte et ma to-do list" aria-expanded={open}>
         {initials ? <span className="profile-initials">{initials}</span> : <AvatarPlaceholder />}
-        {list.length > 0 && <span className="profile-badge">{list.length}</span>}
       </button>
       {open && (
         <div className="profile-menu">
@@ -567,7 +566,11 @@ export default function App() {
   }, [query, visible]);
   const available = visible.filter((p) => p.available).length;
   const allVisited = PLACES.filter((p) => visited.includes(p.id));
-  const visibleVisited = visible.filter((p) => visited.includes(p.id)).length; // suit le filtre choisi
+  // Compteurs to-do / visités : suivent la catégorie choisie, mais pas les filtres « visités » ou « to-do » eux-mêmes
+  // (sinon ils changeraient de forme au clic)
+  const statusBase = tag === 'visited' || tag === 'wanted' ? PLACES : visible;
+  const visibleVisited = statusBase.filter((p) => visited.includes(p.id)).length;
+  const visibleWanted = statusBase.filter((p) => wanted.includes(p.id)).length;
   const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
     setTag(t);
@@ -631,7 +634,8 @@ export default function App() {
     setSelected(id);
     if (!id) return;
     const p = getPlace(id);
-    mapRef.current?.flyTo(p.coords, 11.5);
+    // Focus : on recentre sur le lieu avec un léger zoom (+20 %) depuis la vue actuelle
+    mapRef.current?.focusOn(p.coords, 1.2);
     // Desktop : clic sur un repère → la carte correspondante défile dans la liste de gauche
     if (fromMarker) {
       const side = document.querySelector(`.sidebar .place-card[data-id="${id}"]`);
@@ -709,10 +713,21 @@ export default function App() {
             <h1>Connais-tu vraiment le Finistère ?</h1>
             <div className="sidebar-subrow">
               <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
-              {visibleVisited > 0 && (
-                <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}>
-                  {visibleVisited} visité{visibleVisited > 1 ? 's' : ''} <Icon name="check" size={13} stroke={2.8} />
-                </button>
+              {(visibleVisited > 0 || visibleWanted > 0) && (
+                <span className="sidebar-status">
+                  {visibleWanted > 0 && (
+                    <button className={`sidebar-visited sidebar-wanted ${tag === 'wanted' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'wanted' ? null : 'wanted')} aria-pressed={tag === 'wanted'}
+                      title={`${visibleWanted} dans ta to-do list`} aria-label={`${visibleWanted} dans ta to-do list`}>
+                      {visibleWanted}{visibleVisited === 0 && <> to-do</>} <Icon name="star" size={13} stroke={2.2} />
+                    </button>
+                  )}
+                  {visibleVisited > 0 && (
+                    <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}
+                      title={`${visibleVisited} lieu${visibleVisited > 1 ? 'x' : ''} visité${visibleVisited > 1 ? 's' : ''}`} aria-label={`${visibleVisited} visité${visibleVisited > 1 ? 's' : ''}`}>
+                      {visibleVisited}{visibleWanted === 0 && <> visité{visibleVisited > 1 ? 's' : ''}</>} <Icon name="check" size={13} stroke={2.8} />
+                    </button>
+                  )}
+                </span>
               )}
             </div>
           </div>

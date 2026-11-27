@@ -2654,3 +2654,16 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Échelle de la carte : plus discrète, arrondie */
 .maplibregl-ctrl-scale { border-radius: 4px; border: 1px solid rgba(17,17,17,.25) !important; border-top: 0 !important; background: rgba(255,255,255,.7) !important;
   color: #404040 !important; font: 500 10.5px var(--font) !important; padding: 1px 6px !important; box-shadow: none; }
+
+/* ---------- Compteurs « to-do / visités » : même place dans tous les états, calés sur le bouton + ---------- */
+.sidebar-status { display: inline-flex; gap: 4px; flex: none; margin-right: 0; }
+.sidebar-visited, .sidebar-visited.is-active { padding: 3px 9px !important; border: 1px solid transparent; }
+.sidebar-subrow { margin-right: 0 !important; }
+.sidebar-wanted { color: #a16207 !important; }
+.sidebar-wanted:hover { background: #fef6e0 !important; }
+.sidebar-wanted.is-active { background: #FFB900 !important; color: #111 !important; }
+.sidebar-wanted svg { fill: currentColor; }
+
+/* Titres des mini-cartes : 600 partout, visités compris */
+.place-card.is-visited .pc-body h3 { font-weight: 600 !important; }
+.sidebar-status { margin-right: -8px; }

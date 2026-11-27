@@ -182,6 +182,11 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
   onOpenRef.current = onOpenPlace;
 
   useImperativeHandle(ref, () => ({
+    focusOn(coords, factor = 1.2) {
+      const m = map.current;
+      if (!m) return;
+      m.flyTo({ center: coords, zoom: Math.min(m.getMaxZoom(), m.getZoom() + Math.log2(factor)), padding: padding || undefined, speed: 1.2, essential: true });
+    },
     flyTo(coords, zoom = 11.5) {
       map.current?.flyTo({ center: coords, zoom, padding: padding || undefined, speed: 1.4, essential: true });
     },
