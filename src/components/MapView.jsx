@@ -76,7 +76,8 @@ async function prefetchTiles() {
 
 // Épingle en goutte (un seul tracé SVG : pas de pièce rapportée), pictogramme blanc,
 // petite coche quand le lieu est visité, pastille simple vue de loin.
-const PIN_PATH = 'M22 52C22 52 5 34.5 5 21.5A17 17 0 1 1 39 21.5C39 34.5 22 52 22 52Z';
+// Repère arrondi et « gras » : grosse tête ronde, pointe courte
+const PIN_PATH = 'M22 53C22 53 3 37.5 3 22A19 19 0 1 1 41 22C41 37.5 22 53 22 53Z';
 const LOCK = '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>';
 const CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -106,10 +107,10 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
     <span class="gm-pin">
       <svg class="gm-pin-shape" viewBox="0 0 44 56" aria-hidden="true">
         <path d="${PIN_PATH}" transform="translate(0 2.5)" fill="rgba(0,0,0,.22)"/>
-        <path d="${PIN_PATH}" fill="var(--c)" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/>
+        <path d="${PIN_PATH}" fill="var(--c)" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/>
         <ellipse cx="16" cy="13" rx="6" ry="3.6" fill="#fff" opacity=".28" transform="rotate(-25 16 13)"/>
       </svg>
-      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
       <span class="gm-want" aria-hidden="true">${STAR_SVG}</span>
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
@@ -265,12 +266,22 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     m.once('idle', foldAttrib);
     m.addControl(new maplibregl.ScaleControl({ unit: 'metric', maxWidth: 90 }), 'bottom-left');
     m.on('click', () => onSelectRef.current(null));
-    // Taille des repères selon le zoom : petits points de loin (vue d'ensemble du Finistère),
-    // repères sans étiquette à mi-distance, repères complets de près. Jamais de regroupement.
+    // Trois paliers, comme les cartes de randonnée ou de voyage :
+    //  · vue d'ensemble : un point par lieu, tous de la même taille (vert si visité) ;
+    //  · zoom local : repères avec pictogramme (coche si visité), sans nom ;
+    //  · zoom rapproché : repères + nom. Le survol ou la sélection montrent toujours le nom.
+    // Sur petit écran, les repères arrivent un demi-niveau plus tard (moins de place).
     const onZoom = () => {
       const z = m.getZoom();
-      box.current?.classList.toggle('z-far', z < 9.4);
-      box.current?.classList.toggle('z-mid', z >= 9.4 && z < 11.2);
+      const off = window.innerWidth < 900 ? 0.5 : 0;
+      const c = box.current?.classList;
+      if (!c) return;
+      c.toggle('z-dots', z < 9.6 + off);
+      c.toggle('z-pins', z >= 9.6 + off && z < 11.4 + off);
+      c.toggle('z-labels', z >= 11.4 + off);
+      // Anciennes classes (styles existants)
+      c.toggle('z-far', z < 9.6 + off);
+      c.toggle('z-mid', z >= 9.6 + off && z < 11.4 + off);
     };
     m.on('zoom', onZoom);
     m.once('load', () => {

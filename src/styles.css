@@ -2302,3 +2302,42 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 @keyframes cardPress { 0%, 40% { transform: none; } 55% { transform: scale(.985) translateY(1px); } 75% { transform: scale(1.003); } 100% { transform: none; } }
 .place-card .pc-flags { position: absolute; top: 7px !important; bottom: 7px !important; right: 8px; transform: none !important; justify-content: space-between !important; gap: 0 !important; }
 .place-card.is-visited .pc-flags { justify-content: center !important; }
+
+/* =====================================================================
+   Repères de carte v2 : points (vue d'ensemble) → repères (zoom) → repères + nom
+   ===================================================================== */
+/* 1. Vue d'ensemble : un point par lieu, tous identiques ; vert si visité */
+.map.z-dots .gm-marker .gm-pin, .map.z-dots .gm-marker .gm-marker-ground { display: none !important; }
+.map.z-dots .gm-marker .gm-dot, .map.z-dots .gm-marker.is-soon .gm-dot, .map.z-dots .gm-marker.is-visited .gm-dot {
+  display: block !important; width: 14px !important; height: 14px !important; border-radius: 50%; border: 2.5px solid #fff !important;
+  background: var(--c) !important; box-shadow: 0 1px 4px rgba(17,17,17,.35) !important; transition: transform .15s ease; }
+.map.z-dots .gm-marker.is-visited .gm-dot { background: #16a34a !important; }
+.map.z-dots .gm-marker .gm-dot::after { display: none !important; }
+.map.z-dots .gm-marker:hover .gm-dot { transform: scale(1.35); }
+.map.z-dots .gm-marker .gm-marker-label { display: none !important; }
+.map.z-dots .gm-marker:hover .gm-marker-label { display: inline-flex !important; }
+/* Le lieu sélectionné ressort en repère même de loin */
+.map.z-dots .gm-marker.is-selected .gm-dot { display: none !important; }
+.map.z-dots .gm-marker.is-selected .gm-pin, .map.z-dots .gm-marker.is-selected .gm-marker-ground { display: block !important; }
+.map.z-dots .gm-marker.is-selected .gm-marker-label { display: inline-flex !important; }
+
+/* 2. Zoom local : repères arrondis avec pictogramme, pour tous (visités compris) */
+.map.z-pins .gm-marker .gm-dot, .map.z-labels .gm-marker .gm-dot { display: none !important; }
+.map.z-pins .gm-marker .gm-pin, .map.z-labels .gm-marker .gm-pin, .map .gm-marker.is-selected .gm-pin { display: block !important; width: 38px !important; height: 48px !important; }
+.map.z-pins .gm-marker .gm-marker-ground, .map.z-labels .gm-marker .gm-marker-ground { display: block !important; }
+.map .gm-marker .gm-pin-icon { left: 9.5px !important; top: 9.5px !important; width: 19px !important; height: 19px !important; }
+.map.z-pins .gm-marker .gm-marker-label { display: none !important; }
+.map.z-pins .gm-marker:hover .gm-marker-label, .map.z-pins .gm-marker.is-selected .gm-marker-label { display: inline-flex !important; }
+/* Lieu visité : repère vert, coche à la place du pictogramme */
+.map .gm-marker.is-visited { --c: #16a34a !important; }
+.map .gm-marker.is-visited .gm-pin-icon { display: none !important; }
+.map .gm-marker.is-visited .gm-check { display: grid !important; position: absolute; left: 9.5px; top: 9.5px; width: 19px; height: 19px; margin: 0; padding: 0;
+  background: none !important; border: 0 !important; box-shadow: none !important; color: #fff; place-items: center; }
+.map .gm-marker.is-visited .gm-check svg { width: 19px; height: 19px; }
+/* Lieu sélectionné : repère un peu plus grand */
+.map .gm-marker.is-selected .gm-pin { transform: scale(1.12); transform-origin: 50% 100%; }
+
+/* 3. Zoom rapproché : le nom s'affiche */
+.map.z-labels .gm-marker .gm-marker-label { display: inline-flex !important; }
+/* Mobile : cartes du bandeau trop étroites pour le tampon, la case verte suffit */
+@media (max-width: 899px) { .rail .pc-stamp, .rail-wrap .pc-stamp { display: none !important; } }
