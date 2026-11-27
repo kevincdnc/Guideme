@@ -2052,3 +2052,27 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.015em; }
 /* ---------- Bouton « i » des crédits : une seule icône ---------- */
 .maplibregl-ctrl-attrib-button { background-repeat: no-repeat !important; background-position: center !important; }
 .tool-group .map-settings > .tool-btn.is-open { color: #fff; background: var(--ink); }
+
+/* ---------- Barre noire et contrôles alignés : 16 px de marge, même hauteur, même rayon ---------- */
+.sidebar { --bar-top: 16px; }
+.brand-bar { position: sticky; top: 16px !important; margin: 16px 0 10px !important; border-radius: 8px !important; }
+.brand-bar::before { top: -17px !important; height: 17px !important; }
+.brand-bar .brand-logo { transform: translateY(-2px); }
+.brand-bar .progress-pct { top: -2px; }
+.brand-bar .progress-btn { padding-left: 14px !important; }
+@media (min-width: 900px) {
+  .map-tools { top: 16px !important; }
+  .tool-group { height: 76px; border-radius: 8px; }
+  .tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { height: 100%; }
+  .tool-group > *, .tool-group .map-settings { flex: 1; display: flex; }
+  .tool-group .map-settings > .tool-btn { flex: 1; }
+  .tool-group > :first-child, .tool-group .map-settings:first-child > .tool-btn { border-radius: 8px 8px 0 0 !important; }
+  .tool-group > :last-child.tool-btn { border-radius: 0 0 8px 8px !important; }
+}
+@media (min-width: 900px) { .tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { display: grid !important; place-items: center; width: 100%; } }
+@media (min-width: 900px) {
+  .tool-group { width: 32px; }
+  .tool-group > *, .tool-group .map-settings { flex: none !important; display: block !important; }
+  .tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { display: grid !important; place-items: center; position: relative; width: 32px !important; height: 37.5px !important; }
+  .tool-group .tool-dot { position: absolute; top: 9px; right: 7px; }
+}
