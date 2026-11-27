@@ -31,7 +31,7 @@
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-brand: 'Mochiy Pop One', 'Inter Variable', ui-sans-serif, sans-serif; /* logo et compteurs */
-  --font-title: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, sans-serif; /* titres (alternatives testées : Nunito, Outfit, voir design/typo-titres) */
+  --font-title: 'Outfit Variable', 'Inter Variable', ui-sans-serif, sans-serif; /* titres (alternatives testées : Nunito, Plus Jakarta Sans, voir design/typo-titres) */
   --font-title-axes: normal;
 
   --safe-top: env(safe-area-inset-top, 0px);
@@ -1996,7 +1996,7 @@ img { display: block; max-width: 100%; }
 .topbar .progress-pct { font-size: 13px !important; }
 .topbar .progress-pct small { font-size: 8.5px !important; }
 
-/* ---------- Titres en Plus Jakarta Sans ---------- */
+/* ---------- Graisse des titres ---------- */
 h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
 
 /* ---------- Bloc progression : plus haut, chiffre 14 px ---------- */
@@ -2035,3 +2035,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
 .maplibregl-ctrl-attrib-button { width: 20px !important; height: 20px !important; background-size: 14px !important; }
 @media (max-width: 899px) { .tool-group .tuner { right: auto; left: calc(100% + 8px); top: 0; } }
 @media (min-width: 900px) { .tool-group .tuner { top: 0; left: calc(100% + 10px); } }
+
+/* ---------- Titres en Outfit ---------- */
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.015em; }
+.sidebar-intro h1 { font-size: 25px !important; line-height: 1.2; }

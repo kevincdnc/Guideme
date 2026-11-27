@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import '@fontsource-variable/inter';
-import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/outfit';
 import '@fontsource/mochiy-pop-one/latin-400.css';
 import './studio.css';
 import Studio from './Studio.jsx';
