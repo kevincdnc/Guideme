@@ -2140,3 +2140,12 @@ h1, h2, h3, h4 { font-weight: 800; }
 .tool-group > * + * { border-top: 1px solid rgba(255,255,255,.12) !important; }
 @media (min-width: 900px) { .tool-group .tool-dot { top: 6px !important; right: 6px !important; width: 4.5px !important; height: 4.5px !important; box-shadow: none !important; } }
 .tool-dot { box-shadow: none; }
+
+/* ---------- Contrôles de carte : retour au blanc, icônes grises discrètes ---------- */
+.tool-group { background: #fff !important; box-shadow: 0 1px 4px rgba(15,23,42,.14), 0 0 0 1px rgba(15,23,42,.04) !important; }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { color: #737373 !important; }
+.tool-group .tool-btn:hover { background: #f5f5f5 !important; color: #404040 !important; }
+.tool-group .map-settings > .tool-btn.is-open { background: #111 !important; color: #fff !important; }
+.tool-group > * + * { border-top: 1px solid #e5e5e5 !important; }
+/* Point « ma position » toujours visible, au-dessus des repères */
+.maplibregl-marker:has(.gm-me) { z-index: 7 !important; }

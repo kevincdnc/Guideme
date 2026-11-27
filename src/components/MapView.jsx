@@ -193,22 +193,44 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     },
     locate() {
       if (!navigator.geolocation) return;
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const c = [pos.coords.longitude, pos.coords.latitude];
-          if (!map.current) return;
-          if (!map.current.__me) {
-            const el = document.createElement('div');
-            el.className = 'gm-me';
-            map.current.__me = new maplibregl.Marker({ element: el }).setLngLat(c).addTo(map.current);
-          } else map.current.__me.setLngLat(c);
-          map.current.flyTo({ center: c, zoom: 12, padding: padding || undefined });
-        },
-        () => {},
-        { enableHighAccuracy: true, timeout: 8000 },
-      );
+      watchMe(true);
     },
   }));
+
+  // Position de l'utilisateur : suivie en continu dès qu'il a autorisé la géolocalisation,
+  // et le point reste affiché en permanence sur la carte.
+  const watchRef = useRef(null);
+  const flyNext = useRef(false);
+  function placeMe(c) {
+    const m = map.current;
+    if (!m) return;
+    if (!m.__me) {
+      const el = document.createElement('div');
+      el.className = 'gm-me';
+      m.__me = new maplibregl.Marker({ element: el }).setLngLat(c).addTo(m);
+    } else m.__me.setLngLat(c);
+  }
+  function watchMe(fly) {
+    if (!navigator.geolocation) return;
+    if (fly) flyNext.current = true;
+    if (watchRef.current != null) {
+      if (fly && map.current?.__me) { map.current.flyTo({ center: map.current.__me.getLngLat(), zoom: 12, padding: padding || undefined }); flyNext.current = false; }
+      return;
+    }
+    watchRef.current = navigator.geolocation.watchPosition(
+      (pos) => {
+        const c = [pos.coords.longitude, pos.coords.latitude];
+        placeMe(c);
+        if (flyNext.current && map.current) { map.current.flyTo({ center: c, zoom: 12, padding: padding || undefined }); flyNext.current = false; }
+      },
+      () => {},
+      { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 },
+    );
+  }
+  useEffect(() => {
+    navigator.permissions?.query({ name: 'geolocation' }).then((p) => { if (p.state === 'granted') watchMe(false); }).catch(() => {});
+    return () => { if (watchRef.current != null) navigator.geolocation.clearWatch(watchRef.current); };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { clonePopCss(); }, []);
 
