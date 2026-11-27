@@ -30,15 +30,16 @@ const PAYS = {
 };
 // Une couche par niveau (les zones se superposent) : grands pays, puis pays traditionnels
 const layer = (groups) => { const of = {}; Object.entries(groups).forEach(([id, codes]) => codes.forEach((c) => { of[c] = id; })); return of; };
-const outFile = new URL('../src/data/territoires.json', import.meta.url);
+const outFile = new URL('../public/territoires/zones.json', import.meta.url); // chargé à la demande par la carte
 const merged = [];
-[layer({ leon: LEON, cornouaille: CORNOUAILLE }), layer(PAYS)].forEach((of, i) => {
+// Contours précis (25 m) pour coller au trait de côte de la carte ; 60 m suffisent pour les pays
+[[layer({ leon: LEON, cornouaille: CORNOUAILLE }), 25], [layer(PAYS), 60]].forEach(([of, interval], i) => {
   const tmp = new URL(`./data/.territoires-${i}.geojson`, import.meta.url);
   const out = new URL(`./data/.territoires-${i}-out.geojson`, import.meta.url);
   fs.writeFileSync(tmp, JSON.stringify({ type: 'FeatureCollection', features: communes.features.filter((f) => of[f.properties.code]).map((f) => ({ ...f, properties: { id: of[f.properties.code] } })) }));
-  execSync(`npx -y mapshaper -i "${tmp.pathname}" -dissolve id -simplify interval=150 keep-shapes -o precision=0.00001 format=geojson "${out.pathname}"`, { stdio: 'inherit' });
+  execSync(`npx -y mapshaper -i "${tmp.pathname}" -dissolve id -simplify interval=${interval} keep-shapes -o precision=0.00001 format=geojson "${out.pathname}"`, { stdio: 'inherit' });
   merged.push(...JSON.parse(fs.readFileSync(out)).features);
   fs.unlinkSync(tmp); fs.unlinkSync(out);
 });
 fs.writeFileSync(outFile, JSON.stringify({ type: 'FeatureCollection', features: merged }));
-console.log(`territoires.json : ${(fs.statSync(outFile).size / 1024).toFixed(0)} Ko`);
+console.log(`zones.json : ${(fs.statSync(outFile).size / 1024).toFixed(0)} Ko`);

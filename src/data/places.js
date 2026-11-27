@@ -62,7 +62,7 @@ function readingMinutes(place) {
 // Territoires : deux grands pays historiques (Léon au nord, Cornouaille au sud), chacun découpé en pays
 // traditionnels. On ne liste que les pays qui ont au moins une fiche. flag : drapeau dans
 // public/territoires/<id>.svg (false = pas encore dessiné : on affiche celui du grand pays).
-// color : couleur principale du drapeau, pour la zone sur la carte (src/data/territoires.json).
+// color : couleur principale du drapeau, pour la zone sur la carte (public/territoires/zones.json).
 export const GRANDS_PAYS = [
   { id: 'leon', label: 'Léon', color: '#FFE003', flag: true, pays: [
     { id: 'brest', label: 'Brest & Iroise', color: '#2a2fd6', flag: true, ids: ['phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires', 'phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-four', 'phare-petit-minou', 'phare-portzic'] },

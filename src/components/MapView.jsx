@@ -6,7 +6,6 @@ import { FINISTERE_BOUNDS } from '../data/places.js';
 import MAP_STYLE from '../data/mapFonts.js';
 import { protectionBadgesHtml } from './Protections.jsx';
 import FINISTERE_MASK from '../data/finistere.json';
-import TERRITOIRES from '../data/territoires.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
 // nette à tous les zooms, avec relief ombré. L'attribution complète est déclarée dans le style.
@@ -14,7 +13,15 @@ MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" 
 
 // Emblèmes des grands pays (extraits des drapeaux, public/territoires/emblemes/) et leur opacité sur la carte
 const EMBLEMES = ['leon', 'cornouaille'];
-const EMBLEME_OPACITY = { leon: 0.22, cornouaille: 0.45 };
+const EMBLEME_OPACITY = { leon: 0.26, cornouaille: 0.55 };
+// Bélier plus haut que large : réduit pour peser visuellement autant que le lion
+const EMBLEME_SCALE = ['match', ['get', 'id'], 'cornouaille', 0.8, 1];
+// Grands pays : teinte plus foncée et plus couvrante, pour faire ressortir l'emblème
+const GRAND_FILL = { leon: { color: '#E6B800', opacity: 0.42 }, cornouaille: { color: '#1E46D8', opacity: 0.4 } };
+// Contours des zones (public/territoires/zones.json, ~190 Ko) : chargés à la première utilisation
+let TERRITOIRES = null;
+let zonesPromise = null;
+const loadZones = () => (zonesPromise ||= fetch(`${import.meta.env.BASE_URL}territoires/zones.json`).then((r) => r.json()).then((d) => { TERRITOIRES = d; return d; }));
 // Point d'ancrage de l'emblème : centre de gravité du plus grand polygone du territoire
 function labelPoint(id) {
   const f = TERRITOIRES.features.find((x) => x.properties.id === id);
@@ -225,14 +232,18 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     showTerritory(id, color, pad) {
       const m = map.current;
       if (!m || !m.getLayer('territoire-fill')) return;
+      if (!TERRITOIRES) { loadZones().then(() => this.showTerritory(id, color, pad)).catch(() => {}); return; }
       const f = TERRITOIRES.features.find((x) => x.properties.id === id);
       if (!f) return;
       const filter = ['==', ['get', 'id'], id];
       m.setFilter('territoire-fill', filter); m.setFilter('territoire-line', filter);
-      m.setPaintProperty('territoire-fill', 'fill-color', color);
-      m.setPaintProperty('territoire-line', 'line-color', color);
-      m.setPaintProperty('territoire-fill', 'fill-opacity', 0.28);
+      const g = GRAND_FILL[id];
+      m.setPaintProperty('territoire-fill', 'fill-color', g?.color || color);
+      m.setPaintProperty('territoire-line', 'line-color', g?.color || color);
+      m.setPaintProperty('territoire-fill', 'fill-opacity', g?.opacity || 0.28);
       m.setPaintProperty('territoire-line', 'line-opacity', 0.9);
+      // Liseré blanc du trait de côte masqué : le contour coloré encadre seul la côte
+      if (m.getLayer('water_outline')) m.setPaintProperty('water_outline', 'line-opacity', 0);
       const hasEmb = EMBLEMES.includes(id);
       if (hasEmb) m.setFilter('territoire-embleme', filter);
       m.setPaintProperty('territoire-embleme', 'icon-opacity', hasEmb ? EMBLEME_OPACITY[id] : 0);
@@ -247,6 +258,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       m.setPaintProperty('territoire-fill', 'fill-opacity', 0);
       m.setPaintProperty('territoire-line', 'line-opacity', 0);
       m.setPaintProperty('territoire-embleme', 'icon-opacity', 0);
+      if (m.getLayer('water_outline')) m.setPaintProperty('water_outline', 'line-opacity', 1);
     },
     zoomBy(d) {
       map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });
@@ -384,17 +396,23 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
         layout: { 'line-cap': 'round', 'line-join': 'round' },
         paint: { 'line-color': '#7b6cf6', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 12, 3.5], 'line-dasharray': [1.5, 1.6] } }, firstLabel);
       // Territoire mis en avant depuis la popup de progression (caché par défaut)
-      m.addSource('territoires', { type: 'geojson', data: TERRITOIRES, tolerance: 0.4 });
+      const EMPTY = { type: 'FeatureCollection', features: [] };
+      m.addSource('territoires', { type: 'geojson', data: EMPTY, tolerance: 0.2 });
       m.addLayer({ id: 'territoire-fill', type: 'fill', source: 'territoires', filter: ['==', ['get', 'id'], ''],
         paint: { 'fill-color': '#0173BC', 'fill-opacity': 0, 'fill-opacity-transition': { duration: 450 } } }, firstLabel);
       m.addLayer({ id: 'territoire-line', type: 'line', source: 'territoires', filter: ['==', ['get', 'id'], ''],
         layout: { 'line-join': 'round' },
-        paint: { 'line-color': '#0173BC', 'line-width': 2, 'line-opacity': 0, 'line-opacity-transition': { duration: 450 } } }, firstLabel);
+        paint: { 'line-color': '#0173BC', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 11, 3], 'line-opacity': 0, 'line-opacity-transition': { duration: 450 } } }, firstLabel);
       // Emblème du grand pays (lion du Léon, bélier de Cornouaille) en filigrane au milieu de sa zone
-      m.addSource('territoire-emblemes', { type: 'geojson', data: { type: 'FeatureCollection', features: EMBLEMES.map((id) => ({ type: 'Feature', properties: { id }, geometry: { type: 'Point', coordinates: labelPoint(id) } })) } });
+      m.addSource('territoire-emblemes', { type: 'geojson', data: EMPTY });
+      if (m.getLayer('water_outline')) m.setPaintProperty('water_outline', 'line-opacity-transition', { duration: 450 });
+      loadZones().then((d) => {
+        m.getSource('territoires')?.setData(d);
+        m.getSource('territoire-emblemes')?.setData({ type: 'FeatureCollection', features: EMBLEMES.map((id) => ({ type: 'Feature', properties: { id }, geometry: { type: 'Point', coordinates: labelPoint(id) } })) });
+      }).catch(() => {});
       m.addLayer({ id: 'territoire-embleme', type: 'symbol', source: 'territoire-emblemes', filter: ['==', ['get', 'id'], ''],
         layout: { 'icon-image': ['concat', 'emb-', ['get', 'id']], 'icon-allow-overlap': true, 'icon-ignore-placement': true,
-          'icon-size': ['interpolate', ['exponential', 2], ['zoom'], 7, 0.32, 9, 1.28] },
+          'icon-size': ['interpolate', ['exponential', 2], ['zoom'], 7, ['*', EMBLEME_SCALE, 0.25], 9, ['*', EMBLEME_SCALE, 1]] },
         paint: { 'icon-opacity': 0, 'icon-opacity-transition': { duration: 450 } } }, firstLabel);
       EMBLEMES.forEach((id) => {
         const img = new Image();
