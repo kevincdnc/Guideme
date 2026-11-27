@@ -4,8 +4,8 @@ import { C } from './media.js';
 export default {
   id: 'pointe-du-millier',
   available: true,
-  icon: 'lighthouse',
-  tags: ['phare', 'nature'],
+  icon: 'cliff',
+  tags: ['nature'],
   title: 'Pointe du Millier, phare et moulin',
   shortTitle: 'Pointe du Millier',
   commune: 'Beuzec-Cap-Sizun',
