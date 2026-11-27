@@ -242,7 +242,7 @@ function MapSettings() {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
-      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={21} /></button>
+      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={23} /></button>
       <ColorTuner open={open} />
     </div>
   );

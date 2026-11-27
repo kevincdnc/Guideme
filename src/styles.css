@@ -2131,3 +2131,12 @@ h1, h2, h3, h4 { font-weight: 800; }
 .maplibregl-ctrl-attrib.maplibregl-compact { min-height: 24px; opacity: .7; }
 .maplibregl-ctrl-attrib-button { width: 24px !important; height: 24px !important; background-size: 24px 24px !important; background-repeat: no-repeat !important; background-position: center !important; }
 .sidebar-subrow { margin-right: -8px; }
+
+/* ---------- Contrôles de carte sur fond noir (#111111), icônes claires ---------- */
+.tool-group { background: #111 !important; box-shadow: 0 4px 14px rgba(0,0,0,.16) !important; }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { color: #e5e5e5 !important; background: transparent !important; }
+.tool-group .tool-btn:hover { background: rgba(255,255,255,.08) !important; color: #fff !important; }
+.tool-group .map-settings > .tool-btn.is-open { background: rgba(255,255,255,.14) !important; color: #fff !important; }
+.tool-group > * + * { border-top: 1px solid rgba(255,255,255,.12) !important; }
+@media (min-width: 900px) { .tool-group .tool-dot { top: 6px !important; right: 6px !important; width: 4.5px !important; height: 4.5px !important; box-shadow: none !important; } }
+.tool-dot { box-shadow: none; }
