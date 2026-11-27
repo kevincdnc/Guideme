@@ -2765,3 +2765,8 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Menu des tags : compteurs aux coins nets, comme les compteurs visités / favoris */
 .tag-menu-item b { border-radius: 6px !important; padding: 2px 7px; min-width: 24px; text-align: center; font-variant-numeric: tabular-nums; }
 .progress-menu .terr-grid { margin-bottom: 10px; }
+
+/* Popup de progression : titre et compteur à gauche, drapeau du Finistère aligné à droite */
+.progress-head { grid-template-columns: 1fr auto !important; }
+.progress-head strong, .progress-head > span { grid-column: 1; text-align: left; }
+.progress-head-flag { grid-column: 2; grid-row: 1 / span 2; justify-self: end; }
