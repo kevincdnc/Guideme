@@ -188,6 +188,12 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       const pad = padding ? { ...padding, left: (padding.left || 0) + 60, right: (padding.right || 0) + 150, top: (padding.top || 0) + 40 } : 60; // place pour les étiquettes à droite des points
       map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 1000 });
     },
+    zoomOutMax() {
+      const m = map.current;
+      if (!m) return;
+      const h = m.__home || { center: m.getCenter(), zoom: m.getZoom() };
+      m.flyTo({ center: h.center, zoom: m.getMinZoom(), duration: 900 });
+    },
     zoomBy(d) {
       map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });
     },
@@ -283,7 +289,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       c.toggle('z-pins', z >= 9.6 + off && z < 11.4 + off);
       c.toggle('z-labels', z >= 11.4 + off);
       // Niveau de zoom pour l'indicateur (une mise à jour par image au plus)
-      if (box.current.__z0 == null && m.loaded()) box.current.__z0 = z;
+      if (m.__home) box.current.__z0 = m.__home.zoom; // 100 % = vue par défaut
       if (!box.current.__raf) box.current.__raf = requestAnimationFrame(() => { box.current.__raf = 0; const zz = m.getZoom(); onZoomRef.current?.({ z: zz, z0: box.current.__z0 ?? zz }); });
       // Anciennes classes (styles existants)
       c.toggle('z-far', z < 9.6 + off);
@@ -291,6 +297,9 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     };
     m.on('zoom', onZoom);
     m.once('load', () => {
+      // Vue par défaut = 100 % ; on ne peut pas dézoomer en dessous de 70 %
+      m.__home = { center: m.getCenter(), zoom: m.getZoom() };
+      m.setMinZoom(m.getZoom() + Math.log2(0.7));
       onZoom();
       m.addImage('gm-waves', patternImage(drawWaves, 88), { pixelRatio: 2 });
       m.addImage('gm-trees', patternImage(drawTrees, 40), { pixelRatio: 2 });

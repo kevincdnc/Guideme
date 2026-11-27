@@ -39,8 +39,9 @@ export default function Brand() {
     beam?.addEventListener('animationend', done);
   };
   return (
-    <a className="brand" href={BASE} aria-label="GuideMe.bzh, accueil" ref={ref} onMouseEnter={spin} onFocus={spin}>
-      <span className="brand-svg" dangerouslySetInnerHTML={{ __html: LOGO }} />
+    <a className="brand" href={BASE} aria-label="GuideMe.bzh, accueil" ref={ref} onFocus={spin}>
+      {/* Seul le logo déclenche le tour (pas toute la largeur de la barre) */}
+      <span className="brand-svg" onMouseEnter={spin} dangerouslySetInnerHTML={{ __html: LOGO }} />
     </a>
   );
 }

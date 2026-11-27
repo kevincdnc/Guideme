@@ -410,6 +410,17 @@ function AccountPage({ visited, wanted, onClose, onOpen }) {
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
 function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0, wantedCount = 0, statusInMenu = false }) {
   const [open, setOpen] = useState(false);
+  const moreRef = useRef(null);
+  // Sur ordinateur, le menu s'ouvre sur la carte, juste à droite du bouton « + » (aligné sur son haut)
+  const [menuPos, setMenuPos] = useState(null);
+  useEffect(() => {
+    if (!open || !moreRef.current || window.innerWidth < 900) { setMenuPos(null); return; }
+    const place = () => { const r = moreRef.current.getBoundingClientRect(); setMenuPos({ top: `${r.top}px`, left: `${r.right + 24}px` }); };
+    place();
+    const side = moreRef.current.closest('.sidebar');
+    side?.addEventListener('scroll', place, { passive: true });
+    return () => side?.removeEventListener('scroll', place);
+  }, [open]);
   const boxRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
   // La catégorie active passe en tête pour rester visible
@@ -449,11 +460,11 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
           </button>
         )}
       </div>
-      {!wrap && <button className={`tag-more ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
+      {!wrap && <button ref={moreRef} className={`tag-more ${open || query ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Toutes les catégories" aria-expanded={open}>
         <Icon name="plus" size={16} stroke={2.4} />
       </button>}
       {open && (
-        <div className="tag-menu" role="menu">
+        <div className="tag-menu" role="menu" style={menuPos || undefined}>
           <button role="menuitemradio" aria-checked={value === 'visited'} className={`tag-menu-item tag-menu-item--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')}>
             <Icon name="check" size={16} stroke={2.6} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
           </button>
@@ -675,8 +686,8 @@ export default function App() {
           const el = e.currentTarget;
           el.classList.remove('is-spinning'); void el.offsetWidth; el.classList.add('is-spinning'); // relance l'animation à chaque clic
           setTimeout(() => el.classList.remove('is-spinning'), 1900);
-          mapRef.current?.fitFinistere();
-        }} aria-label="Boussole : revoir tout le Finistère" title="Revoir tout le Finistère">
+          mapRef.current?.zoomOutMax();
+        }} aria-label="Boussole : vue d'ensemble du Finistère (70 %)" title="Vue d'ensemble (70 %)">
           <svg viewBox="0 0 32 32" width="38" height="38" aria-hidden="true">
             <rect width="32" height="32" rx="16" fill="#ffffff" />
             <g className="compass-needle">

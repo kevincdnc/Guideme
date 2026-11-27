@@ -2420,7 +2420,7 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 
 /* Menu « + » des catégories : s'ouvre à droite sur la carte, aligné sur la barre noire (comme compte et progression) */
 @media (min-width: 900px) {
-  .sidebar .tag-menu { position: fixed !important; top: 12px !important; left: 496px !important; right: auto !important; bottom: auto !important; width: 300px; max-height: calc(100vh - 24px); overflow-y: auto; z-index: 60; margin: 0; box-shadow: 0 18px 50px rgba(17,17,17,.22); }
+  .sidebar .tag-menu { position: fixed !important; top: 12px; left: 496px; right: auto !important; bottom: auto !important; width: 300px; max-height: calc(100vh - 24px); overflow-y: auto; z-index: 60; margin: 0; box-shadow: 0 18px 50px rgba(17,17,17,.22); }
 }
 /* Drapeau du Finistère (version flat) avec une légère ombre noire */
 .progress-flag { width: auto; border-radius: 2px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.55)); }
@@ -2583,3 +2583,9 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 }
 .pc-stamp.is-new svg { animation: stampFadeIn .5s ease-out .45s both; }
 @keyframes stampFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Menu « + » : attaché au bouton (position calculée), plus en haut de la carte */
+
+/* Titre de l'accueil en typo du logo (essai) */
+.sidebar-intro h1 { font-family: var(--font-brand) !important; font-weight: 400 !important; letter-spacing: -0.005em !important; font-size: 23px !important; }
+.sidebar-intro h1 { font-size: 20px !important; overflow: visible !important; text-overflow: clip !important; }
