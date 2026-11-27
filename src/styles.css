@@ -2633,3 +2633,16 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name, .keyfig dt, .lh-id-big dd { font-weight: 700 !important; }
 /* % de la barre noire : épaississement plus léger */
 .brand-bar .progress-pct, .topbar .progress-pct { -webkit-text-stroke-width: .35px; }
+
+/* ---------- Tags collés au défilement : effet iOS (fond translucide flouté, filet fin, ombre douce) ---------- */
+.sidebar .tagbar-wrap { transition: background-color .2s ease, box-shadow .2s ease; }
+.sidebar .tagbar-wrap.is-stuck {
+  background: rgba(251,250,246,.82) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(14px); backdrop-filter: saturate(180%) blur(14px);
+  box-shadow: 0 .5px 0 rgba(17,17,17,.10), 0 6px 14px -8px rgba(17,17,17,.16);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .sidebar .tagbar-wrap.is-stuck { background: #fbfaf6 !important; } }
+
+/* Mini-cartes : 600 pour les lieux à découvrir, 700 une fois visités */
+.sidebar .pc-body h3, .pc-body h3 { font-weight: 600 !important; }
+.place-card.is-visited .pc-body h3 { font-weight: 700 !important; }
