@@ -48,7 +48,7 @@ function countLabel(tag, n, query) {
   if (tag === 'visited') return many ? 'spots déjà visités' : 'spot déjà visité';
   if (tag === 'wanted') return many ? 'spots dans ta to-do list' : 'spot dans ta to-do list';
   const w = COUNT_WORDS[tag] || ['spot', 'spots'];
-  return tag ? `${many ? w[1] : w[0]} à découvrir` : (many ? w[1] : w[0]);
+  return tag ? `${many ? w[1] : w[0]} à découvrir` : (many ? 'pépites' : 'pépite');
 }
 
 // Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
@@ -394,10 +394,9 @@ function AccountPage({ visited, wanted, onClose, onOpen }) {
 
 // Puces de catégories. Barre latérale : sur deux lignes, loupe en bout de ligne.
 // Mobile : une seule ligne, la loupe ouvre la recherche et la liste complète des tags.
-function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0, wantedCount = 0 }) {
+function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 0, wantedCount = 0, statusInMenu = false }) {
   const [open, setOpen] = useState(false);
   const boxRef = useRef(null);
-  const inputRef = useRef(null);
   const used = TAGS.filter((t) => places.some((p) => p.tags?.includes(t.id)));
   // La catégorie active passe en tête pour rester visible
   const ordered = value && value !== 'visited' && value !== 'wanted' ? [...used.filter((t) => t.id === value), ...used.filter((t) => t.id !== value)] : used;
@@ -411,24 +410,16 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
     document.addEventListener('pointerdown', close);
     return () => document.removeEventListener('pointerdown', close);
   }, [open]);
-  useEffect(() => { if (open) inputRef.current?.focus(); }, [open]);
-  const searchField = (
-    <label className="tag-search">
-      <Icon name="search" size={15} />
-      <input ref={inputRef} type="search" value={query} onChange={(e) => onQuery(e.target.value)} placeholder="Chercher une catégorie ou un spot…" aria-label="Rechercher" onKeyDown={(e) => e.key === 'Escape' && (onQuery(''), setOpen(false))} />
-      {query && <button type="button" className="tag-search-clear" onClick={() => onQuery('')} aria-label="Effacer la recherche"><Icon name="close" size={14} stroke={2.4} /></button>}
-    </label>
-  );
   return (
     <div className={`tagbar-wrap ${wrap ? 'is-wrap' : ''}`} ref={boxRef}>
       <div className="tagbar" role="toolbar" aria-label="Filtrer par catégorie">
         <button className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button>
-        {(visitedCount > 0 || value === 'visited') && (
+        {((!statusInMenu && visitedCount > 0) || value === 'visited') && (
           <button className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
             <Icon name="check" size={14} stroke={2.8} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
           </button>
         )}
-        {(wantedCount > 0 || value === 'wanted') && (
+        {((!statusInMenu && wantedCount > 0) || value === 'wanted') && (
           <button className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
             <Icon name="star" size={14} stroke={2.2} /> {wantedCount} to-do
           </button>
@@ -449,7 +440,13 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
       </button>}
       {open && (
         <div className="tag-menu" role="menu">
-          {searchField}
+          <button role="menuitemradio" aria-checked={value === 'visited'} className={`tag-menu-item tag-menu-item--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')}>
+            <Icon name="check" size={16} stroke={2.6} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
+          </button>
+          <button role="menuitemradio" aria-checked={value === 'wanted'} className={`tag-menu-item tag-menu-item--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')}>
+            <Icon name="star" size={16} stroke={2.2} /> <span>Mes lieux favoris</span> <b>{wantedCount}</b>
+          </button>
+          <hr className="tag-menu-sep" />
           {menuTags.map((t) => (
             <button key={t.id} role="menuitemradio" aria-checked={value === t.id} className={`tag-menu-item ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)}>
               <Icon name={t.icon} size={16} /> <span>{t.label}</span> <b>{count(t.id)}</b>
@@ -608,10 +605,17 @@ export default function App() {
         <aside className="sidebar">
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
-            <h1>Tu crois connaître le Finistère ?</h1>
-            <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
+            <h1>Connais-tu vraiment le Finistère ?</h1>
+            <div className="sidebar-subrow">
+              <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
+              {allVisited.length > 0 && (
+                <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}>
+                  <Icon name="check" size={13} stroke={2.8} /> {allVisited.length} visité{allVisited.length > 1 ? 's' : ''}
+                </button>
+              )}
+            </div>
           </div>
-          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} />
+          <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} statusInMenu />
           <div className="sidebar-list">
             {visible.length === 0 && <p className="sidebar-empty">{tag === 'visited' ? 'Aucun spot coché pour l\'instant.' : `Aucun spot ne correspond à « ${query} ».`}</p>}
             {visible.map((p) => (
