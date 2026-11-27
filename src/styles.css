@@ -2196,3 +2196,7 @@ h1, h2, h3, h4 { font-weight: 800; }
 .sidebar-intro { padding-left: 8px !important; padding-right: 8px !important; }
 .sidebar-subrow { padding: 0 8px 10px !important; }
 .sidebar .tagbar-wrap { padding-bottom: 8px !important; }
+/* Compteurs de nouveau sous le titre */
+.sidebar-intro .sidebar-subrow { padding: 8px 0 0 !important; }
+.sidebar-intro { padding-bottom: 4px !important; }
+.sidebar .tagbar-wrap { padding-bottom: 14px !important; }
