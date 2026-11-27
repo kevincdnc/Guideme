@@ -498,6 +498,7 @@ export default function App() {
   }, [query, visible]);
   const available = visible.filter((p) => p.available).length;
   const allVisited = PLACES.filter((p) => visited.includes(p.id));
+  const visibleVisited = visible.filter((p) => visited.includes(p.id)).length; // suit le filtre choisi
   const totalSpots = PLACES.filter((p) => p.available).length;
   const changeTag = useCallback((t) => {
     setTag(t);
@@ -607,16 +608,16 @@ export default function App() {
           <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
             <h1>Connais-tu vraiment le Finistère ?</h1>
-            <div className="sidebar-subrow">
-              <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
-              {allVisited.length > 0 && (
-                <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}>
-                  {allVisited.length} visité{allVisited.length > 1 ? 's' : ''} <Icon name="check" size={13} stroke={2.8} />
-                </button>
-              )}
-            </div>
           </div>
           <TagBar value={tag} onChange={changeTag} places={PLACES} visitedCount={allVisited.length} wantedCount={wanted.length} query={query} onQuery={setQuery} statusInMenu />
+          <div className="sidebar-subrow">
+            <p className="sidebar-sub"><b>{visible.length}</b> {countLabel(tag, visible.length, query)}{!tag && !query?.trim() && <> <span className="sidebar-made">made in Penn-ar-Bed</span></>}</p>
+            {visibleVisited > 0 && (
+              <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}>
+                {visibleVisited} visité{visibleVisited > 1 ? 's' : ''} <Icon name="check" size={13} stroke={2.8} />
+              </button>
+            )}
+          </div>
           <div className="sidebar-list">
             {visible.length === 0 && <p className="sidebar-empty">{tag === 'visited' ? 'Aucun spot coché pour l\'instant.' : `Aucun spot ne correspond à « ${query} ».`}</p>}
             {visible.map((p) => (

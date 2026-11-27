@@ -2177,3 +2177,11 @@ h1, h2, h3, h4 { font-weight: 800; }
 .tool-group .tool-btn:hover { background: #f5f4ef !important; color: #404040 !important; }
 /* Bouton Itinéraire et éléments noirs : même encre que la barre */
 .go-btn { background: #111 !important; }
+
+/* ---------- Accueil : titre, tags, puis « 30 pépites · N visités » ---------- */
+.sidebar-intro { padding-top: 22px !important; padding-bottom: 4px !important; }
+.sidebar-intro h1 { margin: 0 !important; }
+.sidebar .tagbar-wrap { padding: 14px 12px 12px !important; }
+.sidebar-subrow { margin: 0 !important; padding: 2px 0 16px; }
+.sidebar-subrow .sidebar-sub { font-size: 14px; }
+.sidebar-intro { padding: 14px 0 4px !important; margin: 0 !important; }
