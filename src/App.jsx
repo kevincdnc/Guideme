@@ -59,8 +59,8 @@ function BreizhStamp({ animate }) {
       <svg viewBox="0 0 104 56" aria-hidden="true">
         <rect x="2" y="2" width="100" height="52" rx="9" fill="none" stroke="currentColor" strokeWidth="3" />
         <rect x="8" y="8" width="88" height="40" rx="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 2.5" />
-        <text x="52" y="32" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="17" fill="currentColor" letterSpacing="1">VISITÉ</text>
-        <text x="52" y="43" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7" fill="currentColor" letterSpacing="1.4">PENN-AR-BED</text>
+        <text x="52" y="29.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="16" fill="currentColor" letterSpacing="1">VISITÉ</text>
+        <text x="52" y="40.5" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7.6" fill="currentColor" letterSpacing="1.4">PENN-AR-BED</text>
       </svg>
     </span>
   );
@@ -245,7 +245,7 @@ function MapSettings() {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
-      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={23} /></button>
+      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={21} /></button>
       <ColorTuner open={open} />
     </div>
   );
@@ -602,7 +602,7 @@ export default function App() {
       <div className="map-tools">
         <div className="tool-group">
           <MapSettings />
-          <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={18} /><i className="tool-dot" aria-hidden="true" /></button>
+          <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={16} /><i className="tool-dot" aria-hidden="true" /></button>
         </div>
         <button className="compass" onClick={(e) => {
           const el = e.currentTarget;
