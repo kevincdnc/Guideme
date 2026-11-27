@@ -12,7 +12,7 @@ const BASE = import.meta.env.BASE_URL;
 import { useSpeech } from '../hooks/useSpeech.js';
 import { useVisited, useFavorites } from '../hooks/useVisited.js';
 import maplibregl from 'maplibre-gl';
-import MAP_STYLE from '../data/map-style.json';
+import MAP_STYLE from '../data/mapFonts.js';
 import { FINISTERE_BOUNDS } from '../data/places.js';
 import FINISTERE_MASK from '../data/finistere.json';
 

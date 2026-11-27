@@ -3,7 +3,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { FINISTERE_BOUNDS } from '../data/places.js';
 
-import MAP_STYLE from '../data/map-style.json';
+import MAP_STYLE from '../data/mapFonts.js';
 import FINISTERE_MASK from '../data/finistere.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
