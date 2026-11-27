@@ -114,7 +114,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       <span class="gm-want" aria-hidden="true">${STAR_SVG}</span>
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
-    <span class="gm-dot" aria-hidden="true"></span>
+    <span class="gm-dot" aria-hidden="true"><svg class="gm-dot-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${icon}</svg><span class="gm-dot-check">${CHECK_SVG}</span></span>
     <span class="gm-marker-ground"></span>
   </span>`;
   el.addEventListener('click', (e) => {
@@ -162,7 +162,7 @@ function clonePopCss() {
   for (const sh of document.styleSheets) { try { walk(sh); } catch { /* feuille externe */ } }
 }
 
-const MapView = forwardRef(function MapView({ onZoomChange, places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
+const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange, places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
   const box = useRef(null);
   const onZoomRef = useRef(onZoomChange);
   onZoomRef.current = onZoomChange;
@@ -400,6 +400,13 @@ const MapView = forwardRef(function MapView({ onZoomChange, places, selectedId, 
     node.addEventListener('pointerdown', close);
     return () => { node.removeEventListener('mouseover', close); node.removeEventListener('pointerdown', close); };
   }, []);
+
+  // Taille des repères choisie par l'utilisateur : petit (point), moyen (point avec pictogramme), gros (repère)
+  useEffect(() => {
+    const c = box.current?.classList;
+    if (!c) return;
+    ['small', 'medium', 'large'].forEach((s) => c.toggle(`m-${s}`, s === markerSize));
+  }, [markerSize]);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;
 });

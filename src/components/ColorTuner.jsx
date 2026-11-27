@@ -29,7 +29,7 @@ function apply(map, target, hex) {
   } catch (e) { /* style pas encore chargé */ }
 }
 
-export default function ColorTuner({ open = true }) {
+export default function ColorTuner({ open = true, markerSize, onMarkerSize }) {
   const [target, setTarget] = useState('mer');
   const [colors, setColors] = useState(() => {
     try { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def }; }
@@ -70,6 +70,16 @@ export default function ColorTuner({ open = true }) {
   if (!open) return null;
   return (
     <div className="tuner" role="group" aria-label="Couleur de fond de la carte (réglage temporaire)">
+      {onMarkerSize && (
+        <div className="tuner-block">
+          <span className="tuner-label">Lieux sur la carte</span>
+          <div className="tuner-tabs">
+            <button className={markerSize !== 'large' ? 'is-active' : ''} onClick={() => onMarkerSize(markerSize === 'small' ? 'small' : 'medium')}>Points</button>
+            <button className={markerSize === 'large' ? 'is-active' : ''} onClick={() => onMarkerSize('large')}>Repères</button>
+          </div>
+        </div>
+      )}
+      <span className="tuner-label">Couleurs</span>
       <div className="tuner-tabs">
         {Object.entries(TARGETS).map(([k, t]) => (
           <button key={k} className={target === k ? 'is-active' : ''} onClick={() => setTarget(k)}>{t.label}</button>

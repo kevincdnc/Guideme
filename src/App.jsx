@@ -252,12 +252,12 @@ const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCa
 const searchText = (p) => norm([p.title, p.shortTitle, p.commune, p.category, ...(p.tags || []).map((id) => TAG_BY_ID[id]?.label)].join(' '));
 
 // Réglages de la carte (TEMPORAIRE) : couleurs de la mer et de la terre
-function MapSettings() {
+function MapSettings({ markerSize, onMarkerSize }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
       <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={21} /></button>
-      <ColorTuner open={open} />
+      <ColorTuner open={open} markerSize={markerSize} onMarkerSize={onMarkerSize} />
     </div>
   );
 }
@@ -473,21 +473,47 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
   );
 }
 
-// Indicateur discret du niveau de zoom (en haut à gauche de la carte) : 100 % = vue par défaut du Finistère
-function ZoomChip({ zoom, left }) {
+// Indicateur de zoom (en haut à gauche de la carte) : apparaît en fondu pendant le zoom,
+// s'efface ~2,5 s après. 100 % = vue par défaut du Finistère. En dessous : taille des lieux.
+const MARKER_SIZES = [['small', 'Petit'], ['medium', 'Moyen'], ['large', 'Gros']];
+function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
+  const [shown, setShown] = useState(false);
+  const hover = useRef(false);
+  const timer = useRef(0);
+  const mountedAt = useRef(Date.now());
+  const hideLater = () => { clearTimeout(timer.current); timer.current = setTimeout(() => { if (!hover.current) setShown(false); }, 2500); };
+  useEffect(() => {
+    if (!zoom) return;
+    if (Date.now() - mountedAt.current < 1500) return; // pas d'affichage pendant le cadrage initial
+    setShown(true); hideLater();
+  }, [zoom?.z]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => () => clearTimeout(timer.current), []);
   const pct = zoom ? Math.round(2 ** (zoom.z - zoom.z0) * 100) : 100;
   return (
-    <div className="zoom-chip" style={{ left }} aria-label={`Zoom ${pct} %`}>
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
-        <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L20 20" /><path d="M10.5 8v5M8 10.5h5" />
-      </svg>
-      <span>{pct} %</span>
+    <div className={`zoom-hud ${shown ? 'is-shown' : ''}`} style={{ left }}
+      onMouseEnter={() => { hover.current = true; clearTimeout(timer.current); }}
+      onMouseLeave={() => { hover.current = false; hideLater(); }}>
+      <div className="zoom-chip" aria-label={`Zoom ${pct} %`}>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+          <circle cx="10" cy="10" r="7.2" /><path d="M15.4 15.4L20.5 20.5" />
+        </svg>
+        <span>{pct} %</span>
+      </div>
+      <div className="zoom-sizes" role="group" aria-label="Taille des lieux sur la carte">
+        {MARKER_SIZES.map(([id, label]) => (
+          <button key={id} className={markerSize === id ? 'is-on' : ''} onClick={() => onMarkerSize(id)} aria-pressed={markerSize === id}>
+            <i className={`zs-${id}`} aria-hidden="true" />{label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function App() {
   const [zoomInfo, setZoomInfo] = useState(null);
+  const [markerSize, setMarkerSizeState] = useState(() => { try { return localStorage.getItem('guideme:markers') || 'large'; } catch { return 'large'; } });
+  const setMarkerSize = (v) => { setMarkerSizeState(v); try { localStorage.setItem('guideme:markers', v); } catch { /* ignore */ } };
   const desktop = useIsDesktop();
   const mapRef = useRef(null);
   const railRef = useRef(null);
@@ -615,7 +641,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
-      <MapView onZoomChange={setZoomInfo} ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
+      <MapView markerSize={markerSize} onZoomChange={setZoomInfo} ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -624,10 +650,10 @@ export default function App() {
         </header>
       )}
 
-      {desktop && <ZoomChip zoom={zoomInfo} left={SIDEBAR_W + 12} />}
+      {desktop && <ZoomChip zoom={zoomInfo} left={SIDEBAR_W + 12} markerSize={markerSize} onMarkerSize={setMarkerSize} />}
       <div className="map-tools">
         <div className="tool-group">
-          <MapSettings />
+          <MapSettings markerSize={markerSize} onMarkerSize={setMarkerSize} />
           <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={16} /><i className="tool-dot" aria-hidden="true" /></button>
         </div>
         <button className="compass" onClick={(e) => {
