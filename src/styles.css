@@ -2221,3 +2221,9 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 @media (min-width: 900px) { body:has(.brand-bar .progress-menu) .map-tools, body:has(.brand-bar .profile-menu) .map-tools { opacity: 1; pointer-events: auto; } }
 .compass svg { width: 100%; height: 100%; }
 @media (max-width: 899px) { .compass { width: 32px; height: 32px; } }
+/* Titre aéré ; « N pépites · N visités » rattaché aux tags ; tags plus proches de la liste */
+.sidebar-intro .sidebar-subrow { padding-top: 20px !important; }
+.sidebar-intro { padding-bottom: 0 !important; }
+.sidebar .tagbar-wrap { margin-top: -6px !important; padding-bottom: 6px !important; }
+.sidebar-intro .sidebar-subrow { padding-top: 28px !important; }
+.sidebar .tagbar-wrap { margin-top: -18px !important; padding-bottom: 0 !important; }
