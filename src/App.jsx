@@ -576,6 +576,20 @@ export default function App() {
   // Desktop : la fiche se pose par-dessus la navigation, la carte reste visible à droite
   const panelW = desktop ? Math.round(Math.max(560, Math.min(window.innerWidth * 0.44, 680))) : 0;
   // Espace laissé à la carte : carrousel en bas (mobile), liste et fiche à gauche (desktop)
+  // Tags collés en haut pendant le défilement de la colonne : classe .is-stuck (marge sous les tags)
+  useEffect(() => {
+    if (!desktop) return undefined;
+    const side = document.querySelector('.sidebar');
+    const wrap = side?.querySelector('.tagbar-wrap');
+    if (!side || !wrap) return undefined;
+    const onScroll = () => {
+      const stuck = wrap.getBoundingClientRect().top <= side.getBoundingClientRect().top + parseFloat(getComputedStyle(wrap).top || 0) + 0.5 && side.scrollTop > 0;
+      wrap.classList.toggle('is-stuck', stuck);
+    };
+    side.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => side.removeEventListener('scroll', onScroll);
+  }, [desktop]);
   const padding = useMemo(
     () => (desktop ? { top: 60, bottom: 60, left: SIDEBAR_W + 40, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],

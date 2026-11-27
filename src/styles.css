@@ -2561,3 +2561,15 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .map.m-medium.z-dots .gm-marker.is-selected .gm-dot-icon { display: block; width: 14px; height: 14px; }
 .map.m-medium.z-dots .gm-marker.is-selected.is-visited .gm-dot-icon { display: none !important; }
 .map.m-medium.z-dots .gm-marker.is-selected.is-visited .gm-dot-check { display: grid; place-items: center; color: #fff; }
+
+/* Tags collés pendant le défilement : 8 px de plus sous les tags */
+@media (min-width: 900px) { .sidebar .tagbar-wrap.is-stuck { padding-bottom: 8px !important; } }
+
+/* Tampon : apparaît grand puis se réduit tout de suite (même impact à 35 %, autres temps inchangés) */
+@keyframes stampV3 {
+  0%   { transform: rotate(-8deg) scale(1.3);  opacity: 0;   animation-timing-function: cubic-bezier(.2,.55,.6,.95); }
+  8%   { transform: rotate(-8deg) scale(1.2);  opacity: .55; animation-timing-function: cubic-bezier(.3,.3,.75,.85); }
+  35%  { transform: rotate(-8deg) scale(1);    opacity: .78; animation-timing-function: cubic-bezier(.25,.6,.35,1); }
+  52%  { transform: rotate(-8deg) scale(.965); opacity: .7;  animation-timing-function: cubic-bezier(.45,0,.35,1); }
+  100% { transform: rotate(-8deg) scale(1);    opacity: .62; }
+}
