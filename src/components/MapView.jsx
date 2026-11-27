@@ -240,7 +240,8 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       container: box.current,
       style: MAP_STYLE,
       bounds: FINISTERE_BOUNDS,
-      fitBoundsOptions: { padding: 20 },
+      // Vue par défaut : tout le Finistère, centré dans la partie visible (à droite de la colonne sur ordinateur), cadré serré
+      fitBoundsOptions: { padding: window.innerWidth >= 900 ? { top: 16, bottom: 16, left: 480 + 16, right: 16 } : { top: 80, bottom: 170, left: 12, right: 12 } },
       maxBounds: MAX_BOUNDS,
       minZoom: 6,
       maxZoom: 17,

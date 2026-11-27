@@ -1,10 +1,11 @@
 // Polices de la carte : les noms de lieux sont dessinés par MapLibre à partir de « glyphes » (public/fonts/).
-// Villes et lieux-dits en Mochiy Pop One (typo du logo, effet jeu) ; mer, rivières et routes en Rubik.
+// Villes et lieux-dits en Rubik SemiBold ; mer, rivières et routes en Rubik Medium.
 // Pour revenir à la police d'origine (Noto Sans, servie par OpenFreeMap), passer USE_BRAND_FONTS à false.
 import MAP_STYLE from './map-style.json';
 
 const USE_BRAND_FONTS = true;
-const BRAND = { 'Noto Sans Bold': 'Mochiy Pop One Regular', 'Noto Sans Regular': 'Rubik Medium', 'Noto Sans Italic': 'Rubik Medium' };
+// Essai précédent : villes en 'Mochiy Pop One Regular' (jugé trop enfantin)
+const BRAND = { 'Noto Sans Bold': 'Rubik SemiBold', 'Noto Sans Regular': 'Rubik Medium', 'Noto Sans Italic': 'Rubik Medium' };
 
 if (USE_BRAND_FONTS && typeof window !== 'undefined' && !MAP_STYLE.__brandFonts) {
   MAP_STYLE.__brandFonts = true;

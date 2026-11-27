@@ -2383,3 +2383,12 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 @media (min-width: 900px) { .sidebar .tagbar-wrap { margin-top: -12px !important; } }
 /* Étiquettes des lieux sur la carte : typo du logo, comme les noms de villes */
 .gm-marker-label .gm-pop-name { font-family: var(--font-brand); font-weight: 400; letter-spacing: 0; }
+
+/* Étiquettes des lieux : retour à Rubik (Mochiy jugé trop enfantin sur la carte) */
+.gm-marker-label .gm-pop-name { font-family: var(--font-title) !important; font-weight: 600 !important; }
+
+/* ---------- Hiérarchie de la colonne : barre plus large que le contenu, titre calé sur les photos ---------- */
+@media (min-width: 900px) {
+  .brand-bar { margin-left: -4px !important; margin-right: -4px !important; }   /* barre à 12 px des bords, contenu à 16 */
+  .sidebar-intro { padding-left: 7px !important; padding-right: 8px !important; } /* = bord gauche des photos des cartes */
+}
