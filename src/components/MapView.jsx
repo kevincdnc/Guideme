@@ -250,6 +250,15 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
       const b = new maplibregl.LngLatBounds();
       polys.forEach((poly) => poly[0].forEach((c) => b.extend(c)));
+      // MapLibre additionne le décalage déjà mémorisé par la carte (colonne de gauche, recadrage précédent)
+      // à celui qu'on passe ici : on le remet à zéro sans bouger la vue, sinon la carte part dans la mer.
+      const cur = m.getPadding();
+      if (cur.left || cur.right || cur.top || cur.bottom) {
+        m.stop();
+        const c = m.getCanvas();
+        const center = m.unproject([c.clientWidth / 2, c.clientHeight / 2]);
+        m.jumpTo({ center, padding: { top: 0, right: 0, bottom: 0, left: 0 } });
+      }
       m.fitBounds(b, { padding: pad, maxZoom: 11, duration: 900, essential: true });
     },
     clearTerritory() {
