@@ -59,13 +59,18 @@ function readingMinutes(place) {
   return Math.max(1, Math.round(text.split(/\s+/).length / 150));
 }
 
-// Sous-régions du Finistère (ordre d'affichage)
+// Territoires du Finistère (ordre d'affichage). flag : drapeau dans public/territoires/<id>.svg
+// (false = logo pas encore dessiné). Rattachement d'après les intercommunalités / pays historiques.
 export const REGIONS = [
-  { id: 'cap-sizun', label: 'Cap Sizun', ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier'] },
-  { id: 'iles', label: "Îles d'Iroise", ids: ['ile-de-sein', 'phare-sein', 'phare-ar-men', 'phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires'] },
-  { id: 'leon', label: 'Léon & pays de Brest', ids: ['phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-petit-minou', 'phare-portzic', 'phare-four', 'phare-ile-vierge', 'phare-batz'] },
-  { id: 'cornouaille', label: 'Cornouaille', ids: ['douarnenez', 'locronan', 'phare-eckmuhl', 'concarneau', 'phare-penfret', 'pont-aven'] },
+  { id: 'cap-sizun', label: 'Cap Sizun', flag: true, ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier', 'ile-de-sein', 'phare-sein', 'phare-ar-men'] },
+  { id: 'iroise', label: "Pays d'Iroise", flag: false, ids: ['phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires', 'phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-four'] },
+  { id: 'brest', label: 'Brest', flag: true, ids: ['phare-petit-minou', 'phare-portzic'] },
+  { id: 'leon', label: 'Léon', flag: true, ids: ['phare-ile-vierge', 'phare-batz'] },
+  { id: 'cornouaille', label: 'Cornouaille', flag: true, ids: ['douarnenez', 'locronan', 'concarneau', 'phare-penfret', 'pont-aven'] },
+  { id: 'pays-bigouden', label: 'Pays Bigouden', flag: true, ids: ['phare-eckmuhl'] },
+  { id: 'tregor', label: 'Trégor', flag: true, ids: [] },
 ];
+export const regionOf = (id) => REGIONS.find((r) => r.ids.includes(id));
 const REGION_OF = Object.fromEntries(REGIONS.flatMap((r) => r.ids.map((id) => [id, r.id])));
 
 // Studio (/admin) : en mode aperçu (?preview=1), les brouillons du navigateur remplacent les champs des fiches

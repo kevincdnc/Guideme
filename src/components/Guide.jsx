@@ -5,6 +5,7 @@ import Lightbox from './Lightbox.jsx';
 import SafeImg from './SafeImg.jsx';
 import Brand from './Brand.jsx';
 import Hermine from './Hermine.jsx';
+import { TerritoryBadge } from './Territory.jsx';
 import { ProtectionChips } from './Protections.jsx';
 import { ADDRESSES } from '../data/addresses.js';
 
@@ -617,6 +618,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
               </button>
             )}
           </div>
+          <TerritoryBadge placeId={place.id} className="terr-badge--head" />
           <h1>{place.title}</h1>
           <p className="guide-teaser">{place.teaser}</p>
           <dl className="keyfigs" aria-label="Chiffres clés">
@@ -765,6 +767,7 @@ export default function Guide({ place, onClose, variant = 'panel' }) {
 
         <aside className="guide-aside">
           <div className="aside-card aside-map">
+            <TerritoryBadge placeId={place.id} className="terr-badge--aside" />
             <Practical place={place} directions={directions} overview />
           </div>
           <FunFact fact={place.funFact} className="funfact--aside" />

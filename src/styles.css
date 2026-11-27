@@ -2718,3 +2718,42 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .sidebar-wanted.is-active { background: #c68400 !important; color: #fff !important; }
 .pc-records, .pc-records svg { color: #c68400 !important; }
 .pc-records { font-weight: 700; }
+
+/* ---------- Territoires : drapeaux ronds, anneau de progression (popup), badge sur la fiche ---------- */
+.progress-sub { margin: 16px 0 10px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); font-family: var(--font-title); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.progress-sub + .progress-cats { margin-top: 0 !important; padding-top: 0 !important; border-top: 0 !important; }
+.progress-menu .terr-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 6px; }
+.progress-menu.is-wide .terr-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.progress-menu .terr-grid li { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; min-width: 0; }
+.terr-grid strong { margin-top: 4px; font-family: var(--font-title); font-size: 12px; font-weight: 600; line-height: 1.15; color: #fff; }
+.terr-grid li > span:last-child { font-family: var(--font-brand); font-size: 12px; color: #4ade80; }
+.terr-grid li:has(.is-none) > span:last-child { color: rgba(255,255,255,.45); }
+.terr-grid li:has(.is-soon) > span:last-child { font-family: var(--font); font-weight: 600; color: rgba(255,255,255,.35); }
+.terr-grid li:has(.is-soon) strong { color: rgba(255,255,255,.45); }
+
+.terr-ring { position: relative; display: inline-block; flex: 0 0 auto; }
+.terr-ring > svg { position: absolute; inset: 0; overflow: visible; }
+.terr-track { fill: none; stroke: rgba(255,255,255,.12); }
+.terr-arc { fill: none; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(74,222,128,.45)); animation: terr-arc .9s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes terr-arc { from { stroke-dasharray: 0 999; } }
+.terr-disc { position: absolute; border-radius: 50%; overflow: hidden; background: #2a2a2a; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); transition: transform .2s; }
+.terr-disc .terr-flag { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .3s, opacity .3s; }
+.terr-ring.is-none .terr-flag, .terr-ring.is-soon .terr-flag { filter: grayscale(1) brightness(.85); opacity: .5; }
+.terr-grid li:hover .terr-disc { transform: scale(1.06); }
+.terr-ring.is-full .terr-disc { box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), 0 0 14px rgba(74,222,128,.5); }
+.terr-crown { position: absolute; top: -5px; right: -3px; width: 18px; height: 18px; border-radius: 50%; background: #FFB900; color: #111; font-size: 11px; line-height: 18px; text-align: center; box-shadow: 0 0 0 2px #111; }
+
+/* Badge territoire sur la fiche */
+.terr-badge { display: flex; align-items: center; gap: 10px; }
+.terr-badge-flag { flex: 0 0 auto; width: 42px; height: 30px; border-radius: 6px; overflow: hidden; box-shadow: 0 0 0 1px rgba(17,17,17,.1), 0 2px 6px rgba(17,17,17,.12); background: #eee; }
+.terr-badge-flag .terr-flag { width: 100%; height: 100%; object-fit: cover; display: block; }
+.terr-badge-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.terr-badge-text small { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #737373; }
+.terr-badge-text b { font-family: var(--font-title); font-size: 16px; font-weight: 700; color: #111; }
+.terr-badge--aside { margin: -2px 0 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(17,17,17,.08); }
+.terr-badge--head { margin: 4px 0 10px; }
+.terr-badge--head .terr-badge-flag { width: 34px; height: 24px; border-radius: 5px; }
+.terr-badge--head .terr-badge-text { flex-direction: row; align-items: baseline; gap: 6px; }
+.terr-badge--head .terr-badge-text b { font-size: 14px; }
+/* Le badge du haut ne sert que quand la colonne de droite est masquée */
+@media (min-width: 900px) { .guide--page .terr-badge--head, .guide--modal .terr-badge--head { display: none; } }

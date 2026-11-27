@@ -7,6 +7,7 @@ import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
 import { PLACES, TAGS, REGIONS, getPlace, RANK } from './data/places.js';
+import { TerritoryRing } from './components/Territory.jsx';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
 const BASE = import.meta.env.BASE_URL;
@@ -194,6 +195,21 @@ function ProgressFlag({ visited, onPick, onAccount }) {
             <b className="progress-bar-pct">{pct} %</b>
           </div>
           <p className="progress-hint">{encouragement}</p>
+          <h5 className="progress-sub">Tes territoires</h5>
+          <ul className="terr-grid" aria-label="Progression par territoire">
+            {REGIONS.map((r) => {
+              const total = r.ids.filter((id) => places.some((p) => p.id === id)).length;
+              const n = r.ids.filter((id) => visited.includes(id)).length;
+              return (
+                <li key={r.id} title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}` : `${r.label} : bientôt`}>
+                  <TerritoryRing region={r} n={n} total={total} size={58} />
+                  <strong>{r.label}</strong>
+                  <span>{total ? `${Math.round((n / total) * 100)} %` : 'Bientôt'}</span>
+                </li>
+              );
+            })}
+          </ul>
+          <h5 className="progress-sub">Tes types de spots</h5>
           <ul className="progress-cats" aria-label="Progression par catégorie">
             {TAGS.map((t) => {
               const all = places.filter((p) => p.tags?.includes(t.id));
@@ -216,7 +232,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
           </button>
           {showAll && (
             <div className="progress-regions">
-              {REGIONS.map((r) => {
+              {REGIONS.filter((r) => r.ids.length).map((r) => {
                 const list = r.ids.map((id) => places.find((p) => p.id === id)).filter(Boolean);
                 const n = list.filter((p) => visited.includes(p.id)).length;
                 return (
@@ -375,9 +391,9 @@ function AccountPage({ visited, wanted, onClose, onOpen }) {
             </ul>
           </section>
           <section className="acc-card">
-            <h2>Par région</h2>
+            <h2>Par territoire</h2>
             <ul className="acc-rows">
-              {REGIONS.map((r) => {
+              {REGIONS.filter((r) => r.ids.length).map((r) => {
                 const n = r.ids.filter((id) => visited.includes(id)).length;
                 return <li key={r.id}><span>{r.label} <small>{n}/{r.ids.length}</small></span>{bar(n, r.ids.length)}</li>;
               })}
