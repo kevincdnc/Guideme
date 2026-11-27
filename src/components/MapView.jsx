@@ -12,6 +12,20 @@ import TERRITOIRES from '../data/territoires.json';
 // nette à tous les zooms, avec relief ombré. L'attribution complète est déclarée dans le style.
 MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/" target="_blank">OpenMapTiles</a> · © <a href="https://www.openstreetmap.org/copyright" target="_blank">les contributeurs OpenStreetMap</a>';
 
+// Emblèmes des grands pays (extraits des drapeaux, public/territoires/emblemes/) et leur opacité sur la carte
+const EMBLEMES = ['leon', 'cornouaille'];
+const EMBLEME_OPACITY = { leon: 0.22, cornouaille: 0.45 };
+// Point d'ancrage de l'emblème : centre de gravité du plus grand polygone du territoire
+function labelPoint(id) {
+  const f = TERRITOIRES.features.find((x) => x.properties.id === id);
+  const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
+  const area = (r) => r.reduce((a, p, i) => { const q = r[(i + 1) % r.length]; return a + p[0] * q[1] - q[0] * p[1]; }, 0) / 2;
+  const ring = polys.map((p) => p[0]).sort((a, b) => Math.abs(area(b)) - Math.abs(area(a)))[0];
+  let cx = 0, cy = 0; const A = area(ring);
+  ring.forEach((p, i) => { const q = ring[(i + 1) % ring.length]; const c = p[0] * q[1] - q[0] * p[1]; cx += (p[0] + q[0]) * c; cy += (p[1] + q[1]) * c; });
+  return [cx / (6 * A), cy / (6 * A)];
+}
+
 // Pictogrammes des repères, selon le type de lieu
 const PIN_ICONS = {
   // Icônes v2 (design/icones-v2) : linéaires, arrondies, lisibles en petit
@@ -219,6 +233,9 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       m.setPaintProperty('territoire-line', 'line-color', color);
       m.setPaintProperty('territoire-fill', 'fill-opacity', 0.28);
       m.setPaintProperty('territoire-line', 'line-opacity', 0.9);
+      const hasEmb = EMBLEMES.includes(id);
+      if (hasEmb) m.setFilter('territoire-embleme', filter);
+      m.setPaintProperty('territoire-embleme', 'icon-opacity', hasEmb ? EMBLEME_OPACITY[id] : 0);
       const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
       const b = new maplibregl.LngLatBounds();
       polys.forEach((poly) => poly[0].forEach((c) => b.extend(c)));
@@ -229,6 +246,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       if (!m || !m.getLayer('territoire-fill')) return;
       m.setPaintProperty('territoire-fill', 'fill-opacity', 0);
       m.setPaintProperty('territoire-line', 'line-opacity', 0);
+      m.setPaintProperty('territoire-embleme', 'icon-opacity', 0);
     },
     zoomBy(d) {
       map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });
@@ -372,6 +390,17 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       m.addLayer({ id: 'territoire-line', type: 'line', source: 'territoires', filter: ['==', ['get', 'id'], ''],
         layout: { 'line-join': 'round' },
         paint: { 'line-color': '#0173BC', 'line-width': 2, 'line-opacity': 0, 'line-opacity-transition': { duration: 450 } } }, firstLabel);
+      // Emblème du grand pays (lion du Léon, bélier de Cornouaille) en filigrane au milieu de sa zone
+      m.addSource('territoire-emblemes', { type: 'geojson', data: { type: 'FeatureCollection', features: EMBLEMES.map((id) => ({ type: 'Feature', properties: { id }, geometry: { type: 'Point', coordinates: labelPoint(id) } })) } });
+      m.addLayer({ id: 'territoire-embleme', type: 'symbol', source: 'territoire-emblemes', filter: ['==', ['get', 'id'], ''],
+        layout: { 'icon-image': ['concat', 'emb-', ['get', 'id']], 'icon-allow-overlap': true, 'icon-ignore-placement': true,
+          'icon-size': ['interpolate', ['exponential', 2], ['zoom'], 7, 0.32, 9, 1.28] },
+        paint: { 'icon-opacity': 0, 'icon-opacity-transition': { duration: 450 } } }, firstLabel);
+      EMBLEMES.forEach((id) => {
+        const img = new Image();
+        img.onload = () => { if (!m.hasImage(`emb-${id}`)) m.addImage(`emb-${id}`, img, { pixelRatio: 2 }); };
+        img.src = `${import.meta.env.BASE_URL}territoires/emblemes/${id}.svg`;
+      });
       // Préchargement après l'affichage initial
       m.once('idle', () => (window.requestIdleCallback || setTimeout)(prefetchTiles));
       // Attribution repliée par défaut (toujours accessible par le bouton « i »)

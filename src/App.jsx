@@ -174,6 +174,16 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
     // la popup s'agrandit quand les pays apparaissent : on mesure après le rendu
     requestAnimationFrame(() => onTerritory?.(next, menuRef.current?.getBoundingClientRect()));
   };
+  // Survol d'un grand pays : même aperçu qu'au clic (zone, emblème, cadrage) ; en sortant, retour à la sélection
+  const hoverT = useRef(null);
+  const previewTerritory = (g) => {
+    clearTimeout(hoverT.current);
+    hoverT.current = setTimeout(() => {
+      const target = g || [...GRANDS_PAYS, ...REGIONS].find((r) => r.id === terr) || null;
+      onTerritory?.(target, menuRef.current?.getBoundingClientRect());
+    }, g ? 120 : 200);
+  };
+  useEffect(() => () => clearTimeout(hoverT.current), []);
   const [showAll, setShowAll] = useState(false);
   const boxRef = useRef(null);
   const places = PLACES.filter((p) => p.available);
@@ -226,7 +236,7 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
             return (
               <>
                 <ul className="terr-grid terr-grid--big" aria-label="Progression par grand pays">
-                  {GRANDS_PAYS.map((g) => <li key={g.id}>{tile(g, 64, { cls: big?.id === g.id ? 'is-parent' : '' })}</li>)}
+                  {GRANDS_PAYS.map((g) => <li key={g.id} onMouseEnter={() => previewTerritory(g)} onMouseLeave={() => previewTerritory(null)}>{tile(g, 64, { cls: big?.id === g.id ? 'is-parent' : '' })}</li>)}
                 </ul>
                 {big && (
                   <div className="terr-sub" key={big.id}>
