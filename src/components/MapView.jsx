@@ -13,14 +13,14 @@ MAP_STYLE.sources.openmaptiles.attribution = '<a href="https://openfreemap.org" 
 
 // Pictogrammes des repères, selon le type de lieu
 const PIN_ICONS = {
-  // Phare : lanterne et dôme, galerie, tour effilée à bande, faisceaux
-  lighthouse: '<path d="M10 4.5h4v3.5h-4z"/><path d="M10.5 4.5Q12 2.2 13.5 4.5"/><path d="M8 9h8"/><path d="M9.3 9.5L8.4 20h7.2l-.9-10.5"/><path d="M8.9 14.5h6.2"/><path d="M6 20.5h12"/><path d="M16.5 5.2l3.5-1.4M16.5 7.3l3.5 1.4M7.5 5.2L4 3.8M7.5 7.3L4 8.7"/>',
-  beach: '<path d="M3 18c2 0 2-1.5 4.5-1.5S9.5 18 12 18s2.5-1.5 4.5-1.5S19 18 21 18"/><path d="M12 14V5"/><path d="M5 9a7 7 0 0114 0z"/>',
-  cliff: '<path d="M3 20h18"/><path d="M4 20l4-11 3 4 3-8 6 15"/>',
-  port: '<circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M5 13a7 7 0 0014 0"/><path d="M8 10h8"/>',
-  church: '<path d="M12 2v4M10 4h4"/><path d="M7 21V11l5-4 5 4v10"/><path d="M4 21h16"/><path d="M10 21v-4a2 2 0 014 0v4"/>',
-  fire: '<path d="M12 21c4 0 6-2.5 6-6 0-4-3-6-4-9-1 2-2 3-3 3 0-2 0-4-1-6-2 3-4 6-4 12 0 3.5 2 6 6 6z"/>',
-};
+  // Icônes v2 (design/icones-v2) : linéaires, arrondies, lisibles en petit
+  lighthouse: '<path d="M8.6 20.5L10 11h4l1.4 9.5"/><path d="M7 20.5h10"/><path d="M9 11h6"/><path d="M10.2 11V8h3.6v3"/><path d="M10.2 8a1.8 1.8 0 013.6 0"/><path d="M5 6.5l2.6.9M19 6.5l-2.6.9"/>',
+  beach: '<path d="M4 11.5a8 8 0 0116 0z"/><path d="M12 3.5v-.5"/><path d="M12 11.5v6"/><path d="M3 20.5c3-1.9 6-1.9 9 0s6 1.9 9 0"/>',
+  cliff: '<path d="M3.5 15.5l5-7.5 3.2 4.3L15.5 6l5 9.5z"/><path d="M3 20c3-1.9 6-1.9 9 0s6 1.9 9 0"/>',
+  port: '<path d="M12 7v13.5"/><path d="M8.5 10.5h7"/><path d="M5 13.5a7 7 0 0014 0"/><path d="M3.5 15l1.5-1.5 1.5 1.5M17.5 15l1.5-1.5 1.5 1.5"/><circle cx="12" cy="4.8" r="2.2"/>',
+  church: '<path d="M5.5 20.5v-8.5L12 7l6.5 5v8.5"/><path d="M4 20.5h16"/><path d="M12 2.5v4M10.4 4.2h3.2"/><path d="M10 20.5v-3a2 2 0 014 0v3"/>',
+  fire: '<path d="M3.8 8.7c0-1.7 3.7-2.7 8.2-2.7s8.2 1 8.2 2.7-3.7 2.6-8.2 2.6-8.2-.9-8.2-2.6z"/><path d="M6.6 20l1-8.7h3l.3 8.7z"/><path d="M13.1 20l.3-8.7h3l1 8.7z"/>',
+}
 
 // Couleur du badge selon le type de lieu
 const PIN_COLORS = { lighthouse: '#ff5a36', beach: '#ffb020', cliff: '#ec4899', church: '#8b5cf6', port: '#2f80ff', fire: '#ff7a1a' };

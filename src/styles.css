@@ -2711,3 +2711,4 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Titre d'accueil en typo du logo (Mochiy n'a qu'une graisse : léger contour pour l'équivalent de +100) */
 .sidebar-intro h1 { font-family: var(--font-brand) !important; font-weight: 400 !important; font-size: 20px !important; letter-spacing: 0 !important;
   -webkit-text-stroke: .5px currentColor; paint-order: stroke fill; }
+.sidebar-intro h1 { -webkit-text-stroke-width: .25px !important; }
