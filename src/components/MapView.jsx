@@ -162,10 +162,10 @@ function clonePopCss() {
   for (const sh of document.styleSheets) { try { walk(sh); } catch { /* feuille externe */ } }
 }
 
-const MapView = forwardRef(function MapView({ onZoomTier, places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
+const MapView = forwardRef(function MapView({ onZoomChange, places, selectedId, onSelect, padding, pois, visibleIds, visitedIds, onToggleVisited, wantedIds, onToggleWanted, onOpenPlace }, ref) {
   const box = useRef(null);
-  const onZoomTierRef = useRef(onZoomTier);
-  onZoomTierRef.current = onZoomTier;
+  const onZoomRef = useRef(onZoomChange);
+  onZoomRef.current = onZoomChange;
   const map = useRef(null);
   const markers = useRef({});
   const onSelectRef = useRef(onSelect);
@@ -282,8 +282,9 @@ const MapView = forwardRef(function MapView({ onZoomTier, places, selectedId, on
       c.toggle('z-dots', z < 9.6 + off);
       c.toggle('z-pins', z >= 9.6 + off && z < 11.4 + off);
       c.toggle('z-labels', z >= 11.4 + off);
-      const tier = z < 9.6 + off ? 'dots' : z < 11.4 + off ? 'pins' : 'labels';
-      if (tier !== box.current.__tier) { box.current.__tier = tier; onZoomTierRef.current?.(tier); }
+      // Niveau de zoom pour l'indicateur (une mise à jour par image au plus)
+      if (box.current.__z0 == null && m.loaded()) box.current.__z0 = z;
+      if (!box.current.__raf) box.current.__raf = requestAnimationFrame(() => { box.current.__raf = 0; const zz = m.getZoom(); onZoomRef.current?.({ z: zz, z0: box.current.__z0 ?? zz }); });
       // Anciennes classes (styles existants)
       c.toggle('z-far', z < 9.6 + off);
       c.toggle('z-mid', z >= 9.6 + off && z < 11.4 + off);

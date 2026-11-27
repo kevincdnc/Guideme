@@ -2474,3 +2474,24 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .progress-head b, .progress-bar-pct, .progress-cats b { font-family: var(--font-brand) !important; font-weight: 400 !important; letter-spacing: 0 !important; }
 .progress-cats b { white-space: nowrap; min-width: 46px; text-align: right; }
 .map .gm-marker.is-visited .gm-check svg { width: 15px !important; height: 15px !important; }
+
+/* Indicateur de zoom en % */
+.zoom-chip { gap: 6px; padding: 0 11px 0 9px; font-variant-numeric: tabular-nums; min-width: 72px; }
+
+/* =====================================================================
+   « Déjà visité » v3 : coche (0–0,34 s) → tampon un peu après (0,45 s)
+   Le tampon tombe, frappe, puis s'enfonce avec la carte (même timing) et remonte avec elle.
+   ===================================================================== */
+.pc-stamp.is-new { animation: stampV3 .8s linear .45s both !important; }
+@keyframes stampV3 {
+  0%   { transform: rotate(-8deg) scale(1.3);  opacity: 0;   animation-timing-function: cubic-bezier(.5,0,.9,.5); }
+  35%  { transform: rotate(-8deg) scale(1);    opacity: .78; animation-timing-function: cubic-bezier(.25,.6,.35,1); }
+  52%  { transform: rotate(-8deg) scale(.965); opacity: .7;  animation-timing-function: cubic-bezier(.45,0,.35,1); }
+  100% { transform: rotate(-8deg) scale(1);    opacity: .62; }
+}
+.place-card:has(.pc-stamp.is-new) { animation: cardV3 .8s linear .45s both !important; }
+@keyframes cardV3 {
+  0%, 35% { transform: none; animation-timing-function: cubic-bezier(.25,.6,.35,1); }
+  52%     { transform: scale(.988) translateY(1.5px); animation-timing-function: cubic-bezier(.45,0,.35,1); }
+  100%    { transform: none; }
+}

@@ -473,28 +473,21 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
   );
 }
 
-// Indicateur discret du niveau de zoom (en haut à gauche de la carte)
-const ZOOM_TIERS = [
-  { id: 'dots', label: 'Tout le Finistère' },
-  { id: 'pins', label: 'Vue du pays' },
-  { id: 'labels', label: 'Vue rapprochée' },
-];
-function ZoomChip({ tier, left }) {
-  const i = Math.max(0, ZOOM_TIERS.findIndex((t) => t.id === tier));
+// Indicateur discret du niveau de zoom (en haut à gauche de la carte) : 100 % = vue par défaut du Finistère
+function ZoomChip({ zoom, left }) {
+  const pct = zoom ? Math.round(2 ** (zoom.z - zoom.z0) * 100) : 100;
   return (
-    <div className="zoom-chip" style={{ left }} aria-live="polite">
-      {/* Jumelles */}
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="6.5" cy="15" r="3.6" /><circle cx="17.5" cy="15" r="3.6" /><path d="M10.1 15h3.8" /><path d="M3.2 13.4L5.6 6.5a1.7 1.7 0 013.2.1l.8 3" /><path d="M20.8 13.4l-2.4-6.9a1.7 1.7 0 00-3.2.1l-.8 3" />
+    <div className="zoom-chip" style={{ left }} aria-label={`Zoom ${pct} %`}>
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L20 20" /><path d="M10.5 8v5M8 10.5h5" />
       </svg>
-      <span>{ZOOM_TIERS[i].label}</span>
-      <i className="zoom-chip-dots" aria-hidden="true">{ZOOM_TIERS.map((t, j) => <b key={t.id} className={j <= i ? 'on' : ''} />)}</i>
+      <span>{pct} %</span>
     </div>
   );
 }
 
 export default function App() {
-  const [zoomTier, setZoomTier] = useState('dots');
+  const [zoomInfo, setZoomInfo] = useState(null);
   const desktop = useIsDesktop();
   const mapRef = useRef(null);
   const railRef = useRef(null);
@@ -622,7 +615,7 @@ export default function App() {
 
   return (
     <div ref={appRef} className={`app ${place ? 'has-guide' : ''} ${tag === 'visited' ? 'is-visited-filter' : ''}`} style={{ '--panel-w': `${panelW}px` }}>
-      <MapView onZoomTier={setZoomTier} ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
+      <MapView onZoomChange={setZoomInfo} ref={mapRef} places={PLACES} selectedId={selected} onSelect={select} padding={padding} pois={selected ? getPlace(selected)?.pois : null} visibleIds={visible.map((p) => p.id)} visitedIds={visited} onToggleVisited={toggleVisited} wantedIds={wanted} onToggleWanted={toggleWanted} onOpenPlace={open} />
 
       {!desktop && !place && (
         <header className="topbar">
@@ -631,7 +624,7 @@ export default function App() {
         </header>
       )}
 
-      {desktop && <ZoomChip tier={zoomTier} left={SIDEBAR_W + 12} />}
+      {desktop && <ZoomChip zoom={zoomInfo} left={SIDEBAR_W + 12} />}
       <div className="map-tools">
         <div className="tool-group">
           <MapSettings />
