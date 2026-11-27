@@ -4,6 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { FINISTERE_BOUNDS } from '../data/places.js';
 
 import MAP_STYLE from '../data/mapFonts.js';
+import { protectionBadgesHtml } from './Protections.jsx';
 import FINISTERE_MASK from '../data/finistere.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
@@ -99,7 +100,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
     <span class="gm-marker-label">
       ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
       <span class="gm-pop-main">
-        <span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>
+        <span class="gm-pop-head"><span class="gm-pop-name"><i class="gm-label-check" aria-hidden="true">${CHECK_SVG}</i>${esc(place.shortTitle)}</span>${place.available ? `<span class="gm-pop-badges">${protectionBadgesHtml(place)}</span>` : ''}</span>
         ${place.available ? `<span class="gm-pop-commune">${esc(place.commune.split(' · ')[0].split(' & ')[0])}</span>` : ''}
         ${place.available ? `<span class="gm-pop-actions"><span class="gm-pop-flag gm-pop-flag--want" role="button" tabindex="0" aria-label="Ajouter à ma to-do list">${STAR_SVG}<em class="gm-off">To-do</em><em class="gm-on">Dans ma to-do</em></span><span class="gm-pop-flag gm-pop-flag--done" role="button" tabindex="0" aria-label="Je l'ai déjà visité">${CHECK_SVG}<em class="gm-off">Visité</em><em class="gm-on">Visité</em></span></span><span class="gm-pop-open" role="button" tabindex="0">Voir la fiche <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>` : ''}
       </span>
@@ -108,13 +109,16 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       <svg class="gm-pin-shape" viewBox="0 0 44 56" aria-hidden="true">
         <path d="${PIN_PATH}" transform="translate(0 2.5)" fill="rgba(0,0,0,.22)"/>
         <path d="${PIN_PATH}" fill="var(--c)" stroke="#fff" stroke-width="3.6" stroke-linejoin="round"/>
-        <ellipse cx="16" cy="13" rx="6" ry="3.6" fill="#fff" opacity=".28" transform="rotate(-25 16 13)"/>
+        <path d="M22 53C22 53 10.5 41.5 6.4 31.5H37.6C33.5 41.5 22 53 22 53Z" fill="rgba(0,0,0,.14)"/>
+        <circle cx="22" cy="22" r="12.6" fill="rgba(0,0,0,.16)"/>
+        <circle cx="22" cy="22" r="12.6" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.3"/>
+        <path d="M9.6 16.5A13.5 13.5 0 0 1 18 8.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
-      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
       <span class="gm-want" aria-hidden="true">${STAR_SVG}</span>
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
-    <span class="gm-dot" aria-hidden="true"><svg class="gm-dot-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${icon}</svg><span class="gm-dot-check">${CHECK_SVG}</span></span>
+    <span class="gm-dot" aria-hidden="true"><svg class="gm-dot-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icon}</svg><span class="gm-dot-check">${CHECK_SVG}</span></span>
     <span class="gm-marker-ground"></span>
   </span>`;
   el.addEventListener('click', (e) => {

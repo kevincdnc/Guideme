@@ -2589,3 +2589,27 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 /* Titre de l'accueil en typo du logo (essai) */
 .sidebar-intro h1 { font-family: var(--font-brand) !important; font-weight: 400 !important; letter-spacing: -0.005em !important; font-size: 23px !important; }
 .sidebar-intro h1 { font-size: 20px !important; overflow: visible !important; text-overflow: clip !important; }
+
+/* ---------- Titre d'accueil : retour à Inter, 22 px ---------- */
+.sidebar-intro h1 { font-family: var(--font-title) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; font-size: 22px !important; }
+
+/* ---------- Info-bulle de carte : rayons réduits, badges à droite du titre, pas de To-do si visité ---------- */
+@media (hover: hover) {
+  .map .gm-marker.is-available:hover .gm-marker-label { border-radius: 8px !important; }
+  .map .gm-marker.is-available:hover .gm-pop-img { border-radius: 4px !important; }
+  .map .gm-marker.is-available:hover .gm-pop-flag, .map .gm-marker.is-available:hover .gm-pop-open { border-radius: 6px !important; }
+  .map .gm-marker.is-available:hover .gm-pop-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .map .gm-marker.is-available:hover .gm-pop-badges { display: inline-flex; gap: 4px; flex: none; margin-top: 1px; }
+  .map .gm-marker.is-available.is-visited:hover .gm-pop-flag--want { display: none !important; }
+  .map .gm-marker.is-available.is-visited:hover .gm-pop-actions { grid-template-columns: 1fr !important; }
+}
+.gm-pop-badges { display: none; }
+.gm-pop-badge { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: #fff; }
+.gm-pop-badge svg { width: 16px; height: 16px; }
+
+/* ---------- Points moyens « jeton de jeu » : relief plat (bas ombré, reflet, ombre portée nette) ---------- */
+.map.m-medium.z-pins .gm-marker .gm-dot, .map.m-medium.z-labels .gm-marker .gm-dot, .map.m-medium .gm-marker.is-selected .gm-dot {
+  width: 32px !important; height: 32px !important;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.16), inset 0 0 0 5px rgba(0,0,0,.08), 0 2px 0 rgba(17,17,17,.22), 0 4px 10px rgba(17,17,17,.18) !important; }
+.map.m-medium.z-pins .gm-marker .gm-dot-icon, .map.m-medium.z-labels .gm-marker .gm-dot-icon, .map.m-medium .gm-marker.is-selected .gm-dot-icon { width: 15px; height: 15px; margin-top: -2px; }
+.map.m-medium .gm-dot-check { margin-top: -2px; }

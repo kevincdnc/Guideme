@@ -67,7 +67,7 @@ export function ProtectionBadges({ place }) {
 }
 
 // Texte de la bulle : « Monument historique classé depuis 2011 »
-function tipOf(x) {
+export function tipOf(x) {
   const t = TYPES[x.type];
   const parts = String(x.detail || '').split(' · ');
   const year = (parts.find((p) => /\d{4}/.test(p)) || '').match(/\d{4}/)?.[0];
@@ -88,4 +88,21 @@ export function ProtectionChips({ place }) {
       <span className="prot-tip" role="tooltip">{tipOf(x)}</span>
     </span>
   ));
+}
+
+// Version texte (SVG) des logos, pour l'info-bulle de la carte (HTML généré hors React)
+const LOGO_SVG = {
+  mh: '<svg viewBox="0 0 24 24"><g fill="none" stroke="#c8102e" stroke-width="1.6"><path d="M12 1.5L22.5 12 12 22.5 1.5 12z"/><path d="M12 5.5L18.5 12 12 18.5 5.5 12z"/><path d="M12 9.2L14.8 12 12 14.8 9.2 12z"/><path d="M12 1.5v4M22.5 12h-4M12 22.5v-4M1.5 12h4"/></g></svg>',
+  'grand-site': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#0f766e"/><path d="M4.5 15.5l4.5-5 3 3.2 2.5-2.7 5 4.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="16" cy="7.5" r="1.6" fill="#fde68a"/></svg>',
+  'site-classe': '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#15803d"/><path d="M5 16l4-6 3 4 2-3 5 5z" fill="#fff"/></svg>',
+  conservatoire: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#1d4ed8"/><path d="M4 13c2 0 2-1.6 4-1.6s2 1.6 4 1.6 2-1.6 4-1.6 2 1.6 4 1.6M4 16.5c2 0 2-1.6 4-1.6s2 1.6 4 1.6 2-1.6 4-1.6 2 1.6 4 1.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.5" r="2" fill="#fde68a"/></svg>',
+  pci: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#7c3aed"/><path d="M12 5.5l1.6 4.6 4.9.2-3.9 3 1.4 4.7L12 15.3 7.9 18l1.4-4.7-3.9-3 4.9-.2z" fill="#fff"/></svg>',
+  liberation: '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="#14532d"/><path d="M12 4.5v15M8.5 8h7M7 11.5h10" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
+};
+const escAttr = (t) => String(t).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+export function protectionBadgesHtml(place) {
+  return protectionsOf(place).filter((x) => TYPES[x.type]).map((x) => {
+    const svg = LOGO_SVG[x.type.startsWith('mh') ? 'mh' : x.type];
+    return svg ? `<span class="gm-pop-badge" title="${escAttr(tipOf(x))}" aria-label="${escAttr(tipOf(x))}">${svg}</span>` : '';
+  }).join('');
 }
