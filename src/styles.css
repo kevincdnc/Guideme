@@ -2270,3 +2270,4 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 /* ---------- Tampon « VISITÉ · PENN-AR-BED » (passeport) ---------- */
 .pc-stamp { width: 58px !important; height: 31px !important; margin-top: -15.5px !important; right: 48px !important; transform: rotate(-8deg); opacity: .9 !important; }
 @keyframes stampIn { 0% { transform: rotate(-22deg) scale(2); opacity: 0; } 55% { transform: rotate(-6deg) scale(.92); opacity: 1; } 75% { transform: rotate(-9deg) scale(1.04); } 100% { transform: rotate(-8deg) scale(1); opacity: .9; } }
+.progress-outline-value { filter: none; }

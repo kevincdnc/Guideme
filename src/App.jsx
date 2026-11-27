@@ -132,13 +132,14 @@ function ProgressOutline({ pct }) {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
-  const sw = 2.5, r = 8;
+  // Même tracé pour les deux lignes (centrées l'une sur l'autre) : contour gris 1 px, progression verte 2 px
+  const inset = 1, r = 7;
   return (
     <svg ref={ref} className="progress-outline" width={size?.w || 0} height={size?.h || 0} aria-hidden="true">
       {size && (
         <>
-          <rect className="progress-outline-track" x={sw / 2} y={sw / 2} width={size.w - sw} height={size.h - sw} rx={r} ry={r} strokeWidth={sw} />
-          <rect className="progress-outline-value" x={sw / 2} y={sw / 2} width={size.w - sw} height={size.h - sw} rx={r} ry={r} strokeWidth={sw}
+          <rect className="progress-outline-track" x={inset} y={inset} width={size.w - inset * 2} height={size.h - inset * 2} rx={r} ry={r} strokeWidth={1} />
+          <rect className="progress-outline-value" x={inset} y={inset} width={size.w - inset * 2} height={size.h - inset * 2} rx={r} ry={r} strokeWidth={2}
             pathLength="100" strokeDasharray={`${pct} 100`} style={{ opacity: pct ? 1 : 0 }} />
         </>
       )}
