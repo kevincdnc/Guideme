@@ -2261,3 +2261,8 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 
 /* Un peu plus d'air entre les tags et la première carte */
 .sidebar-list { padding-top: 6px; }
+
+/* ---------- Cartes de lieux : photo un peu plus grande, arrondis concentriques ---------- */
+/* carte 12 px − (marge 6 + bordure 1) ≈ photo 6 px : les deux courbes suivent le même centre */
+.sidebar .place-card, .place-card { border-radius: 12px !important; padding: 6px 10px 6px 6px !important; }
+.place-card .pc-thumb, .place-card .pc-thumb img { width: 70px !important; height: 70px !important; flex-basis: 70px !important; border-radius: 6px !important; }
