@@ -185,6 +185,9 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
       const pad = padding ? { ...padding, left: (padding.left || 0) + 60, right: (padding.right || 0) + 150, top: (padding.top || 0) + 40 } : 60; // place pour les étiquettes à droite des points
       map.current.fitBounds(b, { padding: pad, maxZoom: 13, duration: 1000 });
     },
+    zoomBy(d) {
+      map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });
+    },
     fitFinistere() {
       map.current?.fitBounds(FINISTERE_BOUNDS, { padding: padding || 24, duration: 900 });
     },
@@ -231,6 +234,13 @@ const MapView = forwardRef(function MapView({ places, selectedId, onSelect, padd
     });
     m.touchZoomRotate.disableRotation();
     m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+    // Crédits de la carte : toujours repliés au départ (bouton « i » discret)
+    const foldAttrib = () => {
+      const a = box.current?.querySelector('.maplibregl-ctrl-attrib');
+      if (a) { a.classList.remove('maplibregl-compact-show'); a.removeAttribute('open'); }
+    };
+    m.once('load', foldAttrib);
+    m.once('idle', foldAttrib);
     m.addControl(new maplibregl.ScaleControl({ unit: 'metric', maxWidth: 90 }), 'bottom-left');
     m.on('click', () => onSelectRef.current(null));
     // Taille des repères selon le zoom : petits points de loin (vue d'ensemble du Finistère),

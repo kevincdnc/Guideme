@@ -2015,3 +2015,23 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
 .tag-menu-sep { border: 0; border-top: 1px solid var(--line); margin: 6px 4px; }
 .tag-menu-item--visited svg { color: #16a34a; }
 .tag-menu-item--wanted svg { color: #d97706; }
+
+/* ---------- Contrôles de carte : colonne en haut à gauche, blocs fusionnés, fond blanc ---------- */
+.map-tools { flex-direction: column !important; gap: 10px; left: 12px; right: auto; }
+@media (min-width: 900px) { .map-tools { top: 16px !important; } }
+.tool-group { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 2px 10px rgba(15,23,42,.12); }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { position: relative; width: 44px; height: 44px; border: 0; border-radius: 0; box-shadow: none; background: transparent; color: var(--ink); }
+.tool-group > :first-child, .tool-group > :first-child.tool-btn { border-radius: 12px 12px 0 0; }
+.tool-group > :last-child, .tool-group .map-settings > .tool-btn { border-radius: 0 0 12px 12px; }
+.tool-group > * + * { border-top: 1px solid var(--line) !important; }
+.tool-group .tool-btn:hover { background: #f4f5f7; }
+.tool-group .tool-btn.is-open { background: var(--ink); color: #fff; }
+.tool-group .tool-btn.is-open svg circle { fill: var(--ink); }
+.tool-dot { position: absolute; top: 9px; right: 9px; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 2px #fff; }
+
+/* ---------- Crédits de la carte : repliés, discrets ---------- */
+.maplibregl-ctrl-attrib.maplibregl-compact { min-height: 20px; background: rgba(255,255,255,.55) !important; opacity: .55; transition: opacity .15s; }
+.maplibregl-ctrl-attrib.maplibregl-compact:hover, .maplibregl-ctrl-attrib.maplibregl-compact-show { opacity: 1; background: rgba(255,255,255,.9) !important; }
+.maplibregl-ctrl-attrib-button { width: 20px !important; height: 20px !important; background-size: 14px !important; }
+@media (max-width: 899px) { .tool-group .tuner { right: auto; left: calc(100% + 8px); top: 0; } }
+@media (min-width: 900px) { .tool-group .tuner { top: 0; left: calc(100% + 10px); } }
