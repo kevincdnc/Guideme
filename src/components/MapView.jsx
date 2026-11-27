@@ -196,7 +196,10 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       const m = map.current;
       if (!m) return;
       const h = m.__home || { center: m.getCenter(), zoom: m.getZoom() };
-      m.flyTo({ center: h.center, zoom: m.getMinZoom(), duration: 900 });
+      // Finistère au centre de la partie visible de la carte (à droite de la colonne sur ordinateur)
+      const [[w, s], [e, n]] = FINISTERE_BOUNDS;
+      const pad = window.innerWidth >= 900 ? { top: 0, bottom: 0, left: 480, right: 0 } : { top: 70, bottom: 160, left: 0, right: 0 };
+      m.flyTo({ center: [(w + e) / 2, (s + n) / 2], zoom: m.getMinZoom(), padding: pad, duration: 900 });
     },
     zoomBy(d) {
       map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });

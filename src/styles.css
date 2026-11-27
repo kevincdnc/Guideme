@@ -2613,3 +2613,18 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
   box-shadow: inset 0 -4px 0 rgba(0,0,0,.16), inset 0 0 0 5px rgba(0,0,0,.08), 0 2px 0 rgba(17,17,17,.22), 0 4px 10px rgba(17,17,17,.18) !important; }
 .map.m-medium.z-pins .gm-marker .gm-dot-icon, .map.m-medium.z-labels .gm-marker .gm-dot-icon, .map.m-medium .gm-marker.is-selected .gm-dot-icon { width: 15px; height: 15px; margin-top: -2px; }
 .map.m-medium .gm-dot-check { margin-top: -2px; }
+
+/* ---------- Typo : un seul poids de titre (Inter 800) pour l'accueil et les cartes ---------- */
+.sidebar .pc-body h3, .pc-body h3 { font-weight: 800 !important; letter-spacing: -0.015em; }
+/* Compteurs des fiches dans la typo des titres */
+.keyfig dt, .lh-id-big dd { font-family: var(--font-title) !important; font-weight: 800 !important; letter-spacing: -0.02em !important; }
+/* Barre noire : le % en Mochiy paraissait plus fin que le logo (même police, plus petit) → léger épaississement */
+.brand-bar .progress-pct, .topbar .progress-pct { -webkit-text-stroke: .45px currentColor; paint-order: stroke fill; }
+.brand-bar .progress-pct small, .topbar .progress-pct small { -webkit-text-stroke: .3px currentColor; }
+/* Popover : « N lieux visités » dans la phrase, en Inter */
+.progress-head b { font-family: var(--font) !important; font-weight: 800 !important; }
+/* Mini-carte visitée sélectionnée : bordure verte */
+.place-card.is-visited.is-selected { box-shadow: 0 0 0 2px #16a34a !important; }
+/* Coupe des records : jaune GuideMe, flat, sans contour */
+.pc-records svg { fill: #FFB900 !important; stroke: #FFB900 !important; }
+.pc-records { color: #9a6c00 !important; }
