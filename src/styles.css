@@ -2707,3 +2707,7 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .map.m-large .gm-marker.is-visited .gm-check, .map.m-large.z-dots .gm-marker.is-visited .gm-check { display: none !important; }
 /* Compteurs to-do / visités : même marge dans tous les états (celle du survol) → plus aucun décalage */
 .sidebar-visited, .sidebar-visited:hover, .sidebar-visited.is-active { padding: 3px 7px 3px 9px !important; }
+
+/* Titre d'accueil en typo du logo (Mochiy n'a qu'une graisse : léger contour pour l'équivalent de +100) */
+.sidebar-intro h1 { font-family: var(--font-brand) !important; font-weight: 400 !important; font-size: 20px !important; letter-spacing: 0 !important;
+  -webkit-text-stroke: .5px currentColor; paint-order: stroke fill; }
