@@ -26,7 +26,7 @@ FLARE = (f'<g class="gmb-flare"><circle cx="{CX}" cy="{CY}" r="22" fill="url(#gm
          f'<ellipse cx="{CX}" cy="{CY}" rx="40" ry="1.3" fill="url(#gmb-streak)"/><ellipse cx="{CX}" cy="{CY}" rx="1" ry="14" fill="url(#gmb-streak)" opacity=".6"/></g>')
 
 # --- images clés : 1 tour, 2,6 s, montée/descente douces (a = 0,22) ---
-T, N, A = 2.6, 80, 0.22
+T, N, A = 2.2, 80, 0.22
 def prof(u):
     vmax = 1 / (1 - A)
     if u < A: return vmax * u * u / (2 * A)
@@ -39,7 +39,7 @@ def mix(t):
 def kf(name, fn):
     rows = []
     for k in range(N + 1):
-        u = k / N; th = 2 * math.pi * prof(u); s = spd(u)
+        u = k / N; th = -2 * math.pi * prof(u); s = spd(u)  # sens inverse : droite → devant → gauche → derrière
         rows.append(f'{100*u:.2f}%{{{fn(th, s)}}}')
     return f'@keyframes {name}{{' + ''.join(rows) + '}'
 side = lambda th, g: max(0.0, g * math.cos(th))
