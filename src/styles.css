@@ -2192,3 +2192,7 @@ h1, h2, h3, h4 { font-weight: 800; }
   .map-tools { transition: opacity .15s ease; }
   body:has(.brand-bar .progress-menu) .map-tools, body:has(.brand-bar .profile-menu) .map-tools { opacity: 0; pointer-events: none; }
 }
+/* Titre et ligne « N pépites » : décollés des bords ; ligne des compteurs plus resserrée */
+.sidebar-intro { padding-left: 8px !important; padding-right: 8px !important; }
+.sidebar-subrow { padding: 0 8px 10px !important; }
+.sidebar .tagbar-wrap { padding-bottom: 8px !important; }
