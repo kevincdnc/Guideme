@@ -1,13 +1,14 @@
 // Drapeaux des territoires : drapeau entouré d'un contour de progression (façon jeu).
 // Drapeau grisé tant qu'aucun spot du territoire n'est visité.
-import { regionOf } from '../data/places.js';
+import { regionOf, grandPaysOf } from '../data/places.js';
 
 const BASE = (import.meta.env && import.meta.env.BASE_URL) || '/Guideme/';
 export const flagSrc = (r) => `${BASE}territoires/${r.id}.svg`;
 
-// Drapeau seul (drapeau du Finistère en attendant celui du territoire)
+// Drapeau seul (celui du grand pays, ou du Finistère, en attendant le drapeau du pays)
 export function TerritoryFlag({ region, className = '' }) {
-  const src = region.flag ? flagSrc(region) : `${BASE}territoires/finistere.svg`;
+  const parent = grandPaysOf(region);
+  const src = region.flag ? flagSrc(region) : parent?.flag ? flagSrc(parent) : `${BASE}territoires/finistere.svg`;
   return <img className={`terr-flag ${className}`} src={src} alt="" draggable="false" />;
 }
 
@@ -37,7 +38,7 @@ export function TerritoryBadge({ placeId, className = '' }) {
   return (
     <div className={`terr-badge ${className}`}>
       <span className="terr-badge-flag"><TerritoryFlag region={region} /></span>
-      <span className="terr-badge-text"><small>Territoire</small><b>{region.label}</b></span>
+      <span className="terr-badge-text"><small>{grandPaysOf(region)?.label || 'Territoire'}</small><b>{region.label}</b></span>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
-import { PLACES, TAGS, REGIONS, getPlace, RANK } from './data/places.js';
+import { PLACES, TAGS, REGIONS, GRANDS_PAYS, getPlace, RANK } from './data/places.js';
 import { TerritoryTile } from './components/Territory.jsx';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
@@ -165,10 +165,14 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
   const menuRef = useRef(null);
   // Fermeture de la popup : la zone du territoire disparaît de la carte
   useEffect(() => { if (!open && terr) { setTerr(null); onTerritory?.(null); } }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Clic sur un grand pays : sa zone et ses pays s'affichent ; clic sur un pays : sa zone.
+  // Re-cliquer sur un pays revient à son grand pays ; re-cliquer sur un grand pays referme tout.
   const pickTerritory = (r) => {
-    const next = terr === r.id ? null : r.id;
-    setTerr(next);
-    onTerritory?.(next ? r : null, menuRef.current?.getBoundingClientRect());
+    const back = terr === r.id && r.parent ? GRANDS_PAYS.find((g) => g.id === r.parent) : null;
+    const next = back || (terr === r.id ? null : r);
+    setTerr(next?.id || null);
+    // la popup s'agrandit quand les pays apparaissent : on mesure après le rendu
+    requestAnimationFrame(() => onTerritory?.(next, menuRef.current?.getBoundingClientRect()));
   };
   const [showAll, setShowAll] = useState(false);
   const boxRef = useRef(null);
@@ -221,22 +225,36 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
             })}
           </ul>
           <h5 className="progress-sub">Tes territoires</h5>
-          <ul className="terr-grid" aria-label="Progression par territoire">
-            {REGIONS.map((r) => {
-              const total = r.ids.filter((id) => places.some((p) => p.id === id)).length;
-              const n = r.ids.filter((id) => visited.includes(id)).length;
+          {(() => {
+            const stat = (r) => ({ total: r.ids.filter((id) => places.some((p) => p.id === id)).length, n: r.ids.filter((id) => visited.includes(id)).length });
+            const tile = (r, w, extra = {}) => {
+              const { n, total } = stat(r);
               return (
-                <li key={r.id}>
-                  <button className={terr === r.id ? 'is-on' : ''} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
-                    title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte` : `${r.label} : bientôt. Voir sur la carte`}>
-                    <TerritoryTile region={r} n={n} total={total} w={44} />
-                    <strong>{r.label}</strong>
-                    <span className="terr-count">{total ? <><b>{Math.round((n / total) * 100)} %</b> · {n}/{total}</> : 'Bientôt'}</span>
-                  </button>
-                </li>
+                <button className={`${terr === r.id ? 'is-on' : ''} ${extra.cls || ''}`} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
+                  title={`${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte`}>
+                  <TerritoryTile region={r} n={n} total={total} w={w} />
+                  <strong>{r.label}</strong>
+                  <span className="terr-count"><b>{total ? Math.round((n / total) * 100) : 0} %</b> · {n}/{total}</span>
+                </button>
               );
-            })}
-          </ul>
+            };
+            const big = GRANDS_PAYS.find((g) => g.id === terr || g.pays.some((p) => p.id === terr));
+            return (
+              <>
+                <ul className="terr-grid terr-grid--big" aria-label="Progression par grand pays">
+                  {GRANDS_PAYS.map((g) => <li key={g.id}>{tile(g, 64, { cls: big?.id === g.id ? 'is-parent' : '' })}</li>)}
+                </ul>
+                {big && (
+                  <div className="terr-sub" key={big.id}>
+                    <p className="terr-sub-title">Les pays {big.id === 'leon' ? 'du' : 'de'} {big.label}</p>
+                    <ul className="terr-grid" aria-label={`Pays traditionnels : ${big.label}`}>
+                      {big.pays.filter((p) => stat(p).total > 0).map((p) => <li key={p.id}>{tile(p, 44)}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </>
+            );
+          })()}
           <button className="progress-account" onClick={() => { setOpen(false); onAccount?.(); }}>Voir tous mes lieux visités <Icon name="chevron" size={14} /></button>
           <button className="progress-toggle" onClick={() => setShowAll((v) => !v)} aria-expanded={showAll}>
             {showAll ? 'Masquer les spots' : 'Afficher tous les spots'}

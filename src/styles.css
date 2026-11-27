@@ -2775,3 +2775,13 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .sidebar-intro .sidebar-subrow { min-height: 28px; box-sizing: content-box; }
 .sidebar-status { min-height: 28px; align-items: center; }
 .sidebar-status .sidebar-visited { height: 28px; box-sizing: border-box; display: inline-flex; align-items: center; }
+
+/* Popup : deux grands pays (Léon, Cornouaille), puis les pays traditionnels du grand pays choisi */
+.progress-menu .terr-grid--big { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+.progress-menu .terr-grid--big li button { padding: 10px 4px 10px; background: rgba(255,255,255,.04); }
+.progress-menu .terr-grid--big strong { font-size: 14px; }
+.progress-menu .terr-grid--big li button.is-parent { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.terr-sub { margin: 10px 0 4px; padding: 12px 6px 6px; border-radius: 10px; background: rgba(255,255,255,.05); animation: terr-sub .25s ease-out both; }
+@keyframes terr-sub { from { opacity: 0; transform: translateY(-4px); } }
+.terr-sub-title { margin: 0 0 10px 4px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.55); }
+.progress-menu .terr-sub .terr-grid { margin-bottom: 0; }
