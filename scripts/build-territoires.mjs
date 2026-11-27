@@ -15,8 +15,7 @@ const N = (...names) => names.map((n) => { if (!byName[n]) throw new Error(`Comm
 
 const TERRITOIRES = {
   'cap-sizun': [...E('242900629'), ...N('Île-de-Sein')],
-  iroise: [...E('242900074'), ...N('Ouessant')],
-  brest: E('242900314'),
+  brest: [...E('242900314'), ...E('242900074'), ...N('Ouessant')], // Brest métropole & Pays d'Iroise
   leon: E('242900553', '242900793', '200067072', '242900751'), // Abers, Lesneven-Côte des Légendes, Haut-Léon, Landivisiau
   cornouaille: E('200068120', '242900645', '242900660', '242900769', '242900694', '242900561', '200067247'),
   'pays-bigouden': E('242900702', '242900710'),
