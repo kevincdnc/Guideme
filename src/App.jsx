@@ -718,13 +718,13 @@ export default function App() {
                   {visibleWanted > 0 && (
                     <button className={`sidebar-visited sidebar-wanted ${tag === 'wanted' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'wanted' ? null : 'wanted')} aria-pressed={tag === 'wanted'}
                       title={`${visibleWanted} dans ta to-do list`} aria-label={`${visibleWanted} dans ta to-do list`}>
-                      {visibleWanted}{visibleVisited === 0 && <> to-do</>} <Icon name="star" size={13} stroke={2.2} />
+                      {visibleWanted} to-do <Icon name="star" size={13} stroke={2.2} />
                     </button>
                   )}
                   {visibleVisited > 0 && (
                     <button className={`sidebar-visited ${tag === 'visited' ? 'is-active' : ''}`} onClick={() => changeTag(tag === 'visited' ? null : 'visited')} aria-pressed={tag === 'visited'}
                       title={`${visibleVisited} lieu${visibleVisited > 1 ? 'x' : ''} visité${visibleVisited > 1 ? 's' : ''}`} aria-label={`${visibleVisited} visité${visibleVisited > 1 ? 's' : ''}`}>
-                      {visibleVisited}{visibleWanted === 0 && <> visité{visibleVisited > 1 ? 's' : ''}</>} <Icon name="check" size={13} stroke={2.8} />
+                      {visibleVisited} visité{visibleVisited > 1 ? 's' : ''} <Icon name="check" size={13} stroke={2.8} />
                     </button>
                   )}
                 </span>

@@ -2667,3 +2667,14 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Titres des mini-cartes : 600 partout, visités compris */
 .place-card.is-visited .pc-body h3 { font-weight: 600 !important; }
 .sidebar-status { margin-right: -8px; }
+
+/* Compteur to-do : même jaune que le bouton « Ajouter à ma to-do » (#eab308) */
+.sidebar-wanted { color: #854d0e !important; }
+.sidebar-wanted svg { color: #eab308; fill: #eab308; }
+.sidebar-wanted:hover { background: #fefce8 !important; }
+.sidebar-wanted.is-active { background: #eab308 !important; color: #fff !important; }
+.sidebar-wanted.is-active svg { color: #fff; fill: #fff; }
+
+/* Records des mini-cartes : coupe pleine et chiffre de la même couleur, jaune foncé */
+.pc-records, .pc-records svg { color: #a16207 !important; }
+.pc-records svg { fill: #a16207 !important; stroke: #a16207 !important; }
