@@ -1,6 +1,5 @@
-// Drapeaux des territoires : drapeau rond entouré d'un anneau de progression (façon jeu).
+// Drapeaux des territoires : drapeau entouré d'un contour de progression (façon jeu).
 // Drapeau grisé tant qu'aucun spot du territoire n'est visité.
-import { useId } from 'react';
 import { regionOf } from '../data/places.js';
 
 const BASE = (import.meta.env && import.meta.env.BASE_URL) || '/Guideme/';
@@ -12,30 +11,20 @@ export function TerritoryFlag({ region, className = '' }) {
   return <img className={`terr-flag ${className}`} src={src} alt="" draggable="false" />;
 }
 
-// Anneau de progression autour du drapeau
-export function TerritoryRing({ region, n, total, size = 64 }) {
-  const id = useId();
-  const stroke = 5;
-  const r = (size - stroke) / 2;
-  const c = 2 * Math.PI * r;
-  const pct = total ? n / total : 0;
+// Drapeau rectangulaire entouré d'un contour de progression (même principe que la jauge de la barre)
+export function TerritoryTile({ region, n, total, w = 64 }) {
+  const h = Math.round(w / 1.4);
+  const gap = 4; // espace entre le drapeau et le contour
+  const W = w + gap * 2 + 4, H = h + gap * 2 + 4, inset = 1, r = 9;
+  const pct = total ? Math.round((n / total) * 100) : 0;
   const state = !total ? 'soon' : n === 0 ? 'none' : n === total ? 'full' : 'some';
   return (
-    <span className={`terr-ring is-${state}`} style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-        <defs>
-          <linearGradient id={`g${id}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#34d399" />
-            <stop offset="1" stopColor="#059669" />
-          </linearGradient>
-        </defs>
-        <circle className="terr-track" cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} />
-        {pct > 0 && (
-          <circle className="terr-arc" cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} stroke={`url(#g${id})`}
-            strokeDasharray={`${c * pct} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
-        )}
+    <span className={`terr-tile is-${state}`} style={{ width: W, height: H }}>
+      <svg width={W} height={H} aria-hidden="true">
+        <rect className="terr-track" x={inset} y={inset} width={W - inset * 2} height={H - inset * 2} rx={r} ry={r} strokeWidth={1} />
+        {pct > 0 && <rect className="terr-arc" x={inset} y={inset} width={W - inset * 2} height={H - inset * 2} rx={r} ry={r} strokeWidth={2.5} pathLength="100" strokeDasharray={`${pct} 100`} />}
       </svg>
-      <span className="terr-disc" style={{ inset: stroke + 3 }}><TerritoryFlag region={region} /></span>
+      <span className="terr-tile-flag" style={{ width: w, height: h }}><TerritoryFlag region={region} /></span>
       {state === 'full' && <span className="terr-crown" aria-hidden="true">★</span>}
     </span>
   );

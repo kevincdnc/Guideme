@@ -2726,22 +2726,26 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .progress-menu.is-wide .terr-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .progress-menu .terr-grid li { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; min-width: 0; }
 .terr-grid strong { margin-top: 4px; font-family: var(--font-title); font-size: 12px; font-weight: 600; line-height: 1.15; color: #fff; }
-.terr-grid li > span:last-child { font-family: var(--font-brand); font-size: 12px; color: #4ade80; }
-.terr-grid li:has(.is-none) > span:last-child { color: rgba(255,255,255,.45); }
-.terr-grid li:has(.is-soon) > span:last-child { font-family: var(--font); font-weight: 600; color: rgba(255,255,255,.35); }
 .terr-grid li:has(.is-soon) strong { color: rgba(255,255,255,.45); }
 
-.terr-ring { position: relative; display: inline-block; flex: 0 0 auto; }
-.terr-ring > svg { position: absolute; inset: 0; overflow: visible; }
-.terr-track { fill: none; stroke: rgba(255,255,255,.12); }
-.terr-arc { fill: none; stroke-linecap: round; filter: drop-shadow(0 0 4px rgba(74,222,128,.45)); animation: terr-arc .9s cubic-bezier(.2,.8,.2,1) both; }
-@keyframes terr-arc { from { stroke-dasharray: 0 999; } }
-.terr-disc { position: absolute; border-radius: 50%; overflow: hidden; background: #2a2a2a; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); transition: transform .2s; }
-.terr-disc .terr-flag { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .3s, opacity .3s; }
-.terr-ring.is-none .terr-flag, .terr-ring.is-soon .terr-flag { filter: grayscale(1) brightness(.85); opacity: .5; }
-.terr-grid li:hover .terr-disc { transform: scale(1.06); }
-.terr-ring.is-full .terr-disc { box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), 0 0 14px rgba(74,222,128,.5); }
-.terr-crown { position: absolute; top: -5px; right: -3px; width: 18px; height: 18px; border-radius: 50%; background: #FFB900; color: #111; font-size: 11px; line-height: 18px; text-align: center; box-shadow: 0 0 0 2px #111; }
+.progress-menu .terr-grid li button { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px 8px; border-radius: 10px; background: none; color: inherit; text-align: center; font: inherit; transition: background .2s; }
+.progress-menu .terr-grid li button:hover { background: rgba(255,255,255,.07); }
+.progress-menu .terr-grid li button.is-on { background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
+.terr-tile { position: relative; display: inline-grid; place-items: center; flex: 0 0 auto; }
+.terr-tile > svg { position: absolute; inset: 0; overflow: visible; }
+.terr-track { fill: none; stroke: rgba(255,255,255,.16); }
+.terr-arc { fill: none; stroke: #4ade80; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(74,222,128,.5)); animation: terr-arc .9s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes terr-arc { from { stroke-dasharray: 0 100; } }
+.terr-tile-flag { position: relative; border-radius: 5px; overflow: hidden; background: #2a2a2a; box-shadow: 0 2px 6px rgba(0,0,0,.4); transition: transform .2s; }
+.terr-tile-flag .terr-flag { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .3s, opacity .3s; }
+.terr-tile.is-none .terr-flag, .terr-tile.is-soon .terr-flag { filter: grayscale(1); opacity: .45; }
+.terr-grid li button:hover .terr-tile-flag { transform: scale(1.05); }
+.terr-grid li button:hover .terr-flag { opacity: 1; }
+.terr-grid li button.is-on .terr-flag { filter: none; opacity: 1; }
+.terr-crown { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: #FFB900; color: #111; font-size: 11px; line-height: 18px; text-align: center; box-shadow: 0 0 0 2px #111; }
+.terr-count { font-size: 11.5px; color: rgba(255,255,255,.5); white-space: nowrap; }
+.terr-count b { font-family: var(--font-brand); font-weight: 400; color: #4ade80; }
+.terr-grid li:has(.is-none) .terr-count b { color: rgba(255,255,255,.55); }
 
 /* Badge territoire sur la fiche */
 .terr-badge { display: flex; align-items: center; gap: 10px; }

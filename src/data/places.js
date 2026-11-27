@@ -60,15 +60,15 @@ function readingMinutes(place) {
 }
 
 // Territoires du Finistère (ordre d'affichage). flag : drapeau dans public/territoires/<id>.svg
-// (false = logo pas encore dessiné). Rattachement d'après les intercommunalités / pays historiques.
+// (false = logo pas encore dessiné). color : couleur principale du drapeau, pour la zone sur la carte. Rattachement d'après les intercommunalités / pays historiques.
 export const REGIONS = [
-  { id: 'cap-sizun', label: 'Cap Sizun', flag: true, ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier', 'ile-de-sein', 'phare-sein', 'phare-ar-men'] },
-  { id: 'iroise', label: "Pays d'Iroise", flag: false, ids: ['phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires', 'phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-four'] },
-  { id: 'brest', label: 'Brest', flag: true, ids: ['phare-petit-minou', 'phare-portzic'] },
-  { id: 'leon', label: 'Léon', flag: true, ids: ['phare-ile-vierge', 'phare-batz'] },
-  { id: 'cornouaille', label: 'Cornouaille', flag: true, ids: ['douarnenez', 'locronan', 'concarneau', 'phare-penfret', 'pont-aven'] },
-  { id: 'pays-bigouden', label: 'Pays Bigouden', flag: true, ids: ['phare-eckmuhl'] },
-  { id: 'tregor', label: 'Trégor', flag: true, ids: [] },
+  { id: 'cap-sizun', label: 'Cap Sizun', color: '#0173BC', flag: true, ids: ['pointe-du-raz', 'phare-vieille', 'baie-des-trepasses', 'pointe-du-van', 'phare-tevennec', 'audierne', 'menez-dregan', 'pointe-du-millier', 'ile-de-sein', 'phare-sein', 'phare-ar-men'] },
+  { id: 'iroise', label: "Pays d'Iroise", color: '#0f9fa6', flag: false, ids: ['phare-creach', 'phare-stiff', 'phare-jument', 'phare-kereon', 'phare-pierres-noires', 'phare-saint-mathieu', 'phare-kermorvan', 'phare-trezien', 'phare-four'] },
+  { id: 'brest', label: 'Brest', color: '#2a2fd6', flag: true, ids: ['phare-petit-minou', 'phare-portzic'] },
+  { id: 'leon', label: 'Léon', color: '#FFD50F', flag: true, ids: ['phare-ile-vierge', 'phare-batz'] },
+  { id: 'cornouaille', label: 'Cornouaille', color: '#006AB3', flag: true, ids: ['douarnenez', 'locronan', 'concarneau', 'phare-penfret', 'pont-aven'] },
+  { id: 'pays-bigouden', label: 'Pays Bigouden', color: '#E20612', flag: true, ids: ['phare-eckmuhl'] },
+  { id: 'tregor', label: 'Trégor', color: '#FFBF00', flag: true, ids: [] },
 ];
 export const regionOf = (id) => REGIONS.find((r) => r.ids.includes(id));
 const REGION_OF = Object.fromEntries(REGIONS.flatMap((r) => r.ids.map((id) => [id, r.id])));

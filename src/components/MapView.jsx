@@ -6,6 +6,7 @@ import { FINISTERE_BOUNDS } from '../data/places.js';
 import MAP_STYLE from '../data/mapFonts.js';
 import { protectionBadgesHtml } from './Protections.jsx';
 import FINISTERE_MASK from '../data/finistere.json';
+import TERRITOIRES from '../data/territoires.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
 // nette à tous les zooms, avec relief ombré. L'attribution complète est déclarée dans le style.
@@ -206,6 +207,29 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       const pad = window.innerWidth >= 900 ? { top: 0, bottom: 0, left: 480, right: 0 } : { top: 70, bottom: 160, left: 0, right: 0 };
       m.flyTo({ center: [(w + e) / 2, (s + n) / 2], zoom: m.getMinZoom(), padding: pad, duration: 900 });
     },
+    // Met un territoire en avant (calque couleur) et le cadre dans la partie visible de la carte
+    showTerritory(id, color, pad) {
+      const m = map.current;
+      if (!m || !m.getLayer('territoire-fill')) return;
+      const f = TERRITOIRES.features.find((x) => x.properties.id === id);
+      if (!f) return;
+      const filter = ['==', ['get', 'id'], id];
+      m.setFilter('territoire-fill', filter); m.setFilter('territoire-line', filter);
+      m.setPaintProperty('territoire-fill', 'fill-color', color);
+      m.setPaintProperty('territoire-line', 'line-color', color);
+      m.setPaintProperty('territoire-fill', 'fill-opacity', 0.28);
+      m.setPaintProperty('territoire-line', 'line-opacity', 0.9);
+      const polys = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates : [f.geometry.coordinates];
+      const b = new maplibregl.LngLatBounds();
+      polys.forEach((poly) => poly[0].forEach((c) => b.extend(c)));
+      m.fitBounds(b, { padding: pad, maxZoom: 11, duration: 900, essential: true });
+    },
+    clearTerritory() {
+      const m = map.current;
+      if (!m || !m.getLayer('territoire-fill')) return;
+      m.setPaintProperty('territoire-fill', 'fill-opacity', 0);
+      m.setPaintProperty('territoire-line', 'line-opacity', 0);
+    },
     zoomBy(d) {
       map.current?.easeTo({ zoom: map.current.getZoom() + d, duration: 300 });
     },
@@ -341,6 +365,13 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       m.addLayer({ id: 'finistere-limite', type: 'line', source: 'finistere', filter: ['==', ['get', 'role'], 'limite'],
         layout: { 'line-cap': 'round', 'line-join': 'round' },
         paint: { 'line-color': '#7b6cf6', 'line-width': ['interpolate', ['linear'], ['zoom'], 7, 2, 12, 3.5], 'line-dasharray': [1.5, 1.6] } }, firstLabel);
+      // Territoire mis en avant depuis la popup de progression (caché par défaut)
+      m.addSource('territoires', { type: 'geojson', data: TERRITOIRES, tolerance: 0.4 });
+      m.addLayer({ id: 'territoire-fill', type: 'fill', source: 'territoires', filter: ['==', ['get', 'id'], ''],
+        paint: { 'fill-color': '#0173BC', 'fill-opacity': 0, 'fill-opacity-transition': { duration: 450 } } }, firstLabel);
+      m.addLayer({ id: 'territoire-line', type: 'line', source: 'territoires', filter: ['==', ['get', 'id'], ''],
+        layout: { 'line-join': 'round' },
+        paint: { 'line-color': '#0173BC', 'line-width': 2, 'line-opacity': 0, 'line-opacity-transition': { duration: 450 } } }, firstLabel);
       // Préchargement après l'affichage initial
       m.once('idle', () => (window.requestIdleCallback || setTimeout)(prefetchTiles));
       // Attribution repliée par défaut (toujours accessible par le bouton « i »)

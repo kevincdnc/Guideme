@@ -7,7 +7,7 @@ import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
 import { useVisited, useFavorites } from './hooks/useVisited.js';
 import { PLACES, TAGS, REGIONS, getPlace, RANK } from './data/places.js';
-import { TerritoryRing } from './components/Territory.jsx';
+import { TerritoryTile } from './components/Territory.jsx';
 
 // Navigation par hash : #/ (carte) ou #/lieu/<id> (fiche)
 const BASE = import.meta.env.BASE_URL;
@@ -159,8 +159,17 @@ function ProgressOutline({ pct }) {
 }
 
 // Progression : part des lieux du Finistère déjà visités. Apparaît au premier lieu coché.
-function ProgressFlag({ visited, onPick, onAccount }) {
+function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
   const [open, setOpen] = useState(false);
+  const [terr, setTerr] = useState(null);
+  const menuRef = useRef(null);
+  // Fermeture de la popup : la zone du territoire disparaît de la carte
+  useEffect(() => { if (!open && terr) { setTerr(null); onTerritory?.(null); } }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+  const pickTerritory = (r) => {
+    const next = terr === r.id ? null : r.id;
+    setTerr(next);
+    onTerritory?.(next ? r : null, menuRef.current?.getBoundingClientRect());
+  };
   const [showAll, setShowAll] = useState(false);
   const boxRef = useRef(null);
   const places = PLACES.filter((p) => p.available);
@@ -184,7 +193,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
         <span className="progress-pct">{pct}<small>%</small></span>
       </button>
       {open && (
-        <div className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
+        <div ref={menuRef} className={`progress-menu ${showAll ? 'is-wide' : ''}`}>
           <div className="progress-head">
             <img className="progress-head-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere-flat.svg`} alt="Drapeau du Finistère" />
             <strong>Ta conquête du bout du monde</strong>
@@ -201,10 +210,13 @@ function ProgressFlag({ visited, onPick, onAccount }) {
               const total = r.ids.filter((id) => places.some((p) => p.id === id)).length;
               const n = r.ids.filter((id) => visited.includes(id)).length;
               return (
-                <li key={r.id} title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}` : `${r.label} : bientôt`}>
-                  <TerritoryRing region={r} n={n} total={total} size={58} />
-                  <strong>{r.label}</strong>
-                  <span>{total ? `${Math.round((n / total) * 100)} %` : 'Bientôt'}</span>
+                <li key={r.id}>
+                  <button className={terr === r.id ? 'is-on' : ''} onClick={() => pickTerritory(r)} aria-pressed={terr === r.id}
+                    title={total ? `${r.label} : ${n} spot${n > 1 ? 's' : ''} visité${n > 1 ? 's' : ''} sur ${total}. Voir sur la carte` : `${r.label} : bientôt. Voir sur la carte`}>
+                    <TerritoryTile region={r} n={n} total={total} w={62} />
+                    <strong>{r.label}</strong>
+                    <span className="terr-count">{total ? <><b>{Math.round((n / total) * 100)} %</b> · {n}/{total}</> : 'Bientôt'}</span>
+                  </button>
                 </li>
               );
             })}
@@ -623,6 +635,18 @@ export default function App() {
     onScroll();
     return () => side.removeEventListener('scroll', onScroll);
   }, [desktop]);
+  // Territoire choisi dans la popup de progression : zone colorée sur la carte, cadrée dans la partie
+  // de l'écran que la popup ne cache pas (à sa droite sur ordinateur, en dessous sinon)
+  const showTerritory = (r, box) => {
+    if (!r) { mapRef.current?.clearTerritory(); return; }
+    const W = window.innerWidth, H = window.innerHeight, m = 40;
+    let pad = { top: m, bottom: m, left: m, right: m };
+    if (box) {
+      if (W - box.right >= 320) pad = { ...pad, left: box.right + m };
+      else if (H - box.bottom >= 240) pad = { ...pad, top: box.bottom + 24 };
+    }
+    mapRef.current?.showTerritory(r.id, r.color, pad);
+  };
   const padding = useMemo(
     () => (desktop ? { top: 60, bottom: 60, left: SIDEBAR_W + 40, right: 60 } : { top: 90, bottom: place ? 40 : 200, left: 28, right: 28 }),
     [desktop, place],
@@ -695,7 +719,7 @@ export default function App() {
       {!desktop && !place && (
         <header className="topbar">
           <Brand />
-          <ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} />
+          <ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} onTerritory={showTerritory} />
         </header>
       )}
 
@@ -724,7 +748,7 @@ export default function App() {
 
       {desktop && (
         <aside className="sidebar">
-          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /></header>
+          <header className="brand-bar"><Brand /><ProgressFlag visited={visited} onPick={select} onAccount={() => setAccount(true)} onTerritory={showTerritory} /><ProfileMenu onOpen={open} onAccount={() => setAccount(true)} /></header>
           <div className="sidebar-intro">
             <h1>Connais-tu vraiment le Finistère ?</h1>
             <div className="sidebar-subrow">
