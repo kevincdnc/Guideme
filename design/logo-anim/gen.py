@@ -86,3 +86,32 @@ section{{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:cente
 {allcss}</style><h1>Logo animé : 3 versions</h1>{cards}</html>'''
 open('index.html', 'w').write(html)
 print('ok')
+
+# ---------- Version 4 : base V2, 8 positions (intermédiaires ajoutées), 4 s ----------
+def css8(v, T):
+    i = f'lg-v{v}'
+    E = 'cubic-bezier(.45,0,.55,1)'
+    # positions : 0 droite · 12.5 droite-arrière · 25 derrière · 37.5 arrière-gauche · 50 gauche · 62.5 gauche-avant · 75 devant · 87.5 avant-droite · 100 droite
+    return f'''
+.{i} .beam, .{i} .flare, .{i} .back, .{i} .glass {{ transform-box: fill-box; }}
+.{i} .beam-r {{ transform-origin: 0% 50%; animation: {i}-r {T}s infinite; }}
+.{i} .beam-l {{ transform-origin: 100% 50%; animation: {i}-l {T}s infinite; }}
+.{i} .back {{ transform-origin: 50% 50%; animation: {i}-b {T}s infinite; }}
+.{i} .glass {{ animation: {i}-g {T}s infinite; }}
+.{i} .flare {{ transform-origin: 50% 50%; animation: {i}-f {T}s infinite; }}
+.{i} .s1 {{ animation: {i}-s1 {T}s infinite; }}
+.{i} .s2 {{ animation: {i}-s2 {T}s infinite; }}
+.{i} * {{ animation-timing-function: {E} !important; }}
+@keyframes {i}-r {{ 0% {{ transform: scaleX(1); opacity: 1; }} 12.5% {{ transform: scaleX(.42); opacity: .85; }} 25% {{ transform: scaleX(0); opacity: 0; }} 75% {{ transform: scaleX(0); opacity: 0; }} 87.5% {{ transform: scaleX(.42); opacity: .85; }} 100% {{ transform: scaleX(1); opacity: 1; }} }}
+@keyframes {i}-l {{ 0%, 25% {{ transform: scaleX(0); opacity: 0; }} 37.5% {{ transform: scaleX(.42); opacity: .85; }} 50% {{ transform: scaleX(1); opacity: 1; }} 62.5% {{ transform: scaleX(.42); opacity: .85; }} 75%, 100% {{ transform: scaleX(0); opacity: 0; }} }}
+@keyframes {i}-b {{ 0% {{ opacity: 0; transform: scale(.6); }} 12.5% {{ opacity: .55; transform: scale(.85); }} 25% {{ opacity: 1; transform: scale(1); }} 37.5% {{ opacity: .5; transform: scale(.85); }} 50%, 100% {{ opacity: 0; transform: scale(.6); }} }}
+@keyframes {i}-f {{ 0%, 50% {{ opacity: 0; transform: scale(.2); }} 62.5% {{ opacity: .45; transform: scale(.6); }} 75% {{ opacity: 1; transform: scale(1.15); }} 87.5% {{ opacity: .35; transform: scale(.55); }} 100% {{ opacity: 0; transform: scale(.2); }} }}
+@keyframes {i}-g {{ 0% {{ opacity: 0; }} 12.5% {{ opacity: .3; }} 25% {{ opacity: .55; }} 37.5% {{ opacity: .3; }} 50% {{ opacity: .12; }} 62.5% {{ opacity: .55; }} 75% {{ opacity: 1; }} 87.5% {{ opacity: .4; }} 100% {{ opacity: 0; }} }}
+@keyframes {i}-s1 {{ 0% {{ stop-color: #FFB900; }} 12.5% {{ stop-color: #FFB900; }} 25% {{ stop-color: #FFB900; }} 37.5% {{ stop-color: #a08a50; }} 50% {{ stop-color: #5c5c5c; }} 62.5% {{ stop-color: #5c5c5c; }} 75% {{ stop-color: #6b6b6b; }} 87.5% {{ stop-color: #c9a04a; }} 100% {{ stop-color: #FFB900; }} }}
+@keyframes {i}-s2 {{ 0% {{ stop-color: #FFB900; }} 12.5% {{ stop-color: #c9a04a; }} 25% {{ stop-color: #7a6a40; }} 37.5% {{ stop-color: #5c5c5c; }} 50% {{ stop-color: #5c5c5c; }} 62.5% {{ stop-color: #a08a50; }} 75% {{ stop-color: #FFD25A; }} 87.5% {{ stop-color: #FFB900; }} 100% {{ stop-color: #FFB900; }} }}
+'''
+s4 = svg(4, False); c4 = css8(4, 4)
+open('logo-anim-v4.svg', 'w').write(s4.replace('<svg class', '<svg style="background:#05070D" class', 1).replace('</defs>', f'</defs><style>{c4}</style>', 1))
+html = html.replace('</style><h1>', c4 + '</style><h1>').replace('</html>', f'<section><div class="stage">{s4}</div><div class="meta"><span>Version 4 · 4 s / tour · 8 positions</span><h2>Clin d\'œil, 8 temps</h2><p>La version 2 avec une position intermédiaire entre chaque étape : droite, droite-arrière, derrière, arrière-gauche, gauche, gauche-avant, devant, avant-droite.</p></div></section></html>')
+open('index.html', 'w').write(html)
+print('v4 ok')
