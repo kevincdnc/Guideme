@@ -168,7 +168,7 @@ function ProgressFlag({ visited, onPick, onAccount }) {
   return (
     <div className="progress" ref={boxRef}>
       <button className={`progress-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={`Ta progression : ${done.length} lieux visités sur ${places.length}`}>
-        <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere.png`} alt="" />
+        <img className="progress-flag" src={`${import.meta.env.BASE_URL}icons/drapeau-finistere-flat.svg`} alt="" />
         <ProgressOutline pct={pct} />
         <span className="progress-pct">{pct}<small>%</small></span>
       </button>
