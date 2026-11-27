@@ -242,7 +242,7 @@ function MapSettings() {
   const [open, setOpen] = useState(false);
   return (
     <div className="map-settings">
-      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={20} /></button>
+      <button className={`tool-btn ${open ? 'is-open' : ''}`} onClick={() => setOpen((o) => !o)} aria-label="Réglages de la carte" aria-expanded={open}><Icon name="gear" size={16} /></button>
       <ColorTuner open={open} />
     </div>
   );
@@ -597,12 +597,8 @@ export default function App() {
 
       <div className="map-tools" style={desktop ? { left: SIDEBAR_W + 16 } : undefined}>
         <div className="tool-group">
-          <button className="tool-btn" onClick={() => mapRef.current?.zoomBy(1)} aria-label="Zoomer"><Icon name="plus" size={20} stroke={2.4} /></button>
-          <button className="tool-btn" onClick={() => mapRef.current?.zoomBy(-1)} aria-label="Dézoomer"><Icon name="minus" size={20} stroke={2.4} /></button>
-        </div>
-        <div className="tool-group">
-          <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={19} /><i className="tool-dot" aria-hidden="true" /></button>
           <MapSettings />
+          <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={15} /><i className="tool-dot" aria-hidden="true" /></button>
         </div>
       </div>
 

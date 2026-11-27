@@ -2039,3 +2039,16 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
 /* ---------- Titres en Outfit ---------- */
 h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.015em; }
 .sidebar-intro h1 { font-size: 25px !important; line-height: 1.2; }
+
+/* ---------- Contrôles v3 : un bloc 32 px (réglages + localisation), aligné sur le haut de la barre noire ---------- */
+@media (min-width: 900px) { .map-tools { top: 12px !important; } }
+.tool-group { border-radius: 6px; border: 0; box-shadow: 0 1px 4px rgba(15,23,42,.14), 0 0 0 1px rgba(15,23,42,.04); overflow: visible; }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { width: 32px; height: 32px; color: #404040; }
+.tool-group > :first-child, .tool-group .map-settings:first-child > .tool-btn { border-radius: 6px 6px 0 0 !important; }
+.tool-group > :last-child.tool-btn { border-radius: 0 0 6px 6px !important; }
+.tool-group > * + * { border-top: 1px solid #e5e5e5 !important; }
+.tool-dot { top: 6px; right: 6px; width: 5px; height: 5px; box-shadow: 0 0 0 1.5px #fff; }
+
+/* ---------- Bouton « i » des crédits : une seule icône ---------- */
+.maplibregl-ctrl-attrib-button { background-repeat: no-repeat !important; background-position: center !important; }
+.tool-group .map-settings > .tool-btn.is-open { color: #fff; background: var(--ink); }
