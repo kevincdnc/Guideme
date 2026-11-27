@@ -86,6 +86,26 @@ export default {
           title: 'Sauvés par des pêcheurs',
           text: "Le 20 mars 1944, un bombardier abattu tombe au large de Plouhinec. Ses aviateurs sont sauvés par l'équipage du bateau de pêche L'Avant-Garde, parti de Pors Poulhan à leur secours.",
         },
+        {
+          title: "Des hyènes pour colocataires",
+          text: "Un kyste fossilisé de parasite intestinal, Toxocara canis, a été retrouvé dans la grotte. Il prouve que des hyènes fréquentaient le site occupé par les humains, il y a environ 400 000 ans.",
+        },
+        {
+          title: "Une dent d'éléphant au cœur du foyer",
+          text: "Dans la couche 5, les archéologues ont dégagé de petites dalles disposées en cercle, avec en leur centre un fragment de dent d'éléphant. Les mesures physiques confirment qu'il s'agit d'un ancien foyer, vidé par ses occupants.",
+        },
+        {
+          title: "La mer à dix kilomètres",
+          text: "Quand les premiers occupants s'installent, le rivage est à une dizaine de kilomètres, sur une plaine aujourd'hui sous 40 mètres d'eau. Depuis leur abri, ces pré-Néandertaliens dominaient une steppe où ils chassaient éléphants, équidés et bovidés.",
+        },
+        {
+          title: "80 000 ans entre deux visites",
+          text: "Les fouilles ont livré plus de 100 000 pièces et au moins six niveaux d'occupation. Entre deux séjours humains, il s'est parfois écoulé 80 000 ans : au gré des glaciations, la mer revenait noyer la grotte, puis se retirait.",
+        },
+        {
+          title: "Un pin sylvestre de 375 000 ans",
+          text: "Les charbons de bois des foyers racontent le climat. À la fin de la couche 5, il ne reste presque plus que du pin sylvestre : le signe d'une période interglaciaire qui s'achève et du basculement vers le froid.",
+        },
       ],
     },
   ],
@@ -144,6 +164,10 @@ export default {
   sources: [
     { label: 'Wikipédia : Menez Dregan', url: 'https://fr.wikipedia.org/wiki/Menez_Dregan' },
     { label: 'Wikipédia : Plouhinec (Finistère)', url: 'https://fr.wikipedia.org/wiki/Plouhinec_(Finist%C3%A8re)' },
+    { label: "Bécédia (Jean-Laurent Monnier, 2016) : Menez-Dregan à Plouhinec", url: "https://bcd.bzh/becedia/fr/menez-dregan-a-plouhinec-finistere" },
+    { label: "Espace des sciences, Sciences Ouest n° 271 : Ici brûlait le feu des ancêtres", url: "https://www.espace-sciences.org/sciences-ouest/271/dossier/ici-brulait-le-feu-des-ancetres" },
+    { label: "Commune de Plouhinec : visite audio de Menez Dregan", url: "https://www.plouhinec.bzh/visite-audio-menez-dregan/" },
+    { label: "INA, L'Ouest en mémoire : fouilles dans une ancienne grotte marine (2001)", url: "https://fresques.ina.fr/ouest-en-memoire/fiche-media/Region00320/fouilles-archeologiques-dans-une-ancienne-grotte-marine.html" },
   ],
   pois: [],
 };

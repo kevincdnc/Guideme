@@ -99,6 +99,18 @@ export default {
           title: 'Les sirènes de Sein',
           text: "La légende veut que des Marie Morgane, les sirènes bretonnes, aient vécu dans les eaux de l'île.",
         },
+        {
+          title: "Prévenus par le gardien d'Ar-Men",
+          text: "C'est le gardien du phare d'Ar-Men qui apprend aux Sénans, le 22 juin 1940, que l'appel d'un général français sera rediffusé le soir même sur la BBC. À l'écoute du message, la décision de partir est vite prise.",
+        },
+        {
+          title: "Cinq bateaux vers l'Angleterre",
+          text: "Le Velleda, le Rouanez ar Mor, le Corbeau des mers, le Marius Stella et le Rouanez ar Péoc'h emmènent les volontaires, âgés de 14 à 54 ans. Le plus jeune, Louis Fouquet, servira sur le contre-torpilleur Léopard, qui escortait les convois de l'Atlantique.",
+        },
+        {
+          title: "Cinq ans de deuil",
+          text: "Pendant l'Occupation, les femmes de Sein font le vœu de porter le deuil de la France. Elles le tiennent cinq ans. En 1946, le général de Gaulle vient leur rendre hommage en remettant la croix de la Libération à l'île.",
+        },
       ],
     },
   ],
@@ -152,6 +164,8 @@ export default {
   sources: [
     { label: 'Wikipédia : Île de Sein', url: 'https://fr.wikipedia.org/wiki/%C3%8Ele_de_Sein' },
     { label: 'Cinémathèque de Bretagne : La Mer et les Jours (Vimeo)', url: 'https://vimeo.com/187300715' },
+    { label: "Bécédia (Erwan Le Gall, 2020) : Quand l'île de Sein était le quart de la France", url: "https://bcd.bzh/becedia/fr/quand-l-ile-de-sein-etait-le-quart-de-la-france" },
+    { label: "INA, L'Ouest en mémoire : hommage du général de Gaulle à l'île de Sein (1946)", url: "https://fresques.ina.fr/ouest-en-memoire/fiche-media/Region00205/hommage-du-general-de-gaulle-a-l-ile-de-sein.html" },
   ],
   pois: [],
 };

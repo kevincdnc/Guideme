@@ -55,6 +55,33 @@ export default {
         "Un pylône métallique porte un feu provisoire dès juin 1945, puis un feu électrique en 1946. La nouvelle tour, en béton, est élevée en 1950, et sa lanterne tourne à nouveau en 1951.",
       ],
     },
+    {
+      id: 'insolite',
+      nav: 'Insolite',
+      title: 'Anecdotes insolites',
+      anecdotes: [
+        {
+          title: "Un bout de phare à Lille",
+          text: "La pierre offerte au général de Gaulle en 1946 sert aujourd'hui de socle à l'effigie du Général, sous les fenêtres de sa maison natale à Lille.",
+        },
+        {
+          title: "Une tête noire",
+          text: "En 1876, la partie haute du premier phare est peinte en noir, sur 12 mètres de hauteur.",
+        },
+        {
+          title: "Le premier tout en granite",
+          text: "Le phare de 1839, en granit rose, est le premier phare entièrement bâti en granite. Celui d'aujourd'hui, reconstruit sur ses fondations, a demandé environ 1 800 m³ de béton.",
+        },
+        {
+          title: "L'eau et la lumière de l'île",
+          text: "Le phare n'éclaire pas que la mer : sa centrale électrique alimente l'île, et une station de désalinisation fournit l'eau douce aux habitants.",
+        },
+        {
+          title: "Un nouveau chapitre",
+          text: "Le phare a été confié au Conservatoire du littoral en 2020. Le projet prévoit un lieu de visite, des gîtes patrimoniaux et des logements pour les ouvriers de passage. On peut y grimper de juin à septembre : 249 marches pour une vue imprenable sur le raz de Sein.",
+        },
+      ],
+    },
   ],
   timeline: [
     { year: '1839', text: 'Allumage du premier phare, le 15 mai.' },
@@ -69,6 +96,11 @@ export default {
   practical: [
     { icon: 'route', title: 'Accès', text: "Vedettes au départ d'Audierne (Sainte-Évette), puis à pied depuis le bourg de Sein." },
   ],
-  sources: [{ label: "Wikipédia : Grand phare de l'île de Sein", url: "https://fr.wikipedia.org/wiki/Grand_phare_de_l%27%C3%AEle_de_Sein" }],
+  sources: [
+    { label: "Wikipédia : Grand phare de l'île de Sein", url: "https://fr.wikipedia.org/wiki/Grand_phare_de_l%27%C3%AEle_de_Sein" },
+    { label: "DIRM Nord Atlantique-Manche Ouest : phare de Sein", url: "https://www.dirm.nord-atlantique-manche-ouest.developpement-durable.gouv.fr/phare-de-sein-a99.html" },
+    { label: "Conservatoire du littoral : restauration du phare de l'île de Sein", url: "https://www.conservatoire-du-littoral.fr/218-restauration-du-phare-de-l-ile-de-sein.htm" },
+    { label: "Réserve de biosphère d'Iroise : phare de Goulénez", url: "https://www.reserve-biosphere-iroise.fr/point-d-interet/phare-de-goulenez/" },
+  ],
   pois: [],
 };

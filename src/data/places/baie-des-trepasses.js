@@ -77,6 +77,14 @@ export default {
           title: 'Une baie qui n\'a pas toujours été là',
           text: "Les sédiments du fossé, parfois tourbeux ou charbonneux, sont d'anciens dépôts continentaux redressés par les grands mouvements de l'écorce terrestre. La baie est l'un des sites d'intérêt géologique de Bretagne.",
         },
+        {
+          title: "Les moulins en deuil",
+          text: "Les moulins à vent du Cap Sizun, comme ceux de Trouguer, sur le tour de la pointe du Van, servaient de repères aux bateaux de pêche. Lors d'un décès, on plaçait leurs ailes en croix, tournées vers la maison du défunt jusqu'à l'enterrement.",
+        },
+        {
+          title: "Sauvée avec la pointe du Raz",
+          text: "La baie faisait partie de l'Opération Grand Site menée de 1989 à 1996 sur 200 hectares, avec la pointe du Raz et la pointe du Van, pour protéger ces espaces naturels d'une fréquentation devenue trop forte.",
+        },
       ],
     },
   ],
@@ -118,6 +126,8 @@ export default {
   ],
   sources: [
     { label: 'Wikipédia : Baie des Trépassés', url: 'https://fr.wikipedia.org/wiki/Baie_des_Tr%C3%A9pass%C3%A9s' },
+    { label: "Cap Sizun Tourisme : le tour de la pointe du Van (PR 13)", url: "https://www.capsizuntourisme.fr/cap-sizun-pointe-du-raz/activites-nature/terre-de-randos/liste-des-boucles-prr/le-tour-de-la-pointe-du-van-pr-13-2144546" },
+    { label: "Communauté de communes Cap Sizun-Pointe du Raz : histoire du label Grand Site", url: "https://www.cap-sizun.bzh/grand-site-de-france/" },
   ],
   pois: [
   ],

@@ -85,6 +85,18 @@ export default {
         { title: 'Monter au phare… en « ballon »', text: "La relève se faisait au cartahu : un filin tendu entre le phare et la vedette, sur lequel on accrochait le « ballon », un siège rudimentaire. Le gardien montant, gilet de sauvetage sur le dos et assis à califourchon, était hissé au treuil pendant que la vedette frôlait les rochers. Aujourd'hui, on n'accède plus à la Vieille que par hélitreuillage." },
         { title: 'Quatre gardiens pour la dernière nuit', text: "Le 14 novembre 1995, pour protester contre l'automatisation, Jean Donnart et un collègue refusent la relève : pour la dernière nuit, quatre gardiens au lieu de deux dorment dans le phare, Noël Fouquet, Jean Donnart, Michel Rozenn et Guy Lasbleiz." },
         { title: 'Une lanterne en hélicoptère', text: "À l'été 2019, la lanterne posée en 1886, qui prenait l'eau, a été enlevée par hélicoptère pour être restaurée à Brest." },
+        {
+          title: "Un chantier jugé presque impossible",
+          text: "Dès 1861, la Commission des phares réclame un feu sur la Vieille. En 1872, le directeur du service des phares envisage carrément l'abandon du projet, tant l'accostage est difficile, et l'on préfère se concentrer sur Ar-Men. Un crédit de 100 000 francs n'est voté qu'en avril 1882.",
+        },
+        {
+          title: "Éteint pendant la guerre",
+          text: "Le 21 janvier 1944, le feu de la Vieille est évacué. Il ne se rallume que le 1er juin 1945.",
+        },
+        {
+          title: "Une voix dans la brume",
+          text: "Depuis le 15 novembre 1913, le phare a aussi une voix : un signal de brume. Son vibrateur émet deux sons puis un, toutes les soixante secondes.",
+        },
       ],
     },
   ],
@@ -103,6 +115,9 @@ export default {
     { icon: 'warn', title: 'Phare en mer', text: 'Inaccessible au public.' },
     { icon: 'hike', title: "Où l'apercevoir", text: 'Depuis le bout de la pointe du Raz, à moins d\'un mille.' },
   ],
-  sources: [{ label: 'Wikipédia : Phare de la Vieille', url: 'https://fr.wikipedia.org/wiki/Phare_de_la_Vieille' }],
+  sources: [
+    { label: 'Wikipédia : Phare de la Vieille', url: 'https://fr.wikipedia.org/wiki/Phare_de_la_Vieille' },
+    { label: "Ministère de la Culture, POP : phare de la Vieille (inventaire général)", url: "https://pop.culture.gouv.fr/notice/merimee/IA29000464" },
+  ],
   pois: [],
 };

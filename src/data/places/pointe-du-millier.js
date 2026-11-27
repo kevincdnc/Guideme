@@ -72,6 +72,18 @@ export default {
           title: 'Un bois abattu pour rendre la lande',
           text: "En octobre 2020, un bois de cyprès vieillissants a été abattu au-dessus du vallon de Kériolet. Les arbres menaçaient les promeneurs et avaient obligé à dévier le GR34 en 2018. La coupe doit permettre aux landes sèches atlantiques, un milieu d'intérêt européen, de reprendre leur place.",
         },
+        {
+          title: "Une fougère tropicale",
+          text: "À la limite des hautes mers, dans les fissures de la falaise, pousse la doradille marine, une fougère à l'écologie tropicale. Plus haut, perce-pierre et cochléaire résistent aux embruns grâce à leurs tissus épais.",
+        },
+        {
+          title: "Phoques et dauphins en face",
+          text: "Depuis les pointes du nord du Cap Sizun, on peut observer les mammifères marins de la baie de Douarnenez : phoque gris, dauphin commun, grand dauphin, dauphin de Risso, marsouin ou globicéphale.",
+        },
+        {
+          title: "63 hectares protégés",
+          text: "Le Conservatoire du littoral protège 63,59 hectares à la pointe du Millier. Les pointes du nord du Cap Sizun ont servi de refuges aux hommes à l'âge du fer.",
+        },
       ],
     },
   ],
@@ -133,6 +145,7 @@ export default {
   sources: [
     { label: 'Wikipédia : Pointe du Millier', url: 'https://fr.wikipedia.org/wiki/Pointe_du_Millier' },
     { label: 'Wikipédia : Beuzec-Cap-Sizun', url: 'https://fr.wikipedia.org/wiki/Beuzec-Cap-Sizun' },
+    { label: "Conservatoire du littoral : pointe du Millier", url: "https://www.conservatoire-du-littoral.fr/siteLittoral/132/28-pointe-du-millier-29_finistere.htm" },
   ],
   pois: [],
 };

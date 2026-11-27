@@ -82,6 +82,10 @@ export default {
           title: 'Le port des peintres',
           text: "Paul Signac, Albert Marquet, Lucien Simon, Bernard Buffet ou encore Alexis Gritchenko, dont la toile est au Centre Pompidou : de nombreux peintres ont posé leur chevalet sur les quais d'Audierne.",
         },
+        {
+          title: "Port dans la ville",
+          text: "Audierne se découvre à pied, des venelles du centre aux églises perchées, jusqu'à la passerelle des Capucins et au môle du Raoulic. L'office de tourisme propose une visite guidée de la ville le mardi et le jeudi en saison, ainsi qu'une visite de la criée de Poulgoazec.",
+        },
       ],
     },
   ],
@@ -184,6 +188,7 @@ export default {
   ],
   sources: [
     { label: 'Wikipédia : Audierne', url: 'https://fr.wikipedia.org/wiki/Audierne' },
+    { label: "Cap Sizun Tourisme : Audierne, port et balnéaire", url: "https://www.capsizuntourisme.fr/cap-sizun-pointe-du-raz/incontournables/audierne-port-et-balneaire" },
   ],
   pois: [],
 };

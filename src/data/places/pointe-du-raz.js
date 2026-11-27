@@ -70,6 +70,18 @@ export default {
           title: 'De la pointe du Raz à Venise',
           text: "Le sentier européen de grande randonnée E5 part d'ici et rejoint Venise, 3 050 kilomètres plus loin. Moins ambitieux, le GR34, le sentier des douaniers, passe lui aussi par la pointe.",
         },
+        {
+          title: "Deux millions de pieds",
+          text: "Avant la réhabilitation, la lande avait disparu au-delà du sémaphore, piétinée par deux millions de pieds chaque année. Pour la faire revenir, on a canalisé les visiteurs, semé des landes pilées et transplanté des mottes de végétation.",
+        },
+        {
+          title: "« Au bout de 45 ans »",
+          text: "Quand la pointe est réhabilitée, commerces et hôtels doivent partir. « Au bout de 45 ans, croyez-moi que j'éprouve beaucoup beaucoup de tristesse », confie Marie Le Coz à la télévision. L'opération coûte 40 millions de francs.",
+        },
+        {
+          title: "Classée dès 1942",
+          text: "La pointe du Raz est classée en 1942 au titre de la loi de 1930 sur les sites. Aujourd'hui, le Grand Site de France couvre près de 8 700 hectares et reçoit plus de 800 000 visiteurs par an. La candidature pour 2026-2033 propose d'y intégrer l'île de Sein.",
+        },
       ],
     },
   ],
@@ -218,5 +230,7 @@ export default {
     { label: 'Wikipédia : Raz de Sein', url: 'https://fr.wikipedia.org/wiki/Raz_de_Sein' },
     { label: 'Wikipédia : Baie des Trépassés', url: 'https://fr.wikipedia.org/wiki/Baie_des_Tr%C3%A9pass%C3%A9s' },
     { label: 'Wikipédia : Projet de centrale nucléaire de Plogoff', url: 'https://fr.wikipedia.org/wiki/Projet_de_centrale_nucl%C3%A9aire_de_Plogoff' },
+    { label: "Communauté de communes Cap Sizun-Pointe du Raz : histoire du label Grand Site", url: "https://www.cap-sizun.bzh/grand-site-de-france/" },
+    { label: "INA, L'Ouest en mémoire : la pointe du Raz", url: "https://fresques.ina.fr/ouest-en-memoire/fiche-media/Region00308/la-pointe-du-raz.html" },
   ],
 };

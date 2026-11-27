@@ -88,6 +88,18 @@ export default {
         { title: 'Sans inauguration', text: "Pas de ministre ni de discours : un simple avis aux navigateurs annonce que le feu sera allumé le 15 mars 1875 à minuit. Un contraste saisissant avec les fêtes données pour d'autres phares." },
         { title: '69 jours en solitaire', text: "En 2016, le président de la Société nationale pour le patrimoine des phares et balises a vécu seul sur le phare pendant 69 jours, de février à mai. Personne n'y avait plus habité longuement depuis 1910." },
         { title: '« Méfie-toi du Tévennec »', text: "Le vieil adage sénan rappelle que le plateau rocheux caché sous le rocher barre la sortie nord du raz : tout navire en panne, pris par le courant de flot, y était inévitablement porté." },
+        {
+          title: "Le cri du rocher expliqué",
+          text: "À la fin des années 1980, deux plongeurs avancent une explication aux bruits inquiétants entendus sur l'îlot : la mer s'engouffrerait dans un tunnel sous-marin d'une vingtaine de mètres qui traverse le rocher de part en part.",
+        },
+        {
+          title: "5,5 watts pour le raz",
+          text: "Le phare fonctionne aujourd'hui grâce à un générateur solaire, installé en 1994, et à une lampe LED de 5,5 watts. Elle porte pourtant à 9,5 milles dans le secteur blanc.",
+        },
+        {
+          title: "Un chantier de sauvetage",
+          text: "En 2022, la DIRM est lauréate du FIM, un fonds pour les monuments historiques, pour restaurer le phare. Les travaux, élaborés avec la DRAC, ont commencé en 2023 et s'étalent sur plusieurs années.",
+        },
       ],
     },
   ],
@@ -106,6 +118,9 @@ export default {
     { icon: 'warn', title: 'Phare en mer', text: 'Inaccessible au public.' },
     { icon: 'hike', title: "Où l'apercevoir", text: 'Depuis la pointe du Van et la pointe du Raz, ou lors de la traversée vers l\'île de Sein.' },
   ],
-  sources: [{ label: 'Wikipédia : Phare du Tévennec', url: 'https://fr.wikipedia.org/wiki/Phare_du_T%C3%A9vennec' }],
+  sources: [
+    { label: 'Wikipédia : Phare du Tévennec', url: 'https://fr.wikipedia.org/wiki/Phare_du_T%C3%A9vennec' },
+    { label: "DIRM Nord Atlantique-Manche Ouest : phare de Tévennec", url: "https://www.dirm.nord-atlantique-manche-ouest.developpement-durable.gouv.fr/phare-de-tevennec-a642.html?lang=fr" },
+  ],
   pois: [],
 };

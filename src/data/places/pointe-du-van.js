@@ -79,6 +79,14 @@ export default {
           title: 'Un décor de cinéma',
           text: "La chapelle Saint-They a servi de décor au film Qui a envie d'être aimé ?, d'Anne Giafferi, sorti en 2011.",
         },
+        {
+          title: "Jusqu'à Ouessant",
+          text: "Du haut de ses falaises de plus de 70 mètres, la pointe du Van embrasse la pointe du Raz, la Vieille et Sein, le Menez-Hom, la baie de Douarnenez, le cap de la Chèvre et Pen-Hir. Par temps clair, on devine Saint-Mathieu, l'archipel de Molène, et même Ouessant avec la tour radar du Stiff.",
+        },
+        {
+          title: "Moins exposée que le Raz",
+          text: "Un peu plus abritée des houles de suroît que sa voisine, la pointe du Van offre un visage plus doux et moins découpé. Elle garde pourtant fièrement l'entrée de la baie de Douarnenez.",
+        },
       ],
     },
   ],
@@ -132,6 +140,7 @@ export default {
   sources: [
     { label: 'Wikipédia : Pointe du Van', url: 'https://fr.wikipedia.org/wiki/Pointe_du_Van' },
     { label: 'Wikipédia : Chapelle Saint-They', url: 'https://fr.wikipedia.org/wiki/Chapelle_Saint-They' },
+    { label: "Cap Sizun Tourisme : la pointe du Van", url: "https://www.capsizuntourisme.fr/cap-sizun-pointe-du-raz/coups-de-coeur/pointe-du-van" },
   ],
   pois: [
     { name: 'Chapelle Saint-They', coords: [-4.712046, 48.060158] },

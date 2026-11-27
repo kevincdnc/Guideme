@@ -90,6 +90,26 @@ export default {
         { title: 'Le soldat et le cormoran', text: "Pendant l'Occupation, trois soldats allemands vivaient sur le phare. En octobre 1941, le gardien François Violant sauve de la noyade l'un d'eux, qui avait sauté à l'eau pour récupérer un cormoran qu'il venait d'abattre." },
         { title: 'Un écrivain gardien', text: "L'écrivain Jean-Pierre Abraham a été gardien d'Ar-Men de 1959 à 1963. Il en a tiré Armen, journal de bord poétique d'un hiver sur le phare." },
         { title: 'Cité par Jules Verne', text: "Dans L'Épave du Cynthia (1885), Jules Verne évoque le chantier, en racontant qu'une année, on n'avait pu travailler que huit heures sur le rocher." },
+        {
+          title: "Ceintures de sauvetage obligatoires",
+          text: "Pour percer la roche, des marins sénans débarquaient sur le récif munis de ceintures de sauvetage. Pendant qu'ils travaillaient, une embarcation croisait tout près pour repêcher ceux que les lames emportaient.",
+        },
+        {
+          title: "Une pierre de sculpteur",
+          text: "La base du phare est en kersantite, une pierre au grain fin et serré extraite des carrières de la région de Daoulas, et les fondations ont été maçonnées avec un mortier gâché à l'eau de mer.",
+        },
+        {
+          title: "« Le phare s'est mis à vibrer »",
+          text: "Un gardien se souvient d'un soir de janvier 1986, par vent de noroît : deux coups de boutoir, puis un grand bruit. « Le phare s'est mis à vibrer et on a senti l'ondulation jusqu'en haut. »",
+        },
+        {
+          title: "Une lentille sur un bain de mercure",
+          text: "Pour tourner avec précision, l'optique d'Ar-Men flottait sur un bain de mercure. En 2019, il a été remplacé par des roulements à billes dans un bain d'huile. La lanterne, démontée en 2022 et restaurée dans les ateliers de Brest, a retrouvé sa place entre 2025 et 2026.",
+        },
+        {
+          title: "Le phare qui a annoncé de Gaulle",
+          text: "Le 22 juin 1940, c'est par le gardien d'Ar-Men que les habitants de Sein apprennent que l'appel du général de Gaulle sera rediffusé le soir même à la BBC.",
+        },
       ],
     },
   ],
@@ -108,6 +128,11 @@ export default {
     { icon: 'warn', title: 'Phare en mer', text: "Inaccessible au public. On l'aperçoit depuis l'île de Sein par temps clair, ou lors de sorties en mer." },
     { icon: 'route', title: "Depuis l'île de Sein", text: 'Vedettes au départ d\'Audierne (Sainte-Évette) ; le phare est à une dizaine de kilomètres à l\'ouest de l\'île.' },
   ],
-  sources: [{ label: "Wikipédia : Phare d'Ar-Men", url: "https://fr.wikipedia.org/wiki/Phare_d%27Ar-Men" }],
+  sources: [
+    { label: "Wikipédia : Phare d'Ar-Men", url: "https://fr.wikipedia.org/wiki/Phare_d%27Ar-Men" },
+    { label: "DIRM Nord Atlantique-Manche Ouest : phare d'Ar-Men", url: "https://www.dirm.nord-atlantique-manche-ouest.developpement-durable.gouv.fr/phare-d-ar-men-a76.html?lang=fr" },
+    { label: "Archives du Finistère : Ar Men", url: "https://archives.finistere.fr/histoires-animees/expositions-numeriques/phares-et-balises/ar-men" },
+    { label: "Parc naturel marin d'Iroise : le phare d'Ar Men", url: "https://parc-marin-iroise.fr/editorial/le-phare-dar-men" },
+  ],
   pois: [],
 };
