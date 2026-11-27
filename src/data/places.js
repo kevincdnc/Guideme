@@ -38,12 +38,12 @@ export const FINISTERE_BOUNDS = [
 // Catégories (puces de navigation au-dessus des lieux)
 export const TAGS = [
   { id: 'nature', label: 'Site naturel', icon: 'cliff' },
+  { id: 'prehistoire', label: 'Préhistoire', icon: 'fire' },
   { id: 'phare', label: 'Phare', icon: 'lighthouse' },
   { id: 'histoire', label: 'Patrimoine', icon: 'book' },
   { id: 'legende', label: 'Légendaire', icon: 'trophy' }, // sélection des spots les plus extraordinaires (records, histoires hors normes)
   { id: 'plage', label: 'Plage', icon: 'beach' },
   { id: 'port', label: 'Port', icon: 'port' },
-  { id: 'prehistoire', label: 'Préhistoire', icon: 'fire' },
 ];
 
 // Lieux annoncés, sans fiche pour l'instant
