@@ -2820,3 +2820,7 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Titre d'accueil : Rubik 700, comme les autres titres */
 .sidebar-intro h1 { font-family: var(--font-title) !important; font-weight: 700 !important; -webkit-text-stroke-width: 0 !important; letter-spacing: -0.015em !important; font-size: 22px !important; }
 .sidebar-intro h1 { font-size: 24px !important; }
+
+/* Popup de progression : compteur de la même taille que sa ligne ; « Afficher tous les spots » mieux centré dans le bas */
+.progress-head span b { font-size: inherit !important; font-weight: 700 !important; }
+.progress-menu .progress-toggle { padding-top: 18px !important; }
