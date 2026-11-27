@@ -2712,3 +2712,9 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .sidebar-intro h1 { font-family: var(--font-brand) !important; font-weight: 400 !important; font-size: 20px !important; letter-spacing: 0 !important;
   -webkit-text-stroke: .5px currentColor; paint-order: stroke fill; }
 .sidebar-intro h1 { -webkit-text-stroke-width: .25px !important; }
+
+/* Jaune to-do et records plus vif : #c68400, à la limite de l'accessibilité (3:1, seuil des textes gras/larges et des icônes) */
+.sidebar-wanted, .sidebar-wanted svg { color: #c68400 !important; fill: #c68400 !important; }
+.sidebar-wanted.is-active { background: #c68400 !important; color: #fff !important; }
+.pc-records, .pc-records svg { color: #c68400 !important; }
+.pc-records { font-weight: 700; }
