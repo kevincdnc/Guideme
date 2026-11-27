@@ -30,7 +30,8 @@
   --shadow-2: 0 2px 6px rgba(15,23,42,.05), 0 16px 40px rgba(15,23,42,.10);
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-title: 'Mochiy Pop One', 'Inter Variable', ui-sans-serif, sans-serif; /* logo, compteurs, titres */
+  --font-brand: 'Mochiy Pop One', 'Inter Variable', ui-sans-serif, sans-serif; /* logo et compteurs */
+  --font-title: 'Mochiy Pop One', 'Inter Variable', ui-sans-serif, sans-serif; /* titres */
   --font-title-axes: normal;
 
   --safe-top: env(safe-area-inset-top, 0px);
@@ -1964,8 +1965,8 @@ img { display: block; max-width: 100%; }
 .brand-bar .progress-btn:hover, .brand-bar .progress-btn.is-open { border-color: #4a4a4a !important; }
 .brand-bar .progress-fill { position: absolute; inset: 0 auto 0 0; z-index: -1; background: linear-gradient(90deg, #16a34a, #22c55e); transition: width .6s cubic-bezier(.3,1.2,.5,1); }
 .brand-bar .progress-flag { height: 22px !important; border-radius: 2px; }
-.brand-bar .progress-pct { font-family: 'Mochiy Pop One', var(--font-title) !important; font-weight: 400 !important; font-size: 18px !important; letter-spacing: 0 !important; color: #fff !important; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,.25); }
-.brand-bar .progress-pct small { font-family: 'Mochiy Pop One', var(--font-title); font-size: 11px !important; margin-left: 1px; color: rgba(255,255,255,.6) !important; }
+.brand-bar .progress-pct { font-family: var(--font-brand) !important; font-weight: 400 !important; font-size: 18px !important; letter-spacing: 0 !important; color: #fff !important; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.brand-bar .progress-pct small { font-family: var(--font-brand); font-size: 11px !important; margin-left: 1px; color: rgba(255,255,255,.6) !important; }
 .brand-bar .profile { flex: none; }
 .brand-bar .profile-btn, .brand-bar .profile-btn:has(.avatar-ph) { width: 40px !important; height: 40px !important; border-radius: 50%; background: #222 !important; border: 1px solid #333 !important; display: grid; place-items: center; }
 .brand-bar .profile-btn .avatar-ph { width: 22px; height: 22px; color: #8a8f98; border-radius: 0; overflow: visible; }
@@ -1973,9 +1974,8 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Typographie unifiée : Mochiy Pop One (une seule graisse) + Inter ---------- */
 :root { font-synthesis: none; }
-h1, h2, h3, h4 { font-weight: 400 !important; letter-spacing: -0.01em; }
 /* Compteurs et chiffres de jeu */
-.keyfig dt, .lh-id-big dd, .progress-pct, .topbar .progress-pct, .acc-stat b, .gm-pop-facts b, .record-detail h3 { font-family: var(--font-title) !important; font-weight: 400 !important; letter-spacing: 0 !important; }
+.keyfig dt, .lh-id-big dd, .progress-pct, .topbar .progress-pct, .progress-pct small { font-family: var(--font-brand) !important; font-weight: 400 !important; letter-spacing: 0 !important; }
 /* Mobile : même bloc de progression que sur desktop */
 .topbar .progress-btn { position: relative; overflow: hidden; isolation: isolate; border-radius: 8px !important; background: #222 !important; border: 1px solid #333 !important; }
 .topbar .progress-fill { position: absolute; inset: 0 auto 0 0; z-index: -1; background: linear-gradient(90deg, #16a34a, #22c55e); transition: width .6s; }
