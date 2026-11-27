@@ -53,12 +53,14 @@ function countLabel(tag, n, query) {
 
 // Petit tampon « Breizh validé » posé à côté de la coche des lieux visités
 function BreizhStamp({ animate }) {
+  // Tampon passeport « VISITÉ · PENN-AR-BED » (typo du logo)
   return (
     <span className={`pc-stamp ${animate ? 'is-new' : ''}`} aria-label="Déjà visité" role="img">
-      <svg viewBox="0 0 60 60" aria-hidden="true">
-        <circle cx="30" cy="30" r="27" fill="none" stroke="currentColor" strokeWidth="2.6" />
-        <circle cx="30" cy="30" r="21.5" fill="none" stroke="currentColor" strokeWidth="1.1" strokeDasharray="2.2 2.2" />
-        <g transform="translate(19.6 14.3) scale(.315)" fill="currentColor"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>
+      <svg viewBox="0 0 104 56" aria-hidden="true">
+        <rect x="2" y="2" width="100" height="52" rx="9" fill="none" stroke="currentColor" strokeWidth="3" />
+        <rect x="8" y="8" width="88" height="40" rx="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 2.5" />
+        <text x="52" y="32" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="17" fill="currentColor" letterSpacing="1">VISITÉ</text>
+        <text x="52" y="43" textAnchor="middle" fontFamily="'Mochiy Pop One', sans-serif" fontSize="7" fill="currentColor" letterSpacing="1.4">PENN-AR-BED</text>
       </svg>
     </span>
   );
