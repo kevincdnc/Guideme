@@ -19,7 +19,7 @@ DEFS = '''<linearGradient id="gmb-bl" x1="1" y1="0" x2="0" y2="0"><stop offset="
 <linearGradient id="gmb-streak" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF" stop-opacity="0"/><stop offset=".5" stop-color="#FFF"/><stop offset="1" stop-color="#FFF" stop-opacity="0"/></linearGradient>
 <linearGradient id="gmb-star" x1="0" y1="0" x2="1" y2="0"><stop class="gmb-s1" offset="0" stop-color="#FFB900"/><stop class="gmb-s2" offset="1" stop-color="#FFB900"/></linearGradient>
 <filter id="gmb-sblur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="2"/></filter>'''
-BACK = f'<circle class="gmb-back" cx="{CX}" cy="{CY}" r="16" fill="url(#gmb-back)"/>'
+BACK = f'<circle class="gmb-back" cx="{CX}" cy="{CY}" r="18" fill="url(#gmb-back)"/>'
 GLASS = '<rect class="gmb-glass" x="5.3" y="10.6" width="9.3" height="7.5" rx=".6" fill="#FFD25A"/>'
 BEAM_L = f'<g class="gmb-beam-l"><path d="{mirror(UP)}" fill="url(#gmb-bl)"/><path d="{mirror(LO)}" fill="url(#gmb-bl)"/></g>'
 FLARE = (f'<g class="gmb-flare"><circle cx="{CX}" cy="{CY}" r="22" fill="url(#gmb-flare)"/>'
@@ -54,7 +54,7 @@ def kf(name, fn):
     return f'@keyframes {name}{{' + ''.join(rows) + '}'
 side = lambda th, g: max(0.0, g * math.cos(th))
 facing = lambda th, g: max(0.0, g * math.sin(th))
-BLUR, HALO, WIDEN, FP, FS = 1.5, 0.3, 0.35, 3.5, 1.15
+BLUR, HALO, WIDEN, FP, FS = 1.5, 0.75, 0.35, 3.5, 1.15
 def beam(g):
     def f(th, s):
         L = side(th, g); w = 1 + WIDEN * (1 - abs(math.cos(th))) * s
@@ -78,7 +78,7 @@ css = f'''/* Généré par scripts/build-brand-anim.py : survol du logo, un tour
 @media (prefers-reduced-motion: reduce) {{ .brand.is-spinning * {{ animation: none !important; }} }}
 {kf('gmb-r', beam(1))}
 {kf('gmb-l', beam(-1))}
-{kf('gmb-b', lambda th, s: f'opacity:{s * HALO * (0.15 + 0.85 * facing(th, 1) ** 1.3):.3f};transform:scale({0.7 + 0.3 * facing(th, 1):.3f})')}
+{kf('gmb-b', lambda th, s: f'opacity:{s * HALO * (0.1 + 0.9 * facing(th, 1) ** 1.6):.3f};transform:scale({0.7 + 0.45 * facing(th, 1):.3f})')}
 {kf('gmb-f', lambda th, s: f'opacity:{facing(th, -1) ** FP:.3f};transform:scale({0.2 + (FS - 0.2) * facing(th, -1) ** FP:.3f});filter:blur({0.6 * s:.2f}px)')}
 {kf('gmb-g', lambda th, s: f'opacity:{s * min(1, 0.12 + 0.88 * facing(th, -1) ** 1.4 + 0.35 * facing(th, 1)):.3f}')}
 {kf('gmb-sg', lambda th, s: f'opacity:{s * 0.6 * ((math.cos(th) + 1) / 2) ** 2:.3f}')}
