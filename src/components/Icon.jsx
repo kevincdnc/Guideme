@@ -35,6 +35,8 @@ const PATHS = {
   hermine: (<g transform="translate(5.4 0) scale(0.24)" fill="currentColor" stroke="none"><path d="M32.4 0L39.4 14.1L32.4 28.2L25.5 14.1Z" /><path d="M0 32.4L14.1 25.5L28.2 32.4L14.1 39.4Z" /><path d="M37 32.4L51.1 25.5L65.2 32.4L51.1 39.4Z" /><path d="M32.8 37.5L54 82.5L43 79.5L32.7 100L22.3 79.5L11 82.5Z" /></g>),
   // Médaille : ruban et disque étoilé
   medal: (<><path d="M8 2l3 6M16 2l-3 6" /><circle cx="12" cy="15" r="6" /><path d="M12 12l.9 1.9 2 .2-1.5 1.4.4 2-1.8-1-1.8 1 .4-2-1.5-1.4 2-.2z" fill="currentColor" stroke="none" /></>),
+  // Coupe pleine (records) : lisible en petit, sans contour
+  trophySolid: <path fill="currentColor" stroke="none" d="M7 3h10v1.5h2.2c.7 0 1.3.6 1.3 1.3v1.4a4.2 4.2 0 0 1-3.9 4.2A5.6 5.6 0 0 1 13 14.9v2.6h2.6c.5 0 .9.4.9.9V21h-9v-2.6c0-.5.4-.9.9-.9H11v-2.6a5.6 5.6 0 0 1-3.6-3.5A4.2 4.2 0 0 1 3.5 7.2V5.8c0-.7.6-1.3 1.3-1.3H7V3zm0 3.3H5.3v.9a2.4 2.4 0 0 0 1.8 2.3A8 8 0 0 1 7 8.5V6.3zm10 0v2.2c0 .3 0 .7-.1 1A2.4 2.4 0 0 0 18.7 7.2v-.9H17z" />,
   trophy: (<><path d="M8 4h8v5a4 4 0 01-8 0z" /><path d="M8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4" /><path d="M12 13v4M9 21h6M10 17h4v4h-4z" /></>),
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
   minus: <path d="M5 12h14" />,

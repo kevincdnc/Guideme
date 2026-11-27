@@ -2678,3 +2678,10 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 /* Records des mini-cartes : coupe pleine et chiffre de la même couleur, jaune foncé */
 .pc-records, .pc-records svg { color: #a16207 !important; }
 .pc-records svg { fill: #a16207 !important; stroke: #a16207 !important; }
+
+/* Un seul jaune (lisible, 4,9:1 sur blanc) pour le texte ET l'icône : to-do et records */
+.sidebar-wanted, .sidebar-wanted svg { color: #a16207 !important; fill: #a16207 !important; }
+.sidebar-wanted.is-active { background: #a16207 !important; color: #fff !important; }
+.sidebar-wanted.is-active svg { color: #fff !important; fill: #fff !important; }
+.pc-records, .pc-records svg { color: #a16207 !important; }
+.pc-records svg { fill: currentColor !important; stroke: none !important; }

@@ -101,7 +101,7 @@ function PlaceCard({ place, selected, onOpen, onSelect, visited, onToggleVisited
         <h3>{soon ? place.shortTitle : <button className="pc-title" onClick={(e) => { e.stopPropagation(); onOpen(place.id); }}>{place.shortTitle}</button>}</h3>
         <span className="pc-meta">
           <span>{place.commune.split(' · ')[0].split(' & ')[0]}</span>
-          {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophy" size={13} stroke={2.2} /> {place.records.length}</span>}
+          {place.records?.length > 0 && <span className="pc-records" title={`${place.records.length} record${place.records.length > 1 ? 's' : ''}`}><Icon name="trophySolid" size={13} /> {place.records.length}</span>}
         </span>
       </div>
       {soon ? <span className="pc-soon">Bientôt</span> : onToggleVisited && (
