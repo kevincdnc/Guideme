@@ -44,6 +44,11 @@ export default function ColorTuner({ open = true }) {
       const map = document.querySelector('.map')?.__map;
       if (!map || !map.isStyleLoaded()) { t = setTimeout(run, 400); return; }
       Object.entries(colors).forEach(([k, v]) => apply(map, k, v));
+      // Opacité du fond de carte (les repères restent nets) : on fond vers le blanc
+      const op = colors.opacity ?? 1;
+      const cv = map.getCanvas();
+      cv.style.opacity = op;
+      map.getContainer().style.background = op < 1 ? '#ffffff' : colors.mer;
     };
     run();
     try { localStorage.setItem(KEY, JSON.stringify(colors)); } catch (e) { /* stockage indisponible */ }
@@ -60,7 +65,8 @@ export default function ColorTuner({ open = true }) {
     try { const r = await new window.EyeDropper().open(); set(r.sRGBHex); } catch (e) { /* annulé */ }
   };
 
-  const resetAll = () => { setColors({ mer: TARGETS.mer.def, terre: TARGETS.terre.def }); setText(TARGETS[target].def); };
+  const resetAll = () => { setColors({ mer: TARGETS.mer.def, terre: TARGETS.terre.def, opacity: 1 }); setText(TARGETS[target].def); };
+  const opacity = colors.opacity ?? 1;
   if (!open) return null;
   return (
     <div className="tuner" role="group" aria-label="Couleur de fond de la carte (réglage temporaire)">
@@ -81,6 +87,10 @@ export default function ColorTuner({ open = true }) {
         )}
         <button className="tuner-reset" onClick={() => set(TARGETS[target].def)} title="Couleur d'origine">↺</button>
       </div>
+      <label className="tuner-opacity">
+        <span>Opacité de la carte <b>{Math.round(opacity * 100)} %</b></span>
+        <input type="range" min="20" max="100" step="5" value={Math.round(opacity * 100)} onChange={(e) => setColors((c) => ({ ...c, opacity: Number(e.target.value) / 100 }))} aria-label="Opacité de la carte" />
+      </label>
       <button className="tuner-default" onClick={resetAll}>Thème par défaut (mer et terre)</button>
     </div>
   );
