@@ -32,7 +32,7 @@
 
   --font: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-brand: 'Mochiy Pop One', 'Inter Variable', ui-sans-serif, sans-serif; /* logo et compteurs */
-  --font-title: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif; /* titres : Inter (alternatives testées : Nunito, Outfit, Plus Jakarta Sans, voir design/typo-titres) */
+  --font-title: 'Rubik Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif; /* titres : Rubik (alternatives testées : design/typo-titres et typo-titres-2) */
   --font-title-axes: normal;
 
   --safe-top: env(safe-area-inset-top, 0px);
@@ -2200,3 +2200,7 @@ h1, h2, h3, h4 { font-weight: 800; }
 .sidebar-intro .sidebar-subrow { padding: 8px 0 0 !important; }
 .sidebar-intro { padding-bottom: 4px !important; }
 .sidebar .tagbar-wrap { padding-bottom: 14px !important; }
+
+/* ---------- Titres en Rubik (angles arrondis, côté jeu) ---------- */
+h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name { font-weight: 600 !important; letter-spacing: -0.01em; }
+.pc-body h3 { font-weight: 600 !important; }

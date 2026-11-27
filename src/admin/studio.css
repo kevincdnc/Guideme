@@ -1,6 +1,6 @@
 /* Studio GuideMe.bzh : back-office */
 :root { --ink: #111111; --ink-2: #404040; --ink-3: #737373; --line: #e5e5e5; --bg: #f6f6f3; --panel: #fff; --primary: #0a6cff; --green: #16a34a; --amber: #d97706; --red: #dc2626;
-  --font: 'Inter Variable', system-ui, sans-serif; --font-title: 'Outfit Variable', 'Inter Variable', sans-serif; }
+  --font: 'Inter Variable', system-ui, sans-serif; --font-title: 'Rubik Variable', 'Inter Variable', sans-serif; }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--font); }
 button, input, textarea, select { font: inherit; color: inherit; }
