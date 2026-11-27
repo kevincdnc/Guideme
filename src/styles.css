@@ -2214,7 +2214,7 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .compass:hover { transform: scale(1.06); }
 .compass-needle { transform-origin: 16px 16px; }
 .compass:hover .compass-needle, .compass:focus-visible .compass-needle { animation: compassWobble 1.1s ease-in-out; }
-.compass:active .compass-needle { animation: compassSpin .6s cubic-bezier(.3,1.4,.5,1); }
+/* (ancienne animation au clic remplacée par .is-spinning) */
 @keyframes compassWobble { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-16deg); } 55% { transform: rotate(11deg); } 80% { transform: rotate(-5deg); } }
 @keyframes compassSpin { from { transform: rotate(-360deg); } to { transform: rotate(0); } }
 /* Les popovers ne recouvrent plus les contrôles : inutile de les masquer */
@@ -2227,3 +2227,13 @@ h1, h2, h3, h4, .gm-pop-name, .funfact strong, .record-body strong, .lh-id-name 
 .sidebar .tagbar-wrap { margin-top: -6px !important; padding-bottom: 6px !important; }
 .sidebar-intro .sidebar-subrow { padding-top: 28px !important; }
 .sidebar .tagbar-wrap { margin-top: -18px !important; padding-bottom: 0 !important; }
+
+/* ---------- Contrôles de carte en noir (#111111), comme la boussole ---------- */
+.tool-group { background: #111 !important; box-shadow: 0 2px 8px rgba(17,17,17,.22) !important; }
+.tool-group > .tool-btn, .tool-group .map-settings > .tool-btn { color: #d4d4d4 !important; background: transparent !important; }
+.tool-group .tool-btn:hover { background: rgba(255,255,255,.08) !important; color: #fff !important; }
+.tool-group .map-settings > .tool-btn.is-open { background: rgba(255,255,255,.16) !important; color: #fff !important; }
+.tool-group > * + * { border-top: 1px solid rgba(255,255,255,.12) !important; }
+/* Boussole : plusieurs tours, ralentissement en fin de course */
+.compass.is-spinning .compass-needle { animation: compassSpinLong 2.2s cubic-bezier(.12,.75,.18,1) !important; }
+@keyframes compassSpinLong { from { transform: rotate(-1800deg); } 92% { transform: rotate(6deg); } to { transform: rotate(0); } }

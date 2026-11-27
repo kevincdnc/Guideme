@@ -601,7 +601,12 @@ export default function App() {
           <MapSettings />
           <button className="tool-btn tool-btn--locate" onClick={() => mapRef.current?.locate()} aria-label="Me localiser"><Icon name="navigate" size={18} /><i className="tool-dot" aria-hidden="true" /></button>
         </div>
-        <button className="compass" onClick={() => mapRef.current?.fitFinistere()} aria-label="Boussole : revoir tout le Finistère" title="Revoir tout le Finistère">
+        <button className="compass" onClick={(e) => {
+          const el = e.currentTarget;
+          el.classList.remove('is-spinning'); void el.offsetWidth; el.classList.add('is-spinning'); // relance l'animation à chaque clic
+          setTimeout(() => el.classList.remove('is-spinning'), 2300);
+          mapRef.current?.fitFinistere();
+        }} aria-label="Boussole : revoir tout le Finistère" title="Revoir tout le Finistère">
           <svg viewBox="0 0 32 32" width="38" height="38" aria-hidden="true">
             <rect width="32" height="32" rx="16" fill="#111111" />
             <g className="compass-needle">
