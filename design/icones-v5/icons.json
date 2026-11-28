@@ -12,28 +12,28 @@
   },
   "nature": {
     "label": "Sites naturels",
-    "shapes": "<circle cx=\"31\" cy=\"15\" r=\"7.5\"/><path d=\"M4 31.5c2.2-6.2 5-10.8 8.4-12.9 1.6-1 3.3-.5 4.2 1.2l5.6 11.7z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4 34.5c3.3-2.6 6.7-2.6 10 0s6.7 2.6 10 0 6.7-2.6 10 0 6.7 2.6 10 0V42a3 3 0 01-3 3H7a3 3 0 01-3-3z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": "<path d=\"M9 40.2c2.5-1.8 5-1.8 7.5 0s5 1.8 7.5 0 5-1.8 7.5 0 5 1.8 7.5 0\" fill=\"none\" stroke=\"#000\" stroke-width=\"2.6\" stroke-linecap=\"round\"/>"
+    "shapes": "<path d=\"M12.5 27a11.5 11.5 0 0123 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 4.5v4M11.3 9.8l2.8 2.8M36.7 9.8l-2.8 2.8M5.5 21.5h3.5M39 21.5h3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M5 33.5c3.2-2.6 6.4-2.6 9.6 0s6.4 2.6 9.6 0 6.4-2.6 9.6 0 6.4 2.6 9.6 0M8.5 41c2.6-2.1 5.2-2.1 7.8 0s5.2 2.1 7.8 0 5.2-2.1 7.8 0 5.2 2.1 7.8 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": ""
   },
   "phare": {
     "label": "Phares",
-    "shapes": "<path d=\"M17 41.5L19.5 18h9L31 41.5z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M18 18.5v-6.3C18 8.2 20.7 5 24 5s6 3.2 6 7.2v6.3z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"12\" y=\"40\" width=\"24\" height=\"5\" rx=\"2.5\"/><path d=\"M11.5 12.5H7M36.5 12.5H41\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": "<rect x=\"21.3\" y=\"10.5\" width=\"5.4\" height=\"4.5\" rx=\"1.3\"/><rect x=\"15\" y=\"29.5\" width=\"18\" height=\"4\"/>"
+    "shapes": "<path d=\"M18 41.5L20.2 21h7.6L30 41.5z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"16\" y=\"17.5\" width=\"16\" height=\"4.2\" rx=\"2\"/><rect x=\"19\" y=\"10.5\" width=\"10\" height=\"8\" rx=\"1.6\"/><path d=\"M18.6 11.2c0-3.7 2.4-6.2 5.4-6.2s5.4 2.5 5.4 6.2z\"/><path d=\"M15 13.5L6 10.5v7zM33 13.5l9-3v7z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"12\" y=\"40\" width=\"24\" height=\"5\" rx=\"2.5\"/>",
+    "holes": "<rect x=\"21.4\" y=\"12.2\" width=\"5.2\" height=\"4.4\" rx=\"1.1\"/><rect x=\"15\" y=\"29\" width=\"18\" height=\"3.8\"/>"
   },
   "histoire": {
     "label": "Patrimoine",
-    "shapes": "<path d=\"M9 42V24.5L24 11.5l15 13V42z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 12.5V3.5M19.8 7.2h8.4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"6\" y=\"40\" width=\"36\" height=\"4.5\" rx=\"2.2\"/>",
+    "shapes": "<path d=\"M9 42V24.5L24 11.5l15 13V42z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 12.5V3.5M19.8 7.2h8.4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"3.5\" y=\"40\" width=\"41\" height=\"4.5\" rx=\"2.2\"/>",
     "holes": "<path d=\"M20.8 42.5v-6.3a3.2 3.2 0 016.4 0v6.3z\"/><circle cx=\"24\" cy=\"24.2\" r=\"2.6\"/>"
   },
   "legende": {
     "label": "Légendaire",
     "shapes": "<path d=\"M13 6.5h22V16c0 7-4.9 12.2-11 12.2S13 23 13 16z\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.5 10H9.2a4.4 4.4 0 000 8.8h4.6M34.5 10h4.3a4.4 4.4 0 010 8.8h-4.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 27v9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"13\" y=\"37.5\" width=\"22\" height=\"6.5\" rx=\"3.2\"/>",
-    "holes": ""
+    "holes": "<path d=\"M24.00 10.90L25.23 13.80L28.37 14.08L26.00 16.15L26.70 19.22L24.00 17.60L21.30 19.22L22.00 16.15L19.63 14.08L22.77 13.80Z\" stroke=\"#000\" stroke-width=\"1\" stroke-linejoin=\"round\"/>"
   },
   "plage": {
     "label": "Plage",
-    "shapes": "<g transform=\"rotate(-12 24 39)\"><path d=\"M7.5 21C7.5 12.2 14.9 5.5 24 5.5S40.5 12.2 40.5 21z\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 21v17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><path d=\"M5 44.5c3.2-4.6 10.2-7.2 19-7.2s15.8 2.6 19 7.2z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": "<g transform=\"rotate(-12 24 39)\"><path d=\"M22.3 7.2c-2.8 3.4-4.3 8.2-4.5 13.8h2.8c.2-5.3 1.5-9.9 3.9-13.5zM25.7 7.2c2.8 3.4 4.3 8.2 4.5 13.8h-2.8c-.2-5.3-1.5-9.9-3.9-13.5z\"/></g>"
+    "shapes": "<path d=\"M7 22C7 12.6 14.6 5.5 24 5.5S41 12.6 41 22c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 21v17.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4 44.5c3.6-4.4 11-6.8 20-6.8s16.4 2.4 20 6.8z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": ""
   },
   "port": {
     "label": "Port",
@@ -47,12 +47,12 @@
   },
   "villes": {
     "label": "Villes & villages",
-    "shapes": "<path d=\"M5.5 41V27.5L15 19l9.5 8.5V41z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M27 41V23.5l6.5-5.5 6.5 5.5V41z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M30 19.8L33.5 8l3.5 11.8z\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"3\" y=\"40\" width=\"42\" height=\"5\" rx=\"2.5\"/>",
-    "holes": "<rect x=\"12\" y=\"29\" width=\"6\" height=\"5.5\" rx=\"1.3\"/><path d=\"M30.5 41v-6a3 3 0 016 0v6z\"/>"
+    "shapes": "<path d=\"M4.5 41V30.5l6.5-5.8 6.5 5.8V41zM30.5 41V30.5l6.5-5.8 6.5 5.8V41z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M18 41V22.5l6-5.2 6 5.2V41z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M21.2 17.8L24 6.5l2.8 11.3z\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"2.5\" y=\"40\" width=\"43\" height=\"5\" rx=\"2.5\"/>",
+    "holes": "<path d=\"M21.6 42v-6.2a2.4 2.4 0 014.8 0V42z\"/><rect x=\"8.8\" y=\"32\" width=\"4.4\" height=\"4\" rx=\"1\"/><rect x=\"34.8\" y=\"32\" width=\"4.4\" height=\"4\" rx=\"1\"/>"
   },
   "histoire-legendes": {
     "label": "Histoire & légendes",
-    "shapes": "<path d=\"M5.5 17.5c5.4-1.8 10.9-1.2 16.5 1.8V42c-5.6-3-11.1-3.6-16.5-1.8z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M42.5 17.5c-5.4-1.8-10.9-1.2-16.5 1.8V42c5.6-3 11.1-3.6 16.5-1.8z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 2.5l1.9 4.6 4.6 1.9-4.6 1.9L24 15.5l-1.9-4.6-4.6-1.9 4.6-1.9z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": ""
+    "shapes": "<path d=\"M5 17.5c6-2.4 12-1.8 17.4 1.6v23.4C17 39.1 11 38.5 5 40.9z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M43 17.5c-6-2.4-12-1.8-17.4 1.6v23.4c5.4-3.4 11.4-4 17.4-1.6z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 2.8l1.6 3.9 3.9 1.6-3.9 1.6L24 13.8l-1.6-3.9-3.9-1.6 3.9-1.6z\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<path d=\"M9 25c3.4-1 6.7-.7 9.6.9M9 31c3.4-1 6.7-.7 9.6.9M39 25c-3.4-1-6.7-.7-9.6.9M39 31c-3.4-1-6.7-.7-9.6.9\" fill=\"none\" stroke=\"#000\" stroke-width=\"2.2\" stroke-linecap=\"round\"/>"
   }
 }
