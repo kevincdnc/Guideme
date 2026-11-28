@@ -2868,16 +2868,18 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 .map.m-app.z-pins .gm-marker:not(.is-selected) .gm-tile { transform: scale(.92); }
 .map.m-app.z-dots .gm-marker:not(.is-selected) .gm-tile { transform: scale(clamp(.6, calc(.6 + (var(--zp, 1) - 1) * .55), .92)); } /* 100 % : .6 → 160 % : .93 */
 .map.m-app.z-dots .gm-marker:not(.is-selected) .gm-tile i { display: none; }
-.map.m-bd .gm-marker .gm-ink { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: -18px; border-radius: 50%; background: #FFB900; border: 2.5px solid #111; box-sizing: border-box; box-shadow: 3px 3px 0 #111; transition: transform .15s ease; }
+.map.m-bd .gm-marker .gm-ink { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: -18px; border-radius: 50%; background: #fff; border: 2.5px solid #111; box-sizing: border-box; box-shadow: 3px 3px 0 #111; transition: transform .15s ease; }
 .map.m-bd .gm-ink svg.gm-ink-icon { width: 20px; height: 20px; color: #111 !important; }
 .map.m-bd .gm-marker.is-visited .gm-ink { background: #16a34a; }
 .map.m-bd .gm-marker.is-visited .gm-ink svg.gm-ink-icon { color: #fff !important; }
-.map.m-bd .gm-marker.is-wanted:not(.is-visited) .gm-ink { background: #fff; }
+.map.m-bd .gm-marker.is-wanted:not(.is-visited) .gm-ink { background: #FFB900; }
 .map.m-bd.z-pins .gm-marker:not(.is-selected) .gm-ink { transform: scale(.95); }
 .map.m-bd.z-dots .gm-marker:not(.is-selected) .gm-ink { transform: scale(clamp(.7, calc(.7 + (var(--zp, 1) - 1) * .45), .95)); }
 .zoom-sizes .zs-app { width: 11px; height: 11px; border-radius: 3.5px; background: #111; }
-.zoom-sizes .zs-bd { width: 11px; height: 11px; background: #FFB900; border: 1.5px solid #111; box-shadow: 1.5px 1.5px 0 #111; }
+.zoom-sizes .zs-bd { width: 11px; height: 11px; background: #fff; border: 1.5px solid #111; box-shadow: 1.5px 1.5px 0 #111; }
 .progress-menu .progress-sub.progress-sub--types { margin-bottom: 18px !important; } /* +8 px sous « Les types de spots » */
 
 /* Noms des lieux (zoom rapproché, toutes cartes) : étiquette noire, texte blanc */
 .map.z-labels .gm-marker:not(:hover) .gm-marker-label { background: #111 !important; color: #fff !important; box-shadow: 0 2px 8px rgba(17,17,17,.25) !important; }
+/* Noms des lieux : petits à 400 %, taille normale vers 800 % */
+.map.z-labels .gm-marker:not(:hover) .gm-marker-label { font-size: clamp(10px, calc(7.6px + var(--zp, 8) * .65px), 13px) !important; padding: clamp(2px, calc(var(--zp, 8) * .5px), 5px) clamp(6px, calc(var(--zp, 8) * 1.1px), 10px) !important; }

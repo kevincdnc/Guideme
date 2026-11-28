@@ -371,7 +371,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     const onZoom = () => {
       const z = m.getZoom();
       const off = window.innerWidth < 900 ? 0.5 : 0;
-      const zl = m.__home ? m.__home.zoom + Math.log2(5.5) : 11.4; // noms des lieux affichés dès ~550 % de la vue par défaut
+      const zl = m.__home ? m.__home.zoom + 2 : 11.4; // noms des lieux affichés dès 400 % de la vue par défaut (petits au début)
       const c = box.current?.classList;
       if (!c) return;
       c.toggle('z-dots', z < 9.6 + off);
