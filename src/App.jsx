@@ -259,7 +259,7 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
               const c = Math.round((n / all.length) * 100);
               return (
                 <li key={t.id}>
-                  <span className="progress-cat-label"><TypeIcon name={t.type} size={15} /> {t.label}</span>
+                  <span className="progress-cat-label"><TypeIcon name={t.type} size={22} /> {t.label}</span>
                   <span className="progress-bar progress-bar--sm"><span style={{ width: `${c}%` }} /></span>
                   <b>{c} %</b>
                 </li>
