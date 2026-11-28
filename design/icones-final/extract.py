@@ -8,7 +8,7 @@ SRC = os.path.join(D, 'source-figma-kevin.svg')
 S, TOP = 145 / 48, 73.5
 ORDER = [  # id, libellé, lignes du fichier source
  ('visites', 'Visités', [(4, 4)]), ('todo', 'To-do', [(5, 5)]), ('nature', 'Sites naturels', [(61, 65)]),
- ('prehistoire', 'Préhistoire', [(16, 18)]), ('phare', 'Phares', [(35, 46)]), ('hermine', 'Hermine', [(56, 60)]),
+ ('prehistoire', 'Préhistoire', [(16, 18)]), ('phare', 'Phares', [(35, 46)]), ('hermine', 'Sites bretons', [(56, 60)]),
  ('histoire', 'Patrimoine', [(6, 15)]), ('port', 'Port', [(47, 50)]), ('legende', 'Légendaire', [(51, 55)]),
  ('villes', 'Villes & villages', [(19, 30), (34, 34)]), ('histoire-legendes', 'Histoire & légendes', [(31, 33)]), ('plage', 'Plage', [(66, 70)]),
 ]
