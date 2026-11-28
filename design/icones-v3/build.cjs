@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const D = __dirname;
 const ICONS = JSON.parse(fs.readFileSync(path.join(D, 'icons.json'), 'utf8'));
-const tags = Object.entries(ICONS).filter(([k]) => !k.startsWith('_'));
+const ONLY = process.argv[2]; // node build.cjs prehistoire → aperçu d'une seule icône
+const tags = Object.entries(ICONS).filter(([k]) => !k.startsWith('_') && (!ONLY || k === ONLY));
 const svg = (body, size = 24, sw = 2) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
 fs.mkdirSync(path.join(D, 'svg'), { recursive: true });
 for (const [id, t] of tags) for (const [v, body] of Object.entries(t.variants)) fs.writeFileSync(path.join(D, 'svg', `${id}-${v}.svg`), svg(body) + '\n');
@@ -27,11 +28,11 @@ h2{margin:0;font-size:15px;font-weight:700}
 .tag svg{color:#737373}
 .tag.is-on{background:#111;border-color:#111;color:#fff}.tag.is-on svg{color:#fff}
 </style><body>${rows}</body>`;
-fs.writeFileSync(path.join(D, 'preview.html'), html);
+fs.writeFileSync(path.join(D, ONLY ? `preview-${ONLY}.html` : 'preview.html'), html);
 (async () => {
   const { chromium } = require('playwright');
-  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 400 }, deviceScaleFactor: 2 });
-  await p.goto('file://' + path.join(D, 'preview.html')); await p.waitForTimeout(300);
-  await p.screenshot({ path: path.join(D, 'preview.png'), fullPage: true }); await b.close();
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 200 }, deviceScaleFactor: 2 });
+  await p.goto('file://' + path.join(D, ONLY ? `preview-${ONLY}.html` : 'preview.html')); await p.waitForTimeout(300);
+  await p.screenshot({ path: path.join(D, ONLY ? `preview-${ONLY}.png` : 'preview.png'), fullPage: true }); await b.close();
   console.log('preview.png ok');
 })();
