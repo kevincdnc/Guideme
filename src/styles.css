@@ -2848,5 +2848,5 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 .gm-marker svg.gm-type { stroke: none !important; color: #FFB900; }
 .gm-marker.is-visited svg.gm-type { color: #fff; }
 /* Pop-up de progression : icônes de types plus grandes, gris opaque (pas de surimpression de transparences) */
-.progress-cat-label svg.type-icon { color: #949494; width: 22px; height: 22px; }
+.progress-cat-label svg.type-icon { color: #949494; width: 18px; height: 18px; }
 .progress-cat-label { gap: 9px; }
