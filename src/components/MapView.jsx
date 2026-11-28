@@ -151,7 +151,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
     <span class="gm-dot" aria-hidden="true">${typeSvg('gm-dot-icon')}<span class="gm-dot-check">${CHECK_SVG}</span></span>
-    <span class="gm-tile" aria-hidden="true"><svg class="gm-tile-shape" viewBox="-3 -3 42 46"><path d="M10 0H26A10 10 0 0 1 36 10V26A10 10 0 0 1 26 36H21.2L18 39L14.8 36H10A10 10 0 0 1 0 26V10A10 10 0 0 1 10 0Z"/></svg>${typeSvg('gm-tile-icon')}<i class="gm-tile-check">${CHECK_SVG}</i><i class="gm-tile-want">${STAR_SVG}</i></span>
+    <span class="gm-tile" aria-hidden="true"><svg class="gm-tile-shape" viewBox="-3 -3 42 42"><rect width="36" height="36" rx="10"/></svg>${typeSvg('gm-tile-icon')}<i class="gm-tile-check">${CHECK_SVG}</i><i class="gm-tile-want">${STAR_SVG}</i></span>
     <span class="gm-ink" aria-hidden="true">${typeSvg('gm-ink-icon')}</span>
     <span class="gm-marker-ground"></span>
   </span>`;
@@ -371,11 +371,12 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     const onZoom = () => {
       const z = m.getZoom();
       const off = window.innerWidth < 900 ? 0.5 : 0;
+      const zl = m.__home ? m.__home.zoom + Math.log2(5.5) : 11.4; // noms des lieux affichés dès ~550 % de la vue par défaut
       const c = box.current?.classList;
       if (!c) return;
       c.toggle('z-dots', z < 9.6 + off);
-      c.toggle('z-pins', z >= 9.6 + off && z < 11.4 + off);
-      c.toggle('z-labels', z >= 11.4 + off);
+      c.toggle('z-pins', z >= 9.6 + off && z < zl + off);
+      c.toggle('z-labels', z >= zl + off);
       // Niveau de zoom pour l'indicateur (une mise à jour par image au plus)
       if (m.__home) box.current.__z0 = m.__home.zoom; // 100 % = vue par défaut
       // Au-delà de 120 % de la vue par défaut, les points (et petits repères) grossissent progressivement (jusqu'à ×1,6 vers 300 %)
@@ -388,7 +389,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       if (!box.current.__raf) box.current.__raf = requestAnimationFrame(() => { box.current.__raf = 0; const zz = m.getZoom(); onZoomRef.current?.({ z: zz, z0: box.current.__z0 ?? zz }); });
       // Anciennes classes (styles existants)
       c.toggle('z-far', z < 9.6 + off);
-      c.toggle('z-mid', z >= 9.6 + off && z < 11.4 + off);
+      c.toggle('z-mid', z >= 9.6 + off && z < zl + off);
     };
     m.on('zoom', onZoom);
     m.once('load', () => {
