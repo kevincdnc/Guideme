@@ -5,12 +5,12 @@
 import json, re, subprocess, os
 D = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(D, 'source-figma-kevin.svg')
-S, TOP = 145 / 48, 73.5
+S, TOP = 58.466 / 48, 29.43  # planche « UPDATE » : cadres de 58,47 px
 ORDER = [  # id, libellé, lignes du fichier source
- ('visites', 'Visités', [(4, 4)]), ('todo', 'To-do', [(5, 5)]), ('nature', 'Sites naturels', [(61, 65)]),
- ('prehistoire', 'Préhistoire', [(16, 18)]), ('phare', 'Phares', [(35, 46)]), ('hermine', 'Sites bretons', [(56, 60)]),
- ('histoire', 'Patrimoine', [(6, 15)]), ('port', 'Port', [(47, 50)]), ('legende', 'Légendaire', [(51, 55)]),
- ('villes', 'Villes & villages', [(19, 30), (34, 34)]), ('histoire-legendes', 'Histoire & légendes', [(31, 33)]), ('plage', 'Plage', [(66, 70)]),
+ ('visites', 'Visités', [(4, 4)]), ('todo', 'To-do', [(5, 5)]), ('nature', 'Sites naturels', [(48, 52)]),
+ ('prehistoire', 'Préhistoire', [(16, 18)]), ('phare', 'Phares', [(58, 69)]), ('hermine', 'Sites bretons', [(43, 47)]),
+ ('histoire', 'Patrimoine', [(6, 15)]), ('port', 'Port', [(34, 37)]), ('legende', 'Légendaire', [(38, 42)]),
+ ('villes', 'Villes & villages', [(19, 29), (33, 33), (70, 70)]), ('histoire-legendes', 'Histoire & légendes', [(30, 32)]), ('plage', 'Plage', [(53, 57)]),
 ]
 L = open(SRC).read().split('\n')
 spec = {id_: [[a, z] for a, z in r] for id_, _, r in ORDER}
@@ -18,7 +18,7 @@ bb = json.loads(subprocess.check_output(['node', os.path.join(D, 'bbox.cjs'), SR
 icons = {}
 for id_, label, ranges in ORDER:
     text = '\n'.join(l for a, z in ranges for l in L[a - 1:z])
-    text = re.sub(r'mask(\d)_54_17680', lambda m: f'{id_}-m{m.group(1)}', text)
+    text = re.sub(r'mask(\d)_\d+_\d+', lambda m: f'{id_}-m{m.group(1)}', text)
     shapes, holes = '', ''
     for part in re.split(r'(<mask[\s\S]*?</mask>)', text):
         if part.startswith('<mask'): shapes += part; continue
