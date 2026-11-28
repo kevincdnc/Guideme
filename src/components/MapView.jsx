@@ -383,6 +383,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
         const pct = 2 ** (z - m.__home.zoom);
         const k = Math.max(0, Math.min(1, (pct - 1.2) / (3 - 1.2)));
         box.current.style.setProperty('--mk', (1 + 0.6 * k * k * (3 - 2 * k)).toFixed(3));
+        box.current.style.setProperty('--zp', pct.toFixed(3)); // niveau de zoom relatif (1 = vue par défaut)
       }
       if (!box.current.__raf) box.current.__raf = requestAnimationFrame(() => { box.current.__raf = 0; const zz = m.getZoom(); onZoomRef.current?.({ z: zz, z0: box.current.__z0 ?? zz }); });
       // Anciennes classes (styles existants)
@@ -533,6 +534,15 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     const c = box.current?.classList;
     if (!c) return;
     ['small', 'medium', 'large', 'app', 'bd'].forEach((s) => c.toggle(`m-${s}`, s === markerSize));
+    // Style BD : les textes de la carte passent dans la typo du logo (Mochiy Pop One)
+    const m = map.current;
+    const fonts = () => {
+      if (!m?.isStyleLoaded()) return false;
+      if (!m.__fonts) m.__fonts = Object.fromEntries(m.getStyle().layers.filter((l) => l.layout?.['text-font']).map((l) => [l.id, l.layout['text-font']]));
+      Object.entries(m.__fonts).forEach(([id, f]) => { try { m.setLayoutProperty(id, 'text-font', markerSize === 'bd' ? ['Mochiy Pop One Regular'] : f); } catch (e) { /* calque absent */ } });
+      return true;
+    };
+    if (!fonts()) m?.once('idle', fonts);
   }, [markerSize]);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;

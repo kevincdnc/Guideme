@@ -2865,15 +2865,17 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 .gm-tile .gm-tile-check { background: #fff; color: #16a34a; }
 .gm-tile .gm-tile-want { background: #FFB900; color: #111; box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(0,0,0,.3); }
 .gm-marker.is-visited .gm-tile-check, .gm-marker.is-wanted:not(.is-visited) .gm-tile-want { display: grid; }
-.map.m-app.z-pins .gm-marker:not(.is-selected) .gm-tile { transform: scale(.86); }
-.map.m-app.z-dots .gm-marker:not(.is-selected) .gm-tile { transform: scale(calc(.6 * var(--mk, 1))); }
+.map.m-app.z-pins .gm-marker:not(.is-selected) .gm-tile { transform: scale(.92); }
+.map.m-app.z-dots .gm-marker:not(.is-selected) .gm-tile { transform: scale(clamp(.6, calc(.6 + (var(--zp, 1) - 1) * .55), .92)); } /* 100 % : .6 → 160 % : .93 */
 .map.m-app.z-dots .gm-marker:not(.is-selected) .gm-tile i { display: none; }
-.map.m-bd .gm-marker .gm-ink { display: grid; place-items: center; width: 30px; height: 30px; margin-bottom: -15px; border-radius: 50%; background: #FFF6D6; border: 2.5px solid #111; box-sizing: border-box; box-shadow: 2.5px 2.5px 0 #111; transition: transform .15s ease; }
-.gm-ink svg.gm-ink-icon { width: 17px; height: 17px; color: #111 !important; }
-.map.m-bd .gm-marker.is-visited .gm-ink { background: #4ade80; }
+.map.m-bd .gm-marker .gm-ink { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: -18px; border-radius: 50%; background: #111; border: 2.5px solid #fff; box-sizing: border-box; box-shadow: 3px 3px 0 #111, 0 2px 6px rgba(17,17,17,.25); transition: transform .15s ease; }
+.map.m-bd .gm-ink svg.gm-ink-icon { width: 20px; height: 20px; color: #FFB900 !important; }
+.map.m-bd .gm-marker.is-visited .gm-ink { background: #16a34a; }
+.map.m-bd .gm-marker.is-visited .gm-ink svg.gm-ink-icon { color: #fff !important; }
 .map.m-bd .gm-marker.is-wanted:not(.is-visited) .gm-ink { background: #FFB900; }
-.map.m-bd.z-pins .gm-marker:not(.is-selected) .gm-ink { transform: scale(.9); }
-.map.m-bd.z-dots .gm-marker:not(.is-selected) .gm-ink { transform: scale(calc(.55 * var(--mk, 1))); }
+.map.m-bd .gm-marker.is-wanted:not(.is-visited) .gm-ink svg.gm-ink-icon { color: #111 !important; }
+.map.m-bd.z-pins .gm-marker:not(.is-selected) .gm-ink { transform: scale(.95); }
+.map.m-bd.z-dots .gm-marker:not(.is-selected) .gm-ink { transform: scale(clamp(.7, calc(.7 + (var(--zp, 1) - 1) * .45), .95)); }
 .zoom-sizes .zs-app { width: 11px; height: 11px; border-radius: 3.5px; background: #111; }
-.zoom-sizes .zs-bd { width: 11px; height: 11px; background: #FFF6D6; border: 1.5px solid #111; box-shadow: 1.5px 1.5px 0 #111; }
+.zoom-sizes .zs-bd { width: 11px; height: 11px; background: #111; border: 1.5px solid #fff; box-shadow: 1.5px 1.5px 0 #111; }
 .progress-menu .progress-sub.progress-sub--types { margin-bottom: 18px !important; } /* +8 px sous « Les types de spots » */
