@@ -554,7 +554,7 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
 
 // Indicateur de zoom (en haut à gauche de la carte) : apparaît en fondu pendant le zoom,
 // s'efface ~2,5 s après. 100 % = vue par défaut du Finistère. En dessous : taille des lieux.
-const MARKER_MODES = [['medium', 'Points'], ['large', 'Repères']]; // points ronds partout, ou repères partout
+const MARKER_MODES = [['medium', 'Points'], ['large', 'Repères'], ['app', 'Icônes'], ['bd', 'BD']]; // styles des lieux sur la carte
 function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
   const [shown, setShown] = useState(false);
   const hover = useRef(false);
@@ -567,6 +567,22 @@ function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
     setShown(true); hideLater();
   }, [zoom?.z]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => () => clearTimeout(timer.current), []);
+  // Visible tant que la souris survole la carte ; s'efface quand on passe sur la colonne de navigation
+  useEffect(() => {
+    let inside = false;
+    const move = (e) => {
+      const map = document.querySelector('.map');
+      const r = map?.getBoundingClientRect();
+      const now = !!r && e.clientX > Math.max(r.left, left - 12) && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom;
+      if (now === inside) return;
+      inside = now; hover.current = now;
+      if (now) { clearTimeout(timer.current); setShown(true); } else { clearTimeout(timer.current); timer.current = setTimeout(() => setShown(false), 400); }
+    };
+    const out = (e) => { if (!e.relatedTarget) move({ clientX: -1, clientY: -1 }); };
+    window.addEventListener('pointermove', move, { passive: true });
+    document.addEventListener('mouseout', out);
+    return () => { window.removeEventListener('pointermove', move); document.removeEventListener('mouseout', out); };
+  }, [left]);
   const pct = zoom ? Math.round(2 ** (zoom.z - zoom.z0) * 100) : 100;
   return (
     <div className={`zoom-hud ${shown ? 'is-shown' : ''}`} style={{ left }}
@@ -592,7 +608,7 @@ function ZoomChip({ zoom, left, markerSize, onMarkerSize }) {
 export default function App() {
   const [zoomInfo, setZoomInfo] = useState(null);
   // Lieux sur la carte : « medium » = points (par défaut), « large » = repères
-  const [markerSize, setMarkerSizeState] = useState(() => { try { return localStorage.getItem('guideme:markers-mode') === 'large' ? 'large' : 'medium'; } catch { return 'medium'; } });
+  const [markerSize, setMarkerSizeState] = useState(() => { try { const v = localStorage.getItem('guideme:markers-mode'); return ['large', 'app', 'bd'].includes(v) ? v : 'medium'; } catch { return 'medium'; } });
   const setMarkerSize = (v) => { setMarkerSizeState(v); try { localStorage.setItem('guideme:markers-mode', v); } catch { /* ignore */ } };
   const desktop = useIsDesktop();
   const mapRef = useRef(null);

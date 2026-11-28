@@ -151,6 +151,8 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
     <span class="gm-dot" aria-hidden="true">${typeSvg('gm-dot-icon')}<span class="gm-dot-check">${CHECK_SVG}</span></span>
+    <span class="gm-tile" aria-hidden="true"><svg class="gm-tile-shape" viewBox="-3 -3 42 46"><path d="M10 0H26A10 10 0 0 1 36 10V26A10 10 0 0 1 26 36H21.2L18 39L14.8 36H10A10 10 0 0 1 0 26V10A10 10 0 0 1 10 0Z"/></svg>${typeSvg('gm-tile-icon')}<i class="gm-tile-check">${CHECK_SVG}</i><i class="gm-tile-want">${STAR_SVG}</i></span>
+    <span class="gm-ink" aria-hidden="true">${typeSvg('gm-ink-icon')}</span>
     <span class="gm-marker-ground"></span>
   </span>`;
   el.addEventListener('click', (e) => {
@@ -530,7 +532,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
   useEffect(() => {
     const c = box.current?.classList;
     if (!c) return;
-    ['small', 'medium', 'large'].forEach((s) => c.toggle(`m-${s}`, s === markerSize));
+    ['small', 'medium', 'large', 'app', 'bd'].forEach((s) => c.toggle(`m-${s}`, s === markerSize));
   }, [markerSize]);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;
