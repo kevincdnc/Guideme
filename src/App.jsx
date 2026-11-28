@@ -496,9 +496,18 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
         <TypeIcon name={t.type} size={15} /> {t.label}
       </button>) })),
   ];
-  const items = value && !wrap ? [...all.filter((it) => it.id === value), ...all.filter((it) => it.id !== value)] : all;
-  // À chaque changement de filtre, la barre revient au début : la puce choisie est visible à gauche
-  useEffect(() => { barRef.current?.scrollTo({ left: 0, behavior: 'smooth' }); }, [value]);
+  // Ordre fixe (« Tous » toujours en premier) ; la barre défile pour amener la puce choisie à gauche
+  const items = all;
+  useEffect(() => {
+    const bar = barRef.current; if (!bar) return;
+    const btn = value ? bar.querySelector('.tag.is-active') : null;
+    bar.style.paddingRight = '';
+    const left = btn ? btn.getBoundingClientRect().left - bar.getBoundingClientRect().left + bar.scrollLeft : 0;
+    // en fin de liste, un espace est ajouté à droite pour que la puce puisse quand même venir à gauche
+    const missing = left + bar.clientWidth - bar.scrollWidth;
+    if (missing > 0) bar.style.paddingRight = `${missing}px`;
+    bar.scrollTo({ left, behavior: 'smooth' });
+  }, [value]);
   const count = (id) => places.filter((p) => p.tags?.includes(id)).length;
   const q = norm(query.trim());
   const menuTags = q ? used.filter((t) => norm(t.label).includes(q)) : used;
