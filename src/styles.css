@@ -2829,3 +2829,7 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 .progress-menu .terr-grid--big .terr-arc { stroke-width: 1px; }
 .progress-menu .progress-cats { margin-bottom: 6px !important; }
 .progress-menu .progress-account { margin-bottom: 4px; }
+
+/* Carte : repères aux couleurs GuideMe, sans couleur par type. Noir + pictogramme jaune ; visité = vert + pictogramme blanc */
+.gm-marker.is-available .gm-pin-icon, .gm-marker.is-available .gm-dot-icon { stroke: #FFB900; }
+.gm-marker.is-available.is-visited .gm-pin-icon, .gm-marker.is-available.is-visited .gm-dot-icon { stroke: #fff; }

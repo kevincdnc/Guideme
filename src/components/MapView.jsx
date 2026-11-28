@@ -45,7 +45,8 @@ const PIN_ICONS = {
 }
 
 // Couleur du badge selon le type de lieu
-const PIN_COLORS = { lighthouse: '#ff5a36', beach: '#ffb020', cliff: '#ec4899', church: '#8b5cf6', port: '#2f80ff', fire: '#ff7a1a' };
+// Une seule couleur pour tous les types : noir GuideMe (pictogramme jaune) ; vert une fois visité
+const PIN_COLOR = '#111111';
 
 // Motifs dessinés à la volée (pas de fichier image) : petites vagues sur la mer, arbres sur les forêts.
 function patternImage(draw, size) {
@@ -114,7 +115,7 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
   const el = document.createElement('button');
   el.type = 'button';
   el.className = `gm-marker ${place.available ? 'is-available' : 'is-soon'}`;
-  el.dataset.color = place.available ? PIN_COLORS[place.icon] || '#ff5a36' : '#9aa3b2';
+  el.dataset.color = place.available ? PIN_COLOR : '#9aa3b2';
   el.style.setProperty('--c', el.dataset.color);
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
   const icon = place.available ? PIN_ICONS[place.icon] || PIN_ICONS.lighthouse : LOCK;
