@@ -12,7 +12,7 @@
   },
   "nature": {
     "label": "Sites naturels",
-    "shapes": "<path d=\"M12.5 27a11.5 11.5 0 0123 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 4.5v4M11.3 9.8l2.8 2.8M36.7 9.8l-2.8 2.8M5.5 21.5h3.5M39 21.5h3.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M5 33.5c3.2-2.6 6.4-2.6 9.6 0s6.4 2.6 9.6 0 6.4-2.6 9.6 0 6.4 2.6 9.6 0M8.5 41c2.6-2.1 5.2-2.1 7.8 0s5.2 2.1 7.8 0 5.2-2.1 7.8 0 5.2 2.1 7.8 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "shapes": "<path d=\"M15 23.5a9 9 0 0118 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 6v3.2M13.4 10.6l2.2 2.2M34.6 10.6l-2.2 2.2M8.5 20h3.2M36.3 20h3.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M5 32.5c3.2-2.6 6.4-2.6 9.6 0s6.4 2.6 9.6 0 6.4-2.6 9.6 0 6.4 2.6 9.6 0M8.5 40.5c2.6-2.1 5.2-2.1 7.8 0s5.2 2.1 7.8 0 5.2-2.1 7.8 0 5.2 2.1 7.8 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
     "holes": ""
   },
   "phare": {
@@ -23,17 +23,17 @@
   "histoire": {
     "label": "Patrimoine",
     "shapes": "<path d=\"M9 42V24.5L24 11.5l15 13V42z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 12.5V3.5M19.8 7.2h8.4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"3.5\" y=\"40\" width=\"41\" height=\"4.5\" rx=\"2.2\"/>",
-    "holes": "<path d=\"M20.8 42.5v-6.3a3.2 3.2 0 016.4 0v6.3z\"/><circle cx=\"24\" cy=\"24.2\" r=\"2.6\"/>"
+    "holes": "<path d=\"M20.8 41.5v-6.3a3.2 3.2 0 016.4 0v6.3z\"/><circle cx=\"24\" cy=\"24.2\" r=\"2.6\"/>"
   },
   "legende": {
     "label": "Légendaire",
     "shapes": "<path d=\"M13 6.5h22V16c0 7-4.9 12.2-11 12.2S13 23 13 16z\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.5 10H9.2a4.4 4.4 0 000 8.8h4.6M34.5 10h4.3a4.4 4.4 0 010 8.8h-4.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 27v9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"13\" y=\"37.5\" width=\"22\" height=\"6.5\" rx=\"3.2\"/>",
-    "holes": "<path d=\"M24.00 10.90L25.23 13.80L28.37 14.08L26.00 16.15L26.70 19.22L24.00 17.60L21.30 19.22L22.00 16.15L19.63 14.08L22.77 13.80Z\" stroke=\"#000\" stroke-width=\"1\" stroke-linejoin=\"round\"/>"
+    "holes": ""
   },
   "plage": {
     "label": "Plage",
-    "shapes": "<path d=\"M7 22C7 12.6 14.6 5.5 24 5.5S41 12.6 41 22c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0c-2.8-2.3-5.7-2.3-8.5 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 21v17.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M4 44.5c3.6-4.4 11-6.8 20-6.8s16.4 2.4 20 6.8z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": ""
+    "shapes": "<g transform=\"rotate(-16 24 40)\"><path d=\"M7 22C7 12.6 14.6 5.5 24 5.5S41 12.6 41 22c-3.7-3.1-7.6-3.1-11.3 0c-3.7-3.1-7.6-3.1-11.3 0c-3.7-3.1-7.6-3.1-11.3 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 20.5v19\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><path d=\"M5 42.5c6.2-2.6 12.6-3.9 19-3.9s12.8 1.3 19 3.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<g transform=\"rotate(-16 24 40)\"><path d=\"M24 7c-3.6 3.6-5.6 8.6-5.9 14.6M24 7c3.6 3.6 5.6 8.6 5.9 14.6\" fill=\"none\" stroke=\"#000\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></g>"
   },
   "port": {
     "label": "Port",
@@ -47,12 +47,12 @@
   },
   "villes": {
     "label": "Villes & villages",
-    "shapes": "<path d=\"M4.5 41V30.5l6.5-5.8 6.5 5.8V41zM30.5 41V30.5l6.5-5.8 6.5 5.8V41z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M18 41V22.5l6-5.2 6 5.2V41z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M21.2 17.8L24 6.5l2.8 11.3z\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"2.5\" y=\"40\" width=\"43\" height=\"5\" rx=\"2.5\"/>",
-    "holes": "<path d=\"M21.6 42v-6.2a2.4 2.4 0 014.8 0V42z\"/><rect x=\"8.8\" y=\"32\" width=\"4.4\" height=\"4\" rx=\"1\"/><rect x=\"34.8\" y=\"32\" width=\"4.4\" height=\"4\" rx=\"1\"/>"
+    "shapes": "<path d=\"M5.5 41V28.5l8.5-7.5 8.5 7.5V41z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M25.5 41V24l7-6 7 6v17z\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M29.4 18.8L32.5 7l3.1 11.8z\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"3\" y=\"40\" width=\"42\" height=\"5\" rx=\"2.5\"/>",
+    "holes": "<rect x=\"11\" y=\"30\" width=\"6\" height=\"5\" rx=\"1.2\"/><path d=\"M30 42v-6.5a2.5 2.5 0 015 0V42z\"/><circle cx=\"32.5\" cy=\"26.5\" r=\"2\"/>"
   },
   "histoire-legendes": {
     "label": "Histoire & légendes",
-    "shapes": "<path d=\"M5 17.5c6-2.4 12-1.8 17.4 1.6v23.4C17 39.1 11 38.5 5 40.9z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M43 17.5c-6-2.4-12-1.8-17.4 1.6v23.4c5.4-3.4 11.4-4 17.4-1.6z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 2.8l1.6 3.9 3.9 1.6-3.9 1.6L24 13.8l-1.6-3.9-3.9-1.6 3.9-1.6z\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
-    "holes": "<path d=\"M9 25c3.4-1 6.7-.7 9.6.9M9 31c3.4-1 6.7-.7 9.6.9M39 25c-3.4-1-6.7-.7-9.6.9M39 31c-3.4-1-6.7-.7-9.6.9\" fill=\"none\" stroke=\"#000\" stroke-width=\"2.2\" stroke-linecap=\"round\"/>"
+    "shapes": "<path d=\"M6 23.5c5.4-2 10.8-1.5 15.6 1.5v17c-4.8-3-10.2-3.5-15.6-1.5z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M42 23.5c-5.4-2-10.8-1.5-15.6 1.5v17c4.8-3 10.2-3.5 15.6-1.5z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 2.5l2.2 5.4 5.4 2.2-5.4 2.2L24 17.7l-2.2-5.4-5.4-2.2 5.4-2.2z\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<path d=\"M9.8 29.6c2.9-.8 5.8-.5 8.3.8M9.8 34.6c2.9-.8 5.8-.5 8.3.8M38.2 29.6c-2.9-.8-5.8-.5-8.3.8M38.2 34.6c-2.9-.8-5.8-.5-8.3.8\" fill=\"none\" stroke=\"#000\" stroke-width=\"2.2\" stroke-linecap=\"round\"/>"
   }
 }
