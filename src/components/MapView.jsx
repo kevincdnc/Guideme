@@ -68,6 +68,28 @@ const drawWaves = (ctx, n) => {
   const wave = (x, y) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 4, y - 4, x + 8, y); ctx.quadraticCurveTo(x + 12, y + 4, x + 16, y); ctx.stroke(); };
   wave(10, 18); wave(n / 2 + 14, n / 2 + 24);
 };
+// Thème BD : petites vagues serrées et bien visibles en vue d'ensemble
+const drawWavesBD = (ctx) => {
+  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+  ctx.lineWidth = 1.4;
+  ctx.lineCap = 'round';
+  const wave = (x, y) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + 2.5, y - 2.6, x + 5, y); ctx.quadraticCurveTo(x + 7.5, y + 2.6, x + 10, y); ctx.stroke(); };
+  wave(5, 10); wave(25, 30);
+};
+// Thème BD : réglages de la carte (mer bleu drapeau, côtes encrées, couleurs franches)
+const BD_PAINT = [
+  ['water', 'fill-color', '#4c9ce6'],
+  ['water_shallow', 'line-color', '#7fbbf0'], ['water_shallow', 'line-blur', 0],
+  ['water_outline', 'line-color', '#1d2433'], ['water_outline', 'line-width', ['interpolate', ['linear'], ['zoom'], 6, 1.1, 10, 2, 14, 3]],
+  ['background', 'background-color', '#F7EFD4'],
+  ['landcover_wood', 'fill-color', '#86cf6f'], ['landcover_grass', 'fill-color', '#bde59c'], ['park', 'fill-color', '#86cf6f'],
+  ['landcover_wood', 'fill-opacity', 1], ['landcover_grass', 'fill-opacity', 0.9],
+  ['landcover_sand', 'fill-color', '#FFD873'],
+  ['voile', 'fill-opacity', 0],
+  ['hors-finistere', 'fill-color', '#1d2433'], ['hors-finistere', 'fill-opacity', 0.22],
+  ['finistere-limite', 'line-color', '#FFB900'], ['finistere-limite', 'line-width', ['interpolate', ['linear'], ['zoom'], 7, 2.5, 12, 4]],
+  ['finistere-halo', 'line-color', '#1d2433'],
+];
 const drawTrees = (ctx) => {
   const tree = (x, y, s) => {
     ctx.fillStyle = 'rgba(70,120,50,0.25)'; ctx.beginPath(); ctx.ellipse(x + 1.5, y + s * 0.9, s * 0.8, s * 0.35, 0, 0, Math.PI * 2); ctx.fill();
@@ -536,14 +558,33 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     if (!c) return;
     ['small', 'medium', 'large', 'app', 'bd'].forEach((s) => c.toggle(`m-${s}`, s === markerSize));
     // Style BD : les textes de la carte passent dans la typo du logo (Mochiy Pop One)
-    const m = map.current;
+    let m;
     const fonts = () => {
       if (!m?.isStyleLoaded()) return false;
       if (!m.__fonts) m.__fonts = Object.fromEntries(m.getStyle().layers.filter((l) => l.layout?.['text-font']).map((l) => [l.id, l.layout['text-font']]));
       Object.entries(m.__fonts).forEach(([id, f]) => { try { m.setLayoutProperty(id, 'text-font', markerSize === 'bd' ? ['Mochiy Pop One Regular'] : f); } catch (e) { /* calque absent */ } });
       return true;
     };
-    if (!fonts()) m?.once('idle', fonts);
+    const theme = () => {
+      if (!m?.__home) return false; // (fonts() vient de modifier le style : isStyleLoaded() peut être faux)
+      const bd = markerSize === 'bd';
+      if (!m.__bdOrig) m.__bdOrig = BD_PAINT.map(([id, k]) => [id, k, m.getLayer(id) ? m.getPaintProperty(id, k) : undefined]);
+      (bd ? BD_PAINT : m.__bdOrig).forEach(([id, k, v]) => { if (m.getLayer(id) && v !== undefined) try { m.setPaintProperty(id, k, v); } catch (e) { /* propriété absente */ } });
+      if (!m.getLayer('water_waves_bd')) {
+        if (!m.hasImage('gm-waves-bd')) m.addImage('gm-waves-bd', patternImage(drawWavesBD, 40), { pixelRatio: 2 });
+        const h = m.__home.zoom;
+        m.addLayer({ id: 'water_waves_bd', type: 'fill', source: 'openmaptiles', 'source-layer': 'water',
+          paint: { 'fill-pattern': 'gm-waves-bd', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], h + 0.1, 0.85, h + 0.7, 0] } }, 'water_shallow');
+      }
+      m.setLayoutProperty('water_waves_bd', 'visibility', bd ? 'visible' : 'none');
+      m.getContainer().style.background = bd ? '#4c9ce6' : '';
+      return true;
+    };
+    // La carte peut ne pas être prête au premier rendu : on réessaie jusqu'à ce qu'elle le soit
+    let t;
+    const run = () => { m = map.current; if (!m || !m.isStyleLoaded() || !m.__home) { t = setTimeout(run, 250); return; } theme(); fonts(); };
+    run();
+    return () => clearTimeout(t);
   }, [markerSize]);
 
   return <div ref={box} className="map" role="application" aria-label="Carte du Finistère" />;

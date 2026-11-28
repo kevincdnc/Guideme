@@ -19,6 +19,7 @@ function lighten(hex, k) {
 function apply(map, target, hex) {
   if (!map || !HEX.test(hex)) return;
   try {
+    if (map.getContainer().classList.contains('m-bd')) return; // le thème BD a ses propres couleurs (mer et terre)
     if (target === 'mer') {
       map.setPaintProperty('water', 'fill-color', hex);
       if (map.getLayer('water_shallow')) map.setPaintProperty('water_shallow', 'line-color', lighten(hex, 0.45));
