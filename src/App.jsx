@@ -219,7 +219,7 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
             <b className="progress-bar-pct">{pct} %</b>
           </div>
           <p className="progress-hint">{encouragement}</p>
-          <h5 className="progress-sub">Tes territoires</h5>
+          <h5 className="progress-sub">Les territoires</h5>
           {(() => {
             const stat = (r) => ({ total: r.ids.filter((id) => places.some((p) => p.id === id)).length, n: r.ids.filter((id) => visited.includes(id)).length });
             const tile = (r, w, extra = {}) => {
@@ -250,7 +250,7 @@ function ProgressFlag({ visited, onPick, onAccount, onTerritory }) {
               </>
             );
           })()}
-          <h5 className="progress-sub">Tes types de spots</h5>
+          <h5 className="progress-sub progress-sub--types">Les types de spots</h5>
           <ul className="progress-cats" aria-label="Progression par catégorie">
             {TAGS.map((t) => {
               const all = places.filter((p) => p.tags?.includes(t.id));
