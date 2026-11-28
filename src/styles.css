@@ -60,7 +60,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Structure ---------- */
 .app { position: fixed; inset: 0; overflow: hidden; }
-.map, .map.maplibregl-map { position: absolute; inset: 0; background: #7fb9f0; }
+.map, .map.maplibregl-map { position: absolute; inset: 0; background: #4ec3e6; }
 
 /* ---------- Marque ---------- */
 .brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }

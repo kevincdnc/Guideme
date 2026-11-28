@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const KEY = 'guideme:tuner';
 const TARGETS = {
-  mer: { label: 'Mer', def: '#7fb9f0' },
+  mer: { label: 'Mer', def: '#4ec3e6' },
   terre: { label: 'Terre', def: '#eef6dc' },
 };
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -32,7 +32,7 @@ function apply(map, target, hex) {
 export default function ColorTuner({ open = true }) {
   const [target, setTarget] = useState('mer');
   const [colors, setColors] = useState(() => {
-    try { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def }; }
+    try { const saved = JSON.parse(localStorage.getItem(KEY) || '{}'); if (saved.mer === '#7fb9f0') delete saved.mer; /* ancienne mer par défaut */ return { mer: TARGETS.mer.def, terre: TARGETS.terre.def, ...saved }; } catch (e) { return { mer: TARGETS.mer.def, terre: TARGETS.terre.def }; }
   });
   const [text, setText] = useState(colors[target]);
   const hex = colors[target];
