@@ -1,0 +1,58 @@
+{
+  "_note": "Icônes v5 « pleines et sympathiques », grille 48 × 48. shapes = formes pleines ; holes = évidements (masque). Port et Préhistoire : dessins de Kevin.",
+  "visites": {
+    "label": "Visités",
+    "shapes": "<path d=\"M10 25.5l9 9L38.5 14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"7.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": ""
+  },
+  "todo": {
+    "label": "To-do",
+    "shapes": "<path d=\"M22.81 8.54L28.56 18.21L39.76 19.13L32.34 27.58L34.93 38.52L24.60 34.08L14.99 39.92L16.03 28.72L7.50 21.39L18.47 18.91Z\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": ""
+  },
+  "nature": {
+    "label": "Sites naturels",
+    "shapes": "<path d=\"M4.5 33.5C8 27 11.5 21 15.5 15.8c1.4-1.9 3.4-1.9 4.8 0l3.6 4.7 5.3-9c1.4-2.4 4.1-2.4 5.5 0C38.8 18.6 41.6 25.6 43.5 33.5z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M5 41.5c3.2-2.6 6.4-2.6 9.6 0s6.4 2.6 9.6 0 6.4-2.6 9.6 0 6.4 2.6 9.6 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"4.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<path d=\"M28.2 17.2l3.1-5c.9-1.5 2.5-1.5 3.4 0l3 5-2.3 1.6-2.5-2-2.4 2z\"/>"
+  },
+  "phare": {
+    "label": "Phares",
+    "shapes": "<path d=\"M17.5 41.5L19.6 21h8.8l2.1 20.5z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"14.5\" y=\"17\" width=\"19\" height=\"4.5\" rx=\"2.2\"/><rect x=\"18.5\" y=\"10\" width=\"11\" height=\"7.5\" rx=\"2\"/><path d=\"M18 10.5c0-4.2 2.7-6.8 6-6.8s6 2.6 6 6.8z\"/><rect x=\"11\" y=\"40\" width=\"26\" height=\"4.5\" rx=\"2.2\"/><path d=\"M11 8.5L6.5 6.2M11 14H5.5M37 8.5l4.5-2.3M37 14h5.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<rect x=\"21.3\" y=\"11.8\" width=\"5.4\" height=\"4\" rx=\"1.2\"/><rect x=\"17.5\" y=\"28\" width=\"13\" height=\"3.6\"/>"
+  },
+  "histoire": {
+    "label": "Patrimoine",
+    "shapes": "<path d=\"M9 42V24.5L24 11.5l15 13V42z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 12.5V3.5M19.8 7.2h8.4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"6\" y=\"40\" width=\"36\" height=\"4.5\" rx=\"2.2\"/>",
+    "holes": "<path d=\"M19.5 42.5V34a4.5 4.5 0 019 0v8.5z\"/><circle cx=\"24\" cy=\"24.5\" r=\"2.8\"/>"
+  },
+  "legende": {
+    "label": "Légendaire",
+    "shapes": "<path d=\"M13 6.5h22V16c0 7-4.9 12.2-11 12.2S13 23 13 16z\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M13.5 10H9.2a4.4 4.4 0 000 8.8h4.6M34.5 10h4.3a4.4 4.4 0 010 8.8h-4.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><rect x=\"21.2\" y=\"27\" width=\"5.6\" height=\"7\" rx=\"1.2\"/><path d=\"M15.5 37.5c0-2 1.3-3.5 3.3-3.5h10.4c2 0 3.3 1.5 3.3 3.5v2h-17z\"/><rect x=\"12\" y=\"39\" width=\"24\" height=\"5\" rx=\"2.4\"/>",
+    "holes": "<path d=\"M24.00 11.10L25.41 14.36L28.95 14.69L26.28 17.04L27.06 20.51L24.00 18.70L20.94 20.51L21.72 17.04L19.05 14.69L22.59 14.36Z\" stroke=\"black\" stroke-width=\"1.2\" stroke-linejoin=\"round\"/>"
+  },
+  "plage": {
+    "label": "Plage",
+    "shapes": "<g transform=\"rotate(-16 24 20)\"><path d=\"M7 20.5C7 11.2 14.6 4 24 4s17 7.2 17 16.5c-1.9-1.6-3.9-1.6-5.8 0-1.9-1.6-3.9-1.6-5.8 0-1.9-1.6-3.9-1.6-5.8 0-1.9-1.6-3.9-1.6-5.8 0-1.9-1.6-3.9-1.6-5.8 0z\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24 20v17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><path d=\"M3.5 44.5V41c6.5-3.6 13.3-5.3 20.5-5.3S38 37.4 44.5 41v3.5z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+    "holes": "<g transform=\"rotate(-16 24 20)\"><path d=\"M22 6.6c-3 3.2-4.6 8-4.8 13.2h2.6c.2-4.7 1.6-9 4.1-12.1zM26 6.6c3 3.2 4.6 8 4.8 13.2h-2.6c-.2-4.7-1.6-9-4.1-12.1z\"/></g>"
+  },
+  "port": {
+    "label": "Port",
+    "shapes": "<path d=\"M43.9812 30.8315L41.5315 23.0979C41.4813 22.94 41.3511 22.8202 41.1856 22.7839C41.1502 22.7767 41.113 22.7712 41.0777 22.7712C40.9493 22.7712 40.8247 22.8221 40.7336 22.9164L34.9862 28.8222C34.8727 28.9402 34.8299 29.1053 34.8727 29.2614C34.9155 29.4175 35.0383 29.5409 35.1982 29.5845L37.3819 30.2052C35.5107 33.8858 33.0926 35.8187 29.3779 36.6281C29.2347 36.6589 29.0878 36.6753 28.9427 36.6753C27.8378 36.6753 26.9301 35.7841 26.9153 34.677L26.374 19.7929H31.4276C32.5101 19.7929 33.3881 18.9362 33.3881 17.88C33.3881 16.8237 32.5101 15.967 31.4276 15.967H26.2345L26.1247 12.9724C27.9867 12.1738 29.2868 10.3626 29.2868 8.25002C29.2868 5.40059 26.9208 3.0918 24.0003 3.0918C21.0801 3.0918 18.7139 5.4004 18.7139 8.25002C18.7139 10.3608 20.0159 12.1739 21.876 12.9724L21.7662 15.967H16.6064C15.5239 15.967 14.6459 16.8237 14.6459 17.88C14.6459 18.9362 15.5239 19.7929 16.6064 19.7929H21.6267L21.0854 34.6882C21.0724 35.7844 20.1629 36.6755 19.058 36.6755C18.9129 36.6755 18.766 36.6592 18.6227 36.6283C14.9027 35.8189 12.4825 33.8805 10.6097 30.1873L12.4717 29.5811C12.6242 29.5321 12.7395 29.4123 12.7804 29.2617C12.8214 29.111 12.7823 28.9513 12.6763 28.8333L7.27841 22.9275C7.18726 22.8277 7.05706 22.7733 6.925 22.7733C6.89152 22.7733 6.85804 22.7769 6.82456 22.7842C6.65715 22.8205 6.52323 22.9403 6.47115 23.1L4.02149 30.8336C3.97126 30.9915 4.01033 31.1621 4.12565 31.2837C4.21679 31.3799 4.34327 31.4325 4.47534 31.4325C4.50882 31.4325 4.5423 31.4289 4.57764 31.4216L6.45813 31.0205C9.12545 39.064 14.1735 40.7376 18.2434 42.0859C20.148 42.7175 21.7942 43.262 22.7725 44.3691C23.0776 44.714 23.524 44.91 24.0002 44.91C24.4745 44.91 24.9227 44.7122 25.2278 44.3691C26.2062 43.262 27.8523 42.7175 29.757 42.0859C33.8268 40.7375 38.8747 39.0641 41.5422 31.0205L43.4227 31.4216C43.4562 31.4289 43.4896 31.4325 43.525 31.4325C43.657 31.4325 43.7835 31.3799 43.8747 31.2837C43.9881 31.1621 44.0291 30.9915 43.9788 30.8336L43.9812 30.8315ZM24.0025 5.88001C25.3417 5.88001 26.4317 6.94357 26.4317 8.25031C26.4317 9.55706 25.3417 10.6206 24.0025 10.6206C22.6633 10.6206 21.5733 9.55706 21.5733 8.25031C21.5733 6.94357 22.6633 5.88001 24.0025 5.88001Z\" />",
+    "holes": ""
+  },
+  "prehistoire": {
+    "label": "Préhistoire",
+    "shapes": "<path d=\"M32.3095 41C30.0868 38.6374 29.0143 31.2547 31.1831 23.6986C31.303 23.2809 31.6856 22.9969 32.1197 22.9776C33.2702 22.9264 35.6545 22.7592 38.3083 22.2154C38.8494 22.1045 39.3886 22.436 39.5154 22.9736L42.3891 35.1537C43.6109 39.0512 43 41 40.5565 41H32.3095Z\" /><path d=\"M7.6 11.4793C3.6 13.7515 2.93333 16.0237 5.6 18.2959C8.0988 20 14.2627 20 23.5909 20H23.6C35.6 20 42.2667 18.8639 43.6 16.5917C44.9333 13.1834 42.9333 10.9112 37.6 9.77515C25.6 6.93491 15.6 7.50296 7.6 11.4793Z\" /><path d=\"M6 39.9999C6 33.5533 6.82503 29.9124 10.0719 23.6512C10.2731 23.2631 10.7048 23.0546 11.1383 23.1109C12.6117 23.3019 14.99 23.4565 16.9596 23.4924C17.4947 23.5021 17.935 23.9121 17.9514 24.447C18.0672 28.2229 18.2548 42 14.8269 42H8.64783C6.2939 42 6 41.3333 6 39.9999Z\" />",
+    "holes": ""
+  },
+  "villes": {
+    "label": "Villes & villages",
+    "shapes": "<path d=\"M5 30.5l9.5-8.5 9.5 8.5V42H5z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M24.5 42V22.5l3.5-3 3.5 3V42zM31 42V26l6-5 6 5v16z\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M28 19.5l3.5-11.5 3.5 11.5\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M3 44c6.8-2.4 13.8-3.6 21-3.6S38.2 41.6 45 44v1.5H3z\"/>",
+    "holes": "<rect x=\"11.5\" y=\"31\" width=\"6\" height=\"5.5\" rx=\"1.2\"/><path d=\"M35 42v-6.5a2.5 2.5 0 015 0V42z\"/><rect x=\"26.4\" y=\"27\" width=\"3.2\" height=\"4.5\" rx=\"1\"/>"
+  },
+  "histoire-legendes": {
+    "label": "Histoire & légendes",
+    "shapes": "<path d=\"M7.5 41.5L27 22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"5.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M33.89 5.60L35.83 12.05L42.35 13.76L36.81 17.60L37.19 24.33L31.83 20.25L25.55 22.69L27.77 16.33L23.51 11.12L30.25 11.26Z\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12.00 7.60L12.88 10.79L16.18 10.64L13.43 12.46L14.59 15.56L12.00 13.50L9.41 15.56L10.57 12.46L7.82 10.64L11.12 10.79Z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M41.00 29.40L41.76 31.95L44.42 31.89L42.24 33.40L43.12 35.91L41.00 34.30L38.88 35.91L39.76 33.40L37.58 31.89L40.24 31.95Z\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"20\" cy=\"5.5\" r=\"1.8\"/><circle cx=\"43\" cy=\"5\" r=\"1.6\"/>",
+    "holes": ""
+  }
+}
