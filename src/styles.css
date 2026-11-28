@@ -2841,3 +2841,6 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 .tag-menu-item--wanted svg { color: #c68400 !important; fill: #c68400 !important; }
 /* Compteurs du menu : +2 px au-dessus et en dessous du texte */
 .tag-menu-item b { padding-top: 4px !important; padding-bottom: 4px !important; }
+/* Tags non sélectionnés : icône pleine adoucie (même teinte, moins dense) */
+.tag:not(.is-active) svg.type-icon { opacity: .6; transition: opacity .15s; }
+.tag:not(.is-active):hover svg.type-icon { opacity: .85; }
