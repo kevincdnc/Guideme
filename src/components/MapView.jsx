@@ -6,6 +6,7 @@ import { FINISTERE_BOUNDS } from '../data/places.js';
 import MAP_STYLE from '../data/mapFonts.js';
 import { protectionBadgesHtml } from './Protections.jsx';
 import { TYPE_ICONS } from '../data/typeIcons.js';
+import { DISCOVERY, discoveryData } from './discovery.js';
 import FINISTERE_MASK from '../data/finistere.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
@@ -400,6 +401,11 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       m.addLayer({ id: 'wood_trees', type: 'fill', source: 'openmaptiles', 'source-layer': 'landcover', minzoom: 10.5,
         filter: ['==', ['get', 'class'], 'wood'],
         paint: { 'fill-pattern': 'gm-trees', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 10.5, 0, 12, 1] } }, 'hillshade');
+      // Terres découvertes : voile gris léger sur les terres (sous la mer), troué autour des lieux visités
+      m.addSource('decouverte', { type: 'geojson', data: discoveryData([]), tolerance: 0.4 });
+      m.addLayer({ id: 'decouverte', type: 'fill', source: 'decouverte', paint: { 'fill-color': DISCOVERY.color, 'fill-opacity': ['get', 'o'], 'fill-antialias': false } }, 'water');
+      m.__discoveryReady = true;
+      drawDiscovery(false);
       // Le Finistère en avant : le reste est grisé, la limite du département est dessinée
       m.addSource('finistere', { type: 'geojson', data: FINISTERE_MASK, tolerance: 0.6 });
       // Tous ces calques passent SOUS les noms de lieux : les textes restent nets et entiers
@@ -474,6 +480,34 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
     });
     return () => list.forEach((mk) => mk.remove());
   }, [pois]);
+
+  // Terres découvertes : le cercle d'un lieu nouvellement visité s'ouvre en douceur
+  const revealed = useRef(null); // id → avancement (0..1)
+  const visitedRef = useRef(visitedIds);
+  visitedRef.current = visitedIds;
+  const anim = useRef(0);
+  function drawDiscovery(animate = true) {
+    const m = map.current;
+    if (!m?.__discoveryReady) return;
+    const ids = (visitedRef.current || []).filter((id) => places.find((p) => p.id === id)?.coords);
+    const prev = revealed.current;
+    const next = {};
+    ids.forEach((id) => { next[id] = prev && animate ? (prev[id] ?? 0) : 1; });
+    revealed.current = next;
+    const render = () => m.getSource('decouverte')?.setData(discoveryData(Object.entries(revealed.current).map(([id, k]) => ({ c: places.find((p) => p.id === id).coords, k }))));
+    cancelAnimationFrame(anim.current);
+    const pending = Object.keys(next).filter((id) => next[id] < 1);
+    if (!pending.length) { render(); return; }
+    const t0 = performance.now(), D = 1400;
+    const tick = (t) => {
+      const e = Math.min(1, (t - t0) / D), k = 1 - (1 - e) ** 3; // départ rapide, arrivée douce
+      pending.forEach((id) => { if (revealed.current[id] != null) revealed.current[id] = k; });
+      render();
+      if (e < 1) anim.current = requestAnimationFrame(tick);
+    };
+    anim.current = requestAnimationFrame(tick);
+  }
+  useEffect(() => { drawDiscovery(true); }, [visitedIds?.join()]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Lieux visités : épingle verte et petite coche
   useEffect(() => {
