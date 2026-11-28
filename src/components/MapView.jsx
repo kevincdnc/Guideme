@@ -77,12 +77,16 @@ const drawWavesBD = (ctx) => {
   wave(5, 10); wave(25, 30);
 };
 // Thème BD : réglages de la carte (mer bleu drapeau, côtes encrées, couleurs franches)
+const COTE_SIDE = 1; // côté de la bande de côte (1 ou -1 selon le sens des contours)
 const BD_PAINT = [
-  ['water', 'fill-color', '#4c9ce6'],
-  ['water_shallow', 'line-color', '#7fbbf0'], ['water_shallow', 'line-blur', 0],
+  // Mer : claire au large, bleu soutenu le long des côtes (bande floutée décalée côté mer)
+  ['water', 'fill-color', '#a6d3f5'],
+  ['water_shallow', 'line-color', '#4c9ce6'], ['water_shallow', 'line-blur', 2], ['water_shallow', 'line-width', ['interpolate', ['linear'], ['zoom'], 6, 3, 10, 6, 14, 10]],
   ['water_outline', 'line-color', '#1d2433'], ['water_outline', 'line-width', ['interpolate', ['linear'], ['zoom'], 6, 1.1, 10, 2, 14, 3]],
-  ['background', 'background-color', '#F7EFD4'],
-  ['landcover_wood', 'fill-color', '#86cf6f'], ['landcover_grass', 'fill-color', '#bde59c'], ['park', 'fill-color', '#86cf6f'],
+  // Terre plus verte, façon carte illustrée
+  ['background', 'background-color', '#CFE6A2'],
+  ['landuse_residential', 'fill-color', '#EAD9A8'],
+  ['landcover_wood', 'fill-color', '#74BC5A'], ['landcover_grass', 'fill-color', '#B5DC86'], ['park', 'fill-color', '#74BC5A'],
   ['landcover_wood', 'fill-opacity', 1], ['landcover_grass', 'fill-opacity', 0.9],
   ['landcover_sand', 'fill-color', '#FFD873'],
   ['voile', 'fill-opacity', 0],
@@ -569,7 +573,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       if (!m?.__home) return false; // (fonts() vient de modifier le style : isStyleLoaded() peut être faux)
       const bd = markerSize === 'bd';
       if (!m.__bdOrig) m.__bdOrig = BD_PAINT.map(([id, k]) => [id, k, m.getLayer(id) ? m.getPaintProperty(id, k) : undefined]);
-      (bd ? BD_PAINT : m.__bdOrig).forEach(([id, k, v]) => { if (m.getLayer(id) && v !== undefined) try { m.setPaintProperty(id, k, v); } catch (e) { /* propriété absente */ } });
+      (bd ? BD_PAINT : m.__bdOrig).forEach(([id, k, v]) => { if (m.getLayer(id)) try { m.setPaintProperty(id, k, v === undefined ? null : v); } catch (e) { /* propriété absente */ } });
       if (!m.getLayer('water_waves_bd')) {
         if (!m.hasImage('gm-waves-bd')) m.addImage('gm-waves-bd', patternImage(drawWavesBD, 40), { pixelRatio: 2 });
         const h = m.__home.zoom;
@@ -577,7 +581,16 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
           paint: { 'fill-pattern': 'gm-waves-bd', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], h + 0.1, 0.85, h + 0.7, 0] } }, 'water_shallow');
       }
       m.setLayoutProperty('water_waves_bd', 'visibility', bd ? 'visible' : 'none');
-      m.getContainer().style.background = bd ? '#4c9ce6' : '';
+      // Dégradé de la mer : bande bleue floutée le long du trait de côte (tracé IGN, côté mer)
+      if (bd && !m.getSource('cote-bd')) {
+        m.addSource('cote-bd', { type: 'geojson', data: `${import.meta.env.BASE_URL}territoires/cote.json`, tolerance: 0.5 });
+        const W = ['interpolate', ['exponential', 1.5], ['zoom'], 6, 12, 9, 30, 12, 80, 15, 200];
+        const mul = (k) => ['interpolate', ['exponential', 1.5], ['zoom'], 6, 12 * k, 9, 30 * k, 12, 80 * k, 15, 200 * k];
+        m.addLayer({ id: 'cote-bd', type: 'line', source: 'cote-bd', layout: { 'line-join': 'round' },
+          paint: { 'line-color': '#4c9ce6', 'line-width': W, 'line-offset': mul(COTE_SIDE * 0.55), 'line-blur': mul(0.7), 'line-opacity': 0.75 } }, 'water_shallow');
+      }
+      if (m.getLayer('cote-bd')) m.setLayoutProperty('cote-bd', 'visibility', bd ? 'visible' : 'none');
+      m.getContainer().style.background = bd ? '#a6d3f5' : '';
       return true;
     };
     // La carte peut ne pas être prête au premier rendu : on réessaie jusqu'à ce qu'elle le soit
