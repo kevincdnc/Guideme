@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import MapView from './components/MapView.jsx';
 import Guide from './components/Guide.jsx';
 import Icon from './components/Icon.jsx';
+import TypeIcon from './components/TypeIcon.jsx';
 import SafeImg from './components/SafeImg.jsx';
 import Brand from './components/Brand.jsx';
 import ColorTuner from './components/ColorTuner.jsx'; // TEMPORAIRE
@@ -484,15 +485,15 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
     { id: null, el: <button key="all" className={`tag ${!value ? 'is-active' : ''}`} onClick={() => pick(null)} aria-pressed={!value}>Tous</button> },
     ...(((!statusInMenu && visitedCount > 0) || value === 'visited') ? [{ id: 'visited', el: (
       <button key="visited" className={`tag tag--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')} aria-pressed={value === 'visited'}>
-        <Icon name="check" size={14} stroke={2.8} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
+        <TypeIcon name="visites" size={15} /> {visitedCount} Visité{visitedCount > 1 ? 's' : ''}
       </button>) }] : []),
     ...(((!statusInMenu && wantedCount > 0) || value === 'wanted') ? [{ id: 'wanted', el: (
       <button key="wanted" className={`tag tag--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')} aria-pressed={value === 'wanted'}>
-        <Icon name="star" size={14} stroke={2.2} /> {wantedCount} to-do
+        <TypeIcon name="todo" size={15} /> {wantedCount} to-do
       </button>) }] : []),
     ...used.map((t) => ({ id: t.id, el: (
       <button key={t.id} className={`tag ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)} aria-pressed={value === t.id}>
-        <Icon name={t.icon} size={14} /> {t.label}
+        <TypeIcon name={t.type} size={15} /> {t.label}
       </button>) })),
   ];
   const items = value && !wrap ? [...all.filter((it) => it.id === value), ...all.filter((it) => it.id !== value)] : all;
@@ -524,15 +525,15 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
       {open && (
         <div className="tag-menu" role="menu" style={menuPos || undefined}>
           <button role="menuitemradio" aria-checked={value === 'visited'} className={`tag-menu-item tag-menu-item--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')}>
-            <Icon name="check" size={16} stroke={2.6} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
+            <TypeIcon name="visites" size={17} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
           </button>
           <button role="menuitemradio" aria-checked={value === 'wanted'} className={`tag-menu-item tag-menu-item--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')}>
-            <Icon name="star" size={16} stroke={2.2} /> <span>Mes lieux favoris</span> <b>{wantedCount}</b>
+            <TypeIcon name="todo" size={17} /> <span>Mes lieux favoris</span> <b>{wantedCount}</b>
           </button>
           <hr className="tag-menu-sep" />
           {menuTags.map((t) => (
             <button key={t.id} role="menuitemradio" aria-checked={value === t.id} className={`tag-menu-item ${value === t.id ? 'is-active' : ''}`} onClick={() => pick(value === t.id ? null : t.id)}>
-              <Icon name={t.icon} size={16} /> <span>{t.label}</span> <b>{count(t.id)}</b>
+              <TypeIcon name={t.type} size={17} /> <span>{t.label}</span> <b>{count(t.id)}</b>
             </button>
           ))}
           {q && (() => { const n = places.filter((p) => searchText(p).includes(q)).length; return <p className="tag-menu-note">{n ? `${n} spot${n > 1 ? 's' : ''} trouvé${n > 1 ? 's' : ''}, affiché${n > 1 ? 's' : ''} dans la liste.` : 'Aucun spot trouvé.'}</p>; })()}

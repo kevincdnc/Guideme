@@ -38,13 +38,13 @@ export const FINISTERE_BOUNDS = [
 
 // Catégories (puces de navigation au-dessus des lieux)
 export const TAGS = [
-  { id: 'nature', label: 'Site naturel', icon: 'tNature' },
-  { id: 'prehistoire', label: 'Préhistoire', icon: 'tPrehistoire' },
-  { id: 'phare', label: 'Phare', icon: 'tPhare' },
-  { id: 'histoire', label: 'Patrimoine', icon: 'tPatrimoine' },
-  { id: 'legende', label: 'Légendaire', icon: 'tLegende' }, // sélection des spots les plus extraordinaires (records, histoires hors normes)
-  { id: 'plage', label: 'Plage', icon: 'tPlage' },
-  { id: 'port', label: 'Port', icon: 'tPort' },
+  { id: 'nature', type: 'nature', label: 'Site naturel', icon: 'tNature' },
+  { id: 'prehistoire', type: 'prehistoire', label: 'Préhistoire', icon: 'tPrehistoire' },
+  { id: 'phare', type: 'phare', label: 'Phare', icon: 'tPhare' },
+  { id: 'histoire', type: 'histoire', label: 'Patrimoine', icon: 'tPatrimoine' },
+  { id: 'legende', type: 'legende', label: 'Légendaire', icon: 'tLegende' }, // sélection des spots les plus extraordinaires (records, histoires hors normes)
+  { id: 'plage', type: 'plage', label: 'Plage', icon: 'tPlage' },
+  { id: 'port', type: 'port', label: 'Port', icon: 'tPort' },
 ];
 
 // Lieux annoncés, sans fiche pour l'instant
