@@ -1,0 +1,570 @@
+{
+ "views": {
+  "proche": [
+   {
+    "id": "audierne",
+    "name": "Audierne",
+    "c": [
+     -4.540556,
+     48.025
+    ],
+    "icon": "port",
+    "tags": [
+     "port",
+     "histoire"
+    ],
+    "x": 496.0922143312973,
+    "y": 493.28662439366667
+   },
+   {
+    "id": "baie-des-trepasses",
+    "name": "Baie des Tr\u00e9pass\u00e9s",
+    "c": [
+     -4.714851,
+     48.048136
+    ],
+    "icon": "beach",
+    "tags": [
+     "nature",
+     "plage"
+    ],
+    "x": 172.56349097834368,
+    "y": 429.0602592643199
+   },
+   {
+    "id": "douarnenez",
+    "name": "Douarnenez",
+    "c": [
+     -4.329167,
+     48.092778
+    ],
+    "icon": "port",
+    "tags": [
+     "port",
+     "histoire"
+    ],
+    "x": 888.4753194166879,
+    "y": 305.0508714630352
+   },
+   {
+    "id": "menez-dregan",
+    "name": "Menez Dregan",
+    "c": [
+     -4.475298,
+     47.986317
+    ],
+    "icon": "fire",
+    "tags": [
+     "prehistoire",
+     "histoire",
+     "legende"
+    ],
+    "x": 617.2249916832623,
+    "y": 600.6076553994562
+   },
+   {
+    "id": "phare-tevennec",
+    "name": "Phare du T\u00e9vennec",
+    "c": [
+     -4.79333,
+     48.06972
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "legende"
+    ],
+    "x": 26.889715597445388,
+    "y": 369.116282917329
+   },
+   {
+    "id": "phare-vieille",
+    "name": "Phare de la Vieille",
+    "c": [
+     -4.75639,
+     48.04056
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 95.45824045849042,
+    "y": 450.0946827159664
+   },
+   {
+    "id": "pointe-du-millier",
+    "name": "Pointe du Millier",
+    "c": [
+     -4.465833,
+     48.098889
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature"
+    ],
+    "x": 634.7940519921663,
+    "y": 288.066971702062
+   },
+   {
+    "id": "pointe-du-raz",
+    "name": "Pointe du Raz",
+    "c": [
+     -4.741111,
+     48.040278
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature",
+     "histoire",
+     "legende"
+    ],
+    "x": 123.81932576851148,
+    "y": 450.87758332175935
+   },
+   {
+    "id": "pointe-du-van",
+    "name": "Pointe du Van",
+    "c": [
+     -4.7149822,
+     48.064501
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature",
+     "histoire"
+    ],
+    "x": 172.31995577366376,
+    "y": 383.61300922259085
+   }
+  ],
+  "large": [
+   {
+    "id": "audierne",
+    "name": "Audierne",
+    "c": [
+     -4.540556,
+     48.025
+    ],
+    "icon": "port",
+    "tags": [
+     "port",
+     "histoire"
+    ],
+    "x": 327.24783377121616,
+    "y": 596.062278060179
+   },
+   {
+    "id": "baie-des-trepasses",
+    "name": "Baie des Tr\u00e9pass\u00e9s",
+    "c": [
+     -4.714851,
+     48.048136
+    ],
+    "icon": "beach",
+    "tags": [
+     "nature",
+     "plage"
+    ],
+    "x": 231.0621688414517,
+    "y": 576.9676654645461
+   },
+   {
+    "id": "concarneau",
+    "name": "Concarneau",
+    "c": [
+     -3.916266,
+     47.871674
+    ],
+    "icon": "church",
+    "tags": [
+     "histoire",
+     "port"
+    ],
+    "x": 671.7657416802474,
+    "y": 722.3893009256662
+   },
+   {
+    "id": "douarnenez",
+    "name": "Douarnenez",
+    "c": [
+     -4.329167,
+     48.092778
+    ],
+    "icon": "port",
+    "tags": [
+     "port",
+     "histoire"
+    ],
+    "x": 443.90402886482275,
+    "y": 540.0994538894392
+   },
+   {
+    "id": "ile-de-sein",
+    "name": "\u00cele de Sein",
+    "c": [
+     -4.85,
+     48.03333333
+    ],
+    "icon": "port",
+    "tags": [
+     "nature",
+     "histoire",
+     "legende"
+    ],
+    "x": 156.47944168581705,
+    "y": 589.1855987986171
+   },
+   {
+    "id": "locronan",
+    "name": "Locronan",
+    "c": [
+     -4.206,
+     48.0985
+    ],
+    "icon": "church",
+    "tags": [
+     "histoire"
+    ],
+    "x": 511.874422693713,
+    "y": 535.3715476826318
+   },
+   {
+    "id": "menez-dregan",
+    "name": "Menez Dregan",
+    "c": [
+     -4.475298,
+     47.986317
+    ],
+    "icon": "fire",
+    "tags": [
+     "prehistoire",
+     "histoire",
+     "legende"
+    ],
+    "x": 363.2608239429874,
+    "y": 627.9690114755577
+   },
+   {
+    "id": "phare-ar-men",
+    "name": "Phare d'Ar-Men",
+    "c": [
+     -4.99722,
+     48.05028
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire",
+     "legende"
+    ],
+    "x": 75.23526605851043,
+    "y": 575.1977443332837
+   },
+   {
+    "id": "phare-eckmuhl",
+    "name": "Phare d'Eckm\u00fchl",
+    "c": [
+     -4.37278,
+     47.79833
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire",
+     "legende"
+    ],
+    "x": 419.8359523016263,
+    "y": 782.6860965160578
+   },
+   {
+    "id": "phare-four",
+    "name": "Phare du Four",
+    "c": [
+     -4.805,
+     48.5233
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 181.31294191152585,
+    "y": 182.89183576148216
+   },
+   {
+    "id": "phare-ile-vierge",
+    "name": "Phare de l'\u00eele Vierge",
+    "c": [
+     -4.567075,
+     48.638806
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire",
+     "legende"
+    ],
+    "x": 312.61317616044505,
+    "y": 86.53976138417072
+   },
+   {
+    "id": "phare-kereon",
+    "name": "Phare de K\u00e9r\u00e9on",
+    "c": [
+     -5.02556,
+     48.43722
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire",
+     "legende"
+    ],
+    "x": 59.59567947192647,
+    "y": 254.55470478014976
+   },
+   {
+    "id": "phare-kermorvan",
+    "name": "Phare de Kermorvan",
+    "c": [
+     -4.78972,
+     48.36194
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 189.74529487706297,
+    "y": 317.1269505809599
+   },
+   {
+    "id": "phare-petit-minou",
+    "name": "Phare du Petit Minou",
+    "c": [
+     -4.61417,
+     48.33667
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 286.6235385353367,
+    "y": 338.11047540909146
+   },
+   {
+    "id": "phare-pierres-noires",
+    "name": "Phare des Pierres Noires",
+    "c": [
+     -4.9117,
+     48.3117
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 122.42995359857639,
+    "y": 358.8346746890283
+   },
+   {
+    "id": "phare-portzic",
+    "name": "Phare du Portzic",
+    "c": [
+     -4.53417,
+     48.3583
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 330.7719833810519,
+    "y": 320.150149738619
+   },
+   {
+    "id": "phare-saint-mathieu",
+    "name": "Phare de Saint-Mathieu",
+    "c": [
+     -4.77083,
+     48.33
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 200.16984641625868,
+    "y": 343.6473280085902
+   },
+   {
+    "id": "phare-sein",
+    "name": "Grand phare de Sein",
+    "c": [
+     -4.8664,
+     48.0438
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 147.4290104924421,
+    "y": 580.5469076568518
+   },
+   {
+    "id": "phare-stiff",
+    "name": "Phare du Stiff",
+    "c": [
+     -5.05667,
+     48.47444
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 42.427452982562386,
+    "y": 223.58342759220338
+   },
+   {
+    "id": "phare-tevennec",
+    "name": "Phare du T\u00e9vennec",
+    "c": [
+     -4.79333,
+     48.06972
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "legende"
+    ],
+    "x": 187.7530963034044,
+    "y": 559.1462146712028
+   },
+   {
+    "id": "phare-trezien",
+    "name": "Phare de Tr\u00e9zien",
+    "c": [
+     -4.77889,
+     48.42361
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 195.7218905980509,
+    "y": 265.8741082570296
+   },
+   {
+    "id": "phare-vieille",
+    "name": "Phare de la Vieille",
+    "c": [
+     -4.75639,
+     48.04056
+    ],
+    "icon": "lighthouse",
+    "tags": [
+     "phare",
+     "histoire"
+    ],
+    "x": 208.13864071089324,
+    "y": 583.2212369717113
+   },
+   {
+    "id": "pointe-du-millier",
+    "name": "Pointe du Millier",
+    "c": [
+     -4.465833,
+     48.098889
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature"
+    ],
+    "x": 368.484136823801,
+    "y": 535.0501102803805
+   },
+   {
+    "id": "pointe-du-raz",
+    "name": "Pointe du Raz",
+    "c": [
+     -4.741111,
+     48.040278
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature",
+     "histoire",
+     "legende"
+    ],
+    "x": 216.57044182086622,
+    "y": 583.4539947144021
+   },
+   {
+    "id": "pointe-du-van",
+    "name": "Pointe du Van",
+    "c": [
+     -4.7149822,
+     48.064501
+    ],
+    "icon": "cliff",
+    "tags": [
+     "nature",
+     "histoire"
+    ],
+    "x": 230.98976539191676,
+    "y": 563.456117187816
+   },
+   {
+    "id": "pont-aven",
+    "name": "Pont-Aven",
+    "c": [
+     -3.75,
+     47.85
+    ],
+    "icon": "church",
+    "tags": [
+     "histoire"
+    ],
+    "x": 763.5205583141951,
+    "y": 740.2165752005528
+   }
+  ]
+ },
+ "thumbs": {
+  "Pointe du Raz": "thumbs/cf59a313e2.jpg",
+  "Baie des Tr\u00e9pass\u00e9s": "thumbs/fb4d57fca7.jpg",
+  "Pointe du Van": "thumbs/d4f843616d.jpg",
+  "\u00cele de Sein": "thumbs/bb2863c012.jpg",
+  "Audierne": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/907_Goyen_Locqu%C3%A9ran.jpg/500px-907_Goyen_Locqu%C3%A9ran.jpg",
+  "Menez Dregan": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Plouhinec_-_M%C3%A9nez_Dr%C3%A9gan.jpg/500px-Plouhinec_-_M%C3%A9nez_Dr%C3%A9gan.jpg",
+  "Pointe du Millier": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/266_Pointe_du_Millier.jpg/500px-266_Pointe_du_Millier.jpg",
+  "Douarnenez": "thumbs/87459c27a8.jpg",
+  "Locronan": "thumbs/0c919dce1b.jpg",
+  "Phare d'Eckm\u00fchl": "thumbs/a89e8bcaf8.jpg",
+  "Concarneau": "thumbs/c436761417.jpg",
+  "Pont-Aven": "thumbs/b52447c9c4.jpg",
+  "Phare d'Ar-Men": "thumbs/37399df496.jpg",
+  "Phare du T\u00e9vennec": "thumbs/631a19674e.jpg",
+  "Phare de la Vieille": "thumbs/6680aa1607.jpg",
+  "Grand phare de Sein": "thumbs/75cb9e91e4.jpg",
+  "Phare de K\u00e9r\u00e9on": "thumbs/945700c402.jpg",
+  "Phare de la Jument": "thumbs/94c2ea8e31.jpg",
+  "Phare du Cr\u00e9ac'h": "thumbs/1ffd3854ba.jpg",
+  "Phare du Stiff": "thumbs/c8971db316.jpg",
+  "Phare du Four": "thumbs/4df106ce79.jpg",
+  "Phare des Pierres Noires": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Les_Pierres_Noires_Phare.jpg/500px-Les_Pierres_Noires_Phare.jpg",
+  "Phare de l'\u00eele Vierge": "thumbs/b5c65392be.jpg",
+  "Phare de Saint-Mathieu": "thumbs/43ff2353f8.jpg",
+  "Phare du Petit Minou": "thumbs/9539cbd831.jpg",
+  "Phare de Tr\u00e9zien": "thumbs/990b9f3e23.jpg",
+  "Phare de l'\u00eele de Batz": "thumbs/85c6efe3ca.jpg",
+  "Phare du Portzic": "thumbs/99c86909b8.jpg",
+  "Phare de Penfret": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Phare_de_Penfret02.jpg/500px-Phare_de_Penfret02.jpg",
+  "Phare de Kermorvan": "thumbs/f411c55e6a.jpg"
+ }
+}
