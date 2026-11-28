@@ -2836,3 +2836,8 @@ h1, h2, h3, h4, .sidebar-intro h1, .sidebar .pc-body h3, .pc-body h3, .gm-pop-na
 
 /* Icônes pleines du set validé (tags + menu des catégories) : les formes portent leurs propres remplissages */
 svg.type-icon { fill: none !important; flex: 0 0 auto; }
+/* Menu « + » : coche et étoile identiques au compteur de la barre latérale (même icône, même couleur) */
+.tag-menu-item--visited svg { color: #15803d !important; }
+.tag-menu-item--wanted svg { color: #c68400 !important; fill: #c68400 !important; }
+/* Compteurs du menu : +2 px au-dessus et en dessous du texte */
+.tag-menu-item b { padding-top: 4px !important; padding-bottom: 4px !important; }

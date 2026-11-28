@@ -525,10 +525,10 @@ function TagBar({ value, onChange, places, wrap, query, onQuery, visitedCount = 
       {open && (
         <div className="tag-menu" role="menu" style={menuPos || undefined}>
           <button role="menuitemradio" aria-checked={value === 'visited'} className={`tag-menu-item tag-menu-item--visited ${value === 'visited' ? 'is-active' : ''}`} onClick={() => pick(value === 'visited' ? null : 'visited')}>
-            <TypeIcon name="visites" size={17} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
+            <Icon name="check" size={16} stroke={2.8} /> <span>Mes lieux visités</span> <b>{visitedCount}</b>
           </button>
           <button role="menuitemradio" aria-checked={value === 'wanted'} className={`tag-menu-item tag-menu-item--wanted ${value === 'wanted' ? 'is-active' : ''}`} onClick={() => pick(value === 'wanted' ? null : 'wanted')}>
-            <TypeIcon name="todo" size={17} /> <span>Mes lieux favoris</span> <b>{wantedCount}</b>
+            <Icon name="star" size={16} stroke={2.2} /> <span>Ma to-do list</span> <b>{wantedCount}</b>
           </button>
           <hr className="tag-menu-sep" />
           {menuTags.map((t) => (
