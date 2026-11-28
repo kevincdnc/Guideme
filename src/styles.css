@@ -2881,5 +2881,5 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 
 /* Noms des lieux (zoom rapproché, toutes cartes) : étiquette noire, texte blanc */
 .map.z-labels .gm-marker:not(:hover) .gm-marker-label { background: #111 !important; color: #fff !important; box-shadow: 0 2px 8px rgba(17,17,17,.25) !important; }
-/* Noms des lieux : petits à 400 %, taille normale vers 800 % */
-.map.z-labels .gm-marker:not(:hover) .gm-marker-label { font-size: clamp(10px, calc(7.6px + var(--zp, 8) * .65px), 13px) !important; padding: clamp(2px, calc(var(--zp, 8) * .5px), 5px) clamp(6px, calc(var(--zp, 8) * 1.1px), 10px) !important; }
+/* Noms des lieux (zoom ≥ 400 %) : taille fixe, texte qui respire */
+.map.z-labels .gm-marker:not(:hover) .gm-marker-label { font-size: 13px !important; line-height: 1.2 !important; padding: 6px 11px !important; border-radius: 8px !important; }
