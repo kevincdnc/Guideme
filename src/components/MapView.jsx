@@ -5,6 +5,7 @@ import { FINISTERE_BOUNDS } from '../data/places.js';
 
 import MAP_STYLE from '../data/mapFonts.js';
 import { protectionBadgesHtml } from './Protections.jsx';
+import { TYPE_ICONS } from '../data/typeIcons.js';
 import FINISTERE_MASK from '../data/finistere.json';
 
 // Carte vectorielle (tuiles OpenFreeMap, style construit par scripts/build-map-style.mjs) :
@@ -47,6 +48,8 @@ const PIN_ICONS = {
 // Couleur du badge selon le type de lieu
 // Une seule couleur pour tous les types : noir GuideMe (pictogramme jaune) ; vert une fois visité
 const PIN_COLOR = '#111111';
+// Pictogramme du repère → icône du set validé
+const PIN_TYPE = { lighthouse: 'phare', beach: 'plage', cliff: 'nature', port: 'port', church: 'histoire', fire: 'prehistoire' };
 
 // Motifs dessinés à la volée (pas de fichier image) : petites vagues sur la mer, arbres sur les forêts.
 function patternImage(draw, size) {
@@ -119,6 +122,12 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
   el.style.setProperty('--c', el.dataset.color);
   el.setAttribute('aria-label', `${place.shortTitle}${place.available ? '' : ' (bientôt disponible)'}`);
   const icon = place.available ? PIN_ICONS[place.icon] || PIN_ICONS.lighthouse : LOCK;
+  // Pictogramme plein du set validé (mêmes icônes que les tags) ; repli sur l'ancien pictogramme linéaire
+  const typeSvg = (cls) => {
+    const t = place.available && TYPE_ICONS[PIN_TYPE[place.icon] || 'phare'];
+    if (!t) return `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>`;
+    return `<svg class="${cls} gm-type" viewBox="0 0 48 48" aria-hidden="true" fill="none">${t.replace(/__U__/g, `${place.id}-${cls}`)}</svg>`;
+  };
   el.innerHTML = `<span class="gm-marker-body">
     <span class="gm-marker-label">
       ${place.available && thumbOf(place) ? '<span class="gm-pop-img" aria-hidden="true"></span>' : ''}
@@ -137,11 +146,11 @@ function markerEl(place, onSelect, onToggleVisited, onToggleWanted, onOpenPlace)
         <circle cx="22" cy="22" r="12.6" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.3"/>
         <path d="M9.6 16.5A13.5 13.5 0 0 1 18 8.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
       </svg>
-      <svg class="gm-pin-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>
+      ${typeSvg('gm-pin-icon')}
       <span class="gm-want" aria-hidden="true">${STAR_SVG}</span>
       <span class="gm-check" aria-hidden="true">${CHECK_SVG}</span>
     </span>
-    <span class="gm-dot" aria-hidden="true"><svg class="gm-dot-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${icon}</svg><span class="gm-dot-check">${CHECK_SVG}</span></span>
+    <span class="gm-dot" aria-hidden="true">${typeSvg('gm-dot-icon')}<span class="gm-dot-check">${CHECK_SVG}</span></span>
     <span class="gm-marker-ground"></span>
   </span>`;
   el.addEventListener('click', (e) => {
@@ -341,6 +350,7 @@ const MapView = forwardRef(function MapView({ markerSize = 'large', onZoomChange
       touchPitch: false,
     });
     m.touchZoomRotate.disableRotation();
+    if (box.current) box.current.__map = m; // accès pour les captures et réglages de carte
     m.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
     // Crédits de la carte : toujours repliés au départ (bouton « i » discret)
     const foldAttrib = () => {

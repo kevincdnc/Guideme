@@ -2844,3 +2844,6 @@ svg.type-icon { fill: none !important; flex: 0 0 auto; }
 /* Tags non sélectionnés : icône pleine adoucie (même teinte, moins dense) */
 .tag:not(.is-active) svg.type-icon { opacity: .6; transition: opacity .15s; }
 .tag:not(.is-active):hover svg.type-icon { opacity: .85; }
+/* Repères : pictogrammes pleins du set validé (jaune, blanc une fois visité) */
+.gm-marker svg.gm-type { stroke: none !important; color: #FFB900; }
+.gm-marker.is-visited svg.gm-type { color: #fff; }
